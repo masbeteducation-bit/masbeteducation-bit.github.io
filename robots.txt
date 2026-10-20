@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://masbeteducation-bit.github.io/sitemap.xml

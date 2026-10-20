@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="description" content="Bibliothèque Masbet : ouvrages gratuits en lecture seule, par domaine.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<script src="biblio/livre-sante.js"></script>
+<script src="biblio/livre-agronomie.js"></script>
+<script src="biblio/livre-gestion-projet.js"></script>
+<script src="biblio/livre-ethique.js"></script>
+<script src="biblio/livre-finance.js"></script>
+<script src="biblio/livre-fiscalite.js"></script>
+<script src="biblio/livre-metre-devis.js"></script>
+<title>Bibliothèque Masbet</title>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--ink:#1d2433;--muted:#5d6782;--line:#e2e5ee;--c:#173a8c;--c2:#e8eefb;--fs:17px}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  /* Lecture seule : pas de sélection, pas de copie, pas d'impression */
+  body.lecture{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  @media print{body *{display:none!important}body:after{content:"Bibliothèque Masbet : lecture en ligne seulement.";display:block;padding:40px;font:16px sans-serif}}
+  button{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  header.h{background:var(--navy);color:#fff;padding:18px 16px 20px}
+  header.h .r{max-width:980px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  header.h h1{margin:0;font-size:23px}header.h h1 span{color:var(--gold)}
+  header.h p{max-width:980px;margin:6px auto 0;color:#cfd6ea;font-size:14px}
+  .lang{display:flex;border:1.5px solid rgba(255,255,255,.35);border-radius:20px;overflow:hidden}
+  .lang button{border:0;background:transparent;color:#cfd6ea;font-weight:800;font-size:12.5px;padding:5px 9px}
+  .lang button.on{background:#fff;color:var(--navy)}
+  main{max-width:980px;margin:0 auto;padding:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+  .chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-weight:800;font-size:13px;cursor:pointer}
+  .chip.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .livres{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:640px){.livres{grid-template-columns:1fr 1fr}}
+  @media(min-width:960px){.livres{grid-template-columns:1fr 1fr 1fr}}
+  .livre{display:flex;gap:12px;background:#fff;border-radius:16px;padding:12px;border:0;text-align:left;cursor:pointer;box-shadow:0 1px 3px rgba(20,33,61,.07)}
+  .couv{flex:0 0 92px;height:128px;border-radius:8px 12px 12px 8px;color:#fff;padding:10px 8px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:inset 6px 0 0 rgba(0,0,0,.15),0 3px 8px rgba(0,0,0,.15)}
+  .couv .i{font-size:28px}.couv .d{font-size:9.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px;opacity:.95}
+  .couv .m{font-size:9px;font-weight:900;letter-spacing:.5px;opacity:.85}
+  .livre .t{font-weight:900;font-size:15.5px;line-height:1.25}
+  .livre .s{color:var(--muted);font-size:13px;margin-top:4px}
+  .livre .x{color:var(--muted);font-size:12px;margin-top:8px}
+  .barre{height:4px;background:#eef0f6;border-radius:4px;margin-top:6px;overflow:hidden}.barre i{display:block;height:100%;background:var(--gold)}
+  /* Lecteur */
+  #lecteur{position:fixed;inset:0;background:#f6f4ef;z-index:60;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .lbar{position:sticky;top:0;z-index:5;background:var(--c);color:#fff;display:flex;align-items:center;gap:8px;padding:9px 12px}
+  .lbar .tt{flex:1;min-width:0;font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lbar button{background:rgba(255,255,255,.16);border:0;border-radius:9px;color:#fff;font-weight:800;padding:6px 10px;cursor:pointer}
+  .prog{position:sticky;top:44px;height:3px;background:rgba(0,0,0,.06);z-index:5}.prog i{display:block;height:100%;width:0;background:var(--gold)}
+  .pages{max-width:760px;margin:0 auto;padding:12px 10px 60px}
+  .page{background:#fff;border-radius:6px;margin:14px 0;box-shadow:0 2px 10px rgba(0,0,0,.07);overflow:hidden}
+  .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 14px;background:var(--c);color:#fff;font-size:11.5px;font-weight:700}
+  .ph img{height:20px;background:#fff;border-radius:4px;padding:1px 4px}
+  .pc{padding:22px 22px 18px;font:var(--fs)/1.7 Georgia,"Times New Roman",serif;color:#222}
+  .pc h2{font:900 calc(var(--fs) + 7px)/1.25 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--c);margin:0 0 14px}
+  .pc h3{font:800 calc(var(--fs) + 1px)/1.3 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--c);margin:20px 0 8px}
+  .pc p{margin:0 0 12px;text-align:justify;hyphens:auto}
+  .pc ul{margin:0 0 12px;padding-left:22px}.pc li{margin:3px 0}
+  .pc .cle{background:var(--c2);border-left:4px solid var(--c);border-radius:6px;padding:10px 14px;margin:14px 0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:calc(var(--fs) - 2px)}
+  .pc .cle b:first-child{display:block;color:var(--c);margin-bottom:3px;text-transform:uppercase;font-size:11.5px;letter-spacing:.8px}
+  .pc table{border-collapse:collapse;width:100%;margin:10px 0 14px;font:calc(var(--fs) - 3px)/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .pc td,.pc th{border:1px solid #d9dce6;padding:6px 8px;vertical-align:top}.pc th{background:var(--c2);text-align:left}
+  .pf{display:flex;justify-content:space-between;gap:10px;padding:8px 14px;border-top:3px solid var(--c);background:var(--c2);font-size:11px;color:#444}
+  .couverture{padding:40px 24px;text-align:center;color:#fff;background:linear-gradient(160deg,var(--c),#111c35)}
+  .couverture .i{font-size:54px}.couverture h1{font-size:26px;margin:14px 0 6px}.couverture .s{opacity:.9}
+  .couverture .att{margin-top:22px;font-size:12.5px;opacity:.9;font-style:italic}
+  .sources{font-size:calc(var(--fs) - 3px)}
+  .toc{position:fixed;top:0;right:0;bottom:0;width:min(340px,88vw);background:#fff;z-index:70;box-shadow:-4px 0 20px rgba(0,0,0,.2);overflow-y:auto;padding:14px}
+  .toc a{display:block;padding:9px 6px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:600}
+  .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+  .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  .navapp a span{display:block;font-size:20px;line-height:1.2}
+</style>
+</head>
+<body class="lecture">
+<header class="h">
+  <div class="r"><h1 id="hTitre"></h1><div class="lang" role="group" aria-label="Langue / Lang"><button id="lHt" onclick="langue('ht')">KR</button><button id="lFr" onclick="langue('fr')">FR</button></div></div>
+  <p id="hTxt"></p>
+</header>
+<main>
+  <div class="chips" id="chips"></div>
+  <div class="livres" id="livres"></div>
+</main>
+<div id="lecteur" class="hidden" onscroll="defile()">
+  <div class="lbar"><button onclick="fermer()" aria-label="Fermer">←</button><div class="tt" id="lTitre"></div>
+    <button onclick="taille(-1)" aria-label="A-">A−</button><button onclick="taille(1)" aria-label="A+">A+</button><button onclick="sommaire()" id="bToc">☰</button></div>
+  <div class="prog"><i id="prog"></i></div>
+  <div class="pages" id="pages"></div>
+</div>
+<div class="toc hidden" id="toc"></div>
+<nav class="navapp" id="nav"></nav>
+<script>
+"use strict";
+var LIVRES = window.MASBET_LIVRES || [];
+var DOMAINES = {
+  medecine:{fr:'Médecine et santé',ht:'Medsin ak sante',c:'#0e7c6b',c2:'#e3f4f0',i:'🩺'},
+  agronomie:{fr:'Agronomie',ht:'Agwonomi',c:'#4d7c0f',c2:'#eef6df',i:'🌱'},
+  gestion:{fr:'Gestion et projets',ht:'Jesyon ak pwojè',c:'#173a8c',c2:'#e8eefb',i:'📋'},
+  finance:{fr:'Finance et comptabilité',ht:'Finans ak kontablite',c:'#13294b',c2:'#f6efd9',i:'💰',or:'#b8860b'},
+  droit:{fr:'Droit et fiscalité',ht:'Dwa ak fiskalite',c:'#7a1f2b',c2:'#f7e7e9',i:'⚖️'},
+  ingenierie:{fr:'Ingénierie, construction et électricité',ht:'Jeni, konstriksyon ak elektrisite',c:'#374151',c2:'#fdf6d8',i:'🏗️'}
+};
+var TXT={
+  fr:{titre:'Bibliothèque <span>Masbet</span>', txt:'Ouvrages gratuits, en lecture seule, préparés à partir de sources documentaires vérifiées.', tous:'Tous', chap:'chapitres', min:'min de lecture', page:'Page', sources:'Sources', sommaire:'Sommaire', couv:'Couverture',
+      att:'Ouvrage préparé, rédigé et synthétisé par les outils Masbet Education à partir de sources documentaires vérifiées.', lu:'lu', aucun:'Aucun ouvrage dans ce domaine pour l\'instant.', nav:['Accueil','Acheter','Matchs','Live','Biblio']},
+  ht:{titre:'Bibliotèk <span>Masbet</span>', txt:'Liv gratis, pou li sèlman, ki prepare apati sous dokimantè ki verifye.', tous:'Tout', chap:'chapit', min:'min lekti', page:'Paj', sources:'Sous', sommaire:'Tab matyè', couv:'Kouvèti',
+      att:'Ouvrage préparé, rédigé et synthétisé par les outils Masbet Education à partir de sources documentaires vérifiées.', lu:'li', aucun:'Poko gen liv nan domèn sa a.', nav:['Akèy','Achte','Match','Live','Biblio']}
+};
+var LANG='fr', FILTRE='', LIVRE=null, FS=17;
+function T(k){ return TXT[LANG][k]; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function el(id){ return document.getElementById(id); }
+function mots(l){ var n=0; l.chapitres.forEach(function(c){ n+=String(c.texte).split(/\s+/).length; }); return n; }
+// Mise en forme simple : « ## » sous-titre, « - » liste, « > » encadré (première ligne en gras), « | » tableau, **gras**
+function formater(t){
+  var out=[], lignes=String(t).split('\n'), i=0;
+  var inl=function(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'); };
+  while(i<lignes.length){
+    var l=lignes[i];
+    if(/^\s*$/.test(l)){ i++; continue; }
+    if(/^## /.test(l)){ out.push('<h3>'+inl(l.slice(3))+'</h3>'); i++; continue; }
+    if(/^- /.test(l)){ var li=[]; while(i<lignes.length && /^- /.test(lignes[i])){ li.push('<li>'+inl(lignes[i].slice(2))+'</li>'); i++; } out.push('<ul>'+li.join('')+'</ul>'); continue; }
+    if(/^> /.test(l)){ var bx=[]; while(i<lignes.length && /^> /.test(lignes[i])){ bx.push(lignes[i].slice(2)); i++; } out.push('<div class="cle"><b>'+inl(bx[0])+'</b>'+bx.slice(1).map(inl).join('<br>')+'</div>'); continue; }
+    if(/^\|/.test(l)){ var rows=[]; while(i<lignes.length && /^\|/.test(lignes[i])){ rows.push(lignes[i].replace(/^\||\|$/g,'').split('|')); i++; }
+      out.push('<table>'+rows.map(function(r,k){ return '<tr>'+r.map(function(c){ return k===0?'<th>'+inl(c.trim())+'</th>':'<td>'+inl(c.trim())+'</td>'; }).join('')+'</tr>'; }).join('')+'</table>'); continue; }
+    var p=[]; while(i<lignes.length && !/^\s*$/.test(lignes[i]) && !/^(## |- |> |\|)/.test(lignes[i])){ p.push(lignes[i]); i++; }
+    out.push('<p>'+inl(p.join(' '))+'</p>');
+  }
+  return out.join('');
+}
+function langue(l){ LANG=l==='ht'?'ht':'fr'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
+  el('lHt').classList.toggle('on',LANG==='ht'); el('lFr').classList.toggle('on',LANG==='fr');
+  el('hTitre').innerHTML=T('titre'); el('hTxt').textContent=T('txt'); liste();
+  var n=T('nav'); el('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="biblio.html" style="color:var(--navy)"><span>📚</span>'+n[4]+'</a>'; }
+function liste(){
+  var doms=Object.keys(DOMAINES).filter(function(d){ return LIVRES.some(function(l){ return l.domaine===d; }); });
+  el('chips').innerHTML='<button class="chip'+(FILTRE?'':' on')+'" onclick="FILTRE=\'\';liste()">'+esc(T('tous'))+'</button>'+doms.map(function(d){ return '<button class="chip'+(FILTRE===d?' on':'')+'" onclick="FILTRE=\''+d+'\';liste()">'+DOMAINES[d].i+' '+esc(DOMAINES[d][LANG])+'</button>'; }).join('');
+  var l=LIVRES.filter(function(x){ return !FILTRE || x.domaine===FILTRE; });
+  el('livres').innerHTML=l.length?l.map(function(x){ var D=DOMAINES[x.domaine]||DOMAINES.gestion, p=Number(lire('masbet_biblio_'+x.id)||0);
+    return '<button class="livre" onclick="ouvrir(\''+esc(x.id)+'\')"><div class="couv" style="background:linear-gradient(160deg,'+D.c+','+(D.or||'#111c35')+')"><div class="d">'+esc(D[LANG])+'</div><div class="i">'+D.i+'</div><div class="m">MASBET</div></div>'+
+      '<div style="min-width:0"><div class="t">'+esc(x.titre)+'</div><div class="s">'+esc(x.soustitre||'')+'</div><div class="x">'+x.chapitres.length+' '+esc(T('chap'))+' · '+Math.max(1,Math.round(mots(x)/200))+' '+esc(T('min'))+'</div>'+
+      (p?'<div class="barre"><i style="width:'+Math.round(p*100)+'%"></i></div><div class="x">'+Math.round(p*100)+' % '+esc(T('lu'))+'</div>':'')+'</div></button>'; }).join(''):'<p>'+esc(T('aucun'))+'</p>';
+}
+function ouvrir(id){
+  LIVRE=LIVRES.filter(function(x){ return x.id===id; })[0]; if(!LIVRE) return;
+  var D=DOMAINES[LIVRE.domaine]||DOMAINES.gestion, R=document.documentElement;
+  R.style.setProperty('--c',D.c); R.style.setProperty('--c2',D.c2);
+  el('lTitre').textContent=LIVRE.titre;
+  var N=LIVRE.chapitres.length+2, pied=function(n){ return '<div class="pf"><span>'+esc(T('page'))+' '+n+' / '+N+'</span><span>Masbet Education · '+esc(D.fr)+'</span></div>'; };
+  var tete=function(c){ return '<div class="ph"><span>'+esc(LIVRE.titre)+(c?' — '+esc(c):'')+'</span><img src="logo.png" alt="Masbet"></div>'; };
+  var h='<section class="page" id="pg0">'+tete('')+'<div class="couverture"><div class="i">'+D.i+'</div><h1>'+esc(LIVRE.titre)+'</h1><div class="s">'+esc(LIVRE.soustitre||'')+'</div><div class="att">'+esc(T('att'))+'</div></div>'+pied(1)+'</section>';
+  LIVRE.chapitres.forEach(function(c,i){ h+='<section class="page" id="pg'+(i+1)+'">'+tete(c.titre)+'<div class="pc"><h2>'+esc((i+1)+'. '+c.titre)+'</h2>'+formater(c.texte)+'</div>'+pied(i+2)+'</section>'; });
+  h+='<section class="page" id="pg'+(N-1)+'">'+tete(T('sources'))+'<div class="pc sources"><h2>'+esc(T('sources'))+'</h2><ul>'+LIVRE.sources.map(function(s){ return '<li>'+esc(s)+'</li>'; }).join('')+'</ul><p><i>'+esc(T('att'))+'</i></p></div>'+pied(N)+'</section>';
+  el('pages').innerHTML=h;
+  el('toc').innerHTML='<b>'+esc(T('sommaire'))+'</b><a href="#" onclick="aller(0);return false">'+esc(T('couv'))+'</a>'+LIVRE.chapitres.map(function(c,i){ return '<a href="#" onclick="aller('+(i+1)+');return false">'+(i+1)+'. '+esc(c.titre)+'</a>'; }).join('')+'<a href="#" onclick="aller('+(N-1)+');return false">'+esc(T('sources'))+'</a>';
+  el('lecteur').classList.remove('hidden'); document.body.style.overflow='hidden';
+  var p=Number(lire('masbet_biblio_'+id)||0), L=el('lecteur');
+  setTimeout(function(){ L.scrollTop=p*(L.scrollHeight-L.clientHeight); defile(); },30);
+  history.replaceState(null,'','#livre='+id);
+}
+function aller(i){ el('toc').classList.add('hidden'); var s=el('pg'+i); if(s) el('lecteur').scrollTop=s.offsetTop-50; }
+function sommaire(){ el('toc').classList.toggle('hidden'); }
+function fermer(){ el('lecteur').classList.add('hidden'); el('toc').classList.add('hidden'); document.body.style.overflow=''; LIVRE=null; history.replaceState(null,'',location.pathname); liste(); }
+var DEF=null;
+function defile(){ if(!LIVRE) return; var L=el('lecteur'), p=L.scrollHeight>L.clientHeight?L.scrollTop/(L.scrollHeight-L.clientHeight):1; el('prog').style.width=Math.round(p*100)+'%';
+  clearTimeout(DEF); var id=LIVRE.id; DEF=setTimeout(function(){ var a=Number(lire('masbet_biblio_'+id)||0); ecrire('masbet_biblio_'+id, String(Math.max(p>0.985?1:p, p<a?p:p))); },400); }
+function taille(s){ FS=Math.max(14,Math.min(24,FS+s)); document.documentElement.style.setProperty('--fs',FS+'px'); ecrire('masbet_biblio_fs',String(FS)); }
+// Lecture seule : copie, clic droit et glisser désactivés
+['copy','cut','contextmenu','dragstart','selectstart'].forEach(function(ev){ document.addEventListener(ev,function(e){ e.preventDefault(); }); });
+document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey) && /^[spcau]$/i.test(e.key)) e.preventDefault(); });
+FS=Number(lire('masbet_biblio_fs')||17); taille(0);
+langue(lire('masbet_lang')||'fr');
+(function(){ var m=/[#&]livre=([a-z0-9-]+)/.exec(location.hash||''); if(m) ouvrir(m[1]); })();
+</script>
+</body>
+</html>

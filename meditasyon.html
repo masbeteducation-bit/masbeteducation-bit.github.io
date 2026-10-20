@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="description" content="Meditasyon Masbet : yon tèm pa jou, ak vèsè, panse ak refleksyon.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<title>Meditasyon Masbet</title>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f6f3ee;--ink:#1d2433;--muted:#6b6a75;--line:#e6e0d6;--c1:#173a8c;--c2:#5b7cd6}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Times New Roman",serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  .hero{color:#fff;padding:26px 18px 34px;background:linear-gradient(160deg,var(--c1),var(--c2));position:relative;overflow:hidden}
+  .hero:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .hero .r{display:flex;justify-content:space-between;align-items:center;max-width:720px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .hero .jou{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.9}
+  .hero h1{max-width:720px;margin:14px auto 0;font-size:32px;line-height:1.2}
+  .hero .ico{font-size:44px;max-width:720px;margin:0 auto;display:block}
+  .lang{display:flex;border:1.5px solid rgba(255,255,255,.4);border-radius:20px;overflow:hidden}
+  .lang button{border:0;background:transparent;color:#eef;font-weight:800;font-size:12.5px;padding:5px 9px;font-family:inherit}
+  .lang button.on{background:#fff;color:var(--navy)}
+  main{max-width:720px;margin:-18px auto 0;padding:0 14px;position:relative}
+  .card{background:#fff;border-radius:18px;padding:20px 20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(30,30,60,.06)}
+  .card h2{font:800 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:var(--c1);margin:0 0 10px}
+  .card p{margin:0 0 12px}
+  .vese{border-left:4px solid var(--c1);padding:4px 0 4px 14px;margin:0 0 14px}
+  .vese .t{font-style:italic}
+  .vese .ref{font:700 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--muted);margin-top:4px}
+  .kr{font-size:15px;color:#3b4354;margin-top:4px}
+  .sit{font-size:19px;text-align:center;padding:6px 8px}
+  .sit .ref{font:700 13px system-ui,sans-serif;color:var(--muted);margin-top:6px}
+  .pratik{background:#fff8ea;border:1.5px solid #f6dfae}
+  .pied{font:13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--muted);text-align:center;margin:18px 0}
+  .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  .navapp a span{display:block;font-size:20px;line-height:1.2}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="r"><span class="jou" id="jou"></span><div class="lang" role="group" aria-label="Lang / Langue"><button id="lHt" onclick="langue('ht')">KR</button><button id="lFr" onclick="langue('fr')">FR</button></div></div>
+  <h1 id="titre"></h1>
+</div>
+<main id="contenu"></main>
+<nav class="navapp" id="nav"></nav>
+<script>
+"use strict";
+// Un thème par jour ; seul le thème du jour s'affiche (date et fuseau horaire du téléphone).
+// Versets : Louis Segond 1910 (domaine public). Créole : traduction libre Masbet Education.
+var JOU = { ht:['Dimanch','Lendi','Madi','Mèkredi','Jedi','Vandredi','Samdi'], fr:['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'] };
+var TEM = [
+ { // Dimanche
+  c:['#8a5a00','#d9a520'], ico:'🌾',
+  ht:{ t:'Richès ak fòtin', r:[
+   'Richès pa sèlman kòb ki nan pòch nou. Gen richès ki pi solid : sante, fanmi, zanmi, konesans, non nou pote ak respè. Moun ki gen anpil kòb men ki pèdi lapè ak dignite, li pòv nan sa ki konte plis la.',
+   'Sa pa vle di pou nou meprize lajan. Lajan se yon bon sèvitè : li voye timoun lekòl, li bati kay, li pèmèt nou ede lòt moun. Men li se yon move mèt : lè l kòmande nou, li pouse nou mache sou valè nou.',
+   'Bib la montre yon chemen : travay ak onètete, ekonomize ti kras pa ti kras, pa kouri dèyè lajan fasil. Richès ki bati sou manti fonn tankou glas nan solèy ; richès ki bati sou travay ak pasyans grandi, tankou pyebwa ki gen bon rasin.'],
+   p:'Jodi a, fè lis 5 richès ou genyen ki pa achte ak lajan. Epi chwazi yon ti kantite, menm piti, pou w mete sou kote chak semèn.' },
+  fr:{ t:'Richesse et fortune', r:[
+   'La richesse n\'est pas seulement l\'argent que l\'on a en poche. Il existe des richesses plus solides : la santé, la famille, les amis, le savoir, un nom que l\'on porte avec honneur. Celui qui possède beaucoup mais a perdu la paix et la dignité est pauvre de ce qui compte le plus.',
+   'Il ne s\'agit pas de mépriser l\'argent. L\'argent est un bon serviteur : il envoie les enfants à l\'école, bâtit des maisons, permet d\'aider les autres. Mais c\'est un mauvais maître : quand il commande, il pousse à piétiner ses propres valeurs.',
+   'La Bible trace un chemin : travailler avec honnêteté, épargner peu à peu, ne pas courir après l\'argent facile. La richesse bâtie sur le mensonge fond comme la glace au soleil ; celle qui repose sur le travail et la patience grandit, comme un arbre aux bonnes racines.'],
+   p:'Aujourd\'hui, écrivez cinq richesses que vous possédez et qui ne s\'achètent pas. Puis choisissez une somme, même petite, à mettre de côté chaque semaine.' },
+  v:[['C\'est la bénédiction de l\'Éternel qui enrichit, Et il ne la fait suivre d\'aucun chagrin.','Se benediksyon Letènèl ki fè moun rich, epi li pa mete okenn chagren dèyè l.','Proverbes 10:22'],
+     ['La richesse mal acquise diminue, Mais celui qui amasse peu à peu l\'augmente.','Richès ki mal genyen ap diminye, men moun ki ranmase ti kras pa ti kras ap fè l grandi.','Proverbes 13:11'],
+     ['Car l\'amour de l\'argent est une racine de tous les maux…','Paske renmen lajan se yon rasin tout kalite mal…','1 Timothée 6:10']],
+  s:{o:'Piti piti, zwazo fè nich li.',ht:'',fr:'Petit à petit, l\'oiseau fait son nid.',ref:'Pwovèb ayisyen / Proverbe haïtien'} },
+ { // Lundi
+  c:['#173a8c','#5b7cd6'], ico:'🔭',
+  ht:{ t:'Vizyon ak revelasyon', r:[
+   'Yon vizyon se yon limyè devan nou : li montre ki kote nou vle rive, menm lè chemen an poko klè. San vizyon, nou mache pou nou mache ; jou yo pase, men yo pa mennen okenn kote.',
+   'Pwofèt Abakouk te resevwa lòd pou l ekri vizyon an, gwo lèt, pou tout moun ka li l. Vizyon ki rete nan tèt nou sèlman fasil pou bliye. Lè nou ekri l, lè nou pataje l, li vin yon pwomès nou fè ak tèt nou ak lòt moun.',
+   'Revelasyon se lè yon bagay ki te kache vin klè : yon solisyon, yon lide, yon vokasyon. Li mande silans, priyè, refleksyon, epi pasyans. Vizyon an gen tan pa l : si l pran tan, tann li ; li pral rive.'],
+   p:'Ekri an twa fraz kote ou wè tèt ou nan 5 an. Mete fèy la yon kote ou ka wè l chak maten.' },
+  fr:{ t:'Vision et révélation', r:[
+   'Une vision est une lumière devant nous : elle montre où nous voulons aller, même quand le chemin n\'est pas encore clair. Sans vision, on marche pour marcher ; les jours passent sans mener nulle part.',
+   'Le prophète Habacuc reçoit l\'ordre d\'écrire la vision, en grandes lettres, pour que chacun puisse la lire. Une vision gardée dans la tête s\'oublie vite. Écrite et partagée, elle devient un engagement envers soi-même et envers les autres.',
+   'La révélation, c\'est le moment où ce qui était caché devient clair : une solution, une idée, une vocation. Elle demande du silence, de la prière, de la réflexion et de la patience. La vision a son temps : si elle tarde, attends-la ; elle viendra.'],
+   p:'Écrivez en trois phrases où vous vous voyez dans cinq ans. Placez la feuille là où vous la verrez chaque matin.' },
+  v:[['L\'Éternel m\'adressa la parole, et il dit: Écris la prophétie: Grave-la sur des tables, Afin qu\'on la lise couramment.','Letènèl pale avè m, li di : Ekri vizyon an, grave l byen klè sou tablo yo, pou moun ka li l fasil.','Habacuc 2:2'],
+     ['Quand il n\'y a pas de révélation, le peuple est sans frein; Heureux s\'il observe la loi!','Lè pa gen revelasyon, pèp la pa gen fren ; bon chans pou li si l kenbe lalwa !','Proverbes 29:18'],
+     ['Invoque-moi, et je te répondrai; Je t\'annoncerai de grandes choses, des choses cachées, Que tu ne connais pas.','Rele m, m ap reponn ou ; m ap fè w konnen gwo bagay ki kache, bagay ou pa konnen.','Jérémie 33:3']],
+  s:{o:'En me renversant, on n\'a abattu à Saint-Domingue que le tronc de l\'arbre de la liberté des Noirs ; il repoussera par les racines, parce qu\'elles sont profondes et nombreuses.',ht:'Lè yo fè m tonbe, se sèlman pye bwa libète Nwa yo yo koupe nan Sen Domeng ; l ap repouse pa rasin li, paske yo fon e yo anpil.',fr:'',ref:'Toussaint Louverture, 1802'} },
+ { // Mardi
+  c:['#9f1239','#e05a7a'], ico:'⚖️',
+  ht:{ t:'Aksyon ak vanjans', r:[
+   'Lè yo fè nou mal, premye santiman ki leve se anvi rann kou pou kou. Se nòmal pou nou santi kòlè : sa montre nou konnen sa ki jis. Men vanjans pa janm fini : chak kou rele yon lòt kou, epi de fanmi, de katye, de pèp kontinye soufri pandan plizyè jenerasyon.',
+   'Bib la pa mande nou rete san fè anyen. Li mande nou chanje kalite aksyon an : kite jistis la nan men Bondye ak nan men lalwa, epi nou menm, goumen kont mal la ak byen. Lafwa san aksyon mouri ; men aksyon ki fèt nan kòlè detwi.',
+   'Bon aksyon an se sa ki repare : pale verite a, pote plent kote sa dwe fèt, pwoteje moun ki fèb, refize repete sa yo te fè nou an. Se pi difisil pase vanjans, men se sèl chemen ki bay lapè.'],
+   p:'Panse ak yon moun ki fè w mal. Jodi a, olye w panse ak vanjans, chwazi yon aksyon jis : yon konvèsasyon onèt, yon priyè, oswa yon plent kote ki apwopriye.' },
+  fr:{ t:'Action et vengeance', r:[
+   'Quand on nous fait du mal, le premier mouvement est de rendre coup pour coup. La colère est normale : elle montre que nous savons ce qui est juste. Mais la vengeance ne finit jamais : chaque coup en appelle un autre, et des familles, des quartiers, des peuples souffrent pendant des générations.',
+   'La Bible ne demande pas de rester sans rien faire. Elle demande de changer la nature de l\'action : laisser la justice à Dieu et à la loi, et combattre soi-même le mal par le bien. La foi sans les œuvres est morte ; mais l\'action née de la colère détruit.',
+   'La bonne action est celle qui répare : dire la vérité, porter plainte là où il faut, protéger les plus faibles, refuser de reproduire ce que l\'on a subi. C\'est plus difficile que la vengeance, mais c\'est le seul chemin vers la paix.'],
+   p:'Pensez à quelqu\'un qui vous a fait du mal. Aujourd\'hui, au lieu de la vengeance, choisissez une action juste : une conversation honnête, une prière, ou une démarche auprès de qui de droit.' },
+  v:[['Ne vous vengez point vous-mêmes, bien-aimés, mais laissez agir la colère; car il est écrit: A moi la vengeance, à moi la rétribution, dit le Seigneur.','Pa tire revanj pou tèt nou, zanmi m yo ; kite kòlè Bondye a aji, paske men sa ki ekri : Se mwen ki pou tire revanj, se mwen ki pou peye, Senyè a di.','Romains 12:19'],
+     ['Ne te laisse pas vaincre par le mal, mais surmonte le mal par le bien.','Pa kite mal la genyen w, men genyen mal la ak byen.','Romains 12:21'],
+     ['Il en est ainsi de la foi: si elle n\'a pas les oeuvres, elle est morte en elle-même.','Se konsa lafwa ye tou : si l pa gen zèv, li mouri nan tèt li.','Jacques 2:17']],
+  s:{o:'Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.',ht:'Fènwa pa ka chase fènwa : se limyè sèlman ki ka fè sa. Rayi pa ka chase rayi : se lanmou sèlman ki ka fè sa.',fr:'Les ténèbres ne peuvent pas chasser les ténèbres : seule la lumière le peut. La haine ne peut pas chasser la haine : seul l\'amour le peut.',ref:'Martin Luther King Jr., « Strength to Love », 1963'} },
+ { // Mercredi
+  c:['#0f766e','#3fb5a4'], ico:'🌿',
+  ht:{ t:'Chans ak gerizon', r:[
+   'Nou tout konn wè moun ki travay di san yo pa reyisi, ak lòt ki jwenn chans san yo pa chèche l. Eklezyas rekonèt sa : se pa toujou pi rapid la ki genyen kous la ; tan ak sikonstans jwe yon wòl. Sa ka fè nou dekouraje, men li ka libere nou tou : nou pa kontwole tout bagay.',
+   'Sa nou kontwole, se fason nou resevwa sa ki rive nou. Chans se pa sèlman yon bagay ki tonbe sou nou : souvan se yon opòtinite ki jwenn yon moun ki te pare. Prepare w, rete onèt, rete atantif.',
+   'Gerizon tou mande tan. Gen blesi nan kò, gen blesi nan kè. Bondye panse blesi moun ki gen kè kase, men li sèvi ak moun pou sa : doktè, enfimyè, zanmi, fanmi. Chèche swen bonè, pale ak yon moun ou fè konfyans : se pa feblès, se kouraj.'],
+   p:'Jodi a, pran swen kò w (dlo, repo, yon ti mache) epi kè w : pale ak yon moun sou yon bagay k ap peze w. Si w malad, pa tann : ale wè yon pwofesyonèl sante.' },
+  fr:{ t:'Chance et guérison', r:[
+   'Nous avons tous vu des gens travailler dur sans réussir, et d\'autres trouver la chance sans la chercher. L\'Ecclésiaste le reconnaît : la course n\'est pas toujours aux plus rapides ; le temps et les circonstances jouent leur rôle. Cela peut décourager, mais aussi libérer : nous ne contrôlons pas tout.',
+   'Ce que nous contrôlons, c\'est la manière d\'accueillir ce qui arrive. La chance ne tombe pas seulement du ciel : c\'est souvent une occasion qui rencontre quelqu\'un de préparé. Préparez-vous, restez honnête, restez attentif.',
+   'La guérison aussi demande du temps. Il y a des blessures du corps et des blessures du cœur. Dieu panse ceux qui ont le cœur brisé, mais il se sert des autres pour cela : médecins, infirmières, amis, famille. Chercher de l\'aide tôt, parler à quelqu\'un de confiance, ce n\'est pas une faiblesse, c\'est du courage.'],
+   p:'Aujourd\'hui, prenez soin de votre corps (eau, repos, un peu de marche) et de votre cœur : parlez à quelqu\'un de ce qui vous pèse. Si vous êtes malade, n\'attendez pas : consultez un professionnel de santé.' },
+  v:[['J\'ai encore vu sous le soleil que la course n\'est point aux agiles ni la guerre aux vaillants, ni le pain aux sages, ni la richesse aux intelligents, ni la faveur aux savants; car tout dépend pour eux du temps et des circonstances.','M wè ankò anba solèy la : se pa moun ki kouri vit yo ki toujou genyen kous la, ni vanyan yo ki genyen lagè, ni moun saj yo ki jwenn pen, ni moun entelijan yo ki rich, ni moun save yo ki jwenn favè : tout depann de tan ak sikonstans.','Ecclésiaste 9:11'],
+     ['Guéris-moi, Éternel, et je serai guéri; Sauve-moi, et je serai sauvé; Car tu es ma gloire.','Geri m, Letènèl, m ap geri ; sove m, m ap sove ; paske se ou ki fè lwanj mwen.','Jérémie 17:14'],
+     ['Il guérit ceux qui ont le coeur brisé, Et il panse leurs blessures.','Li geri moun ki gen kè kase, li panse blesi yo.','Psaumes 147:3']],
+  s:{o:'Sa ou pa konnen pi gran pase w.',ht:'',fr:'Ce que tu ne connais pas est plus grand que toi.',ref:'Pwovèb ayisyen / Proverbe haïtien'} },
+ { // Jeudi
+  c:['#4b2a8f','#8a6ad6'], ico:'📚',
+  ht:{ t:'Filozofi ak konesans', r:[
+   'Filozofi vle di « renmen sajès ». Se kouraj pou nou poze kesyon : poukisa ? kijan ? èske sa vre ? Moun ki pa janm poze kesyon rete prizonye sa lòt moun di l.',
+   'Konesans se yon richès pèsonn pa ka vòlè w. Liv yo, lekòl la, eksperyans granmoun yo, travay chak jou : tout se pòt pou aprann. Men konesans san sajès danjere ; sajès se konnen kijan pou sèvi ak sa nou konnen pou byen tout moun.',
+   'Pwovèb yo di kòmansman sajès se krentif Letènèl : yon imilite devan sa ki pi gran pase nou. Moun ki saj vrèman konnen tou sa li pa konnen. Se pou sa li toujou ap aprann.'],
+   p:'Jodi a, aprann yon bagay nouvo (yon kesyon Quiz Masbet, yon chapit nan yon liv, yon metye) epi eksplike l bay yon lòt moun.' },
+  fr:{ t:'Philosophie et connaissance', r:[
+   'Philosophie veut dire « amour de la sagesse ». C\'est le courage de poser des questions : pourquoi ? comment ? est-ce vrai ? Celui qui ne pose jamais de questions reste prisonnier de ce que d\'autres lui disent.',
+   'Le savoir est une richesse que personne ne peut vous voler. Les livres, l\'école, l\'expérience des anciens, le travail de chaque jour : autant de portes pour apprendre. Mais le savoir sans sagesse est dangereux ; la sagesse, c\'est savoir utiliser ce que l\'on sait pour le bien de tous.',
+   'Les Proverbes disent que le commencement de la science est la crainte de l\'Éternel : une humilité devant ce qui nous dépasse. Le vrai sage sait aussi ce qu\'il ne sait pas. C\'est pourquoi il ne cesse jamais d\'apprendre.'],
+   p:'Aujourd\'hui, apprenez une chose nouvelle (une question du Quiz Masbet, un chapitre de livre, un geste de métier) et expliquez-la à quelqu\'un.' },
+  v:[['La crainte de l\'Éternel est le commencement de la science; Les insensés méprisent la sagesse et l\'instruction.','Krentif Letènèl se kòmansman konesans ; moun fou yo meprize sajès ak enstriksyon.','Proverbes 1:7'],
+     ['Voici le commencement de la sagesse: Acquiers la sagesse, Et avec tout ce que tu possèdes acquiers l\'intelligence.','Men kòmansman sajès : chèche sajès ; ak tout sa ou genyen, chèche konprann.','Proverbes 4:7'],
+     ['Si quelqu\'un d\'entre vous manque de sagesse, qu\'il la demande à Dieu, qui donne à tous simplement et sans reproche, et elle lui sera donnée.','Si yonn nan nou manke sajès, se pou l mande Bondye, ki bay tout moun san gad dèyè e san repwòch, epi l ap resevwa l.','Jacques 1:5']],
+  s:{o:'Lespri pa pran nan bwat.',ht:'',fr:'L\'intelligence ne s\'achète pas en boîte : elle se cultive.',ref:'Pwovèb ayisyen / Proverbe haïtien'} },
+ { // Vendredi
+  c:['#c2410c','#f08a4b'], ico:'❤️',
+  ht:{ t:'Lanmou ak bonte', r:[
+   'Lanmou pa sèlman yon santiman, se yon chwa nou fè chak jou. Pòl dekri l byen : li pran pasyans, li bon, li pa jalou, li pa vante tèt li. Se nan ti bagay yo li parèt : yon salitasyon, yon èd, yon pawòl dous lè tout bagay difisil.',
+   'Bonte se lanmou ki aji. Mike rezime sa Bondye mande : pratike jistis, renmen mizèrikòd, mache ak imilite. Nan yon peyi kote anpil moun ap soufri, chak ti bonte konte : pataje yon manje, akonpaye yon moun malad, ede yon timoun fè devwa l.',
+   'Lanmou kòmanse lakay : fanmi nou, vwazen nou. Li pa mande pou nou dakò sou tout bagay ; li mande respè, pasyans, ak volonte pou nou padone.'],
+   p:'Jodi a, fè yon zak bonte san pèsonn pa konnen se ou. Epi di yon moun ou renmen kisa li reprezante pou ou.' },
+  fr:{ t:'Amour et bonté', r:[
+   'L\'amour n\'est pas seulement un sentiment, c\'est un choix de chaque jour. Paul le décrit bien : il est patient, plein de bonté, sans envie, sans vantardise. Il se voit dans les petites choses : un salut, un coup de main, une parole douce quand tout est difficile.',
+   'La bonté, c\'est l\'amour qui agit. Michée résume ce que Dieu demande : pratiquer la justice, aimer la miséricorde, marcher humblement. Dans un pays où beaucoup souffrent, chaque geste compte : partager un repas, accompagner un malade, aider un enfant à faire ses devoirs.',
+   'L\'amour commence à la maison : notre famille, nos voisins. Il ne demande pas d\'être d\'accord sur tout ; il demande du respect, de la patience et la volonté de pardonner.'],
+   p:'Aujourd\'hui, faites un geste de bonté sans que personne ne sache que c\'est vous. Et dites à quelqu\'un que vous aimez ce qu\'il représente pour vous.' },
+  v:[['La charité est patiente, elle est pleine de bonté; la charité n\'est point envieuse; la charité ne se vante point, elle ne s\'enfle point d\'orgueil.','Lanmou pran pasyans, lanmou bon ; lanmou pa jalou, li pa vante tèt li, li pa gonfle ak lògèy.','1 Corinthiens 13:4'],
+     ['On t\'a fait connaître, ô homme, ce qui est bien; Et ce que l\'Éternel demande de toi, C\'est que tu pratiques la justice, Que tu aimes la miséricorde, Et que tu marches humblement avec ton Dieu.','Yo fè w konnen, o lòm, sa ki byen ; men sa Letènèl mande w : pratike jistis, renmen mizèrikòd, epi mache ak imilite avèk Bondye w.','Michée 6:8'],
+     ['Soyez bons les uns envers les autres, compatissants, vous pardonnant réciproquement, comme Dieu vous a pardonné en Christ.','Se pou nou bon youn ak lòt, gen kè sansib, padone youn lòt, menm jan Bondye padone nou nan Kris la.','Éphésiens 4:32']],
+  s:{o:'Men anpil, chay pa lou.',ht:'',fr:'Avec beaucoup de mains, le fardeau n\'est pas lourd.',ref:'Pwovèb ayisyen / Proverbe haïtien'} },
+ { // Samedi
+  c:['#1f4e79','#4a8bc2'], ico:'🕊️',
+  ht:{ t:'Saba ak padon', r:[
+   'Saba se jou repo. Bondye li menm bay egzanp lan : apre travay, poze. Nan yon vi kote nou toujou ap kouri dèyè lavi, repo pa yon liksi : se yon kòmandman ak yon kado. Kò a bezwen l, lespri a bezwen l, fanmi an bezwen l.',
+   'Repo vrèman pa sèlman sispann travay ; se tou depoze chay ki nan kè nou. Pa gen chay ki pi lou pase rankin. Jezi envite tout moun ki fatige ak chaje pou vin jwenn repo.',
+   'Padone pa vle di bliye ni di sa ki te fèt la pa grav. Padone se refize kite mal la kontinye kòmande lavi nou. Li ka pran tan ; li ka mande èd. Men chak fwa nou padone, se nou menm ki premye moun ki libere.'],
+   p:'Jodi a, pran yon moman repo san telefòn. Epi nan kè w, lage yon rankin : ekri non moun nan sou yon papye, priye pou li, epi chire papye a.' },
+  fr:{ t:'Sabbat et pardon', r:[
+   'Le sabbat est le jour du repos. Dieu lui-même en donne l\'exemple : après le travail, s\'arrêter. Dans une vie où l\'on court sans cesse, le repos n\'est pas un luxe : c\'est un commandement et un cadeau. Le corps en a besoin, l\'esprit aussi, la famille aussi.',
+   'Le vrai repos n\'est pas seulement l\'arrêt du travail ; c\'est aussi déposer les fardeaux du cœur. Aucun n\'est plus lourd que la rancune. Jésus invite tous ceux qui sont fatigués et chargés à venir trouver le repos.',
+   'Pardonner ne veut pas dire oublier, ni dire que ce qui s\'est passé n\'était pas grave. Pardonner, c\'est refuser que le mal continue de commander notre vie. Cela peut prendre du temps et demander de l\'aide. Mais chaque fois que l\'on pardonne, c\'est soi-même que l\'on libère d\'abord.'],
+   p:'Aujourd\'hui, prenez un moment de repos sans téléphone. Puis, dans votre cœur, déposez une rancune : écrivez le nom de la personne sur un papier, priez pour elle, et déchirez le papier.' },
+  v:[['Souviens-toi du jour du repos, pour le sanctifier. Tu travailleras six jours, et tu feras tout ton ouvrage.','Chonje jou repo a pou w mete l apa pou Bondye. W ap travay pandan sis jou, w ap fè tout travay ou.','Exode 20:8-9'],
+     ['Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos.','Vini jwenn mwen, nou tout ki bouke ak chaje, m ap ban nou repo.','Matthieu 11:28'],
+     ['Supportez-vous les uns les autres, et, si l\'un a sujet de se plaindre de l\'autre, pardonnez-vous réciproquement. De même que Christ vous a pardonné, pardonnez-vous aussi.','Sipòte youn lòt ; si yonn gen rezon pou l plenyen kont lòt, padone youn lòt. Menm jan Kris la padone nou, se pou nou padone tou.','Colossiens 3:13']],
+  s:{o:'Dèyè mòn, gen mòn.',ht:'',fr:'Derrière les montagnes, il y a encore des montagnes.',ref:'Pwovèb ayisyen / Proverbe haïtien'} }
+];
+var LANG='ht';
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function langue(l){
+  LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
+  document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
+  afficher();
+}
+// Sagesse : la traduction dans la langue choisie, avec le texte original en petit quand il est différent
+function sagesse(w){ var tr=w[LANG]; return '« '+esc(tr||w.o)+' »'+(tr?'<div class="kr">« '+esc(w.o)+' »</div>':'')+'<div class="ref">— '+esc(w.ref)+'</div>'; }
+function afficher(){
+  var d=new Date(), j=d.getDay(), t=TEM[j], x=t[LANG];   // jour selon le fuseau horaire du téléphone
+  document.documentElement.style.setProperty('--c1',t.c[0]); document.documentElement.style.setProperty('--c2',t.c[1]);
+  document.querySelector('meta[name=theme-color]').content=t.c[0];
+  document.getElementById('jou').textContent=JOU[LANG][j]+' · '+d.toLocaleDateString(LANG==='fr'?'fr-FR':'fr-HT',{day:'numeric',month:'long'});
+  document.getElementById('titre').innerHTML='<span class="ico">'+t.ico+'</span>'+esc(x.t);
+  document.title=(LANG==='fr'?'Méditation — ':'Meditasyon — ')+x.t;
+  var L=LANG==='fr'?{r:'Réflexion',v:'Paroles pour aujourd\'hui',s:'Sagesse',p:'À vivre aujourd\'hui',pied:'Un nouveau thème chaque jour. Revenez demain.',src:'Versets : Louis Segond 1910 · créole : traduction libre Masbet Education'}
+                   :{r:'Refleksyon',v:'Pawòl pou jodi a',s:'Sajès',p:'Pou viv jodi a',pied:'Yon nouvo tèm chak jou. Tounen demen.',src:'Vèsè yo : Louis Segond 1910 · kreyòl : tradiksyon lib Masbet Education'};
+  var vs=t.v.map(function(v){ return '<div class="vese"><div class="t">« '+esc(LANG==='fr'?v[0]:v[1])+' »</div>'+'<div class="ref">'+esc(v[2])+'</div></div>'; }).join('');
+  document.getElementById('contenu').innerHTML=
+    '<div class="card"><h2>'+L.r+'</h2>'+x.r.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'</div>'+
+    '<div class="card"><h2>'+L.v+'</h2>'+vs+'</div>'+
+    '<div class="card sit"><h2>'+L.s+'</h2>'+sagesse(t.s)+'</div>'+
+    '<div class="card pratik"><h2>'+L.p+'</h2><p style="margin:0">'+esc(x.p)+'</p></div>'+
+    '<div class="pied">'+L.pied+'<br><span style="font-size:11.5px">'+L.src+'</span></div>';
+  var n=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Communauté']:['Akèy','Achte','Match','Live','Kominote'];
+  document.getElementById('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="kominote.html"><span>💬</span>'+n[4]+'</a>';
+}
+langue(lire('masbet_lang')||'ht');
+// À minuit (heure du téléphone), le thème change tout seul
+(function(){ var d=new Date(), m=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1,0,0,5)-d; setTimeout(function(){ afficher(); setInterval(afficher,864e5); }, m); })();
+</script>
+</body>
+</html>

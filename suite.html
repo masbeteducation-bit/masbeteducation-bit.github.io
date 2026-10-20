@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="author" content="Duckhens Lespérance — Masbet Education">
+<meta name="description" content="Masbet Suite : devis de construction en ligne, prêts à imprimer.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<title>Masbet Suite — Devis</title>
+<style>
+  :root{--navy:#14213d;--navy2:#1d2f57;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--acc:#173a8c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  button,input,select,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  .bar{background:var(--navy);color:#fff;display:flex;align-items:center;gap:10px;padding:10px 16px;position:sticky;top:0;z-index:20}
+  .bar .logo{font-weight:900;font-size:18px;letter-spacing:.2px}.bar .logo span{color:var(--gold)}
+  .bar .sp{flex:1}
+  .bar a,.bar button.l{color:#fff;text-decoration:none;font-weight:700;font-size:14px;background:none;border:0;padding:6px 4px}
+  .lang{display:flex;border:1.5px solid rgba(255,255,255,.35);border-radius:20px;overflow:hidden}
+  .lang button{border:0;background:transparent;color:#cfd6ea;font-weight:800;font-size:12.5px;padding:5px 9px}
+  .lang button.on{background:#fff;color:var(--navy)}
+  main{max-width:1060px;margin:0 auto;padding:16px}
+  .card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 1px 3px rgba(20,33,61,.07)}
+  h1{font-size:22px;margin:0 0 6px}h2{font-size:17px;margin:0 0 10px}
+  .hint{color:var(--muted);font-size:13.5px}
+  label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:8px 0 3px}
+  input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  textarea{min-height:64px;resize:vertical}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:12px;padding:11px 16px;font-weight:800;background:var(--gold);color:var(--navy);cursor:pointer}
+  .btn.sec{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .btn.dark{background:var(--navy);color:#fff}
+  .btn.mini{padding:6px 10px;font-size:13px;border-radius:9px}
+  .btn.danger{background:#fff;border:1.5px solid #f1c7c2;color:var(--err)}
+  .btn:disabled{opacity:.5}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .grid2{display:grid;grid-template-columns:1fr;gap:0 12px}
+  @media(min-width:720px){.grid2{grid-template-columns:1fr 1fr}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px}}
+  .msg{border-radius:10px;padding:10px 12px;margin:10px 0;font-size:14px}
+  .msg.err{background:#fdecea;color:#8e2219}.msg.ok{background:#e8f6ee;color:#155b33}.msg.info{background:#eef2fb;color:#1d3466}
+  /* Accueil : fond plan d'architecte */
+  .hero{position:relative;overflow:hidden;border-radius:20px;color:#fff;padding:28px 20px;margin-bottom:14px;
+    background:linear-gradient(135deg,rgba(20,33,61,.96),rgba(23,58,140,.92)),
+      repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,transparent 1px 22px),repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 1px,transparent 1px 22px);
+    background-blend-mode:normal}
+  .hero:after{content:"";position:absolute;right:-40px;bottom:-40px;width:220px;height:220px;border:2px dashed rgba(252,163,17,.5);border-radius:50%}
+  .hero h1{font-size:26px;margin-bottom:8px}.hero h1 span{color:var(--gold)}
+  .hero p{margin:0 0 6px;color:#dbe3f6;max-width:560px}
+  .feat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;max-width:560px}
+  .feat div{background:rgba(255,255,255,.1);border-radius:12px;padding:9px 10px;font-size:13.5px}
+  .login{max-width:460px}
+  /* Liste */
+  .dv{display:flex;gap:10px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;margin-top:8px;background:#fff;cursor:pointer}
+  .dv:hover{border-color:var(--gold)}
+  .dv .t{font-weight:800}.dv .s{color:var(--muted);font-size:13px}.dv .m{margin-left:auto;font-weight:800;white-space:nowrap}
+  .badge{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:2px 8px;margin-left:6px}
+  .b-br{background:#fff4dc;color:#8a5a00}.b-fi{background:#e8f6ee;color:#1d6b3a}
+  .abo{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  /* Éditeur */
+  .sec{border:1.5px solid var(--line);border-radius:14px;padding:12px;margin-top:12px;background:#fbfcfe}
+  .sec-h{display:flex;gap:8px;align-items:center}
+  .sec-h input{font-weight:800}
+  .lg{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-areas:'d d d' 'u q p' 'm m x';gap:6px;border-top:1px dashed var(--line);padding:8px 0}
+  .lg>div:nth-child(1){grid-area:d}.lg>div:nth-child(2){grid-area:u}.lg>div:nth-child(3){grid-area:q}.lg>div:nth-child(4){grid-area:p}.lg>.mt{grid-area:m;align-self:center}.lg>.x{grid-area:x;justify-self:end}
+  .lg label{margin:0 0 2px;font-size:11.5px}
+  .lg .mt{font-weight:800;text-align:right}
+  @media(min-width:760px){
+    .lg{grid-template-columns:minmax(0,1fr) 90px 80px 120px 150px 34px;grid-template-areas:'d u q p m x';align-items:center;gap:8px}
+    .lg-h{display:grid!important;grid-template-columns:minmax(0,1fr) 90px 80px 120px 150px 34px;gap:8px;font-size:12px;font-weight:800;color:var(--muted);padding:6px 0 0}
+    .lg label{display:none}
+  }
+  .lg-h{display:none}
+  .x{border:0;background:#fff;border:1.5px solid var(--line);border-radius:9px;width:34px;height:34px;font-weight:900;color:var(--err);cursor:pointer}
+  .tot{max-width:420px;margin-left:auto}
+  .tot div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-bottom:1px solid var(--line)}
+  .tot .g{font-size:18px;font-weight:900;border-bottom:0}
+  .lettres{font-style:italic;color:var(--muted);font-size:13.5px;margin-top:6px;text-align:right}
+  .stick{position:sticky;bottom:0;background:rgba(244,245,248,.97);padding:8px 0;display:flex;gap:6px;flex-wrap:wrap;z-index:10;border-top:1px solid var(--line)}
+  @media(max-width:640px){.stick{flex-wrap:nowrap;overflow-x:auto}.stick .btn{padding:9px 11px;font-size:13.5px;white-space:nowrap;flex:0 0 auto}.bar{padding:9px 12px;gap:6px}.bar .logo{font-size:16px;white-space:nowrap}.bar a,.bar button.l{font-size:13px}}
+  .logoprev{max-height:70px;max-width:180px;display:block;margin-top:6px}
+  .tpls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tpl{border:2px solid var(--line);border-radius:12px;padding:8px;text-align:center;background:#fff;cursor:pointer;font-weight:800;font-size:13px}
+  .tpl.on{border-color:var(--gold);background:#fff8ea}
+  .tpl i{display:block;height:40px;border-radius:6px;margin-bottom:6px;background:#eef1f7}
+  .tpl.t-standard i{background:linear-gradient(#173a8c 0 10px,#eef1f7 10px)}
+  .tpl.t-creatif i{background:linear-gradient(90deg,#fca311 0 12px,#eef1f7 12px)}
+  .tpl.t-classique i{background:linear-gradient(#eef1f7 0 4px,#14213d 4px 6px,#eef1f7 6px)}
+  .couleurs{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+  .couleurs button{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1.5px var(--line);cursor:pointer}
+  .couleurs button.on{box-shadow:0 0 0 3px var(--ink)}
+
+  /* Fenêtres : métré, sous-détail */
+  .modal{position:fixed;inset:0;background:rgba(20,33,61,.55);z-index:80;display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px 10px}
+  .modal .box{background:#fff;border-radius:16px;max-width:720px;width:100%;padding:16px;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+  .modal h2{display:flex;justify-content:space-between;align-items:center}
+  .res{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+  .res td,.res th{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left}.res td.n,.res th.n{text-align:right;white-space:nowrap}
+  .res input{padding:5px 6px;text-align:right}
+  .note{background:#eef2fb;border-radius:10px;padding:8px 10px;font-size:13px;color:#1d3466;margin-top:8px}
+  .sd{border:0;background:#eef2fb;color:var(--acc);border-radius:8px;font-weight:900;padding:3px 7px;margin-right:6px;cursor:pointer}
+  .sdm{border-bottom:1px solid var(--line);padding:8px 0}.sdm1{display:flex;gap:6px}.sdm1 input{flex:1}.sdm2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end;margin-top:6px}.sdm2 label{font-size:12px;margin:0}.sdm2 b{text-align:right;white-space:nowrap;font-size:14px;padding-bottom:10px}
+  .tabsdoc .btn.on{background:var(--acc);color:#fff;border-color:var(--acc)}
+  #doc .bpu-d{font-size:11.5px;color:#333;margin-top:2px;white-space:pre-wrap}#doc .bpu-l{font-size:11.5px;font-style:italic;margin-top:3px}
+  #doc .sdbloc{break-inside:avoid;page-break-inside:avoid;margin:16px 0 10px;border:1px solid #ccd;border-radius:6px;padding:8px 10px}#doc .sdbloc h3{margin:0 0 4px;font-size:13.5px;color:var(--c)}#doc .sdbloc .sg td{font-weight:800;background:#f6f8fc}#doc .sdbloc .pv td{font-weight:900;background:var(--c);color:#fff}
+  .lg .metre{font-size:11.5px;margin-top:2px}.outils{margin:10px 0;border:1px dashed var(--line);border-radius:10px;padding:8px 10px}.outils summary{cursor:pointer;font-weight:800}
+  .chk{display:flex;gap:6px;align-items:center;font-weight:600}.chk input{width:auto}
+  #verifs{margin:0 auto 12px;max-width:820px;border:1px solid #f0c36d;background:#fff8e6;border-radius:10px;padding:10px 14px;font-size:14px}#verifs.ok{border-color:#9bd3a8;background:#eefaf1}#verifs ul{margin:6px 0 0 18px;padding:0}
+  #doc .equiv{font-size:11.5px;color:#444}#doc .faita{margin-top:18px;font-size:12px}
+  .prixmat{display:grid;grid-template-columns:1fr 110px;gap:4px 10px;align-items:center;font-size:14px}
+  @media(min-width:720px){.prixmat{grid-template-columns:1fr 110px 1fr 110px}}
+  /* ===== Document imprimable ===== */
+  #doc{-webkit-print-color-adjust:exact;print-color-adjust:exact;background:#fff;color:#111;max-width:820px;margin:0 auto;padding:34px 38px;box-shadow:0 2px 14px rgba(0,0,0,.08);font-size:12.5px;line-height:1.4;--c:#173a8c}
+  #doc .en{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+  #doc .en img{max-height:78px;max-width:200px}
+  #doc .firme{font-size:19px;font-weight:900;color:var(--c)}
+  #doc .coord{font-size:11.5px;color:#333}
+  #doc .titredoc{font-size:22px;font-weight:900;letter-spacing:1px;color:var(--c);text-align:right}
+  #doc .meta{font-size:11.5px;text-align:right}
+  #doc .blocs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 10px}
+  #doc .bloc{border:1px solid #ccd;border-radius:6px;padding:8px 10px}
+  #doc .bloc b{display:block;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--c);margin-bottom:3px}
+  #doc .objet{font-size:13.5px;margin:6px 0 10px}
+  #doc table{width:100%;border-collapse:collapse;margin-top:6px}
+  #doc th{background:var(--c);color:#fff;font-size:11px;text-align:left;padding:6px}
+  #doc td{border-bottom:1px solid #dde;padding:5px 6px;vertical-align:top}
+  #doc td.n,#doc th.n{text-align:right;white-space:nowrap}
+  #doc tr.lot td{background:#f1f4fa;font-weight:800;color:var(--c)}
+  #doc tr.st td{font-weight:800;border-bottom:1.5px solid #bbc}
+  #doc .totaux{margin:12px 0 0 auto;width:52%}
+  #doc .totaux div{display:flex;justify-content:space-between;padding:4px 6px;border-bottom:1px solid #dde}
+  #doc .totaux .g{background:var(--c);color:#fff;font-weight:900;font-size:14px;border:0}
+  #doc .lettres2{margin-top:8px;font-style:italic}
+  #doc .cond{margin-top:14px;font-size:11.5px;white-space:pre-wrap}
+  #doc .sign{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:28px}
+  #doc .sign div{border-top:1px solid #555;padding-top:6px;font-size:11.5px;min-height:70px}
+  #doc .pied{margin-top:18px;font-size:9.5px;color:#777;text-align:center;border-top:1px solid #eee;padding-top:6px}
+  /* Modèle Créatif : bande de couleur à gauche, titre en couleur d'accent */
+  #doc.creatif{border-left:14px solid var(--c);padding-left:30px}
+  #doc.creatif .firme{font-size:22px}
+  #doc.creatif th{background:#fff;color:var(--c);border-bottom:2.5px solid var(--c)}
+  #doc.creatif .bloc{border:0;background:#f5f7fc;border-radius:10px}
+  #doc.creatif .totaux .g{border-radius:8px}
+  /* Modèle Classique : noir et blanc, filets fins, sobre */
+  #doc.classique{--c:#111;font-family:Georgia,"Times New Roman",serif}
+  #doc.classique .en{border-bottom:2px solid #111;padding-bottom:10px}
+  #doc.classique th{background:#fff;color:#111;border-top:1.5px solid #111;border-bottom:1.5px solid #111}
+  #doc.classique tr.lot td{background:#fff;text-decoration:underline}
+  #doc.classique .bloc{border-radius:0}
+  #doc.classique .totaux .g{background:#fff;color:#111;border-top:2px solid #111;border-bottom:2px solid #111}
+  @media print{
+    @page{size:A4;margin:12mm}
+    body{background:#fff}
+    .bar,.noprint,.stick{display:none!important}
+    main{padding:0;max-width:none}
+    #doc{box-shadow:none;max-width:none;padding:0}
+    #doc.creatif{padding-left:16px}
+    #doc tr{page-break-inside:avoid}
+  }
+  @media(max-width:640px){#doc{padding:18px 14px;font-size:11.5px}#doc .blocs{grid-template-columns:1fr}#doc .totaux{width:100%}#doc .en{flex-direction:column}#doc .titredoc,#doc .meta{text-align:left}}
+  @media screen and (max-width:640px){#doc{padding:18px 12px;font-size:11px}#doc td,#doc th{padding:4px 3px}#doc .blocs{grid-template-columns:1fr}#doc .totaux{width:100%}#doc .sdbloc{padding:6px}#doc th.n{white-space:normal}#doc .sdbloc td.n{white-space:normal}#doc .sign{gap:14px}}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="logo">Masbet <span>Suite</span></div>
+  <div class="sp"></div>
+  <a href="index.html" id="lienApp">← Masbet</a>
+  <button class="l hidden" id="btnDeco" onclick="deconnexion()" data-t="deco"></button>
+  <div class="lang" role="group" aria-label="Langue / Language"><button id="lFr" onclick="langue('fr')">FR</button><button id="lEn" onclick="langue('en')">EN</button></div>
+</div>
+<main>
+  <!-- ===== Connexion ===== -->
+  <section id="vLogin">
+    <div class="hero">
+      <h1>Masbet <span>Suite</span></h1>
+      <p data-t="heroTxt"></p>
+      <div class="feat"><div data-t="f1"></div><div data-t="f2"></div><div data-t="f3"></div><div data-t="f4"></div></div>
+    </div>
+    <div class="card login">
+      <h2 data-t="loginTitre"></h2>
+      <label for="kod" data-t="kodLabel"></label>
+      <input id="kod" autocapitalize="characters" autocomplete="off" placeholder="TK…">
+      <div class="row" style="margin-top:10px"><button class="btn" id="btnLogin" onclick="connexion()" data-t="connecter"></button><a class="btn sec" href="achte.html#suite" data-t="acheter"></a></div>
+      <div id="mLogin"></div>
+      <p class="hint" data-t="loginAide"></p>
+    </div>
+  </section>
+
+  <!-- ===== Tableau de bord ===== -->
+  <section id="vListe" class="hidden">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <h1 data-t="mesDevis"></h1>
+        <div class="row"><button class="btn sec mini" onclick="ouvrirProfil()" data-t="profil"></button><button class="btn" onclick="nouveauDevis()" id="btnNouveau" data-t="nouveau"></button></div>
+      </div>
+      <div class="abo" id="abo"></div>
+      <div id="mListe"></div>
+      <input id="filtre" style="margin-top:10px" oninput="afficherListe()">
+      <div id="liste"></div>
+    </div>
+  </section>
+
+  <!-- ===== Profil (en-tête) ===== -->
+  <section id="vProfil" class="hidden">
+    <div class="card">
+      <h1 data-t="profilTitre"></h1>
+      <p class="hint" data-t="profilAide"></p>
+      <div class="grid2">
+        <div><label for="pFirme" data-t="pFirme"></label><input id="pFirme" maxlength="120"></div>
+        <div><label for="pIng" data-t="pIng"></label><input id="pIng" maxlength="120"></div>
+        <div><label for="pTitre" data-t="pTitre"></label><input id="pTitre" maxlength="120"></div>
+        <div><label for="pNif" data-t="pNif"></label><input id="pNif" maxlength="40"></div>
+        <div><label for="pAdresse" data-t="pAdresse"></label><input id="pAdresse" maxlength="200"></div>
+        <div><label for="pTel" data-t="pTel"></label><input id="pTel" maxlength="80"></div>
+        <div><label for="pEmail" data-t="pEmail"></label><input id="pEmail" maxlength="120" type="email"></div>
+        <div><label for="pWeb" data-t="pWeb"></label><input id="pWeb" maxlength="120"></div>
+      </div>
+      <label for="pLogo" data-t="pLogo"></label><input id="pLogo" type="file" accept="image/png,image/jpeg,image/webp" onchange="chargerLogo(this)">
+      <img id="pLogoPrev" class="logoprev hidden" alt=""><button class="btn danger mini hidden" id="pLogoX" onclick="retirerLogo()" style="margin-top:6px" data-t="retirerLogo"></button>
+      <label data-t="pModele"></label>
+      <div class="tpls" id="tpls"></div>
+      <label data-t="pCouleur"></label>
+      <div class="couleurs" id="couleurs"></div>
+      <div class="grid2">
+        <div><label for="pDevise" data-t="pDevise"></label><select id="pDevise"><option>HTG</option><option>USD</option></select></div>
+        <div><label for="pTca" data-t="pTca"></label><input id="pTca" type="number" min="0" max="30" step="0.5"></div>
+      </div>
+      <label data-t="pPrix"></label><p class="hint" style="margin:0 0 6px" data-t="pPrixAide"></p>
+      <div class="grid2"><div><label for="pPrixDev" data-t="pPrixDev"></label><select id="pPrixDev"><option>HTG</option><option>USD</option></select></div>
+        <div><label for="pTaux" data-t="pTaux"></label><input id="pTaux" type="number" min="0" step="any" placeholder="ex. 132"></div></div>
+      <p class="hint" id="pPrixMaj" style="margin:0 0 6px"></p>
+      <div class="prixmat" id="prixmat"></div>
+      <div class="grid2"><div><label for="pSac" data-t="pSac"></label><select id="pSac"><option value="42.5">42,5 kg</option><option value="50">50 kg</option></select></div><div class="hint" style="align-self:end;padding-bottom:12px" data-t="pSacAide"></div></div>
+      <label data-t="pCoefs"></label>
+      <div class="grid2" style="grid-template-columns:1fr 1fr 1fr 1fr">
+        <div><label for="pKIm" data-t="sdIm"></label><input id="pKIm" type="number" min="0" step="any"></div><div><label for="pKTx" data-t="sdTx"></label><input id="pKTx" type="number" min="0" step="any"></div>
+        <div><label for="pKFg" data-t="sdFg"></label><input id="pKFg" type="number" min="0" step="any"></div><div><label for="pKPr" data-t="sdPr"></label><input id="pKPr" type="number" min="0" step="any"></div>
+      </div>
+      <label for="pCond" data-t="pCond"></label><textarea id="pCond" maxlength="1500"></textarea>
+      <div id="mProfil"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" onclick="enregistrerProfil()" data-t="enregistrer"></button><button class="btn sec" onclick="vue('liste')" data-t="retour"></button></div>
+    </div>
+  </section>
+
+  <!-- ===== Éditeur ===== -->
+  <section id="vEditeur" class="hidden">
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h1 id="edTitre"></h1><span id="edStatut"></span></div>
+      <div class="grid2">
+        <div><label for="dTitre" data-t="dTitre"></label><input id="dTitre" maxlength="150" oninput="modif()"></div>
+        <div><label for="dLieu" data-t="dLieu"></label><input id="dLieu" maxlength="150" oninput="modif()"></div>
+      </div>
+      <div class="grid3">
+        <div><label for="dNum" data-t="dNum"></label><input id="dNum" maxlength="40" oninput="modif()"></div>
+        <div><label for="dDate" data-t="dDate"></label><input id="dDate" type="date" oninput="modif()"></div>
+        <div><label for="dValid" data-t="dValid"></label><input id="dValid" type="number" min="1" max="365" oninput="modif()"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2 data-t="client"></h2>
+      <div class="grid2">
+        <div><label for="cNom" data-t="cNom"></label><input id="cNom" maxlength="150" oninput="modif()"></div>
+        <div><label for="cTel" data-t="cTel"></label><input id="cTel" maxlength="80" oninput="modif()"></div>
+        <div><label for="cAdresse" data-t="cAdresse"></label><input id="cAdresse" maxlength="200" oninput="modif()"></div>
+        <div><label for="cEmail" data-t="cEmail"></label><input id="cEmail" maxlength="120" oninput="modif()"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><h2 data-t="travaux"></h2>
+        <div class="row"><select id="lotType" style="width:auto"></select><button class="btn sec mini" onclick="ajouterLotType()" data-t="ajouterLotType"></button><button class="btn mini" onclick="ajouterLot()" data-t="ajouterLot"></button><button class="btn dark mini" onclick="ouvrirMetre()" data-t="metreBtn"></button></div></div>
+      <div id="lots"></div>
+    </div>
+    <div class="card">
+      <h2 data-t="totaux"></h2>
+      <div class="grid3">
+        <div><label for="dImprevus" data-t="dImprevus"></label><input id="dImprevus" type="number" min="0" max="50" step="0.5" oninput="modif()"></div>
+        <div><label for="dRemise" data-t="dRemise"></label><input id="dRemise" type="number" min="0" step="1" oninput="modif()"></div>
+        <div><label for="dTca" data-t="dTca"></label><input id="dTca" type="number" min="0" max="30" step="0.5" oninput="modif()"></div>
+      </div>
+      <div class="grid3">
+        <div><label for="dDevise" data-t="dDevise"></label><select id="dDevise" onchange="changerDevise()"><option>HTG</option><option>USD</option></select></div>
+        <div><label for="dTaux" data-t="dTaux"></label><input id="dTaux" type="number" min="0" step="any" placeholder="ex. 132" oninput="modif()"></div>
+        <div><label class="chk" style="margin-top:28px"><input type="checkbox" id="dDouble" onchange="modif()"> <span data-t="dDouble"></span></label></div>
+      </div>
+      <div id="mDevise" class="hint"></div>
+      <div class="tot" id="tot"></div>
+      <details class="outils"><summary data-t="outilsPrix"></summary>
+        <p class="hint" data-t="outilsAide"></p>
+        <div class="row"><button class="btn sec mini" onclick="actualiserPrix()" data-t="actualiser"></button></div>
+        <div class="row" style="margin-top:8px;align-items:end"><div><label for="dRevision" data-t="dRevision"></label><input id="dRevision" type="number" step="any" style="width:110px" placeholder="ex. 8"></div><button class="btn sec mini" onclick="reviserPrix()" data-t="reviser"></button></div>
+        <div id="mOutils" class="hint"></div>
+      </details>
+      <label for="dCond" data-t="dCond"></label><textarea id="dCond" maxlength="2000" oninput="modif()"></textarea>
+    </div>
+    <div class="stick">
+      <button class="btn" onclick="sauver('BROUYON')" data-t="sauverBrouillon"></button>
+      <button class="btn dark" onclick="sauver('FINAL')" data-t="sauverFinal"></button>
+      <button class="btn sec" onclick="apercu()" data-t="apercu"></button>
+      <button class="btn sec" onclick="dupliquer()" data-t="dupliquer"></button>
+      <button class="btn sec" onclick="fermerEditeur()" data-t="retour"></button>
+      <span id="mEd" class="hint" style="align-self:center"></span>
+    </div>
+  </section>
+
+  <!-- ===== Aperçu / impression ===== -->
+  <div class="modal hidden" id="mMetre"><div class="box">
+    <h2><span data-t="metreTitre"></span><button class="x" style="color:var(--ink)" onclick="fermerModal('mMetre')">✕</button></h2>
+    <label for="mOuv" data-t="metreOuvrage"></label><select id="mOuv" onchange="champsMetre()"></select>
+    <div id="mChamps" class="grid2"></div>
+    <div id="mRes"></div>
+    <label for="mLot" data-t="metreLot"></label><select id="mLot"></select>
+    <div class="row" style="margin-top:10px"><button class="btn" onclick="ajouterMetre('ouvrage')" data-t="metreAjOuv"></button><button class="btn sec" onclick="ajouterMetre('mat')" data-t="metreAjMat"></button></div>
+    <div class="note" data-t="metreNote"></div>
+  </div></div>
+  <div class="modal hidden" id="mSd"><div class="box">
+    <h2><span data-t="sdTitre"></span><button class="x" style="color:var(--ink)" onclick="fermerModal('mSd')">✕</button></h2>
+    <div id="sdLigne" class="hint"></div>
+    <label for="sdDesc" data-t="sdDesc"></label><textarea id="sdDesc" maxlength="1200" style="min-height:70px" oninput="SD.sd.desc=this.value"></textarea>
+    <div class="grid2"><div><label for="sdBase" data-t="sdBase"></label><input id="sdBase" type="number" min="0" step="any" oninput="sdCalc()"></div><div class="hint" style="align-self:end;padding-bottom:12px" data-t="sdBaseAide"></div></div>
+    <div id="sdGroupes"></div>
+    <h3 style="margin:14px 0 4px" data-t="sdCoefs"></h3>
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <div><label for="sdIm" data-t="sdIm"></label><input id="sdIm" type="number" min="0" step="any" oninput="sdCalc()"></div>
+      <div><label for="sdTx" data-t="sdTx"></label><input id="sdTx" type="number" min="0" step="any" oninput="sdCalc()"></div>
+      <div><label for="sdFg" data-t="sdFg"></label><input id="sdFg" type="number" min="0" step="any" oninput="sdCalc()"></div>
+      <div><label for="sdPr" data-t="sdPr"></label><input id="sdPr" type="number" min="0" step="any" oninput="sdCalc()"></div>
+    </div>
+    <div id="sdRes"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" onclick="sdAppliquer()" data-t="sdAppliquer"></button><button class="btn sec" onclick="fermerModal('mSd')" data-t="retour"></button></div>
+    <div class="note" data-t="sdNote"></div>
+  </div></div>
+
+  <section id="vApercu" class="hidden">
+    <div class="row noprint tabsdoc" id="tabsDoc" style="margin-bottom:8px"><button class="btn sec mini" onclick="apercu('devis')" data-t="docDevis"></button><button class="btn sec mini" onclick="apercu('bpu')" data-t="docBpu"></button><button class="btn sec mini" onclick="apercu('sd')" data-t="docSd"></button></div>
+    <div class="row noprint" style="margin-bottom:12px"><button class="btn" onclick="window.print()" data-t="imprimer"></button><button class="btn sec" onclick="vue(EDITABLE?'editeur':'liste')" data-t="retour"></button><span class="hint" data-t="imprimerAide"></span></div>
+    <div id="verifs" class="noprint hidden"></div>
+    <div id="doc"></div>
+  </section>
+</main>
+<script>
+"use strict";
+var API = window.MASBET_CONTENU || '';
+var DEMO = !API;
+var TXT = {
+  fr: {
+    deco:'Déconnexion', heroTxt:'Vos devis de construction, propres et prêts à imprimer, depuis votre téléphone ou votre ordinateur. Vos données restent en ligne, même à la fin de l\'abonnement.',
+    f1:'📐 Lots et lignes, calculs automatiques', f2:'🖨️ 3 modèles d\'impression à vos couleurs', f3:'💾 Brouillons enregistrés en ligne', f4:'📱💻 1 téléphone + 1 ordinateur',
+    loginTitre:'Connexion', kodLabel:'Code d\'abonnement (reçu après paiement)', connecter:'Se connecter', acheter:'Acheter un abonnement',
+    loginAide:'Abonnement : 1 000 gourdes par mois ou 5 000 gourdes par an, par MonCash ou NatCash (Masbet Pay). Le code marche sur 2 appareils : votre téléphone et votre ordinateur.',
+    mesDevis:'Mes devis', profil:'Mon en-tête', nouveau:'+ Nouveau devis', filtre:'Rechercher (titre, client)…', aucun:'Aucun devis pour l\'instant. Commencez par « Mon en-tête », puis « Nouveau devis ».',
+    actif:function(d){ return '✅ Abonnement actif jusqu\'au '+d; }, admin:'🔑 Accès administrateur', expire:'⛔ Abonnement terminé : vos devis restent consultables et imprimables. Renouvelez pour en créer ou les modifier.',
+    renouveler:'Renouveler', nouveauCode:'Nouveau code d\'abonnement', renouveleOk:'Abonnement renouvelé ✓',
+    profilTitre:'Mon en-tête (sur tous mes devis)', profilAide:'Ces informations apparaissent en haut de chaque devis imprimé.',
+    pFirme:'Firme ou entreprise', pIng:'Nom de l\'ingénieur / du responsable', pTitre:'Titre (ex. Ingénieur civil, Ingénieur-Conseil)', pNif:'NIF', pAdresse:'Adresse', pTel:'Téléphones', pEmail:'E-mail', pWeb:'Site web (facultatif)',
+    pLogo:'Logo (PNG ou JPG, réduit automatiquement)', retirerLogo:'Retirer le logo', pModele:'Modèle d\'impression', pCouleur:'Couleur d\'accent', pDevise:'Monnaie', pTca:'TCA par défaut (%)', pCond:'Conditions par défaut (paiement, délais, garantie…)',
+    standard:'Standard', creatif:'Créatif', classique:'Classique',
+    enregistrer:'Enregistrer', retour:'Retour', profilOk:'En-tête enregistré ✓',
+    dTitre:'Objet du devis / projet', dLieu:'Lieu / adresse de la construction', dNum:'Numéro du devis', dDate:'Date de soumission', dValid:'Validité (jours)',
+    client:'Maître d\'ouvrage (client)', cNom:'Nom du maître d\'ouvrage (propriétaire)', cTel:'Téléphone', cAdresse:'Adresse', cEmail:'E-mail',
+    travaux:'Travaux', ajouterLot:'+ Lot vide', ajouterLotType:'+ Lot type', lotType:'Lot type…',
+    lot:'Lot', nomLot:'Nom du lot (ex. Fondation)', designation:'Désignation', unite:'Unité', qte:'Qté', pu:'Prix unitaire', montant:'Montant',
+    ajouterLigne:'+ Ligne', supprimerLot:'Supprimer le lot', monter:'↑', descendre:'↓', sousTotal:'Sous-total',
+    totaux:'Totaux', dImprevus:'Imprévus (%)', dRemise:'Remise (montant)', dTca:'TCA (%)', dCond:'Conditions de ce devis',
+    totalHT:'Total des travaux', imprevus:'Imprévus', remise:'Remise', baseHT:'Total HT', tca:'TCA', totalTTC:'Total TTC',
+    arrete:'Arrêté le présent devis à la somme de', sauverBrouillon:'💾 Brouillon', sauverFinal:'✔ Final', apercu:'🖨️ Aperçu / imprimer', dupliquer:'Dupliquer',
+    imprimer:'Imprimer / PDF', imprimerAide:'Dans la fenêtre d\'impression, choisissez « Enregistrer en PDF » pour l\'envoyer par WhatsApp ou e-mail.',
+    enregistre:'Enregistré ✓', localSeul:'Gardé sur cet appareil (pas d\'internet) : appuyez de nouveau sur Brouillon quand internet revient.',
+    brouillon:'Brouillon', final:'Final', nouveauTitre:'Nouveau devis', modifierTitre:'Devis', confirmerSuppr:'Supprimer ce devis ? Cette action est définitive.', supprimer:'Supprimer', ouvrir:'Ouvrir',
+    copie:'(copie)', quitter:'Des changements ne sont pas enregistrés. Quitter quand même ?',
+    doc:'DEVIS', docNum:'N°', docDate:'Date de soumission', docValid:'Validité', jours:'jours', docClient:'Maître d\'ouvrage', docChantier:'Lieu de la construction', docObjet:'Objet',
+    signEntreprise:'Pour l\'entreprise', signClient:'Bon pour accord — le maître d\'ouvrage (date et signature)', pied:'Devis préparé avec Masbet Suite — Masbet Education',
+    nif:'NIF', tel:'Tél.', reseau:'Pas de connexion. Vérifiez internet et réessayez.', lectureSeule:'Abonnement terminé : lecture seule.'
+  },
+  en: {
+    deco:'Sign out', heroTxt:'Clean, print-ready construction quotes from your phone or computer. Your data stays online, even after your subscription ends.',
+    f1:'📐 Sections and lines, automatic totals', f2:'🖨️ 3 print templates in your colours', f3:'💾 Drafts saved online', f4:'📱💻 1 phone + 1 computer',
+    loginTitre:'Sign in', kodLabel:'Subscription code (received after payment)', connecter:'Sign in', acheter:'Buy a subscription',
+    loginAide:'Subscription: 1,000 gourdes per month or 5,000 gourdes per year, by MonCash or NatCash (Masbet Pay). The code works on 2 devices: your phone and your computer.',
+    mesDevis:'My quotes', profil:'My letterhead', nouveau:'+ New quote', filtre:'Search (title, client)…', aucun:'No quotes yet. Start with “My letterhead”, then “New quote”.',
+    actif:function(d){ return '✅ Subscription active until '+d; }, admin:'🔑 Administrator access', expire:'⛔ Subscription ended: your quotes can still be viewed and printed. Renew to create or edit.',
+    renouveler:'Renew', nouveauCode:'New subscription code', renouveleOk:'Subscription renewed ✓',
+    profilTitre:'My letterhead (on all my quotes)', profilAide:'This information appears at the top of every printed quote.',
+    pFirme:'Firm or company', pIng:'Engineer / person in charge', pTitre:'Title (e.g. Civil Engineer, Consulting Engineer)', pNif:'Tax ID (NIF)', pAdresse:'Address', pTel:'Phones', pEmail:'Email', pWeb:'Website (optional)',
+    pLogo:'Logo (PNG or JPG, resized automatically)', retirerLogo:'Remove logo', pModele:'Print template', pCouleur:'Accent colour', pDevise:'Currency', pTca:'Default sales tax (TCA %)', pCond:'Default terms (payment, schedule, warranty…)',
+    standard:'Standard', creatif:'Creative', classique:'Classic',
+    enregistrer:'Save', retour:'Back', profilOk:'Letterhead saved ✓',
+    dTitre:'Quote subject / project', dLieu:'Construction site / address', dNum:'Quote number', dDate:'Submission date', dValid:'Valid for (days)',
+    client:'Project owner (client)', cNom:'Owner\'s name', cTel:'Phone', cAdresse:'Address', cEmail:'Email',
+    travaux:'Works', ajouterLot:'+ Empty section', ajouterLotType:'+ Standard section', lotType:'Standard section…',
+    lot:'Section', nomLot:'Section name (e.g. Foundations)', designation:'Description', unite:'Unit', qte:'Qty', pu:'Unit price', montant:'Amount',
+    ajouterLigne:'+ Line', supprimerLot:'Delete section', monter:'↑', descendre:'↓', sousTotal:'Subtotal',
+    totaux:'Totals', dImprevus:'Contingency (%)', dRemise:'Discount (amount)', dTca:'Sales tax TCA (%)', dCond:'Terms for this quote',
+    totalHT:'Works total', imprevus:'Contingency', remise:'Discount', baseHT:'Total before tax', tca:'TCA', totalTTC:'Grand total',
+    arrete:'This quote is set at the sum of', sauverBrouillon:'💾 Draft', sauverFinal:'✔ Final', apercu:'🖨️ Preview / print', dupliquer:'Duplicate',
+    imprimer:'Print / PDF', imprimerAide:'In the print window, choose “Save as PDF” to send it by WhatsApp or email.',
+    enregistre:'Saved ✓', localSeul:'Kept on this device (no internet): tap Draft again when internet is back.',
+    brouillon:'Draft', final:'Final', nouveauTitre:'New quote', modifierTitre:'Quote', confirmerSuppr:'Delete this quote? This cannot be undone.', supprimer:'Delete', ouvrir:'Open',
+    copie:'(copy)', quitter:'Some changes are not saved. Leave anyway?',
+    doc:'QUOTATION', docNum:'No.', docDate:'Submission date', docValid:'Valid for', jours:'days', docClient:'Project owner', docChantier:'Construction site', docObjet:'Subject',
+    signEntreprise:'For the company', signClient:'Approved — project owner (date and signature)', pied:'Quote prepared with Masbet Suite — Masbet Education',
+    nif:'Tax ID', tel:'Tel.', reseau:'No connection. Check your internet and try again.', lectureSeule:'Subscription ended: read only.'
+  }
+};
+var UNITES = ['u','ml','m²','m³','kg','lb','t','sac','gallon','barre','voyage','forfait','jour','h','lot'];
+// Lots types d'un devis de bâtiment (désignations seulement : les prix sont à saisir)
+var LOTS_TYPES = {
+  fr: [
+    ['Installation de chantier', [['Installation et repli de chantier','forfait'],['Clôture provisoire et signalisation','ml'],['Implantation de l\'ouvrage','forfait']]],
+    ['Terrassement', [['Débroussaillage et décapage','m²'],['Fouilles en rigole pour semelles','m³'],['Remblai compacté','m³'],['Évacuation des déblais','voyage']]],
+    ['Fondation', [['Béton de propreté dosé à 150 kg/m³','m³'],['Semelles en béton armé dosé à 350 kg/m³','m³'],['Maçonnerie de soubassement en blocs pleins','m²'],['Chaînage bas en béton armé','ml']]],
+    ['Béton armé (structure)', [['Poteaux en béton armé','m³'],['Poutres et chaînages','m³'],['Dalle pleine en béton armé','m³'],['Acier (fers à béton)','kg'],['Coffrage','m²']]],
+    ['Maçonnerie', [['Murs en blocs de 15 cm','m²'],['Murs en blocs de 20 cm','m²'],['Linteaux en béton armé','ml']]],
+    ['Toiture et étanchéité', [['Étanchéité de la dalle','m²'],['Charpente','m²'],['Couverture en tôle','m²']]],
+    ['Plomberie et sanitaires', [['Réseau d\'eau froide','forfait'],['Réseau d\'évacuation','forfait'],['Appareils sanitaires (WC, lavabo, douche)','u'],['Fosse septique et puisard','u']]],
+    ['Électricité', [['Tableau et protections','u'],['Points lumineux','u'],['Prises de courant','u'],['Câblage et gaines','forfait']]],
+    ['Finitions', [['Enduit (crépissage) intérieur et extérieur','m²'],['Carrelage de sol','m²'],['Peinture','m²'],['Portes','u'],['Fenêtres','u']]]
+  ],
+  en: [
+    ['Site setup', [['Site setup and removal','forfait'],['Temporary fencing and signage','ml'],['Setting out','forfait']]],
+    ['Earthworks', [['Clearing and stripping','m²'],['Trench excavation for footings','m³'],['Compacted backfill','m³'],['Spoil removal','voyage']]],
+    ['Foundations', [['Blinding concrete 150 kg/m³','m³'],['Reinforced concrete footings 350 kg/m³','m³'],['Solid block plinth masonry','m²'],['Ground beam','ml']]],
+    ['Reinforced concrete (structure)', [['RC columns','m³'],['Beams and ring beams','m³'],['RC slab','m³'],['Reinforcement steel','kg'],['Formwork','m²']]],
+    ['Masonry', [['15 cm block walls','m²'],['20 cm block walls','m²'],['RC lintels','ml']]],
+    ['Roofing and waterproofing', [['Slab waterproofing','m²'],['Roof structure','m²'],['Metal sheet roofing','m²']]],
+    ['Plumbing and sanitary', [['Cold water network','forfait'],['Drainage network','forfait'],['Sanitary fittings (WC, basin, shower)','u'],['Septic tank and soakaway','u']]],
+    ['Electrical', [['Distribution board and protection','u'],['Lighting points','u'],['Sockets','u'],['Wiring and conduits','forfait']]],
+    ['Finishes', [['Interior and exterior plaster','m²'],['Floor tiles','m²'],['Painting','m²'],['Doors','u'],['Windows','u']]]
+  ]
+};
+var COULEURS = ['#173a8c','#14213d','#0f766e','#b45309','#9f1239','#4b2a8f','#1f2937'];
+var DP = ' : ', LANG = 'fr', SESSION = null, ETAT = null, DEVIS = null, DEVIS_ID = '', DEVIS_STATUT = 'BROUYON', SALE = false, EDITABLE = true, PROFIL_BROUILLON = null;
+
+function T(k){ var v=TXT[LANG][k]; return v===undefined?(TXT.fr[k]===undefined?k:TXT.fr[k]):v; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function effacer(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function el(id){ return document.getElementById(id); }
+function msg(id,t,cls){ el(id).innerHTML = t ? '<div class="msg '+(cls||'info')+'">'+t+'</div>' : ''; }
+function appareil(){
+  var a=lire('masbet_appareil');
+  if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); }
+  return a;
+}
+function nombre(x){ var n=Number(String(x==null?'':x).replace(',','.')); return isFinite(n)?n:0; }
+function arrondi(n){ return Math.round(n*100)/100; }
+function nb(n){ return argent(n).replace(/ [A-Z]{3}$/,''); }
+function argent(n,dev){ var d=dev||(DEVIS&&DEVIS.devise)||(ETAT&&ETAT.profil&&ETAT.profil.devise)||'HTG';
+  var s=arrondi(n).toFixed(2).replace('.',LANG==='fr'?',':'.'), p=s.split(/[.,]/); p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g, LANG==='fr'?' ':',');
+  return p[0]+(LANG==='fr'?',':'.')+p[1]+' '+d; }
+
+// ---------- Montant en lettres ----------
+function lettresFr(n){
+  var U=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize'];
+  var D={2:'vingt',3:'trente',4:'quarante',5:'cinquante',6:'soixante'};
+  function m100(x){ // 0..99
+    if(x<17) return U[x];
+    if(x<20) return 'dix-'+U[x-10];
+    var d=Math.floor(x/10), u=x%10;
+    if(d===7||d===9){ var base=d===7?'soixante':'quatre-vingt'; var r=x-(d===7?60:80); return base+(r===11&&d===7?' et onze':'-'+m100(r)); }
+    if(d===8) return u===0?'quatre-vingts':'quatre-vingt-'+U[u];
+    return D[d]+(u===0?'':u===1?' et un':'-'+U[u]);
+  }
+  function m1000(x, finale){ // 0..999 ; finale : le groupe est en fin de nombre (accord de cent/vingt)
+    var c=Math.floor(x/100), r=x%100, s='';
+    if(c>0) s=(c>1?U[c]+' ':'')+'cent'+(c>1&&r===0&&finale?'s':'');
+    if(r>0){ var t=m100(r); if(!finale && r===80) t='quatre-vingt'; s+=(s?' ':'')+t; }
+    return s;
+  }
+  n=Math.floor(Math.abs(n)); if(n===0) return 'zéro';
+  var mds=Math.floor(n/1e9), mns=Math.floor(n/1e6)%1000, mil=Math.floor(n/1000)%1000, r=n%1000, out=[];
+  if(mds) out.push(m1000(mds,true)+' milliard'+(mds>1?'s':''));
+  if(mns) out.push(m1000(mns,true)+' million'+(mns>1?'s':''));
+  if(mil) out.push(mil===1?'mille':m1000(mil,false)+' mille');
+  if(r) out.push(m1000(r,true));
+  return out.join(' ');
+}
+function lettresEn(n){
+  var U=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+  var D=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  function m1000(x){ var c=Math.floor(x/100), r=x%100, s=c?U[c]+' hundred':''; if(r){ var t=r<20?U[r]:D[Math.floor(r/10)]+(r%10?'-'+U[r%10]:''); s+=(s?' and ':'')+t; } return s; }
+  n=Math.floor(Math.abs(n)); if(n===0) return 'zero';
+  var parts=[], g=[[1e9,'billion'],[1e6,'million'],[1e3,'thousand']];
+  g.forEach(function(x){ var q=Math.floor(n/x[0])%1000; if(q) parts.push(m1000(q)+' '+x[1]); });
+  if(n%1000) parts.push((parts.length && n%1000<100?'and ':'')+m1000(n%1000));
+  return parts.join(' ');
+}
+// Montant entier en lettres avec la monnaie : la gourde est féminine (« vingt et une gourdes », « une gourde »)
+function montantFr(ent,dev){
+  var t=lettresFr(ent), usd=dev==='USD';
+  if(!usd) t=t.replace(/(^|[ -])un$/,'$1une');
+  var nom=usd?(ent<2?'dollar américain':'dollars américains'):(ent<2?'gourde':'gourdes');
+  return t+((/(million|milliard)s?$/.test(t))?' de ':' ')+nom;
+}
+function enLettres(montant){
+  var dev=(DEVIS&&DEVIS.devise)||'HTG', ent=Math.floor(arrondi(montant)), cts=Math.round((arrondi(montant)-ent)*100);
+  if(LANG==='en'){ var nomE=dev==='USD'?(ent===1?'US dollar':'US dollars'):(ent===1?'gourde':'gourdes'); var e=lettresEn(ent); return e.charAt(0).toUpperCase()+e.slice(1)+' '+nomE+(cts?' and '+lettresEn(cts)+(dev==='USD'?' cents':' centimes'):''); }
+  var t=montantFr(ent,dev); t=t.charAt(0).toUpperCase()+t.slice(1);
+  return t+(cts?' et '+lettresFr(cts)+(dev==='USD'?' cent'+(cts>1?'s':''):' centime'+(cts>1?'s':'')):'');
+}
+
+// ---------- Réseau ----------
+function appelGet(action, params){
+  if(DEMO) return demo(action, params);
+  var q='api='+encodeURIComponent(action); Object.keys(params||{}).forEach(function(k){ q+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); });
+  return lireReponse(fetch(API+'?'+q+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}));
+}
+function appelPost(action, corps){
+  if(DEMO) return demo(action, corps);
+  var c=Object.assign({api:action}, corps||{});
+  // text/plain : requête « simple », sans pré-vérification CORS (Apps Script la refuse)
+  return lireReponse(fetch(API,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)}));
+}
+function lireReponse(p){
+  var ctl=null;
+  return p.then(function(r){ return r.json(); }, function(){ throw new Error(T('reseau')); })
+    .then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||T('reseau')); return j.data; });
+}
+function sess(){ return { code: SESSION.code, appareil: appareil() }; }
+
+// ---------- Mode démonstration (sans adresse Contenu) ----------
+var DEMO_DB = { profil:null, devis:{} };
+function demo(action, p){
+  return new Promise(function(ok,ko){ setTimeout(function(){
+    try{
+      var liste=function(){ return Object.keys(DEMO_DB.devis).map(function(id){ var d=DEMO_DB.devis[id]; return {id:id,titre:d.donnees.titre,client:d.donnees.client&&d.donnees.client.nom,montant:d.donnees.totalTTC,devise:d.donnees.devise,statut:d.statut,maj:d.maj}; }).sort(function(a,b){return b.maj-a.maj;}); };
+      if(action==='suite_connexion'||action==='suite_liste'){ if(action==='suite_connexion' && !/^[A-Z0-9-]{6,}$/i.test(p.code||'')) throw new Error('Kòd sa a pa yon abònman Masbet Suite.'); return ok({valide:true,jusqua:'2026-12-31',admin:false,profil:DEMO_DB.profil,devis:liste()}); }
+      if(action==='suite_devis'){ var x=DEMO_DB.devis[p.id]; if(!x) throw new Error('Devis sa a pa egziste.'); return ok({id:p.id,statut:x.statut,maj:x.maj,donnees:JSON.parse(JSON.stringify(x.donnees))}); }
+      if(action==='suite_sauver'){ var id=p.id||('DV'+Math.random().toString(36).slice(2,10).toUpperCase()); DEMO_DB.devis[id]={donnees:JSON.parse(JSON.stringify(p.donnees)),statut:p.statut||'BROUYON',maj:Date.now()}; return ok({id:id,statut:DEMO_DB.devis[id].statut,maj:Date.now()}); }
+      if(action==='suite_supprimer'){ delete DEMO_DB.devis[p.id]; return ok({id:p.id,efface:true}); }
+      if(action==='suite_profil'){ DEMO_DB.profil=JSON.parse(JSON.stringify(p.profil)); return ok({ok:true}); }
+      if(action==='suite_prolonger'){ return ok({valide:true,jusqua:'2027-12-31'}); }
+      throw new Error('Action inconnue.');
+    }catch(e){ ko(e); }
+  },250); });
+}
+
+// ---------- Langue et vues ----------
+function langue(l){
+  LANG = l==='en' ? 'en' : 'fr'; DP = LANG==='fr' ? ' : ' : ': '; ecrire('masbet_suite_lang', LANG); document.documentElement.lang=LANG;
+  el('lFr').classList.toggle('on',LANG==='fr'); el('lEn').classList.toggle('on',LANG==='en');
+  document.querySelectorAll('[data-t]').forEach(function(x){ x.textContent=T(x.getAttribute('data-t')); });
+  el('filtre').placeholder=T('filtre');
+  el('lotType').innerHTML='<option value="">'+esc(T('lotType'))+'</option>'+LOTS_TYPES[LANG].map(function(l,i){ return '<option value="'+i+'">'+esc(l[0])+'</option>'; }).join('');
+  if(ETAT) { afficherAbo(); afficherListe(); }
+  if(DEVIS && !el('vEditeur').classList.contains('hidden')) { afficherLots(); calculer(); }
+  if(DEVIS && !el('vApercu').classList.contains('hidden')) apercu();
+  if(!el('vProfil').classList.contains('hidden')) afficherModeles();
+}
+function vue(v){
+  ['login','liste','profil','editeur','apercu'].forEach(function(x){ el('v'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('hidden', x!==v); });
+  el('btnDeco').classList.toggle('hidden', v==='login');
+  window.scrollTo(0,0);
+}
+
+// ---------- Connexion ----------
+function connexion(code){
+  code = String(code || el('kod').value || '').trim().toUpperCase();
+  if(code.length<6) return msg('mLogin', esc(T('kodLabel')), 'err');
+  var b=el('btnLogin'); b.disabled=true; msg('mLogin','');
+  appelGet('suite_connexion',{code:code, appareil:appareil()}).then(function(d){
+    SESSION={code:code}; ecrire('masbet_suite_kod', code); ETAT=d; vue('liste'); afficherAbo(); afficherListe();
+  }).catch(function(e){ msg('mLogin', esc(e.message), 'err'); }).then(function(){ b.disabled=false; });
+}
+function rafraichir(){ return appelGet('suite_liste', sess()).then(function(d){ ETAT=d; afficherAbo(); afficherListe(); }); }
+function deconnexion(){ if(SALE && !confirm(T('quitter'))) return; effacer('masbet_suite_kod'); SESSION=null; ETAT=null; DEVIS=null; SALE=false; el('kod').value=''; vue('login'); }
+function afficherAbo(){
+  if(!ETAT) return;
+  EDITABLE = !!ETAT.valide;
+  el('btnNouveau').disabled = !EDITABLE;
+  var h = ETAT.admin ? '<span class="msg ok" style="margin:6px 0">'+T('admin')+'</span>' : ETAT.valide ? '<span class="msg ok" style="margin:6px 0">'+esc(T('actif')(ETAT.jusqua))+'</span>' : '<span class="msg err" style="margin:6px 0">'+esc(T('expire'))+'</span>';
+  if(!ETAT.admin) h+='<input id="nvKod" style="max-width:220px" placeholder="'+esc(T('nouveauCode'))+'" autocapitalize="characters"><button class="btn sec mini" onclick="renouveler()">'+esc(T('renouveler'))+'</button>';
+  el('abo').innerHTML=h;
+}
+function renouveler(){
+  var c=(el('nvKod').value||'').trim().toUpperCase(); if(c.length<6) return;
+  appelGet('suite_prolonger', Object.assign(sess(),{nouveau:c})).then(function(){ msg('mListe', esc(T('renouveleOk')), 'ok'); return rafraichir(); })
+    .catch(function(e){ msg('mListe', esc(e.message), 'err'); });
+}
+
+// ---------- Liste ----------
+function afficherListe(){
+  if(!ETAT) return;
+  var f=(el('filtre').value||'').toLowerCase(), l=(ETAT.devis||[]).filter(function(d){ return !f || (d.titre+' '+d.client).toLowerCase().indexOf(f)>=0; });
+  var brouillons=brouillonsLocaux();
+  var h=brouillons.map(function(b){ return '<div class="dv" onclick="reprendreLocal(\''+esc(b.cle)+'\')"><div><div class="t">'+esc(b.titre||T('nouveauTitre'))+' <span class="badge b-br">📱 '+esc(T('brouillon'))+'</span></div><div class="s">'+esc(T('localSeul'))+'</div></div></div>'; }).join('');
+  h+=l.map(function(d){
+    return '<div class="dv" onclick="ouvrirDevis(\''+esc(d.id)+'\')"><div><div class="t">'+esc(d.titre)+'<span class="badge '+(d.statut==='FINAL'?'b-fi':'b-br')+'">'+esc(T(d.statut==='FINAL'?'final':'brouillon'))+'</span></div>'+
+      '<div class="s">'+esc(d.client||'')+(d.maj?' · '+new Date(d.maj).toLocaleDateString(LANG==='fr'?'fr-FR':'en-GB'):'')+'</div></div><div class="m">'+esc(argent(d.montant,d.devise||(ETAT.profil&&ETAT.profil.devise)||'HTG'))+'</div></div>';
+  }).join('');
+  el('liste').innerHTML = h || '<p class="hint" style="margin-top:12px">'+esc(T('aucun'))+'</p>';
+}
+
+// ---------- Profil ----------
+function profil(){ return (ETAT&&ETAT.profil)||{}; }
+function ouvrirProfil(){
+  var p=profil(); PROFIL_BROUILLON=JSON.parse(JSON.stringify(p));
+  ['Firme','Ing','Titre','Nif','Adresse','Tel','Email','Web','Cond'].forEach(function(k){ el('p'+k).value=p[k.toLowerCase()]||''; });
+  el('pDevise').value=p.devise||'HTG'; el('pTca').value=p.tca==null?'':p.tca;
+  majLogo(); afficherModeles(); afficherPrix(); el('pSac').value=String(p.sac||42.5); el('pPrixDev').value=p.prixDevise||p.devise||'HTG'; el('pTaux').value=p.taux||''; var kd=coefsDefaut(p); el('pKIm').value=kd.im; el('pKTx').value=kd.tx; el('pKFg').value=kd.fg; el('pKPr').value=kd.pr; msg('mProfil',''); vue('profil');
+}
+function afficherModeles(){
+  var p=PROFIL_BROUILLON||{}, m=p.modele||'standard', c=p.couleur||COULEURS[0];
+  el('tpls').innerHTML=['standard','creatif','classique'].map(function(x){ return '<button class="tpl t-'+x+(x===m?' on':'')+'" onclick="PROFIL_BROUILLON.modele=\''+x+'\';afficherModeles()"><i></i>'+esc(T(x))+'</button>'; }).join('');
+  el('couleurs').innerHTML=COULEURS.map(function(x){ return '<button style="background:'+x+'" class="'+(x===c?'on':'')+'" aria-label="'+x+'" onclick="PROFIL_BROUILLON.couleur=\''+x+'\';afficherModeles()"></button>'; }).join('');
+}
+function majLogo(){ var l=PROFIL_BROUILLON&&PROFIL_BROUILLON.logo; el('pLogoPrev').classList.toggle('hidden',!l); el('pLogoX').classList.toggle('hidden',!l); if(l) el('pLogoPrev').src=l; }
+function retirerLogo(){ PROFIL_BROUILLON.logo=''; el('pLogo').value=''; majLogo(); }
+// Le logo est réduit (300 px de large au plus) et compressé pour rester léger
+function chargerLogo(inp){
+  var f=inp.files&&inp.files[0]; if(!f) return;
+  var r=new FileReader();
+  r.onload=function(){ var img=new Image(); img.onload=function(){
+    var w=Math.min(300,img.width), h=Math.round(img.height*w/img.width); if(h>150){ h=150; w=Math.round(img.width*h/img.height); }
+    var c=document.createElement('canvas'); c.width=w; c.height=h; var g=c.getContext('2d'); g.fillStyle='#fff'; g.fillRect(0,0,w,h); g.drawImage(img,0,0,w,h);
+    var url=c.toDataURL('image/png'); if(url.length>30000) url=c.toDataURL('image/jpeg',0.82);
+    PROFIL_BROUILLON.logo=url; majLogo(); };
+    img.src=r.result; };
+  r.readAsDataURL(f);
+}
+function enregistrerProfil(){
+  var p=PROFIL_BROUILLON||{};
+  ['Firme','Ing','Titre','Nif','Adresse','Tel','Email','Web','Cond'].forEach(function(k){ p[k.toLowerCase()]=el('p'+k).value.trim(); });
+  p.devise=el('pDevise').value; p.tca=el('pTca').value===''?'':nombre(el('pTca').value);
+  p.sac=nombre(el('pSac').value)||42.5; p.k={im:nombre(el('pKIm').value),tx:nombre(el('pKTx').value),fg:nombre(el('pKFg').value),pr:nombre(el('pKPr').value)};
+  var ancien=JSON.stringify(p.prix||{}); p.prix={}; Object.keys(MAT).forEach(function(k){ var x=el('px_'+k); if(x && x.value!=='') p.prix[k]=nombre(x.value); });
+  p.prixDevise=el('pPrixDev').value; p.taux=nombre(el('pTaux').value)||'';
+  if(JSON.stringify(p.prix)!==ancien || !p.prixMaj) p.prixMaj=Date.now();
+  appelPost('suite_profil', Object.assign(sess(),{profil:p})).then(function(){ ETAT.profil=p; msg('mProfil', esc(T('profilOk')), 'ok'); setTimeout(function(){ vue('liste'); },700); })
+    .catch(function(e){ msg('mProfil', esc(e.message), 'err'); });
+}
+
+// ---------- Devis : modèle de données ----------
+function aujourdhui(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function numeroAuto(){ var n=(ETAT&&ETAT.devis?ETAT.devis.length:0)+1; return 'DV-'+new Date().getFullYear()+'-'+String(n).padStart(3,'0'); }
+function devisVide(){ var p=profil(); return { v:1, titre:'', lieu:'', numero:numeroAuto(), date:aujourdhui(), validite:30, client:{nom:'',tel:'',adresse:'',email:''},
+  lots:[{titre:'',lignes:[{d:'',u:'u',q:1,pu:0}]}], imprevus:5, taux:p.taux||'', double:false, remise:0, tca:p.tca===''||p.tca==null?0:p.tca, conditions:p.cond||'', devise:p.devise||'HTG' }; }
+function cleLocal(id){ return 'masbet_suite_brouillon_'+(id||'nouveau'); }
+function brouillonsLocaux(){
+  var out=[]; try{ for(var i=0;i<localStorage.length;i++){ var k=localStorage.key(i); if(k.indexOf('masbet_suite_brouillon_')===0){ var d=JSON.parse(localStorage.getItem(k)||'null'); if(d&&d.local) out.push({cle:k,titre:d.titre}); } } }catch(e){}
+  return out;
+}
+function reprendreLocal(k){ var d=null; try{ d=JSON.parse(lire(k)||'null'); }catch(e){} if(!d) return; DEVIS=d; DEVIS_ID=d._id||''; DEVIS_STATUT='BROUYON'; SALE=true; remplirEditeur(); vue('editeur'); }
+function nouveauDevis(){ if(!EDITABLE) return; DEVIS=devisVide(); DEVIS_ID=''; DEVIS_STATUT='BROUYON'; SALE=false; remplirEditeur(); vue('editeur'); }
+function ouvrirDevis(id){
+  msg('mListe','');
+  appelGet('suite_devis', Object.assign(sess(),{id:id})).then(function(d){
+    DEVIS=d.donnees||devisVide(); DEVIS_ID=d.id; DEVIS_STATUT=d.statut; SALE=false;
+    if(EDITABLE){ remplirEditeur(); vue('editeur'); } else { apercu(); }
+  }).catch(function(e){ msg('mListe', esc(e.message), 'err'); });
+}
+function remplirEditeur(){
+  el('edTitre').textContent = DEVIS_ID ? T('modifierTitre')+' '+(DEVIS.numero||'') : T('nouveauTitre');
+  el('edStatut').innerHTML = '<span class="badge '+(DEVIS_STATUT==='FINAL'?'b-fi':'b-br')+'">'+esc(T(DEVIS_STATUT==='FINAL'?'final':'brouillon'))+'</span>';
+  el('dTitre').value=DEVIS.titre||''; el('dLieu').value=DEVIS.lieu||''; el('dNum').value=DEVIS.numero||''; el('dDate').value=DEVIS.date||''; el('dValid').value=DEVIS.validite||'';
+  el('cNom').value=DEVIS.client.nom||''; el('cTel').value=DEVIS.client.tel||''; el('cAdresse').value=DEVIS.client.adresse||''; el('cEmail').value=DEVIS.client.email||'';
+  el('dImprevus').value=DEVIS.imprevus; el('dRemise').value=DEVIS.remise; el('dTca').value=DEVIS.tca; el('dCond').value=DEVIS.conditions||'';
+  if(!DEVIS.devise) DEVIS.devise=profil().devise||'HTG'; if(DEVIS.taux==null) DEVIS.taux=profil().taux||'';
+  el('dDevise').value=DEVIS.devise; el('dTaux').value=DEVIS.taux||''; el('dDouble').checked=!!DEVIS.double; el('mDevise').textContent=''; el('mOutils').textContent='';
+  el('mEd').textContent=''; afficherLots(); calculer();
+}
+function lireEditeur(){
+  DEVIS.titre=el('dTitre').value.trim(); DEVIS.lieu=el('dLieu').value.trim(); DEVIS.numero=el('dNum').value.trim(); DEVIS.date=el('dDate').value; DEVIS.validite=nombre(el('dValid').value)||'';
+  DEVIS.client={nom:el('cNom').value.trim(),tel:el('cTel').value.trim(),adresse:el('cAdresse').value.trim(),email:el('cEmail').value.trim()};
+  DEVIS.imprevus=nombre(el('dImprevus').value); DEVIS.remise=nombre(el('dRemise').value); DEVIS.tca=nombre(el('dTca').value); DEVIS.conditions=el('dCond').value;
+  DEVIS.taux=nombre(el('dTaux').value)||''; DEVIS.double=el('dDouble').checked;
+}
+var MINUT=null;
+function modif(){ SALE=true; lireEditeur(); calculer(); clearTimeout(MINUT); MINUT=setTimeout(garderLocal, 600); }
+function garderLocal(){ if(!DEVIS) return; var c=JSON.parse(JSON.stringify(DEVIS)); c.local=true; c._id=DEVIS_ID; ecrire(cleLocal(DEVIS_ID), JSON.stringify(c)); }
+
+// ---------- Lots et lignes ----------
+function afficherLots(){
+  var h='';
+  DEVIS.lots.forEach(function(l,i){
+    h+='<div class="sec"><div class="sec-h"><b>'+esc(T('lot'))+' '+(i+1)+'</b><input value="'+esc(l.titre)+'" placeholder="'+esc(T('nomLot'))+'" oninput="DEVIS.lots['+i+'].titre=this.value;modif()">'+
+      '<button class="x" title="'+esc(T('monter'))+'" style="color:var(--ink)" onclick="deplacerLot('+i+',-1)">↑</button><button class="x" title="'+esc(T('descendre'))+'" style="color:var(--ink)" onclick="deplacerLot('+i+',1)">↓</button><button class="x" title="'+esc(T('supprimerLot'))+'" onclick="supprimerLot('+i+')">✕</button></div>'+
+      '<div class="lg-h"><span>'+esc(T('designation'))+'</span><span>'+esc(T('unite'))+'</span><span>'+esc(T('qte'))+'</span><span>'+esc(T('pu'))+'</span><span style="text-align:right">'+esc(T('montant'))+'</span><span></span></div>';
+    l.lignes.forEach(function(g,j){
+      var opts=UNITES.concat(UNITES.indexOf(g.u)<0&&g.u?[g.u]:[]).map(function(u){ return '<option'+(u===g.u?' selected':'')+'>'+esc(u)+'</option>'; }).join('');
+      h+='<div class="lg"><div><label>'+esc(T('designation'))+'</label><input value="'+esc(g.d)+'" oninput="DEVIS.lots['+i+'].lignes['+j+'].d=this.value;modif()">'+(g.metre?'<div class="hint metre">📐 '+esc(g.metre)+(g.sd?' · Σ':'')+'</div>':(g.sd?'<div class="hint metre">Σ '+esc(T('sdFait'))+'</div>':''))+'</div>'+
+        '<div><label>'+esc(T('unite'))+'</label><select onchange="DEVIS.lots['+i+'].lignes['+j+'].u=this.value;modif()">'+opts+'</select></div>'+
+        '<div><label>'+esc(T('qte'))+'</label><input type="number" inputmode="decimal" step="any" min="0" value="'+esc(g.q)+'" oninput="DEVIS.lots['+i+'].lignes['+j+'].q=nombre(this.value);modif()"></div>'+
+        '<div><label>'+esc(T('pu'))+'</label><input type="number" inputmode="decimal" step="any" min="0" value="'+esc(g.pu)+'" oninput="DEVIS.lots['+i+'].lignes['+j+'].pu=nombre(this.value);modif()"></div>'+
+        '<div class="mt"><button class="sd" title="'+esc(T('sdTitre'))+'" onclick="ouvrirSd('+i+','+j+')">Σ</button><span id="mt'+i+'_'+j+'"></span></div><button class="x" onclick="supprimerLigne('+i+','+j+')">✕</button></div>';
+    });
+    h+='<div class="row" style="justify-content:space-between;margin-top:6px"><button class="btn sec mini" onclick="ajouterLigne('+i+')">'+esc(T('ajouterLigne'))+'</button><b id="st'+i+'"></b></div></div>';
+  });
+  el('lots').innerHTML=h;
+}
+function ajouterLot(){ DEVIS.lots.push({titre:'',lignes:[{d:'',u:'u',q:1,pu:0}]}); afficherLots(); modif(); }
+function ajouterLotType(){ var i=el('lotType').value; if(i==='') return; var t=LOTS_TYPES[LANG][Number(i)]; DEVIS.lots.push({titre:t[0],lignes:t[1].map(function(x){ return {d:x[0],u:x[1],q:1,pu:0}; })}); el('lotType').value=''; afficherLots(); modif(); }
+function ajouterLigne(i){ DEVIS.lots[i].lignes.push({d:'',u:'u',q:1,pu:0}); afficherLots(); modif(); }
+function supprimerLigne(i,j){ DEVIS.lots[i].lignes.splice(j,1); if(!DEVIS.lots[i].lignes.length) DEVIS.lots[i].lignes.push({d:'',u:'u',q:1,pu:0}); afficherLots(); modif(); }
+function supprimerLot(i){ if(DEVIS.lots.length===1){ DEVIS.lots[0]={titre:'',lignes:[{d:'',u:'u',q:1,pu:0}]}; } else DEVIS.lots.splice(i,1); afficherLots(); modif(); }
+function deplacerLot(i,s){ var k=i+s; if(k<0||k>=DEVIS.lots.length) return; var x=DEVIS.lots[i]; DEVIS.lots[i]=DEVIS.lots[k]; DEVIS.lots[k]=x; afficherLots(); modif(); }
+
+// ---------- Vérification avant impression : un devis propre ----------
+function verifierDevis(d,mode){
+  var v=[], l=lignesDevis(d), p=profil();
+  if(!String(d.client&&d.client.nom||'').trim()) v.push(T('vClient'));
+  if(!String(d.lieu||'').trim()) v.push(T('vLieu'));
+  if(!String(d.titre||'').trim()) v.push(T('vObjet'));
+  if(!nombre(d.validite)) v.push(T('vValid'));
+  var sansPrix=l.filter(function(x){ return !nombre(x.g.pu); }).map(function(x){ return x.n; });
+  if(sansPrix.length) v.push(T('vSansPrix')(sansPrix.join(', ')));
+  var sansQ=l.filter(function(x){ return !(nombre(x.g.q)>0); }).map(function(x){ return x.n; });
+  if(sansQ.length) v.push(T('vSansQ')(sansQ.join(', ')));
+  var sansD=l.filter(function(x){ return !String(x.g.d||'').trim(); }).map(function(x){ return x.n; });
+  if(sansD.length) v.push(T('vSansD')(sansD.join(', ')));
+  var vus={}, diff=[]; l.forEach(function(x){ var c=String(x.g.d).trim().toLowerCase()+'|'+x.g.u; if(!String(x.g.d).trim()) return; if(vus[c]!=null && vus[c]!==nombre(x.g.pu)) diff.push(x.g.d); vus[c]=nombre(x.g.pu); });
+  if(diff.length) v.push(T('vPrixDiff')(diff.filter(function(x,i,a){ return a.indexOf(x)===i; }).join(' ; ')));
+  var avecSdIm=l.some(function(x){ return x.g.sd && nombre(x.g.sd.im)>0; });
+  if(avecSdIm && nombre(d.imprevus)>0) v.push(T('vDoubleImp'));
+  var coefs={}; l.forEach(function(x){ if(x.g.sd && x.g.sd.g){ var t=sdTotaux(x.g.sd); coefs[fq(t.k,3)]=1; } });
+  if(Object.keys(coefs).length>1) v.push(T('vK')(Object.keys(coefs).join(' ; ')));
+  var usePrix=l.some(function(x){ return x.g.k || (x.g.sd && (x.g.sd.g&&x.g.sd.g.mat||[]).some(function(m){ return m.k; })); });
+  if(usePrix && p.prixMaj && Date.now()-p.prixMaj>90*864e5) v.push(T('vPrixVieux')(new Date(p.prixMaj).toLocaleDateString(LANG==='fr'?'fr-FR':'en-GB')));
+  if(d.double && !tauxDe(d.taux)) v.push(T('vTaux'));
+  if(mode==='bpu'){ var sd=l.filter(function(x){ return !String(x.g.desc||'').trim(); }).length; if(sd) v.push(T('vDesc')(sd)); }
+  if(mode==='sd'){ var ss=l.filter(function(x){ return !x.g.sd; }).map(function(x){ return x.n; }); if(ss.length) v.push(T('vSd')(ss.join(', '))); }
+  return v;
+}
+function afficherVerifs(mode){
+  var v=verifierDevis(DEVIS,mode), b=el('verifs'); b.classList.remove('hidden'); b.classList.toggle('ok',!v.length);
+  b.innerHTML=v.length?'<b>'+esc(T('vTitre'))+'</b><ul>'+v.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul>':'✓ '+esc(T('vOk'));
+}
+
+// ---------- Monnaie, taux du dollar et révision des prix ----------
+function autreDevise(d){ return d==='USD'?'HTG':'USD'; }
+function pourChaquePrix(fn){ // applique fn(prix) à tous les prix du devis (lignes et sous-détails)
+  DEVIS.lots.forEach(function(l){ l.lignes.forEach(function(g){
+    if(g.sd && g.sd.g){ GROUPES.forEach(function(gr){ (g.sd.g[gr]||[]).forEach(function(m){ m.p=arrondi(fn(nombre(m.p))); }); }); var t=sdTotaux(g.sd); if(t.base>0) g.pu=t.pu; else g.pu=arrondi(fn(nombre(g.pu))); }
+    else g.pu=arrondi(fn(nombre(g.pu)));
+  }); });
+}
+// Conversion sans dérive : chaque prix garde sa valeur d'origine ; un aller-retour HTG → USD → HTG redonne exactement les mêmes prix
+function convPrix(o,cle,de,vers,t){
+  var x=nombre(o[cle]), m=o._m||(o._m={});
+  if(m[cle] && m[cle].d===vers && m[cle].c===x){ o[cle]=m[cle].o; delete m[cle]; return; }
+  var y=arrondi(de==='USD'?x*t:x/t); m[cle]={d:de,o:x,c:y}; o[cle]=y;
+}
+function convertirPrix(de,vers,t){
+  DEVIS.lots.forEach(function(l){ l.lignes.forEach(function(g){
+    if(g.sd && g.sd.g){ GROUPES.forEach(function(gr){ (g.sd.g[gr]||[]).forEach(function(m){ convPrix(m,'p',de,vers,t); }); }); }
+    convPrix(g,'pu',de,vers,t);
+  }); });
+}
+function changerDevise(){
+  lireEditeur(); var vers=el('dDevise').value, de=DEVIS.devise||'HTG'; if(vers===de) return;
+  var t=tauxDe(DEVIS.taux), avecPrix=DEVIS.lots.some(function(l){ return l.lignes.some(function(g){ return nombre(g.pu)>0; }); });
+  if(avecPrix && !t){ el('dDevise').value=de; el('mDevise').textContent=T('tauxManque'); el('dTaux').focus(); return; }
+  if(avecPrix){ convertirPrix(de,vers,t); if(nombre(DEVIS.remise)) DEVIS.remise=arrondi(de==='USD'?DEVIS.remise*t:DEVIS.remise/t); el('dRemise').value=DEVIS.remise; }
+  DEVIS.devise=vers; el('mDevise').textContent=avecPrix?T('convertiAu')(fq(t,2)):''; afficherLots(); modif();
+}
+function actualiserPrix(){
+  lireEditeur(); var n=0;
+  DEVIS.lots.forEach(function(l){ l.lignes.forEach(function(g){
+    if(g.k && MAT[g.k]){ var x=prixMat(g.k); if(x>0 && x!==nombre(g.pu)){ g.pu=x; n++; } }
+    if(g.sd && g.sd.g){ var ch=false; (g.sd.g.mat||[]).forEach(function(m){ if(m.k && MAT[m.k]){ var x=prixMat(m.k); if(x>0 && x!==nombre(m.p)){ m.p=x; ch=true; } } }); if(ch){ var t=sdTotaux(g.sd); if(t.base>0) g.pu=t.pu; n++; } }
+  }); });
+  el('mOutils').textContent=T('actualises')(n); afficherLots(); modif();
+}
+function reviserPrix(){
+  var pc=nombre(el('dRevision').value); if(!pc){ el('mOutils').textContent=T('revisionVide'); return; }
+  lireEditeur(); pourChaquePrix(function(x){ return x*(1+pc/100); });
+  DEVIS.revision=arrondi((1+nombre(DEVIS.revision)/100)*(1+pc/100)*100-100);
+  el('dRevision').value=''; el('mOutils').textContent=T('revises')(fq(pc)); afficherLots(); modif();
+}
+function equivalent(n){ var d=DEVIS.devise||'HTG', t=tauxDe(DEVIS.taux); if(!t) return ''; return argent(convertir(n,d,autreDevise(d),t),autreDevise(d)); }
+
+// ---------- Calculs ----------
+function totaux(d){
+  var lots=d.lots.map(function(l){ var st=0; l.lignes.forEach(function(g){ st+=arrondi(nombre(g.q)*nombre(g.pu)); }); return arrondi(st); });
+  var ht=arrondi(lots.reduce(function(a,b){return a+b;},0));
+  var imp=arrondi(ht*nombre(d.imprevus)/100), rem=Math.min(arrondi(nombre(d.remise)), ht+imp), base=arrondi(ht+imp-rem), tca=arrondi(base*nombre(d.tca)/100);
+  return { lots:lots, ht:ht, imp:imp, rem:rem, base:base, tca:tca, ttc:arrondi(base+tca) };
+}
+function calculer(){
+  if(!DEVIS) return;
+  var t=totaux(DEVIS);
+  DEVIS.lots.forEach(function(l,i){ l.lignes.forEach(function(g,j){ var e=el('mt'+i+'_'+j); if(e) e.textContent=argent(nombre(g.q)*nombre(g.pu)); }); var s=el('st'+i); if(s) s.textContent=T('sousTotal')+DP+argent(t.lots[i]); });
+  DEVIS.totalTTC=t.ttc;
+  el('tot').innerHTML='<div><span>'+esc(T('totalHT'))+'</span><b>'+esc(argent(t.ht))+'</b></div>'+
+    (t.imp?'<div><span>'+esc(T('imprevus'))+' ('+esc(DEVIS.imprevus)+' %)</span><b>'+esc(argent(t.imp))+'</b></div>':'')+
+    (t.rem?'<div><span>'+esc(T('remise'))+'</span><b>− '+esc(argent(t.rem))+'</b></div>':'')+
+    (t.tca?'<div><span>'+esc(T('baseHT'))+'</span><b>'+esc(argent(t.base))+'</b></div><div><span>'+esc(T('tca'))+' ('+esc(DEVIS.tca)+' %)</span><b>'+esc(argent(t.tca))+'</b></div>':'')+
+    '<div class="g"><span>'+esc(T('totalTTC'))+'</span><span>'+esc(argent(t.ttc))+'</span></div>'+(DEVIS.double&&equivalent(t.ttc)?'<div><span>'+esc(T('equiv'))+'</span><b>'+esc(equivalent(t.ttc))+'</b></div>':'')+'<div class="lettres">'+esc(enLettres(t.ttc))+'</div>';
+}
+
+// ---------- Enregistrer ----------
+function sauver(statut){
+  if(!EDITABLE){ el('mEd').textContent=T('lectureSeule'); return; }
+  lireEditeur(); calculer(); garderLocal();
+  el('mEd').textContent='…';
+  appelPost('suite_sauver', Object.assign(sess(),{id:DEVIS_ID, statut:statut, donnees:DEVIS})).then(function(r){
+    effacer(cleLocal(DEVIS_ID)); DEVIS_ID=r.id; DEVIS_STATUT=r.statut; effacer(cleLocal(DEVIS_ID)); SALE=false;
+    el('mEd').textContent=T('enregistre'); remplirEtat(); rafraichir().catch(function(){});
+  }).catch(function(e){ el('mEd').textContent = /connexion|connection/i.test(e.message) ? T('localSeul') : e.message; });
+}
+function remplirEtat(){ el('edTitre').textContent=T('modifierTitre')+' '+(DEVIS.numero||''); el('edStatut').innerHTML='<span class="badge '+(DEVIS_STATUT==='FINAL'?'b-fi':'b-br')+'">'+esc(T(DEVIS_STATUT==='FINAL'?'final':'brouillon'))+'</span>'; }
+function dupliquer(){ lireEditeur(); var c=JSON.parse(JSON.stringify(DEVIS)); c.titre=(c.titre||'')+' '+T('copie'); c.numero=numeroAuto(); c.date=aujourdhui(); DEVIS=c; DEVIS_ID=''; DEVIS_STATUT='BROUYON'; SALE=true; remplirEditeur(); }
+function fermerEditeur(){ if(SALE && !confirm(T('quitter'))) return; SALE=false; DEVIS=null; vue('liste'); afficherListe(); }
+
+// ---------- Aperçu imprimable ----------
+function apercu(mode){
+  mode=(mode==='bpu'||mode==='sd')?mode:'devis';
+  if(!el('vEditeur').classList.contains('hidden')) lireEditeur();
+  Array.prototype.forEach.call(el('tabsDoc').children,function(b,k){ b.classList.toggle('on',['devis','bpu','sd'][k]===mode); });
+  var p=profil(), d=DEVIS, t=totaux(d), modele=p.modele||'standard';
+  var doc=el('doc'); doc.className=modele==='standard'?'':modele; doc.style.setProperty('--c', modele==='classique'?'#111':(p.couleur||COULEURS[0]));
+  var coord=[p.adresse, p.tel?T('tel')+' '+p.tel:'', p.email, p.web, p.nif?T('nif')+DP+p.nif:''].filter(Boolean).map(esc).join('<br>');
+  var lignes='';
+  lignesDevis(d).forEach(function(x,k,arr){
+    if(k===0 || arr[k-1].i!==x.i) lignes+='<tr class="lot"><td colspan="5">'+esc(titreLot(x.lot,x.nl))+'</td></tr>';
+    lignes+='<tr><td>'+esc(x.n)+' '+esc(x.g.d)+'</td><td>'+esc(x.g.u)+'</td><td class="n">'+esc(fq(x.g.q,3))+'</td><td class="n">'+esc(nb(x.g.pu))+'</td><td class="n">'+esc(nb(nombre(x.g.q)*nombre(x.g.pu)))+'</td></tr>';
+    if(!arr[k+1] || arr[k+1].i!==x.i) lignes+='<tr class="st"><td colspan="4">'+esc(T('sousTotal'))+' '+esc(T('lot').toLowerCase())+' '+x.nl+'</td><td class="n">'+esc(nb(t.lots[x.i]))+'</td></tr>';
+  });
+  var dt=d.date?new Date(d.date+'T12:00:00').toLocaleDateString(LANG==='fr'?'fr-FR':'en-GB',{day:'numeric',month:'long',year:'numeric'}):'';
+  doc.innerHTML=
+    '<div class="en"><div>'+(p.logo?'<img src="'+esc(p.logo)+'" alt=""><br>':'')+'<div class="firme">'+esc(p.firme||'')+'</div>'+
+      (p.ing?'<div><b>'+esc(p.ing)+'</b>'+(p.titre?' — '+esc(p.titre):'')+'</div>':'')+'<div class="coord">'+coord+'</div></div>'+
+      '<div><div class="titredoc">'+esc(mode==='devis'?T('doc'):mode==='bpu'?T('docBpuT'):T('docSdT'))+'</div><div class="meta">'+esc(T('docNum'))+' <b>'+esc(d.numero||'')+'</b><br>'+esc(T('docDate'))+DP+esc(dt)+(d.validite?'<br>'+esc(T('docValid'))+DP+esc(d.validite)+' '+esc(T('jours')):'')+'</div></div></div>'+
+    '<div class="blocs"><div class="bloc"><b>'+esc(T('docClient'))+'</b>'+esc(d.client.nom||'')+(d.client.adresse?'<br>'+esc(d.client.adresse):'')+(d.client.tel?'<br>'+esc(T('tel'))+' '+esc(d.client.tel):'')+(d.client.email?'<br>'+esc(d.client.email):'')+'</div>'+
+      '<div class="bloc"><b>'+esc(T('docChantier'))+'</b>'+esc(d.lieu||'—')+'</div></div>'+
+    (d.titre?'<div class="objet"><b>'+esc(T('docObjet'))+DP.replace(/ $/,'')+'</b> '+esc(d.titre)+'</div>':'')+
+    (mode==='bpu'?docBpu(d):mode==='sd'?docSd(d):(
+    '<table><thead><tr><th>'+esc(T('designation'))+'</th><th>'+esc(T('unite'))+'</th><th class="n">'+esc(T('qte'))+'</th><th class="n">'+esc(T('pu'))+' ('+esc(d.devise||'HTG')+')</th><th class="n">'+esc(T('montant'))+' ('+esc(d.devise||'HTG')+')</th></tr></thead><tbody>'+lignes+'</tbody></table>'+
+    '<div class="totaux"><div><span>'+esc(T('totalHT'))+'</span><b>'+esc(argent(t.ht))+'</b></div>'+
+      (t.imp?'<div><span>'+esc(T('imprevus'))+' ('+esc(d.imprevus)+' %)</span><span>'+esc(argent(t.imp))+'</span></div>':'')+
+      (t.rem?'<div><span>'+esc(T('remise'))+'</span><span>− '+esc(argent(t.rem))+'</span></div>':'')+
+      (t.tca?'<div><span>'+esc(T('baseHT'))+'</span><span>'+esc(argent(t.base))+'</span></div><div><span>'+esc(T('tca'))+' ('+esc(d.tca)+' %)</span><span>'+esc(argent(t.tca))+'</span></div>':'')+
+      '<div class="g"><span>'+esc(T('totalTTC'))+'</span><span>'+esc(argent(t.ttc))+'</span></div>'+
+      (d.double&&equivalent(t.ttc)?'<div class="equiv"><span>'+esc(T('equiv'))+' ('+esc(T('tauxCourt')(fq(tauxDe(d.taux),2)))+')</span><span>'+esc(equivalent(t.ttc))+'</span></div>':'')+'</div>'+
+    '<div class="lettres2">'+esc(T('arrete'))+DP+'<b>'+esc(enLettres(t.ttc))+'</b>.</div>'+
+    (d.conditions?'<div class="cond">'+esc(d.conditions)+'</div>':'')))+
+    '<div class="faita">'+esc(T('faitA')((String(p.adresse||'').split(',')[0].trim()||d.lieu||'…'),dt||'…'))+'</div>'+
+    (mode==='devis'?'<div class="sign"><div>'+esc(T('signEntreprise'))+'<br><b>'+esc(p.ing||p.firme||'')+'</b></div><div>'+esc(T('signClient'))+'</div></div>'
+      :'<div class="sign"><div>'+esc(T('signSoum'))+'<br><b>'+esc(p.ing||p.firme||'')+'</b>'+(p.titre?'<br>'+esc(p.titre):'')+'</div><div></div></div>')+
+    '<div class="pied">'+esc(T(mode==='devis'?'pied':'piedDoc'))+'</div>';
+  afficherVerifs(mode);
+  vue('apercu');
+}
+
+
+// =====================================================================
+// Métré (quantités de matériaux) et sous-détail des prix
+// Règles : pratique haïtienne (documents « Calcul de métré devis », « Métré et devis ») et dosages
+// courants des bétons. Tous les coefficients restent modifiables dans les champs.
+// =====================================================================
+var MAT = {
+  ciment:{fr:'Ciment gris',en:'Grey cement',u:'sac'}, cimentb:{fr:'Ciment blanc (sac)',en:'White cement (bag)',u:'sac'},
+  sable:{fr:'Sable',en:'Sand',u:'m³'}, gravier:{fr:'Gravier',en:'Gravel',u:'m³'}, roche:{fr:'Roches',en:'Rubble stone',u:'m³'},
+  eau:{fr:'Eau',en:'Water',u:'gallon'}, remblai:{fr:'Remblai (tout-venant de rivière)',en:'Fill (river all-in aggregate)',u:'m³'},
+  bloc10:{fr:'Blocs de 10 cm',en:'10 cm blocks',u:'u'}, bloc15:{fr:'Blocs de 15 cm',en:'15 cm blocks',u:'u'}, bloc20:{fr:'Blocs de 20 cm',en:'20 cm blocks',u:'u'},
+  fer14:{fr:'Fer Ø 1/4" × 20\'',en:'Rebar Ø 1/4" × 20\'',u:'barre'}, fer38:{fr:'Fer Ø 3/8" × 30\'',en:'Rebar Ø 3/8" × 30\'',u:'barre'},
+  fer12:{fr:'Fer Ø 1/2" × 30\'',en:'Rebar Ø 1/2" × 30\'',u:'barre'}, fer58:{fr:'Fer Ø 5/8" × 30\'',en:'Rebar Ø 5/8" × 30\'',u:'barre'},
+  fer34:{fr:'Fer Ø 3/4" × 30\'',en:'Rebar Ø 3/4" × 30\'',u:'barre'}, fer78:{fr:'Fer Ø 7/8" × 30\'',en:'Rebar Ø 7/8" × 30\'',u:'barre'}, fer1:{fr:'Fer Ø 1" × 30\'',en:'Rebar Ø 1" × 30\'',u:'barre'},
+  fil:{fr:'Fil à ligaturer',en:'Tie wire',u:'lb'}, clous:{fr:'Clous 2 ½" AT',en:'2 ½" nails',u:'lb'}, clous4:{fr:'Clous 4"',en:'4" nails',u:'u'},
+  planche:{fr:'Planches 1" × 10" × 12\'',en:'Boards 1" × 10" × 12\'',u:'u'}, tasseau:{fr:'Tasseaux',en:'Battens',u:'u'},
+  plywood:{fr:'Plywood 4\' × 8\'',en:'Plywood 4\' × 8\'',u:'feuille'}, boisdur:{fr:'Bois durs',en:'Hardwood poles',u:'u'}, etai:{fr:'Étais métalliques',en:'Steel props',u:'u'},
+  bois214:{fr:'Bois 2" × 4" × 14\'',en:'Lumber 2" × 4" × 14\'',u:'u'}, bois212:{fr:'Bois 2" × 4" × 12\'',en:'Lumber 2" × 4" × 12\'',u:'u'},
+  crossbar:{fr:'Cross-bars',en:'Profile boards (cross-bars)',u:'u'}, latte:{fr:'Lattes',en:'Laths',u:'u'}, ficelle:{fr:'Ficelle #48 (rouleau)',en:'#48 string (roll)',u:'u'},
+  hourdis:{fr:'Hourdis',en:'Hollow pots',u:'u'}, ceramique:{fr:'Céramique',en:'Ceramic tiles',u:'m²'},
+  peinture:{fr:'Peinture',en:'Paint',u:'gallon'}, papier:{fr:'Papier sablé',en:'Sandpaper',u:'u'}
+};
+// Barres : longueur de calcul (m) et poids par barre (livres), tableau du document « Calcul de métré devis »
+var FERS = { fer14:{l:6,lb:3.34,ph:'1/4"',d:0.635}, fer38:{l:9,lb:11.28,ph:'3/8"',d:0.9525}, fer12:{l:9,lb:20.04,ph:'1/2"',d:1.27}, fer58:{l:9,lb:31.29,ph:'5/8"',d:1.588},
+  fer34:{l:9,lb:45.06,ph:'3/4"',d:1.905}, fer78:{l:9,lb:61.32,ph:'7/8"',d:2.2225}, fer1:{l:9,lb:80.10,ph:'1"',d:2.54} };
+var DRUM = 54, LB_KG = 0.4536, CLOUS_LB = 90;   // gallons par drum ; kg par livre ; clous 2 ½" par livre
+function SAC(){ return Number(profil().sac)||42.5; }  // poids du sac de ciment : 42,5 kg en Haïti (50 kg dans certains cas)
+function sacs(kg){ return kg/SAC(); }
+function f(k,fr,en,def,extra){ return Object.assign({k:k,fr:fr,en:en,def:def},extra||{}); }
+function L2(fr,en){ return {fr:fr,en:en}; }
+function tr2(o){ return o?o[LANG]||o.fr:''; }
+function libFer(k){ return 'Ø '+FERS[k].ph+' × '+(FERS[k].l===6?'20\'':'30\''); }
+// Nombre de barres pour n morceaux de longueur lm (m) ; recouvrement de rc diamètres quand un morceau dépasse une barre
+function barresPour(k,n,lm,rc){
+  var F=FERS[k], L=F.l; if(!(n>0) || !(lm>0)) return 0;
+  if(lm<=L) return Math.ceil(n/Math.max(1,Math.floor(L/lm)));
+  var lap=(rc||40)*F.d/100, seg=Math.ceil((lm-lap)/(L-lap));
+  return Math.ceil(n*(lm+(seg-1)*lap)/L);
+}
+function resFers(k,barres,ml){ var lb=barres*FERS[k].lb; return {lb:lb, m:[[k,barres],['fil',Math.ceil(lb*0.02)]], d:[[T('mMl'),ml,'ml'],[T('mPoids'),lb,'lb'],[T('mPoids'),lb*LB_KG,'kg']]}; }
+function clousLb(n){ return Math.ceil(n/CLOUS_LB); }
+// Éléments en béton : nom de la ligne et dosage habituel
+var ELB = {
+  proprete:{n:L2('Béton de propreté','Blinding concrete'),dos:150}, semelle:{n:L2('Béton des semelles','Footing concrete'),dos:350}, socle:{n:L2('Béton des socles','Pedestal concrete'),dos:350},
+  chainage:{n:L2('Béton du chaînage inférieur','Ground beam concrete'),dos:350}, colonne:{n:L2('Béton des colonnes','Column concrete'),dos:350}, poutre:{n:L2('Béton des poutres','Beam concrete'),dos:350},
+  linteau:{n:L2('Béton des linteaux','Lintel concrete'),dos:350}, dalle:{n:L2('Béton de la dalle','Slab concrete'),dos:350}, escalier:{n:L2('Béton de l\'escalier','Stair concrete'),dos:350}, parquet:{n:L2('Béton du parquet (macadam)','Ground slab concrete'),dos:250}
+};
+var SABLES = { blanc:{n:L2('Sable blanc : 0,9 m³ de sable + 0,5 m³ de gravier par m³','White sand: 0.9 m³ sand + 0.5 m³ gravel per m³'),s:0.9,g:0.5},
+  riviere:{n:L2('Sable de rivière ou moulin : 0,5 m³ de sable + 0,9 m³ de gravier par m³','River or crushed sand: 0.5 m³ sand + 0.9 m³ gravel per m³'),s:0.5,g:0.9} };
+var COFL = { chainage:{n:L2('Coffrage du chaînage inférieur','Ground beam formwork'),pl:2,cl:10,bd:1.5}, poutre:{n:L2('Coffrage des poutres','Beam formwork'),pl:3,cl:20,bd:3}, linteau:{n:L2('Coffrage des linteaux','Lintel formwork'),pl:2,cl:20,bd:0.5} };
+var LOTS_M = { terr:L2('Terrassement','Earthworks'), fond:L2('Fondation','Foundations'), ba:L2('Béton armé','Reinforced concrete'), mac:L2('Maçonnerie','Masonry'), fin:L2('Finitions','Finishes'), prep:L2('Installation de chantier','Site setup'), dal:L2('Dalle','Slab') };
+var OUV = [
+ {id:'implantation', n:L2('Implantation (cross-bars)','Setting out (profile boards)'), u:'forfait', lot:'prep',
+  ch:[f('n','Nombre de colonnes ou de tranchées','Number of columns or trenches',12)],
+  des:function(v){ return LANG==='fr'?'Implantation de l\'ouvrage':'Setting out of the works'; }, dims:function(v){ return v.n+' × 2 cross-bars'; },
+  calc:function(v){ var cb=2*v.n; return {q:1, m:[['crossbar',cb],['latte',cb],['boisdur',Math.ceil(cb*1.5)],['clous',clousLb(cb*10)],['ficelle',1]], d:[[MAT.crossbar[LANG],cb,'u']]}; }},
+ {id:'fouille', n:L2('Fouilles (semelles ou rigoles)','Excavation (footings or trenches)'), u:'m³', lot:'terr',
+  ch:[f('t','Type','Type','semelle',{sel:['semelle','rigole'],lib:function(x){ return x==='semelle'?(LANG==='fr'?'Pour semelles':'For footings'):(LANG==='fr'?'En rigole (tranchée)':'Trench'); }}),
+      f('L','Longueur (m)','Length (m)',1.2),f('l','Largeur (m)','Width (m)',1.2),f('h','Profondeur (m)','Depth (m)',1),f('n','Nombre','Number',8),f('fo','Foisonnement (coef.)','Bulking factor',1.25),f('cam','Capacité du camion (m³) : 6 roues 5 à 6, 10 roues 11 à 12','Truck capacity (m³): 6-wheel 5–6, 10-wheel 11–12',5)],
+  des:function(v){ return v.t==='rigole'?(LANG==='fr'?'Fouilles en rigole':'Trench excavation'):(LANG==='fr'?'Fouilles pour semelles':'Footing excavation'); },
+  dims:function(v){ return dimsTxt([v.L,v.l,v.h],v.n); },
+  calc:function(v){ var V=v.L*v.l*v.h*v.n; return {q:V, m:[], d:[[T('mVol'),V,'m³'],[T('mEvac'),V*v.fo,'m³'],[T('mCamions'),v.cam>0?Math.ceil(V*v.fo/v.cam):0,T('mVoyages')]]}; }},
+ {id:'foncage', n:L2('Fonçage (roches à galet)','Stone soling (cobbles)'), u:'m³', lot:'fond',
+  ch:[f('L','Longueur (m)','Length (m)',1.2),f('l','Largeur (m)','Width (m)',1.2),f('e','Épaisseur (m)','Thickness (m)',0.2),f('n','Nombre de semelles','Number of footings',8),f('ca','Coef. d\'augmentation des roches','Stone factor',1.2)],
+  des:function(){ return LANG==='fr'?'Fonçage en roches à galet':'Stone soling'; }, dims:function(v){ return dimsTxt([v.L,v.l,v.e],v.n); },
+  calc:function(v){ var V=v.L*v.l*v.e*v.n; return {q:V, m:[['roche',V*v.ca]], d:[[T('mVol'),V,'m³']]}; }},
+ {id:'beton', n:L2('Béton (propreté, semelles, socles, colonnes, poutres, dalle…)','Concrete (blinding, footings, columns, beams, slab…)'), u:'m³', lot:'ba',
+  ch:[f('el','Élément','Element','semelle',{sel:Object.keys(ELB),lib:function(k){ return tr2(ELB[k].n); },maj:function(v){ return {dos:ELB[v.el].dos}; }}),
+      f('L','Longueur (m)','Length (m)',1.2),f('l','Largeur (m)','Width (m)',1.2),f('h','Épaisseur ou hauteur (m)','Thickness or height (m)',0.3),f('n','Nombre d\'éléments','Number of elements',8),
+      f('dos','Dosage (kg de ciment / m³)','Mix (kg cement / m³)',350,{sel:[150,250,300,350,400],lib:function(x){ return x+' kg/m³'; }}),
+      f('sab','Type de sable','Sand type','blanc',{sel:Object.keys(SABLES),lib:function(k){ return tr2(SABLES[k].n); }}),f('pe','Pertes (%)','Waste (%)',5)],
+  des:function(v){ return tr2(ELB[v.el].n)+(LANG==='fr'?' dosé à ':' at ')+v.dos+' kg/m³'; }, dims:function(v){ return dimsTxt([v.L,v.l,v.h],v.n); },
+  calc:function(v){ var V=v.L*v.l*v.h*v.n, Vb=V*(1+v.pe/100), S=SABLES[v.sab]||SABLES.blanc;
+    return {q:V, m:[['ciment',Math.ceil(sacs(Vb*v.dos))],['sable',Vb*S.s],['gravier',Vb*S.g],['eau',Math.ceil(Vb*(v.dos<=150?30:60))]], d:[[T('mVol'),V,'m³'],[T('mVolPe'),Vb,'m³'],[T('mDrums'),Math.ceil(Vb*(v.dos<=150?30:60)/DRUM),'drum']]}; }},
+ {id:'roches', n:L2('Maçonnerie de roches','Rubble stone masonry'), u:'m³', lot:'fond',
+  ch:[f('L','Longueur (mètres linéaires)','Length (linear metres)',20),f('l','Largeur (m)','Width (m)',0.4),f('h','Hauteur (m)','Height (m)',0.6),f('ca','Coef. d\'augmentation des roches','Stone factor',1.2)],
+  des:function(){ return LANG==='fr'?'Maçonnerie de roches':'Rubble stone masonry'; }, dims:function(v){ return dimsTxt([v.L,v.l,v.h],1); },
+  calc:function(v){ var V=v.L*v.l*v.h; return {q:V, m:[['roche',V*v.ca],['sable',V*0.6],['ciment',Math.ceil(sacs(V*1.75*42.5))],['eau',Math.ceil(V*30)]], d:[[T('mVol'),V,'m³']]}; }},
+ {id:'blocs', n:L2('Mur en blocs','Block wall'), u:'m²', lot:'mac',
+  ch:[f('L','Longueur du mur (m)','Wall length (m)',4),f('H','Hauteur (m)','Height (m)',2.8),f('o','Ouvertures à déduire (m²)','Openings to deduct (m²)',1.89),f('b','Épaisseur des blocs','Block thickness',15,{sel:[10,15,20],lib:function(x){ return x+' cm'; }}),f('pm','Blocs par m²','Blocks per m²',13),f('pe','Pertes (%)','Waste (%)',5)],
+  des:function(v){ return (LANG==='fr'?'Mur en blocs de ':'Wall in ')+v.b+' cm'+(LANG==='fr'?'':' blocks'); }, dims:function(v){ return fq(v.L)+' × '+fq(v.H)+' m'+(v.o?' − '+fq(v.o)+' m²':''); },
+  calc:function(v){ var S=Math.max(0,v.L*v.H-v.o), n=Math.ceil(S*v.pm*(1+v.pe/100)), par=({10:70,15:50,20:30}[v.b]||50)*SAC()/42.5, sb={10:0.003,15:0.004,20:0.005}[v.b]||0.004;
+    return {q:S, m:[['bloc'+v.b,n],['ciment',Math.ceil(n/par)],['sable',n*sb],['eau',Math.ceil(n*0.16)]], d:[[T('mSurf'),S,'m²'],[T('mBlocsSac'),Math.round(par),T('mParSac')]]}; }},
+ {id:'fers', n:L2('Fers (morceaux droits ou repliés)','Rebar (straight or bent pieces)'), u:'kg', lot:'ba',
+  ch:[f('fer','Diamètre','Diameter','fer12',{sel:Object.keys(FERS),lib:libFer}),f('nm','Morceaux par élément','Pieces per element',4),f('lm','Développement d\'un morceau (m)','Length of one piece incl. bends (m)',4.5),f('ne','Nombre d\'éléments','Number of elements',1),f('rc','Recouvrement si le morceau dépasse une barre (× diamètre)','Lap if a piece is longer than a bar (× diameter)',40)],
+  des:function(v){ return (LANG==='fr'?'Armatures en fer Ø ':'Reinforcement Ø ')+FERS[v.fer].ph; }, dims:function(v){ return v.nm+' × '+fq(v.lm)+' m'+(v.ne!==1?' × '+v.ne:''); },
+  calc:function(v){ var b=barresPour(v.fer,v.nm*v.ne,v.lm,v.rc), r=resFers(v.fer,b,v.nm*v.ne*v.lm); return {q:arrondi(r.lb*LB_KG), m:r.m, d:r.d}; }},
+ {id:'quadrillage', n:L2('Quadrillage de fers (semelle, parquet, dalle pleine)','Rebar mesh (footing, ground slab, solid slab)'), u:'kg', lot:'ba',
+  ch:[f('fer','Diamètre','Diameter','fer38',{sel:Object.keys(FERS),lib:libFer}),f('L','Longueur (m)','Length (m)',3),f('l','Largeur (m)','Width (m)',2.6),f('ma','Maille (m)','Mesh spacing (m)',0.2),f('cr','Crochets ou retours par morceau (m)','Hooks or bends per piece (m)',0),f('n','Nombre d\'éléments identiques','Number of identical elements',1),f('rc','Recouvrement si nécessaire (× diamètre)','Lap if needed (× diameter)',40)],
+  des:function(v){ return (LANG==='fr'?'Quadrillage en fer Ø ':'Rebar mesh Ø ')+FERS[v.fer].ph+(LANG==='fr'?', maille de ':', spacing ')+fq(v.ma*100)+' cm'; }, dims:function(v){ return dimsTxt([v.L,v.l],v.n); },
+  calc:function(v){ if(!(v.ma>0)) return {q:0,m:[],d:[]}; var nA=(Math.floor(v.l/v.ma+1e-9)+1)*v.n, nB=(Math.floor(v.L/v.ma+1e-9)+1)*v.n, lA=v.L+v.cr, lB=v.l+v.cr;
+    var b=barresPour(v.fer,nA,lA,v.rc)+barresPour(v.fer,nB,lB,v.rc), r=resFers(v.fer,b,nA*lA+nB*lB);
+    r.d.unshift([T('mMorceaux'),nA+' × '+fq(lA)+' m + '+nB+' × '+fq(lB)+' m','']); return {q:arrondi(r.lb*LB_KG), m:r.m, d:r.d}; }},
+ {id:'cadres', n:L2('Cadres et étriers','Stirrups and ties'), u:'u', lot:'ba',
+  ch:[f('fer','Diamètre','Diameter','fer14',{sel:['fer14','fer38'],lib:libFer}),f('L','Longueur ou hauteur d\'un élément (m)','Length or height of one element (m)',2.8),f('es','Espacement (m) : 0,15 colonnes, 0,20 socles et chaînages','Spacing (m): 0.15 columns, 0.20 pedestals and ground beams',0.15),f('dv','Développement d\'un cadre (m)','Length of one stirrup (m)',0.7),f('ne','Nombre d\'éléments','Number of elements',12)],
+  des:function(v){ return (LANG==='fr'?'Cadres en fer Ø ':'Stirrups Ø ')+FERS[v.fer].ph+(LANG==='fr'?', espacés de ':', spaced at ')+fq(v.es*100)+' cm'; }, dims:function(v){ return v.ne+' × '+fq(v.L)+' m'; },
+  calc:function(v){ if(!(v.es>0)) return {q:0,m:[],d:[]}; var n=(Math.floor(v.L/v.es+1e-9)+1)*v.ne, b=barresPour(v.fer,n,v.dv,40), r=resFers(v.fer,b,n*v.dv);
+    r.d.unshift([T('mCadres'),n,'u']); return {q:n, m:r.m, d:r.d}; }},
+ {id:'cofsocle', n:L2('Coffrage de socles','Pedestal formwork'), u:'u', lot:'fond',
+  ch:[f('t','Type de socle','Pedestal type','angle',{sel:['angle','plat'],lib:function(x){ return x==='angle'?(LANG==='fr'?'Socle à l\'angle (2 parties)':'Corner pedestal (2 parts)'):(LANG==='fr'?'Socle plat (1 partie)':'Flat pedestal (1 part)'); }}),f('n','Nombre de socles','Number of pedestals',8)],
+  des:function(v){ return v.t==='angle'?(LANG==='fr'?'Coffrage des socles d\'angle':'Corner pedestal formwork'):(LANG==='fr'?'Coffrage des socles plats':'Flat pedestal formwork'); }, dims:function(v){ return v.n+' socles'; },
+  calc:function(v){ var k=v.t==='angle'?2:1; return {q:v.n, m:[['planche',2*k*v.n],['tasseau',2*k*v.n],['boisdur',2*k*v.n],['clous',clousLb(20*k*v.n)]], d:[]}; }},
+ {id:'coflin', n:L2('Coffrage linéaire (chaînage, poutres, linteaux)','Linear formwork (ground beams, beams, lintels)'), u:'ml', lot:'ba',
+  ch:[f('t','Élément','Element','poutre',{sel:Object.keys(COFL),lib:function(k){ return tr2(COFL[k].n); }}),f('ml','Mètres linéaires','Linear metres',30),f('lp','Longueur d\'une planche (m) : 12\' ≈ 3,66 m','Board length (m): 12\' ≈ 3.66 m',3.66)],
+  des:function(v){ return tr2(COFL[v.t].n); }, dims:function(v){ return fq(v.ml)+' ml'; },
+  calc:function(v){ var C=COFL[v.t]; return {q:v.ml, m:[['planche',v.lp>0?Math.ceil(v.ml/v.lp)*C.pl:0],['boisdur',Math.ceil(v.ml*C.bd)],['clous',clousLb(v.ml*C.cl)]], d:[]}; }},
+ {id:'cofcol', n:L2('Coffrage de colonnes','Column formwork'), u:'u', lot:'ba',
+  ch:[f('n','Nombre de colonnes','Number of columns',12),f('H','Hauteur d\'une colonne (m)','Column height (m)',2.8),f('lp','Longueur d\'une planche (m)','Board length (m)',3.66)],
+  des:function(){ return LANG==='fr'?'Coffrage des colonnes':'Column formwork'; }, dims:function(v){ return v.n+' × '+fq(v.H)+' m'; },
+  calc:function(v){ var pl=v.lp>0?4*Math.ceil(v.H/v.lp)*v.n:0; return {q:v.n, m:[['planche',pl],['boisdur',2*pl],['tasseau',16*v.n],['clous',clousLb(60*v.n)]], d:[]}; }},
+ {id:'cofdalle', n:L2('Coffrage de dalle','Slab formwork'), u:'m²', lot:'dal',
+  ch:[f('S','Surface de dalle (m²)','Slab area (m²)',50),f('et','Étaiement','Props','bois',{sel:['bois','metal'],lib:function(x){ return x==='bois'?(LANG==='fr'?'Bois durs : 5 par m² (maille de 0,60 m)':'Hardwood: 5 per m² (0.60 m grid)'):(LANG==='fr'?'Étais métalliques : 2 par m² (maille de 1,20 m)':'Steel props: 2 per m² (1.20 m grid)'); }})],
+  des:function(){ return LANG==='fr'?'Coffrage de la dalle':'Slab formwork'; }, dims:function(v){ return fq(v.S)+' m²'; },
+  calc:function(v){ var pl=Math.ceil(v.S/2.88), m=[['plywood',pl]]; m.push(v.et==='metal'?['etai',Math.ceil(v.S*2)]:['boisdur',Math.ceil(v.S*5)]);
+    m.push(['clous',clousLb(pl*50*0.7)],['clous4',Math.ceil(pl*50*0.3)],['bois214',Math.ceil(v.S*0.6)],['bois212',Math.ceil(v.S*0.8)]); return {q:v.S, m:m, d:[[T('mSurf'),v.S,'m²']]}; }},
+ {id:'hourdis', n:L2('Pose de hourdis','Hollow pot laying'), u:'m²', lot:'dal',
+  ch:[f('S','Surface de dalle (m²)','Slab area (m²)',50),f('pm','Hourdis par m²','Pots per m²',6),f('pe','Pertes (%)','Waste (%)',3)],
+  des:function(){ return LANG==='fr'?'Pose de hourdis':'Hollow pot laying'; }, dims:function(v){ return fq(v.S)+' m²'; },
+  calc:function(v){ return {q:v.S, m:[['hourdis',Math.ceil(v.S*v.pm*(1+v.pe/100))]], d:[[T('mSurf'),v.S,'m²']]}; }},
+ {id:'remblai', n:L2('Remblai (mouvement de terre)','Backfill (earth fill)'), u:'m³', lot:'terr',
+  ch:[f('S','Surface des pièces à remblayer (m²)','Floor area to fill (m²)',60),f('h','Hauteur : soubassement − parquet (m)','Height: plinth − ground slab (m)',0.5),f('ca','Coef. d\'augmentation (compactage)','Compaction factor',1.3)],
+  des:function(){ return LANG==='fr'?'Remblai compacté en tout-venant de rivière':'Compacted backfill (river all-in)'; }, dims:function(v){ return fq(v.S)+' m² × '+fq(v.h)+' m'; },
+  calc:function(v){ var V=v.S*v.h; return {q:V, m:[['remblai',V*v.ca]], d:[[T('mVol'),V,'m³']]}; }},
+ {id:'enduit', n:L2('Crépissage et enduit','Plaster and render'), u:'m²', lot:'fin',
+  ch:[f('S','Surface (m²)','Area (m²)',100),f('e','Épaisseur (cm)','Thickness (cm)',2),f('dos','Dosage du mortier','Mortar mix',400,{sel:[300,350,400,450,600],lib:function(x){ return x+' kg/m³'+(x===600?(LANG==='fr'?' (étanche)':' (waterproof)'):''); }}),f('pe','Pertes (%)','Waste (%)',10)],
+  des:function(v){ return (LANG==='fr'?'Crépissage et enduit, mortier dosé à ':'Plaster and render, mortar at ')+v.dos+' kg/m³'; }, dims:function(v){ return fq(v.S)+' m² × '+fq(v.e)+' cm'; },
+  calc:function(v){ var V=v.S*v.e/100*(1+v.pe/100); return {q:v.S, m:[['ciment',Math.ceil(sacs(V*v.dos))],['sable',V*1.1],['eau',Math.ceil(V*55)]], d:[[T('mVolMortier'),V,'m³']]}; }},
+ {id:'carrelage', n:L2('Revêtement en céramique','Ceramic tiling'), u:'m²', lot:'fin',
+  ch:[f('S','Surface (m²)','Area (m²)',40),f('bd','Bordures (mètres linéaires)','Skirting (linear metres)',0),f('pe','Pertes et coupes (%)','Waste and cuts (%)',5)],
+  des:function(){ return LANG==='fr'?'Revêtement en céramique':'Ceramic tiling'; }, dims:function(v){ return fq(v.S)+' m²'+(v.bd?' + '+fq(v.bd)+' ml':''); },
+  calc:function(v){ var Sc=(v.S+v.bd*0.11)*(1+v.pe/100); return {q:v.S, m:[['ceramique',Sc],['ciment',Math.ceil(sacs(v.S*8.5))],['cimentb',Math.ceil(v.S*0.015)],['sable',v.S*0.05]], d:[[T('mSurf'),v.S,'m²']]}; }},
+ {id:'peinture', n:L2('Peinture','Painting'), u:'m²', lot:'fin',
+  ch:[f('S','Surface à peindre (m²)','Area to paint (m²)',100),f('c','Nombre de couches','Coats',2),f('r','Rendement (m² par gallon)','Coverage (m² per gallon)',13)],
+  des:function(v){ return (LANG==='fr'?'Peinture, ':'Painting, ')+v.c+(LANG==='fr'?' couche'+(v.c>1?'s':''):' coat'+(v.c>1?'s':'')); }, dims:function(v){ return fq(v.S)+' m²'; },
+  calc:function(v){ var g=v.r>0?Math.ceil(v.S*v.c/v.r):0; return {q:v.S, m:[['peinture',g],['papier',g*3]], d:[[T('mSurf'),v.S,'m²']]}; }}
+];
+function dimsTxt(a,n){ return a.map(function(x){ return fq(x); }).join(' × ')+' m'+(n&&n!==1?' × '+fq(n):''); }
+Object.assign(TXT.fr,{ metreBtn:'🧮 Métré', metreTitre:'Calculatrice de métré', metreOuvrage:'Ouvrage', metreLot:'Ajouter dans le lot', metreAjOuv:'Ajouter comme ouvrage', metreAjMat:'Ajouter les matériaux',
+  metreNote:'« Ajouter comme ouvrage » crée une ligne (ex. 5 m³ de béton) et garde ses matériaux : le bouton Σ de la ligne les reprend dans le sous-détail. « Ajouter les matériaux » crée une ligne par matériau, avec vos prix de « Mon en-tête ». Les coefficients sont modifiables.',
+  mVol:'Volume', mVolPe:'Volume avec pertes', mEvac:'Déblais foisonnés à évacuer', mCamions:'Voyages de camion', mVoyages:'voyages', mDrums:'Eau en drums (54 gal)', mSurf:'Surface', mBlocsSac:'Blocs par sac de ciment', mParSac:'blocs / sac',
+  mVolMortier:'Volume de mortier', mMl:'Longueur totale', mPoids:'Poids', mCadres:'Nombre de cadres', mMateriau:'Matériau', mQte:'Quantité', mNouvLot:'Nouveau lot', mMatDe:'Matériaux — ',
+  pPrix:'Mes prix de matériaux', pPrixAide:'Servent au sous-détail des prix et aux lignes de matériaux. Laissez vide si vous ne savez pas.',
+  sdTitre:'Sous-détail du prix', sdAjMat:'+ Matériau', sdMo:'Main-d\'œuvre (montant total)', sdTr:'Transport (% des achats)', sdMa:'Manutention (% du transport)', sdIm:'Imprévus (%)', sdFr:'Frais et bénéfice (%)',
+  sdAchats:'Achats', sdTransp:'Transport', sdManut:'Manutention', sdMoL:'Main-d\'œuvre', sdImp:'Imprévus', sdFrais:'Frais et bénéfice', sdRevient:'Prix de revient', sdPU:'Prix unitaire', sdAppliquer:'Appliquer ce prix unitaire', sdPrix:'Prix', sdTot:'Total',
+  sdNote:'Méthode : achats + transport + manutention + main-d\'œuvre, puis imprévus et frais calculés sur ce total. Le prix unitaire = prix de revient ÷ quantité de la ligne. Si vos prix incluent déjà les imprévus, mettez « Imprévus » à 0 % dans les totaux du devis.',
+  sdLigneQ:function(d,q,u){ return 'Ligne : '+d+' — quantité '+q+' '+u; }, sdQ0:'Mettez d\'abord une quantité sur la ligne.' });
+Object.assign(TXT.en,{ metreBtn:'🧮 Take-off', metreTitre:'Quantity take-off calculator', metreOuvrage:'Work item', metreLot:'Add to section', metreAjOuv:'Add as work item', metreAjMat:'Add materials',
+  metreNote:'“Add as work item” creates one line (e.g. 5 m³ of concrete) and keeps the materials for the Σ price breakdown. “Add materials” creates one line per material, priced from “My letterhead”. All factors can be edited.',
+  mVol:'Volume', mVolPe:'Volume with waste', mEvac:'Bulked spoil to remove', mCamions:'Truck trips', mVoyages:'trips', mDrums:'Water in drums (54 gal)', mSurf:'Area', mBlocsSac:'Blocks per bag of cement', mParSac:'blocks / bag',
+  mVolMortier:'Mortar volume', mMl:'Total length', mPoids:'Weight', mCadres:'Number of stirrups', mMateriau:'Material', mQte:'Quantity', mNouvLot:'New section', mMatDe:'Materials — ',
+  pPrix:'My material prices', pPrixAide:'Used for the price breakdown and material lines. Leave blank if unknown.',
+  sdTitre:'Unit price breakdown', sdAjMat:'+ Material', sdMo:'Labour (total amount)', sdTr:'Transport (% of purchases)', sdMa:'Handling (% of transport)', sdIm:'Contingency (%)', sdFr:'Overheads and profit (%)',
+  sdAchats:'Purchases', sdTransp:'Transport', sdManut:'Handling', sdMoL:'Labour', sdImp:'Contingency', sdFrais:'Overheads and profit', sdRevient:'Cost price', sdPU:'Unit price', sdAppliquer:'Apply this unit price', sdPrix:'Price', sdTot:'Total',
+  sdNote:'Method: purchases + transport + handling + labour, then contingency and overheads on that total. Unit price = cost price ÷ line quantity. If your prices already include contingency, set “Contingency” to 0 % in the quote totals.',
+  sdLigneQ:function(d,q,u){ return 'Line: '+d+' — quantity '+q+' '+u; }, sdQ0:'Enter a quantity on the line first.' });
+
+Object.assign(TXT.fr,{ sdDesc:'Ce prix comprend (texte du bordereau des prix)', sdBase:'Ce sous-détail est établi pour', sdBaseAide:'1 = le prix d\'une seule unité (méthode des dossiers d\'appel d\'offres). Si vous détaillez toute la quantité de la ligne, mettez cette quantité.',
+  sdCoefs:'Coefficients (en % du coût sec)', sdIm:'Imprévus (%)', sdTx:'Taxes (%)', sdFg:'Frais généraux et autres coûts (%)', sdPr:'Profit (%)',
+  sdG_mat:'Matériaux et fournitures', sdG_mo:'Main-d\'œuvre', sdG_mt:'Matériel', sdG_tr:'Transport, assurance et dépenses connexes', sdAjLigne:'+ Ligne', sdTrp:'Transport en % du coût des matériaux (facultatif)',
+  sdCs:'Coût sec', sdPv:'Prix de vente', sdPU:'Prix unitaire', sdBaseDoc:function(b,u){ return 'sous-détail établi pour '+b+' '+u; },
+  sdNote:'Méthode : coût sec = (1) matériaux + (2) main-d\'œuvre + (3) matériel + (4) transport. Imprévus, taxes, frais généraux et profit se calculent sur le coût sec ; prix de vente = coût sec × K. Avec 10 + 2 + 8 + 5 %, K = 1,25. Si les imprévus sont déjà ici, mettez 0 % d\'imprévus dans les totaux du devis.',
+  pSac:'Poids du sac de ciment', pSacAide:'Change le nombre de sacs dans la calculatrice de métré (150 kg/m³ = 3,5 sacs de 42,5 kg ou 3 sacs de 50 kg).', pCoefs:'Mes coefficients par défaut du sous-détail (%)',
+  docDevis:'Devis estimatif', docBpu:'Bordereau des prix', docSd:'Sous-détails', docBpuT:'BORDEREAU DES PRIX UNITAIRES', docSdT:'SOUS-DÉTAILS DES PRIX UNITAIRES', docN:'N°', docPrixN:'Prix N°',
+  docCu:'Coût unitaire', docCt:'Coût total', docSdVide:'Aucune ligne n\'a encore de sous-détail. Ouvrez une ligne avec le bouton Σ.' });
+Object.assign(TXT.en,{ sdDesc:'This price includes (bill of rates text)', sdBase:'This breakdown is for', sdBaseAide:'1 = the price of a single unit (tender method). If you break down the whole line quantity, enter that quantity.',
+  sdCoefs:'Factors (% of direct cost)', sdIm:'Contingency (%)', sdTx:'Taxes (%)', sdFg:'Overheads and other costs (%)', sdPr:'Profit (%)',
+  sdG_mat:'Materials and supplies', sdG_mo:'Labour', sdG_mt:'Equipment', sdG_tr:'Transport, insurance and related costs', sdAjLigne:'+ Line', sdTrp:'Transport as % of materials (optional)',
+  sdCs:'Direct cost', sdPv:'Selling price', sdPU:'Unit price', sdBaseDoc:function(b,u){ return 'breakdown for '+b+' '+u; },
+  sdNote:'Method: direct cost = (1) materials + (2) labour + (3) equipment + (4) transport. Contingency, taxes, overheads and profit are % of direct cost; selling price = direct cost × K. With 10 + 2 + 8 + 5 %, K = 1.25. If contingency is included here, set the quote contingency to 0 %.',
+  pSac:'Cement bag weight', pSacAide:'Changes the number of bags in the take-off calculator (150 kg/m³ = 3.5 bags of 42.5 kg or 3 bags of 50 kg).', pCoefs:'My default breakdown factors (%)',
+  docDevis:'Estimate', docBpu:'Bill of rates', docSd:'Breakdowns', docBpuT:'BILL OF UNIT RATES', docSdT:'UNIT PRICE BREAKDOWNS', docN:'No.', docPrixN:'Rate No.',
+  docCu:'Unit cost', docCt:'Total cost', docSdVide:'No line has a price breakdown yet. Open a line with the Σ button.' });
+Object.assign(TXT.fr,{ prixMajLe:'Prix mis à jour le', pPrixDev:'Monnaie de mes prix', pTaux:'Taux du dollar : 1 USD = … HTG',
+  pSacAide:'En Haïti, le sac courant (usage général ou structurel) pèse 42,5 kg. Choisissez 50 kg seulement si votre fournisseur ou le cahier des charges l\'impose.',
+  pPrixAide:'Servent au métré et aux sous-détails. Les prix changent vite avec l\'inflation : mettez-les à jour avant chaque devis. La date de mise à jour est notée.',
+  dDevise:'Monnaie du devis', dTaux:'Taux : 1 USD = … HTG', dDouble:'Afficher aussi l\'autre monnaie',
+  outilsPrix:'Prix et inflation', outilsAide:'« Reprendre mes prix » remplace les prix des matériaux de ce devis par ceux de « Mon en-tête ». La révision applique un pourcentage à tous les prix (ex. 8 % d\'inflation depuis la première version).',
+  actualiser:'Reprendre mes prix actuels', dRevision:'Révision (%)', reviser:'Appliquer à tous les prix', revisionVide:'Indiquez un pourcentage (ex. 8 ou −5).',
+  actualises:function(n){ return n?n+' ligne(s) mise(s) à jour avec vos prix actuels.':'Aucune ligne à mettre à jour (prix identiques ou absents de « Mon en-tête »).'; },
+  revises:function(x){ return 'Tous les prix ont été révisés de '+x+' %.'; },
+  tauxManque:'Indiquez d\'abord le taux du dollar pour convertir les prix.', convertiAu:function(t){ return 'Prix convertis au taux 1 USD = '+t+' HTG.'; },
+  equiv:'Équivalent', tauxCourt:function(t){ return '1 USD = '+t+' HTG'; }, tauxUtilise:function(t){ return 'Taux utilisé : 1 USD = '+t+' HTG.'; },
+  faitA:function(l,d){ return 'Fait à '+l+', le '+d+'.'; }, signSoum:'Le soumissionnaire (signature et cachet)', piedDoc:'Document préparé avec Masbet Suite — Masbet Education',
+  sdFait:'sous-détail fait', mMorceaux:'Morceaux',
+  vTitre:'À vérifier avant d\'imprimer :', vOk:'Tout est en ordre : le document est prêt.',
+  vClient:'Le nom du maître d\'ouvrage est vide.', vLieu:'Le lieu de la construction est vide.', vObjet:'L\'objet du devis (titre) est vide.', vValid:'La durée de validité n\'est pas indiquée.',
+  vSansPrix:function(x){ return 'Lignes sans prix unitaire : '+x+'.'; }, vSansQ:function(x){ return 'Lignes sans quantité : '+x+'.'; }, vSansD:function(x){ return 'Lignes sans désignation : '+x+'.'; },
+  vPrixDiff:function(x){ return 'Même ouvrage avec des prix différents : '+x+'.'; },
+  vDoubleImp:'Des sous-détails contiennent déjà des imprévus : mettez « Imprévus » à 0 % dans les totaux pour ne pas les compter deux fois.',
+  vK:function(x){ return 'Les sous-détails n\'utilisent pas tous le même coefficient K ('+x+') : harmonisez ou justifiez.'; },
+  vPrixVieux:function(d){ return 'Vos prix de matériaux datent du '+d+' : vérifiez-les (inflation).'; },
+  vTaux:'Indiquez le taux du dollar pour afficher l\'autre monnaie.',
+  vDesc:function(n){ return n+' prix sans texte « Ce prix comprend… » (bouton Σ de la ligne).'; },
+  vSd:function(x){ return 'Prix sans sous-détail : '+x+' (bouton Σ de la ligne).'; } });
+Object.assign(TXT.en,{ prixMajLe:'Prices updated on', pPrixDev:'Currency of my prices', pTaux:'Dollar rate: 1 USD = … HTG',
+  pSacAide:'In Haiti the usual bag (general or structural use) weighs 42.5 kg. Choose 50 kg only if your supplier or the specifications require it.',
+  pPrixAide:'Used in take-offs and price breakdowns. Prices change quickly with inflation: update them before each quote. The update date is recorded.',
+  dDevise:'Quote currency', dTaux:'Rate: 1 USD = … HTG', dDouble:'Also show the other currency',
+  outilsPrix:'Prices and inflation', outilsAide:'“Use my current prices” replaces the material prices of this quote with those in “My letterhead”. The revision applies a percentage to every price (e.g. 8 % inflation since the first version).',
+  actualiser:'Use my current prices', dRevision:'Revision (%)', reviser:'Apply to all prices', revisionVide:'Enter a percentage (e.g. 8 or −5).',
+  actualises:function(n){ return n?n+' line(s) updated with your current prices.':'Nothing to update (same prices, or not set in “My letterhead”).'; },
+  revises:function(x){ return 'All prices revised by '+x+' %.'; },
+  tauxManque:'Enter the dollar rate first to convert prices.', convertiAu:function(t){ return 'Prices converted at 1 USD = '+t+' HTG.'; },
+  equiv:'Equivalent', tauxCourt:function(t){ return '1 USD = '+t+' HTG'; }, tauxUtilise:function(t){ return 'Rate used: 1 USD = '+t+' HTG.'; },
+  faitA:function(l,d){ return 'Done at '+l+', on '+d+'.'; }, signSoum:'The bidder (signature and stamp)', piedDoc:'Document prepared with Masbet Suite — Masbet Education',
+  sdFait:'breakdown done', mMorceaux:'Pieces',
+  vTitre:'Check before printing:', vOk:'Everything is in order: the document is ready.',
+  vClient:'The project owner name is empty.', vLieu:'The construction site is empty.', vObjet:'The quote subject (title) is empty.', vValid:'The validity period is missing.',
+  vSansPrix:function(x){ return 'Lines without a unit price: '+x+'.'; }, vSansQ:function(x){ return 'Lines without a quantity: '+x+'.'; }, vSansD:function(x){ return 'Lines without a description: '+x+'.'; },
+  vPrixDiff:function(x){ return 'Same item with different prices: '+x+'.'; },
+  vDoubleImp:'Some breakdowns already include contingency: set “Contingency” to 0 % in the totals so it is not counted twice.',
+  vK:function(x){ return 'Breakdowns do not all use the same K factor ('+x+'): harmonise or justify.'; },
+  vPrixVieux:function(d){ return 'Your material prices date from '+d+': check them (inflation).'; },
+  vTaux:'Enter the dollar rate to show the other currency.',
+  vDesc:function(n){ return n+' rate(s) without “This price includes…” text (Σ button on the line).'; },
+  vSd:function(x){ return 'Rates without a breakdown: '+x+' (Σ button on the line).'; } });
+function nomMat(k){ if(k==='ciment') return (LANG==='fr'?'Ciment gris (sac de ':'Grey cement (')+fq(SAC())+' kg'+(LANG==='fr'?')':' bag)'); return (MAT[k]||{})[LANG] || k; }
+// Prix d'un matériau dans la monnaie du devis (les prix du profil sont saisis dans leur propre monnaie)
+function prixMat(k){ var p=profil(), x=(p.prix||{})[k]; if(x==null||x==='') return 0; return convertir(Number(x)||0, p.prixDevise||p.devise||'HTG', (DEVIS&&DEVIS.devise)||p.devise||'HTG', DEVIS&&DEVIS.taux); }
+function tauxDe(t){ var x=Number(t); if(!(x>0)) x=Number(profil().taux); return x>0?x:0; }
+function convertir(n,de,vers,taux){ if(de===vers||!n) return n; var t=tauxDe(taux); if(!t) return n; return arrondi(de==='USD'?n*t:n/t); }
+function fq(x,dec){ var n=Number(x)||0, d=dec==null?(Math.abs(n-Math.round(n))<1e-9?0:2):dec; return n.toLocaleString(LANG==='fr'?'fr-FR':'en-US',{minimumFractionDigits:0,maximumFractionDigits:d}); }
+function afficherPrix(){
+  var p=(PROFIL_BROUILLON&&PROFIL_BROUILLON.prix)||{};
+  el('prixmat').innerHTML=Object.keys(MAT).map(function(k){ return '<span>'+esc(nomMat(k))+' <span class="hint">/ '+esc(MAT[k].u)+'</span></span><input id="px_'+k+'" type="number" min="0" step="any" value="'+esc(p[k]==null?'':p[k])+'">'; }).join('');
+  var d=PROFIL_BROUILLON&&PROFIL_BROUILLON.prixMaj; el('pPrixMaj').textContent=d?T('prixMajLe')+DP+new Date(d).toLocaleDateString(LANG==='fr'?'fr-FR':'en-GB'):'';
+}
+function fermerModal(id){ el(id).classList.add('hidden'); }
+function ouvrirMetre(){
+  if(!DEVIS) return; lireEditeur();
+  el('mOuv').innerHTML=OUV.map(function(o,i){ return '<option value="'+i+'">'+esc(tr2(o.n))+'</option>'; }).join('');
+  el('mLot').innerHTML=DEVIS.lots.map(function(l,i){ return '<option value="'+i+'">'+esc((i+1)+'. '+(l.titre||T('lot')))+'</option>'; }).join('')+'<option value="nouveau">+ '+esc(T('mNouvLot'))+'</option>';
+  champsMetre(); el('mMetre').classList.remove('hidden');
+}
+function ouvCourant(){ return OUV[Number(el('mOuv').value)||0]; }
+function champsMetre(){
+  var o=ouvCourant();
+  el('mChamps').innerHTML=o.ch.map(function(c){
+    if(c.sel) return '<div><label for="mc_'+c.k+'">'+esc(c[LANG])+'</label><select id="mc_'+c.k+'" onchange="calcMetre(\''+c.k+'\')">'+c.sel.map(function(x){ return '<option value="'+esc(x)+'"'+(String(x)===String(c.def)?' selected':'')+'>'+esc(c.lib?c.lib(x):x)+'</option>'; }).join('')+'</select></div>';
+    return '<div><label for="mc_'+c.k+'">'+esc(c[LANG])+'</label><input id="mc_'+c.k+'" type="number" inputmode="decimal" step="any" min="0" value="'+esc(c.def)+'" oninput="calcMetre()"></div>';
+  }).join('');
+  calcMetre();
+}
+var METRE=null;
+function lireChamps(o){ var v={}; o.ch.forEach(function(c){ var x=el('mc_'+c.k).value; v[c.k]=c.sel&&isNaN(Number(x))?x:nombre(x); }); return v; }
+function calcMetre(change){
+  var o=ouvCourant(), v=lireChamps(o);
+  if(change){ var c=o.ch.filter(function(x){ return x.k===change; })[0]; if(c&&c.maj){ var m=c.maj(v); Object.keys(m).forEach(function(k){ if(el('mc_'+k)) el('mc_'+k).value=m[k]; }); v=lireChamps(o); } }
+  var r=o.calc(v); METRE={o:o,v:v,r:r};
+  var h='<p class="hint" style="margin:8px 0 0"><b>'+esc(o.des(v))+'</b> — '+esc(fq(r.q))+' '+esc(o.u)+'</p><table class="res"><tr><th>'+esc(T('mMateriau'))+'</th><th class="n">'+esc(T('mQte'))+'</th></tr>';
+  r.d.forEach(function(x){ h+='<tr><td>'+esc(x[0])+'</td><td class="n"><b>'+esc(typeof x[1]==='number'?fq(x[1]):x[1])+'</b> '+esc(x[2])+'</td></tr>'; });
+  r.m.forEach(function(x){ h+='<tr><td>'+esc(nomMat(x[0]))+'</td><td class="n"><b>'+esc(fq(x[1]))+'</b> '+esc(MAT[x[0]].u)+'</td></tr>'; });
+  el('mRes').innerHTML=h+'</table>';
+}
+function ajouterMetre(mode){
+  if(!METRE) return;
+  var o=METRE.o, r=METRE.r, v=METRE.v, li=el('mLot').value, lot;
+  var vide=function(l){ return !String(l.titre||'').trim() && l.lignes.every(function(g){ return !ligneVisible(g); }); };
+  if(li==='nouveau' && DEVIS.lots.length===1 && vide(DEVIS.lots[0])) DEVIS.lots=[];
+  if(li==='nouveau'){ DEVIS.lots.push({titre:mode==='mat'?T('mMatDe')+tr2(LOTS_M[o.lot]):tr2(LOTS_M[o.lot]),lignes:[]}); lot=DEVIS.lots[DEVIS.lots.length-1]; }
+  else { lot=DEVIS.lots[Number(li)]; if(lot.lignes.length===1 && !lot.lignes[0].d && !nombre(lot.lignes[0].pu)) lot.lignes=[]; }
+  if(mode==='mat') r.m.forEach(function(x){
+    var q=arrondi(x[1]); if(!(q>0)) return;
+    var ex=lot.lignes.filter(function(g){ return g.k===x[0] && g.u===MAT[x[0]].u; })[0];   // même matériau dans le lot : on additionne
+    if(ex) ex.q=arrondi(nombre(ex.q)+q); else lot.lignes.push({d:nomMat(x[0]),u:MAT[x[0]].u,q:q,pu:prixMat(x[0]),k:x[0]});
+  });
+  else lot.lignes.push({d:o.des(v),u:o.u,q:arrondi(r.q),pu:0,metre:o.dims(v),mat:r.m.filter(function(x){ return x[1]>0; }).map(function(x){ return {k:x[0],q:arrondi(x[1])}; })});
+  if(!lot.lignes.length) lot.lignes.push({d:'',u:'u',q:1,pu:0});
+  fermerModal('mMetre'); afficherLots(); modif();
+}
+// ---------- Sous-détail (format des dossiers d'appel d'offres) ----------
+// 4 groupes : (1) matériaux et fournitures, (2) main-d'œuvre, (3) matériel, (4) transport, assurance et dépenses connexes
+// Coût sec = 1+2+3+4 ; imprévus, taxes, frais généraux et profit en % du coût sec ; prix de vente = coût sec × K.
+var GROUPES=['mat','mo','mt','tr'];
+function coefsDefaut(p){ var k=(p||profil()).k||{}; return {im:k.im==null?10:k.im, tx:k.tx==null?2:k.tx, fg:k.fg==null?8:k.fg, pr:k.pr==null?5:k.pr}; }
+var SD=null;
+// Ancien format (matériaux + main-d'œuvre en montant + % de transport) converti au nouveau
+function sdNormal(o,g){
+  if(o && o.g) return o;
+  var k=coefsDefaut(), n={desc:'',base:1,trp:0,im:k.im,tx:k.tx,fg:k.fg,pr:k.pr,g:{mat:[],mo:[],mt:[],tr:[]}};
+  if(o){ n.g.mat=(o.mat||[]).map(function(m){ return {d:m.d,u:m.u,q:m.q,p:m.p}; }); if(nombre(o.mo)) n.g.mo.push({d:T('sdMoL'),u:'forfait',q:1,p:nombre(o.mo)});
+    n.trp=nombre(o.tr); n.im=nombre(o.im); n.fr=0; n.base=nombre(g.q)||1; }
+  else if(g.mat && g.mat.length){ n.g.mat=g.mat.map(function(m){ return {d:nomMat(m.k),u:MAT[m.k]?MAT[m.k].u:'u',q:m.q,p:prixMat(m.k),k:m.k}; }); n.base=nombre(g.q)||1; }
+  return n;
+}
+function ouvrirSd(i,j){
+  lireEditeur(); var g=DEVIS.lots[i].lignes[j];
+  SD={i:i,j:j,sd:JSON.parse(JSON.stringify(sdNormal(g.sd,g)))};
+  if(!SD.sd.desc) SD.sd.desc=g.desc||'';
+  el('sdLigne').textContent=T('sdLigneQ')(g.d||'—',fq(g.q),g.u);
+  el('sdDesc').value=SD.sd.desc; el('sdBase').value=SD.sd.base;
+  el('sdIm').value=SD.sd.im; el('sdTx').value=SD.sd.tx; el('sdFg').value=SD.sd.fg; el('sdPr').value=SD.sd.pr;
+  afficherSdGroupes(); el('mSd').classList.remove('hidden');
+}
+function afficherSdGroupes(){
+  var h='';
+  GROUPES.forEach(function(gr,n){
+    h+='<div class="sdg"><h3 style="margin:14px 0 2px">'+(n+1)+'. '+esc(T('sdG_'+gr))+'</h3>';
+    SD.sd.g[gr].forEach(function(m,k){
+      var r='SD.sd.g.'+gr+'['+k+']';
+      h+='<div class="sdm"><div class="sdm1"><input aria-label="'+esc(T('designation'))+'" placeholder="'+esc(T('designation'))+'" value="'+esc(m.d)+'" oninput="'+r+'.d=this.value"><input aria-label="'+esc(T('unite'))+'" style="flex:0 0 74px" value="'+esc(m.u)+'" oninput="'+r+'.u=this.value"><button class="x" onclick="SD.sd.g.'+gr+'.splice('+k+',1);afficherSdGroupes()">✕</button></div>'+
+        '<div class="sdm2"><label>'+esc(T('mQte'))+'<input type="number" inputmode="decimal" step="any" min="0" value="'+esc(m.q)+'" oninput="'+r+'.q=nombre(this.value);sdCalc()"></label>'+
+        '<label>'+esc(T('sdPrix'))+'<input type="number" inputmode="decimal" step="any" min="0" value="'+esc(m.p)+'" oninput="'+r+'.p=nombre(this.value);sdCalc()"></label>'+
+        '<b id="sdt_'+gr+'_'+k+'"></b></div></div>';
+    });
+    h+='<div class="row" style="justify-content:space-between;margin-top:6px"><button class="btn sec mini" onclick="sdAjouter(\''+gr+'\')">'+esc(T('sdAjLigne'))+'</button><b id="sdst_'+gr+'"></b></div>';
+    if(gr==='tr') h+='<div class="grid2"><div><label for="sdTrp" data-t="sdTrp">'+esc(T('sdTrp'))+'</label><input id="sdTrp" type="number" min="0" step="any" value="'+esc(SD.sd.trp)+'" oninput="sdCalc()"></div></div>';
+    h+='</div>';
+  });
+  el('sdGroupes').innerHTML=h; sdCalc();
+}
+function sdAjouter(gr){ var u={mat:'u',mo:'jour',mt:'h',tr:'forfait'}[gr]; SD.sd.g[gr].push({d:'',u:u,q:1,p:0}); afficherSdGroupes(); }
+function sdTotaux(sd){
+  var st={}; GROUPES.forEach(function(gr){ st[gr]=0; (sd.g[gr]||[]).forEach(function(m){ st[gr]+=arrondi(nombre(m.q)*nombre(m.p)); }); });
+  st.trp=arrondi(st.mat*nombre(sd.trp)/100); st.tr+=st.trp;
+  var cs=arrondi(st.mat+st.mo+st.mt+st.tr), im=arrondi(cs*nombre(sd.im)/100), tx=arrondi(cs*nombre(sd.tx)/100), fg=arrondi(cs*nombre(sd.fg)/100), pr=arrondi(cs*nombre(sd.pr)/100);
+  var pv=arrondi(cs+im+tx+fg+pr), base=nombre(sd.base)||0;
+  return {st:st,cs:cs,im:im,tx:tx,fg:fg,pr:pr,pv:pv,k:1+(nombre(sd.im)+nombre(sd.tx)+nombre(sd.fg)+nombre(sd.pr))/100,base:base,pu:base>0?arrondi(pv/base):0};
+}
+function sdCalc(){
+  if(!SD) return; var sd=SD.sd;
+  sd.base=nombre(el('sdBase').value); sd.im=nombre(el('sdIm').value); sd.tx=nombre(el('sdTx').value); sd.fg=nombre(el('sdFg').value); sd.pr=nombre(el('sdPr').value);
+  if(el('sdTrp')) sd.trp=nombre(el('sdTrp').value);
+  GROUPES.forEach(function(gr){ sd.g[gr].forEach(function(m,k){ var c=el('sdt_'+gr+'_'+k); if(c) c.textContent=argent(nombre(m.q)*nombre(m.p)); }); });
+  var t=sdTotaux(sd), g=DEVIS.lots[SD.i].lignes[SD.j];
+  GROUPES.forEach(function(gr,n){ var c=el('sdst_'+gr); if(c) c.textContent=T('sousTotal')+' ('+(n+1)+')'+DP+argent(t.st[gr]); });
+  el('sdRes').innerHTML='<table class="res">'+
+    [[T('sdCs'),t.cs,1],[sansPct('sdIm')+' — '+fq(sd.im)+' %',t.im],[sansPct('sdTx')+' — '+fq(sd.tx)+' %',t.tx],[sansPct('sdFg')+' — '+fq(sd.fg)+' %',t.fg],[sansPct('sdPr')+' — '+fq(sd.pr)+' %',t.pr],[T('sdPv')+' (K = '+fq(t.k,3)+')',t.pv,1]]
+      .map(function(x){ return '<tr><td>'+(x[2]?'<b>':'')+esc(x[0])+(x[2]?'</b>':'')+'</td><td class="n">'+(x[2]?'<b>':'')+esc(argent(x[1]))+(x[2]?'</b>':'')+'</td></tr>'; }).join('')+
+    '<tr><td><b>'+esc(T('sdPU'))+'</b> ('+esc(g.u)+')</td><td class="n"><b>'+(t.base>0?esc(argent(t.pu)):esc(T('sdQ0')))+'</b></td></tr></table>';
+}
+function sdAppliquer(){
+  sdCalc(); var t=sdTotaux(SD.sd); if(!(t.base>0)) return;
+  var g=DEVIS.lots[SD.i].lignes[SD.j]; g.pu=t.pu; g.sd=SD.sd; g.desc=SD.sd.desc||''; delete g.mat; fermerModal('mSd'); afficherLots(); modif();
+}
+
+// ---------- Bordereau des prix (prix unitaire en lettres) et annexe des sous-détails ----------
+var PAR_UNITE={fr:{'m³':'Le mètre cube','m²':'Le mètre carré','ml':'Le mètre linéaire','kg':'Le kilogramme','lb':'La livre','t':'La tonne','u':'L\'unité','sac':'Le sac','gallon':'Le gallon','barre':'La barre','voyage':'Le voyage','forfait':'Le forfait','jour':'Le jour','h':'L\'heure','lot':'Le lot'},
+  en:{'m³':'Per cubic metre','m²':'Per square metre','ml':'Per linear metre','kg':'Per kilogram','lb':'Per pound','t':'Per tonne','u':'Per unit','sac':'Per bag','gallon':'Per gallon','barre':'Per bar','voyage':'Per trip','forfait':'Lump sum','jour':'Per day','h':'Per hour','lot':'Per lot'}};
+function prixLettresBpu(n,u){
+  var dev=(DEVIS&&DEVIS.devise)||'HTG', ent=Math.floor(arrondi(n)), c=String(Math.round((arrondi(n)-ent)*100)).padStart(2,'0');
+  var pre=PAR_UNITE[LANG][u]||(LANG==='fr'?'L\'unité ('+u+')':'Per '+u);
+  if(LANG==='en') return pre+': '+lettresEn(ent)+' '+(dev==='USD'?(ent===1?'US dollar':'US dollars'):(ent===1?'gourde':'gourdes'))+' and '+c+'/100';
+  return pre+DP+montantFr(ent,dev)+' et '+c+'/100';
+}
+function sansPct(k){ return T(k).replace(/ \(%\)$/,''); }
+function ligneVisible(g){ return !!(String(g.d||'').trim() || nombre(g.pu)); }
+function lignesDevis(d){ var l=[], nl=0; d.lots.forEach(function(lot,i){ var v=lot.lignes.filter(ligneVisible); if(!v.length) return; nl++; v.forEach(function(g,j){ l.push({n:nl+'.'+(j+1),g:g,lot:lot,i:i,nl:nl}); }); }); return l; }
+function titreLot(lot,nl){ return nl+'. '+(lot.titre||T('lot')+' '+nl); }
+function docBpu(d){
+  var deux=d.double && tauxDe(d.taux), ad=autreDevise(d.devise||'HTG'), nc=deux?5:4;
+  var h='<table><thead><tr><th style="width:48px">'+esc(T('docN'))+'</th><th>'+esc(T('designation'))+'</th><th>'+esc(T('unite'))+'</th><th class="n">'+esc(T('pu'))+' ('+esc(d.devise||'HTG')+')</th>'+(deux?'<th class="n">'+esc(T('pu'))+' ('+esc(ad)+')</th>':'')+'</tr></thead><tbody>';
+  lignesDevis(d).forEach(function(x,k,arr){
+    if(k===0 || arr[k-1].i!==x.i) h+='<tr class="lot"><td colspan="'+nc+'">'+esc(titreLot(x.lot,x.nl))+'</td></tr>';
+    h+='<tr><td>'+esc(x.n)+'</td><td><b>'+esc(x.g.d)+'</b>'+(x.g.desc?'<div class="bpu-d">'+esc(x.g.desc)+'</div>':'')+'<div class="bpu-l">'+esc(prixLettresBpu(nombre(x.g.pu),x.g.u))+'</div></td><td>'+esc(x.g.u)+'</td><td class="n">'+esc(nb(x.g.pu))+'</td>'+(deux?'<td class="n">'+esc(equivalent(nombre(x.g.pu)).replace(/ [A-Z]{3}$/,''))+'</td>':'')+'</tr>';
+  });
+  return h+'</tbody></table>'+(deux?'<p class="equiv">'+esc(T('tauxUtilise')(fq(tauxDe(d.taux),2)))+'</p>':'');
+}
+function docSd(d){
+  var l=lignesDevis(d).filter(function(x){ return x.g.sd; }); if(!l.length) return '<p>'+esc(T('docSdVide'))+'</p>';
+  return l.map(function(x){
+    var sd=sdNormal(x.g.sd,x.g), t=sdTotaux(sd), h='<div class="sdbloc"><h3>'+esc(T('docPrixN'))+' '+esc(x.n)+' — '+esc(x.g.d)+'</h3><div>'+esc(T('unite'))+DP+'<b>'+esc(x.g.u)+'</b> · '+esc(T('sdBaseDoc')(fq(t.base),x.g.u))+'</div>';
+    var dv=' ('+(d.devise||'HTG')+')'; h+='<table><thead><tr><th>'+esc(T('designation'))+'</th><th class="n">'+esc(T('mQte'))+'</th><th>'+esc(T('unite'))+'</th><th class="n">'+esc(T('docCu')+dv)+'</th><th class="n">'+esc(T('docCt')+dv)+'</th></tr></thead><tbody>';
+    GROUPES.forEach(function(gr,n){
+      h+='<tr class="lot"><td colspan="5">'+(n+1)+'. '+esc(T('sdG_'+gr))+'</td></tr>';
+      sd.g[gr].forEach(function(m){ h+='<tr><td>'+esc(m.d)+'</td><td class="n">'+esc(fq(m.q))+'</td><td>'+esc(m.u)+'</td><td class="n">'+esc(nb(m.p))+'</td><td class="n">'+esc(nb(nombre(m.q)*nombre(m.p)))+'</td></tr>'; });
+      if(gr==='tr' && t.st.trp) h+='<tr><td colspan="4">'+esc(T('sdTrp'))+' ('+esc(fq(sd.trp))+' %)</td><td class="n">'+esc(nb(t.st.trp))+'</td></tr>';
+      h+='<tr class="sg"><td colspan="4">'+esc(T('sousTotal'))+' ('+(n+1)+')</td><td class="n">'+esc(nb(t.st[gr]))+'</td></tr>';
+    });
+    [[T('sdCs')+' (1+2+3+4)',t.cs,'sg'],[sansPct('sdIm')+' ('+fq(sd.im)+' %)',t.im],[sansPct('sdTx')+' ('+fq(sd.tx)+' %)',t.tx],[sansPct('sdFg')+' ('+fq(sd.fg)+' %)',t.fg],[sansPct('sdPr')+' ('+fq(sd.pr)+' %)',t.pr],[T('sdPv'),t.pv,'sg'],[T('sdPU')+' ('+x.g.u+')',t.pu,'pv']]
+      .forEach(function(r){ h+='<tr'+(r[2]?' class="'+r[2]+'"':'')+'><td colspan="4">'+esc(r[0])+'</td><td class="n">'+esc(nb(r[1]))+'</td></tr>'; });
+    return h+'</tbody></table></div>';
+  }).join('');
+}
+
+// ---------- Démarrage ----------
+window.addEventListener('beforeunload', function(e){ if(SALE){ garderLocal(); e.preventDefault(); e.returnValue=''; } });
+if(!window.MASBET_APP) el('lienApp').classList.add('hidden');
+langue(lire('masbet_suite_lang') || (/^en/i.test(navigator.language||'')?'en':'fr'));
+(function(){
+  var m=/[#&]kod=([A-Za-z0-9-]+)/.exec(location.hash||''), k=m?m[1]:lire('masbet_suite_kod');
+  if(m) el('kod').value=m[1];
+  if(k) connexion(k);
+})();
+</script>
+</body>
+</html>

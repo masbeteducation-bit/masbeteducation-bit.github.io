@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14213d">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>MasbetAirNet — Wi-Fi kominotè Ansavo</title>
+<link rel="canonical" href="https://masbeteducation-bit.github.io/apropo.html">
+<meta name="author" content="Duckhens Lespérance — Masbet Education">
+<meta name="description" content="MasbetAirNet, rezo Wi-Fi kominotè Anse-à-Veau (Haïti), jere pa Masbet Education : Starlink, enèji solè, kòd Wi-Fi peye ak MonCash oswa NatCash.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MasbetAirNet">
+<meta property="og:url" content="https://masbeteducation-bit.github.io/apropo.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="MasbetAirNet — Wi-Fi kominotè Ansavo">
+<meta property="og:description" content="Wi-Fi kominotè Ansavo : Plas Piblik, PA sou pon, Kay Diderot, Rue Salomon. Achte kòd ou ak MonCash oswa NatCash.">
+<meta property="og:image" content="https://masbeteducation-bit.github.io/photos/parapli-teren.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="1050">
+<meta property="og:locale" content="fr_HT">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="config.js"></script>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e}
+  *{box-sizing:border-box}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+  .skip{position:absolute;left:-999px;top:8px;z-index:3000;background:var(--gold);color:var(--navy);padding:8px 12px;border-radius:8px;font-weight:700}
+  .skip:focus{left:8px}
+  html{scroll-behavior:smooth;scroll-padding-top:64px}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  /* barre du haut */
+  header{position:sticky;top:0;z-index:1000;background:var(--navy);color:#fff}
+  header .wrap{display:flex;align-items:center;gap:10px;height:56px}
+  header .marque{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:800;font-size:18px}
+  header .marque img{width:32px;height:32px;border-radius:8px}
+  header nav{margin-left:auto;display:flex;gap:4px;align-items:center}
+  header nav a.lien{display:none;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:14px;opacity:.9}
+  header nav a.lien:hover{background:rgba(255,255,255,.1)}
+  .lang{display:flex;border:1px solid rgba(255,255,255,.35);border-radius:8px;overflow:hidden}
+  .lang button{background:none;border:0;color:#fff;padding:6px 9px;font-weight:700;cursor:pointer;font-size:13px}
+  .lang button.on{background:var(--gold);color:var(--navy)}
+  .bt{display:inline-block;background:var(--gold);color:var(--navy);font-weight:800;text-decoration:none;padding:12px 18px;border-radius:12px;border:0;cursor:pointer;font-size:15px}
+  .bt.sec{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4)}
+  header .bt{padding:8px 12px;font-size:14px}
+  /* bandeau */
+  .hero{position:relative;color:#fff;min-height:440px;display:flex;align-items:flex-end;background:#0b1328}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,19,40,.1),rgba(11,19,40,.92))}
+  .hero .wrap{position:relative;z-index:1;padding-top:60px;padding-bottom:36px;width:100%}
+  .hero h1{font-size:32px;line-height:1.15;margin:0 0 10px}
+  .hero p{font-size:17px;max-width:640px;margin:0 0 20px;opacity:.95}
+  .hero .actions{display:flex;flex-wrap:wrap;gap:10px}
+  .puces{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .puces span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 11px;border-radius:999px;font-size:13px}
+  section{padding:44px 0}
+  section.blanc{background:var(--card)}
+  h2{font-size:26px;margin:0 0 6px}
+  .sous{color:var(--muted);margin:0 0 24px}
+  .grille{display:grid;gap:16px}
+  .carte{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px}
+  section.blanc .carte{background:var(--bg)}
+  .carte h3{margin:0 0 6px;font-size:17px}
+  .carte p{margin:0;color:var(--muted)}
+  .ico{font-size:26px;margin-bottom:6px}
+  /* carte géographique */
+  .carteRepli{display:flex;height:100%;align-items:center;justify-content:center;font-weight:700;text-decoration:none;background:var(--card);border-radius:16px}
+  #carte{height:340px;border-radius:16px;border:1px solid var(--line);z-index:0}
+  .zones{list-style:none;padding:0;margin:0}
+  .zones li{padding:12px 0;border-bottom:1px solid var(--line)}
+  .zones li:last-child{border:0}
+  .zones b{display:block}
+  .zones small{color:var(--muted)}
+  /* tarifs */
+  .tarifs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .tarif{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center}
+  .tarif .prix{font-size:26px;font-weight:800}
+  .tarif .prix small{font-size:13px;font-weight:600;color:var(--muted)}
+  .tarif .vol{font-weight:700;margin-top:4px}
+  .tarif .dur{color:var(--muted);font-size:14px}
+  .tarif.epuise{opacity:.55}
+  .tarif .badge{display:inline-block;margin-top:8px;font-size:12px;background:#fdecea;color:#a12b20;padding:2px 8px;border-radius:999px}
+  .avis{color:var(--muted);font-size:14px;margin-top:12px}
+  /* étapes */
+  .etapes{counter-reset:e;display:grid;gap:12px}
+  .etape{position:relative;padding-left:52px}
+  .etape::before{counter-increment:e;content:counter(e);position:absolute;left:0;top:16px;width:36px;height:36px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:800}
+  .etape.carte{padding-left:64px}
+  .etape.carte::before{left:16px}
+  /* galerie */
+  .galerie{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .galerie button{padding:0;border:0;background:none;cursor:zoom-in;border-radius:12px;overflow:hidden;aspect-ratio:4/3}
+  .galerie img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+  .galerie button:hover img{transform:scale(1.04)}
+.filtres{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+  .filtres button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:7px 14px;border-radius:999px;font-weight:700;font-size:14px;cursor:pointer}
+  .filtres button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  #visio{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px}
+  #visio.on{display:flex}
+  #visio img{max-height:88vh;border-radius:8px}
+  #visio button{position:absolute;background:rgba(255,255,255,.15);color:#fff;border:0;font-size:26px;width:48px;height:48px;border-radius:50%;cursor:pointer}
+  #vFerme{top:14px;right:14px}#vPrec{left:10px;top:50%}#vSuiv{right:10px;top:50%}
+  #vLeg{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#fff;font-size:14px;padding:0 16px}
+  /* contact */
+  .contacts a{display:flex;align-items:center;gap:12px;text-decoration:none}
+  .contacts a .ico{margin:0}
+  footer{background:var(--navy);color:#fff;padding:28px 0 90px;font-size:14px}
+  footer a{opacity:.9}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
+  /* barre d'action mobile */
+  .barreMobile{position:fixed;left:0;right:0;bottom:0;z-index:1500;background:var(--card);border-top:1px solid var(--line);display:flex;gap:8px;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+  .barreMobile .bt{flex:1;text-align:center}
+  .barreMobile .bt.sec{background:var(--bg);color:var(--navy);border-color:var(--line)}
+  @media (min-width:640px){
+    .galerie{grid-template-columns:repeat(3,1fr)}
+    .g2{grid-template-columns:1fr 1fr}
+  }
+  @media (min-width:900px){
+    header nav a.lien{display:inline-block}
+    .hero{min-height:560px}
+    .hero h1{font-size:46px}
+    .hero p{font-size:19px}
+    h2{font-size:30px}
+    .g3{grid-template-columns:repeat(3,1fr)}
+    .g4{grid-template-columns:repeat(4,1fr)}
+    .zonesGrille{grid-template-columns:3fr 2fr;align-items:start}
+    #carte{height:420px}
+    .galerie{grid-template-columns:repeat(4,1fr)}
+    .galerie button:first-child{grid-column:span 2;grid-row:span 2}
+    .etapes{grid-template-columns:repeat(4,1fr)}
+    .barreMobile{display:none}
+    footer{padding-bottom:28px}
+  }
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"MasbetAirNet","url":"https://masbeteducation-bit.github.io/","logo":"https://masbeteducation-bit.github.io/icon-512.png",
+ "description":"Réseau Wi-Fi communautaire d'Anse-à-Veau (Haïti), géré par Masbet Education.",
+ "parentOrganization":{"@type":"Organization","name":"Masbet Education"},
+ "areaServed":{"@type":"City","name":"Anse-à-Veau","address":{"@type":"PostalAddress","addressLocality":"Anse-à-Veau","addressRegion":"Nippes","addressCountry":"HT"}},
+ "contactPoint":{"@type":"ContactPoint","telephone":"+509-3699-5259","contactType":"customer support","availableLanguage":["ht","fr"]},
+ "sameAs":["https://www.facebook.com/MasbetEducation","https://www.youtube.com/@MasbetHT"]}
+</script>
+</head>
+<body>
+<a class="skip" href="#nou">Aller au contenu / Ale nan kontni an</a>
+<header>
+  <div class="wrap">
+    <a class="marque" href="index.html"><img src="icon-192.png" alt="">MasbetAirNet</a>
+    <nav>
+      <a class="lien" href="#nou" data-t="mNou"></a>
+      <a class="lien" href="#zon" data-t="mZon"></a>
+      <a class="lien" href="#pri" data-t="mPri"></a>
+      <a class="lien" href="#kijan" data-t="mKijan"></a>
+      <a class="lien" href="#evenman" data-t="mEv"></a>
+      <a class="lien" href="#kontak" data-t="mKontak"></a>
+      <div class="lang"><button id="lHt" type="button">KR</button><button id="lFr" type="button">FR</button></div>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <img src="photos/parapli-teren.jpg" srcset="photos/parapli-teren-p.jpg 640w, photos/parapli-teren.jpg 1400w" sizes="100vw" alt="" fetchpriority="high">
+  <div class="wrap">
+    <h1 data-t="hTitre"></h1>
+    <p data-t="hTexte"></p>
+    <div class="actions">
+      <a class="bt" href="achte.html" data-t="btAchte"></a>
+      <a class="bt sec" href="index.html" data-t="btAppli"></a>
+    </div>
+    <div class="puces"><span>🛰️ Starlink</span><span>☀️ <span data-t="pSolè"></span></span><span>📶 Grandstream</span><span>📱 MonCash · NatCash</span></div>
+  </div>
+</div>
+
+<section id="nou" class="blanc">
+  <div class="wrap">
+    <h2 data-t="nTitre"></h2>
+    <p class="sous" data-t="nSous"></p>
+    <div class="grille g3">
+      <div class="carte"><div class="ico">🤝</div><h3 data-t="n1t"></h3><p data-t="n1"></p></div>
+      <div class="carte"><div class="ico">🛰️</div><h3 data-t="n2t"></h3><p data-t="n2"></p></div>
+      <div class="carte"><div class="ico">🎓</div><h3 data-t="n3t"></h3><p data-t="n3"></p></div>
+    </div>
+    <p class="sous" style="margin-top:18px"><b data-t="nFondT"></b> <span data-t="nFond"></span></p>
+  </div>
+</section>
+
+<section id="zon">
+  <div class="wrap">
+    <h2 data-t="zTitre"></h2>
+    <p class="sous" data-t="zSous"></p>
+    <div class="grille zonesGrille">
+      <div id="carte" role="img" aria-label="Carte Anse-à-Veau"></div>
+      <div class="carte">
+        <ul class="zones">
+          <li><b>📍 Plas Piblik / Place Publique</b><small data-t="z1"></small></li>
+          <li><b>📍 PA sou pon</b><small data-t="z2"></small></li>
+          <li><b>📍 Kay Diderot</b><small data-t="z3"></small></li>
+          <li><b>📍 Rue Salomon</b><small data-t="z3"></small></li>
+        </ul>
+        <p class="avis" data-t="zAvis"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pri" class="blanc">
+  <div class="wrap">
+    <h2 data-t="pTitre"></h2>
+    <p class="sous" data-t="pSous"></p>
+    <div class="tarifs" id="tarifs"><div class="tarif"><span data-t="chaj"></span></div></div>
+    <p class="avis" data-t="pAvis"></p>
+  </div>
+</section>
+
+<section id="kijan">
+  <div class="wrap">
+    <h2 data-t="kTitre"></h2>
+    <p class="sous" data-t="kSous"></p>
+    <div class="etapes">
+      <div class="carte etape"><h3 data-t="k1t"></h3><p data-t="k1"></p></div>
+      <div class="carte etape"><h3 data-t="k2t"></h3><p data-t="k2"></p></div>
+      <div class="carte etape"><h3 data-t="k3t"></h3><p data-t="k3"></p></div>
+      <div class="carte etape"><h3 data-t="k4t"></h3><p data-t="k4"></p></div>
+    </div>
+    <div class="grille g2" style="margin-top:16px">
+      <div class="carte"><div class="ico">🎫</div><h3 data-t="kPapt"></h3><p data-t="kPap"></p></div>
+      <div class="carte"><div class="ico">🌎</div><h3 data-t="kDiat"></h3><p data-t="kDia"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="evenman" class="blanc">
+  <div class="wrap">
+    <h2 data-t="eTitre"></h2>
+    <p class="sous" data-t="eSous"></p>
+    <div class="filtres" id="filtres"><button type="button" data-f="tout"></button><button type="button" data-f="espo"></button><button type="button" data-f="kilti"></button><button type="button" data-f="kominote"></button></div>
+    <div class="galerie" id="galerie"></div>
+  </div>
+</section>
+
+<section id="kontak">
+  <div class="wrap">
+    <h2 data-t="cTitre"></h2>
+    <p class="sous" data-t="cSous"></p>
+    <div class="grille g3 contacts">
+      <a class="carte" href="https://wa.me/50936995259" target="_blank" rel="noopener"><span class="ico">💬</span><span><h3>WhatsApp</h3><p>+509 3699 5259 · <span data-t="cWa"></span></p></span></a>
+      <a class="carte" href="https://www.facebook.com/MasbetEducation" target="_blank" rel="noopener"><span class="ico">📘</span><span><h3>Facebook</h3><p>@MasbetEducation</p></span></a>
+      <a class="carte" href="https://www.youtube.com/@MasbetHT" target="_blank" rel="noopener"><span class="ico">▶️</span><span><h3>YouTube</h3><p>@MasbetHT</p></span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="an"></span> MasbetAirNet · Masbet Education · Anse-à-Veau, Haïti</div>
+    <div>Duckhens Lespérance, <span data-t="fFond"></span></div>
+    <div><a href="index.html" data-t="fAppli"></a> · <a href="achte.html" data-t="btAchte"></a></div>
+  </div>
+</footer>
+
+<div class="barreMobile">
+  <a class="bt" href="achte.html" data-t="btAchte"></a>
+  <a class="bt sec" href="index.html" data-t="btAppli2"></a>
+</div>
+
+<div id="visio" role="dialog" aria-modal="true" aria-label="Photo">
+  <img id="vImg" alt="">
+  <div id="vLeg"></div>
+  <button id="vFerme" type="button" aria-label="Fermer">×</button>
+  <button id="vPrec" type="button" aria-label="Précédente">‹</button>
+  <button id="vSuiv" type="button" aria-label="Suivante">›</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+var TXT = {
+  ht: {
+    mNou:'Kiyès nou ye', mZon:'Zòn yo', mPri:'Pri', mKijan:'Kijan pou achte', mEv:'Evènman', mKontak:'Kontak',
+    hTitre:'Entènèt rapid nan kè Ansavo', hTexte:'MasbetAirNet se rezo Wi-Fi kominotè Ansavo. Achte yon kòd ak MonCash oswa NatCash, epi konekte.',
+    btAchte:'Achte yon kòd', btAppli:'Ouvri aplikasyon an', btAppli2:'Aplikasyon', pSolè:'Enèji solè',
+    nTitre:'Kiyès nou ye', nFondT:'Fondatè :', nFond:'Duckhens Lespérance, enjenyè sivil ak konsiltan, Ansavo (Nip). Li dirije Masbet Education ak rezo MasbetAirNet.', nSous:'Yon rezo pa kominote a, pou kominote a.',
+    n1t:'Yon pwojè kominotè', n1:'MasbetAirNet se yon inisyativ Masbet Education pou mete entènèt bon kalite disponib pou moun Ansavo, nan pri yo ka peye.',
+    n2t:'Teknoloji solid', n2:'Koneksyon satelit Starlink ak pwen aksè Grandstream, ki mache ak enèji solè.',
+    n3t:'Masbet Education', n3:'Edikasyon, espò, kilti, syans ak lavi kominotè : tounwa, quiz Les Génies d\'Haïti, lives sou YouTube ak Facebook.',
+    zTitre:'Zòn kouvèti', zSous:'Kote w ka konekte sou Wi-Fi MasbetAirNet jodi a.',
+    z1:'Nan Plas Piblik Ansavo.', z2:'Bò pon an.', z3:'Bò PA sou pon.',
+    carteRepli:'Gade kat la sou OpenStreetMap', zAvis:'Rezo a ap grandi. Ou vle Wi-Fi nan zòn pa w ? Ekri nou sou WhatsApp.',
+    pTitre:'Pri yo', pSous:'Pri yo mete ajou otomatikman.', chaj:'Ap chaje…',
+    pAvis:'Tout pake yo bay aksè sou rezo Masbet.AirNet, nan zòn ki endike pi wo yo.',
+    epuise:'Pa genyen kounye a', jou:'jou', jou1:'jou', erPri:'Pri yo pa ka parèt kounye a. Gade yo nan paj acha a.',
+    kTitre:'Kijan pou achte', kSous:'4 etap senp.',
+    k1t:'Chwazi pake w', k1:'Nan aplikasyon an oswa sou paj acha a.',
+    k2t:'Peye', k2:'Voye kòb la ak MonCash oswa NatCash sou nimewo ki parèt la.',
+    k3t:'Resevwa kòd ou', k3:'Kòd la parèt sou paj la (ak nan « Kòd mwen ») depi peman an konfime.',
+    k4t:'Konekte', k4:'Chwazi Wi-Fi Masbet.AirNet, antre kòd la, epi navige.',
+    kPapt:'Kat papye', kPap:'Ou ka achte kat papye tou nan pwen vant nou yo, nan Haute Ville ak nan Basse Ville. Ekri nou sou WhatsApp pou konnen kote.',
+    kDiat:'Ou lòt bò dlo ?', kDia:'Ou ka achte yon pake pou yon moun nan fanmi w Ansavo. Si w pa gen MonCash oswa NatCash, yon moun an Ayiti ka voye peman an pou ou.',
+    eTitre:'Evènman Masbet', eSous:'Espò, kilti, edikasyon ak lavi kominotè — Ansavo vivan !',
+    cTitre:'Kontak', cSous:'Yon kesyon, yon pwoblèm ak yon kòd, oswa ou vle patisipe ?', cWa:'mesaj tèks sèlman',
+    fAppli:'Aplikasyon MasbetAirNet', fFond:'fondatè', f_tout:'Tout', f_espo:'⚽ Espò', f_kilti:'🎭 Kilti', f_kominote:'🤝 Kominote'
+  },
+  fr: {
+    mNou:'Qui sommes-nous', mZon:'Zones', mPri:'Tarifs', mKijan:'Comment acheter', mEv:'Événements', mKontak:'Contact',
+    hTitre:'Internet rapide au cœur d\'Anse-à-Veau', hTexte:'MasbetAirNet est le réseau Wi-Fi communautaire d\'Anse-à-Veau. Achetez un code par MonCash ou NatCash, puis connectez-vous.',
+    btAchte:'Acheter un code', btAppli:'Ouvrir l\'application', btAppli2:'Application', pSolè:'Énergie solaire',
+    nTitre:'Qui sommes-nous', nFondT:'Fondateur :', nFond:'Duckhens Lespérance, ingénieur civil et consultant, Anse-à-Veau (Nippes). Il dirige Masbet Education et le réseau MasbetAirNet.', nSous:'Un réseau par la communauté, pour la communauté.',
+    n1t:'Un projet communautaire', n1:'MasbetAirNet est une initiative de Masbet Education pour offrir un internet de qualité aux habitants d\'Anse-à-Veau, à un prix accessible.',
+    n2t:'Une technologie fiable', n2:'Connexion satellite Starlink et points d\'accès Grandstream, alimentés à l\'énergie solaire.',
+    n3t:'Masbet Education', n3:'Éducation, sport, culture, sciences et vie communautaire : tournois, quiz Les Génies d\'Haïti, lives sur YouTube et Facebook.',
+    zTitre:'Zones de couverture', zSous:'Où se connecter au Wi-Fi MasbetAirNet aujourd\'hui.',
+    z1:'Sur la Place Publique d\'Anse-à-Veau.', z2:'Près du pont.', z3:'Près de PA sou pon.',
+    carteRepli:'Voir la carte sur OpenStreetMap', zAvis:'Le réseau s\'étend. Vous voulez le Wi-Fi dans votre quartier ? Écrivez-nous sur WhatsApp.',
+    pTitre:'Tarifs', pSous:'Les tarifs sont mis à jour automatiquement.', chaj:'Chargement…',
+    pAvis:'Tous les forfaits donnent accès au réseau Masbet.AirNet, dans les zones indiquées plus haut.',
+    epuise:'Épuisé pour le moment', jou:'jours', jou1:'jour', erPri:'Les tarifs ne peuvent pas s\'afficher pour l\'instant. Consultez la page d\'achat.',
+    kTitre:'Comment acheter', kSous:'4 étapes simples.',
+    k1t:'Choisissez votre forfait', k1:'Dans l\'application ou sur la page d\'achat.',
+    k2t:'Payez', k2:'Envoyez le montant par MonCash ou NatCash au numéro affiché.',
+    k3t:'Recevez votre code', k3:'Le code s\'affiche sur la page (et dans « Mes codes ») dès que le paiement est confirmé.',
+    k4t:'Connectez-vous', k4:'Choisissez le Wi-Fi Masbet.AirNet, entrez le code et naviguez.',
+    kPapt:'Cartes papier', kPap:'Cartes papier aussi en vente dans nos points de vente, en Haute Ville et en Basse Ville. Écrivez-nous sur WhatsApp pour savoir où.',
+    kDiat:'Vous êtes à l\'étranger ?', kDia:'Achetez un forfait pour un proche à Anse-à-Veau. Sans MonCash ni NatCash, une personne en Haïti peut envoyer le paiement pour vous.',
+    eTitre:'Événements Masbet', eSous:'Sport, culture, éducation et vie communautaire — Anse-à-Veau bien vivant !',
+    cTitre:'Contact', cSous:'Une question, un souci avec un code, ou envie de participer ?', cWa:'messages texte uniquement',
+    fAppli:'Application MasbetAirNet', fFond:'fondateur', f_tout:'Tout', f_espo:'⚽ Sport', f_kilti:'🎭 Culture', f_kominote:'🤝 Communauté'
+  }
+};
+var PHOTOS = [
+  ["parapli-teren", "espo", "Teren an anba parapli koulè yo", "Le terrain sous les parapluies colorés"],
+  ["aksyon-futsal", "espo", "Aksyon nan match futsal la", "Action pendant le match de futsal"],
+  ["match-nwit", "espo", "Match lannwit", "Match de nuit"],
+  ["ekip-oranj", "espo", "Ekip oranj lan", "L'équipe orange"],
+  ["jadca", "espo", "Tounwa JADCA an dirèk", "Le tournoi JADCA en direct"],
+  ["ekip-lajounen", "espo", "Ekip yo anvan kout siflèt la", "Les équipes avant le coup d'envoi"],
+  ["teren-nwit-2", "espo", "Teren an aswè", "Le terrain le soir"],
+  ["ti-kaj", "espo", "Ti kaj la sou teren an", "Le petit but sur le terrain"],
+  ["trofe", "espo", "Remiz twofe yo", "La remise des trophées"],
+  ["dans", "kilti", "Dans tradisyonèl", "Danse traditionnelle"],
+  ["live-dans", "kilti", "Konkou dans, an dirèk sou Masbet", "Concours de danse, en direct sur Masbet"],
+  ["kilti", "kilti", "Ble ak wouj : fyète ayisyen", "Bleu et rouge : fierté haïtienne"],
+  ["sware-fet", "kilti", "Swarè fèt la", "La soirée de fête"],
+  ["deko-pyebwa", "kilti", "Dekorasyon nan pyebwa yo", "Décoration dans les arbres"],
+  ["balon-ble", "kilti", "Balon nan syèl la", "Ballons dans le ciel"],
+  ["balon-wouj", "kilti", "Koulè fèt la", "Les couleurs de la fête"],
+  ["konferans", "kominote", "Konferans ak kominote a", "Conférence avec la communauté"],
+  ["anivese", "kominote", "Seremoni anivèsè", "Cérémonie d'anniversaire"],
+  ["gradyasyon", "kominote", "Gradyasyon", "Remise de diplômes"],
+  ["enskripsyon", "kominote", "Enskripsyon devan piblik la", "Inscriptions devant le public"],
+  ["plas-piblik", "kominote", "Plas Piblik plen moun", "La Place Publique pleine de monde"],
+  ["foul-tribin", "kominote", "Foul la nan tribin yo", "La foule dans les tribunes"],
+  ["foul-timoun", "kominote", "Piblik la, gran kou piti", "Le public, petits et grands"],
+  ["foul-lari", "kominote", "Tout lari a plen moun", "Toute la rue est pleine"]
+];
+var LANG = 'ht', INFOS = null, ERR = false;
+function lire(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+function ecrire(k, v){ try { localStorage.setItem(k, v); } catch (e) {} }
+function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]; }); }
+
+function langue(l) {
+  LANG = l === 'fr' ? 'fr' : 'ht'; ecrire('masbet_lang', LANG); document.documentElement.lang = LANG;
+  var T = TXT[LANG];
+  document.querySelectorAll('[data-t]').forEach(function (el) { var v = T[el.getAttribute('data-t')]; if (typeof v === 'string') el.textContent = v; });
+  document.getElementById('lHt').className = LANG === 'ht' ? 'on' : '';
+  document.getElementById('lFr').className = LANG === 'fr' ? 'on' : '';
+  galerie(); tarifs();
+}
+
+var FILTRE = 'tout', VUE = [];
+function galerie() {
+  var T = TXT[LANG];
+  document.querySelectorAll('#filtres button').forEach(function (b) {
+    b.textContent = T['f_' + b.getAttribute('data-f')];
+    b.className = b.getAttribute('data-f') === FILTRE ? 'on' : '';
+    b.setAttribute('aria-pressed', b.className === 'on' ? 'true' : 'false');
+  });
+  VUE = PHOTOS.filter(function (p) { return FILTRE === 'tout' || p[1] === FILTRE; });
+  document.getElementById('galerie').innerHTML = VUE.map(function (p, i) {
+    return '<button type="button" data-i="' + i + '"><img loading="lazy" src="photos/' + p[0] + '-p.jpg" alt="' + esc(LANG === 'fr' ? p[3] : p[2]) + '"></button>';
+  }).join('');
+}
+document.getElementById('filtres').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return; FILTRE = b.getAttribute('data-f'); galerie();
+});
+var VI = 0;
+function voir(i) {
+  VI = (i + VUE.length) % VUE.length;
+  var p = VUE[VI], leg = LANG === 'fr' ? p[3] : p[2];
+  document.getElementById('vImg').src = 'photos/' + p[0] + '.jpg';
+  document.getElementById('vImg').alt = leg;
+  document.getElementById('vLeg').textContent = leg;
+  var v = document.getElementById('visio');
+  if (!v.classList.contains('on')) { DERNIER = document.activeElement; v.classList.add('on'); document.body.style.overflow = 'hidden'; document.getElementById('vFerme').focus(); }
+}
+var DERNIER = null;
+function fermer() {
+  document.getElementById('visio').classList.remove('on'); document.body.style.overflow = '';
+  if (DERNIER && DERNIER.focus) DERNIER.focus();
+}
+document.getElementById('galerie').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) voir(+b.getAttribute('data-i')); });
+document.getElementById('vFerme').onclick = fermer;
+document.getElementById('vPrec').onclick = function () { voir(VI - 1); };
+document.getElementById('vSuiv').onclick = function () { voir(VI + 1); };
+document.getElementById('visio').addEventListener('click', function (e) { if (e.target.id === 'visio') fermer(); });
+document.addEventListener('keydown', function (e) {
+  if (!document.getElementById('visio').classList.contains('on')) return;
+  if (e.key === 'Escape') fermer(); else if (e.key === 'ArrowLeft') voir(VI - 1); else if (e.key === 'ArrowRight') voir(VI + 1);
+});
+
+function tarifs() {
+  var box = document.getElementById('tarifs'), T = TXT[LANG];
+  if (ERR) { box.innerHTML = '<p class="avis">' + esc(T.erPri) + ' <a href="achte.html">→</a></p>'; return; }
+  if (!INFOS) return;
+  var fs = (INFOS.forfaits || []).filter(function (f) { return f.type !== 'LIVE'; });
+  box.innerHTML = fs.map(function (f) {
+    return '<div class="tarif' + (f.disponible ? '' : ' epuise') + '"><div class="prix">' + esc(f.prix) + ' <small>HTG</small></div>' +
+      '<div class="vol">' + esc(f.volume) + '</div><div class="dur">' + esc(f.duree) + ' ' + esc(+f.duree === 1 ? T.jou1 : T.jou) + '</div>' +
+      (f.disponible ? '' : '<span class="badge">' + esc(T.epuise) + '</span>') + '</div>';
+  }).join('');
+}
+function chargerTarifs() {
+  if (!window.MASBET_API) { ERR = true; tarifs(); return; }
+  fetch(window.MASBET_API + '?api=infos', { credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (j) { if (!j.ok) throw new Error(j.erreur); INFOS = j.data; ERR = false; tarifs(); })
+    .catch(function () { ERR = true; tarifs(); });
+}
+
+function carte() {
+  var box = document.getElementById('carte');
+  if (!window.L) {
+    box.removeAttribute('role');
+    box.innerHTML = '<a class="carteRepli" href="https://www.openstreetmap.org/?mlat=18.5004&mlon=-73.3464#map=16/18.5004/-73.3464" target="_blank" rel="noopener">🗺️ ' + esc(TXT[LANG].carteRepli) + ' ↗</a>';
+    return;
+  }
+  var m = L.map('carte', { scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false }).setView([18.5004, -73.3464], 16);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(m);
+  var pts = [[18.503459, -73.3457, 'Plas Piblik / Place Publique'], [18.497354, -73.347085, 'PA sou pon']];
+  pts.forEach(function (p) {
+    L.circle([p[0], p[1]], { radius: 120, color: '#fca311', fillColor: '#fca311', fillOpacity: .18, weight: 1 }).addTo(m);
+    L.marker([p[0], p[1]]).addTo(m).bindPopup('<b>' + p[2] + '</b><br>Wi-Fi Masbet.AirNet');
+  });
+  m.fitBounds(pts.map(function (p) { return [p[0], p[1]]; }), { padding: [60, 60] });
+}
+
+document.getElementById('lHt').onclick = function () { langue('ht'); };
+document.getElementById('lFr').onclick = function () { langue('fr'); };
+document.getElementById('an').textContent = new Date().getFullYear();
+langue(lire('masbet_lang') || 'ht');
+chargerTarifs();
+carte();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>

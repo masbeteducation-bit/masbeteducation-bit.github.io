@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Masbet Kominote : temwayaj, diskisyon, kòmantè.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<title>Masbet Kominote</title>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--rose:#e0245e}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  button,input,textarea{font:inherit;color:inherit}
+  .hidden{display:none!important}
+  header{background:var(--navy);color:#fff;padding:16px 16px 18px}
+  header .r{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:760px;margin:0 auto}
+  header h1{margin:0;font-size:22px}header h1 span{color:var(--gold)}
+  header p{margin:6px auto 0;color:#cfd6ea;font-size:14px;max-width:760px}
+  .lang{display:flex;border:1.5px solid rgba(255,255,255,.35);border-radius:20px;overflow:hidden}
+  .lang button{border:0;background:transparent;color:#cfd6ea;font-weight:800;font-size:12.5px;padding:5px 9px}
+  .lang button.on{background:#fff;color:var(--navy)}
+  main{max-width:760px;margin:0 auto;padding:14px}
+  .card{background:var(--card);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.07)}
+  .btn{border:0;border-radius:12px;padding:10px 15px;font-weight:800;background:var(--gold);color:var(--navy);cursor:pointer}
+  .btn.sec{background:#fff;border:1.5px solid var(--line)}
+  .btn:disabled{opacity:.5}
+  input,textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;background:#fff}
+  textarea{min-height:80px;resize:vertical}
+  input:focus,textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+  label{display:block;font-size:13px;font-weight:700;color:var(--muted);margin:8px 0 3px}
+  .hint{color:var(--muted);font-size:13px}
+  .tabs{display:flex;gap:6px;margin-bottom:10px}
+  .tab{flex:1;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 6px;font-weight:800;font-size:13.5px;cursor:pointer}
+  .tab.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .sj{display:block;border:1.5px solid var(--line);border-radius:14px;padding:12px;margin-top:8px;background:#fff;cursor:pointer;text-align:left;width:100%}
+  .sj:hover{border-color:var(--gold)}
+  .sj .t{font-weight:800;font-size:16px;word-break:break-word}
+  .sj .x{color:var(--muted);font-size:13.5px;margin-top:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
+  .meta{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:12.5px;margin-top:6px;align-items:center}
+  .av{display:inline-flex;width:26px;height:26px;border-radius:50%;align-items:center;justify-content:center;font-weight:900;font-size:12px;color:#fff;flex-shrink:0}
+  .post .t{font-size:19px;font-weight:900;margin:6px 0;word-break:break-word}
+  .txt{white-space:pre-wrap;word-break:break-word}
+  .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .act{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer}
+  .act.on{border-color:var(--rose);color:var(--rose);background:#fff0f4}
+  .act.disc{border:0;color:var(--muted);font-weight:600;padding:5px 6px}
+  .kom{border-top:1px solid var(--line);padding:10px 0}
+  .kom.rep{margin-left:22px;padding-left:12px;border-left:3px solid #eef1f7;border-top:0}
+  .kom .h{display:flex;gap:8px;align-items:center;font-size:13px}
+  .kom .h b{font-size:14px}
+  .emo{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0}
+  .emo button{border:0;background:#f1f3f8;border-radius:8px;font-size:18px;padding:3px 6px;cursor:pointer}
+  .msg{border-radius:10px;padding:9px 11px;margin:8px 0;font-size:14px}.msg.err{background:#fdecea;color:#8e2219}.msg.ok{background:#e8f6ee;color:#155b33}
+  .fab{position:fixed;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:40;border-radius:999px;box-shadow:0 6px 18px rgba(20,33,61,.25);padding:13px 18px}
+  .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+  .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  .navapp a span{display:block;font-size:20px;line-height:1.2}
+  .regles{font-size:12.5px;color:var(--muted);margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div class="r"><h1>Masbet <span data-t="kom"></span></h1>
+    <div class="lang" role="group" aria-label="Lang / Langue"><button id="lHt" onclick="langue('ht')">KR</button><button id="lFr" onclick="langue('fr')">FR</button></div></div>
+  <p data-t="slogan"></p>
+</header>
+<main>
+  <!-- Liste -->
+  <section id="vLis">
+    <div class="tabs"><button class="tab" id="tAktif" onclick="tri('aktif')" data-t="aktif"></button><button class="tab" id="tNouvo" onclick="tri('nouvo')" data-t="nouvo"></button><button class="tab" id="tPopile" onclick="tri('popile')" data-t="popile"></button></div>
+    <div id="mLis"></div>
+    <div id="lis"></div>
+    <div style="text-align:center;margin-top:12px"><button class="btn sec hidden" id="plis" onclick="chaje(true)" data-t="plis"></button></div>
+  </section>
+  <!-- Nouveau sujet -->
+  <section id="vNouvo" class="hidden">
+    <div class="card">
+      <h2 style="margin:0 0 6px" data-t="nouvoTit"></h2>
+      <div id="zPseudo1"></div>
+      <label for="nTit" data-t="tit"></label><input id="nTit" maxlength="120">
+      <label for="nTeks" data-t="teks"></label><textarea id="nTeks" maxlength="2000"></textarea>
+      <div class="emo" id="emo1"></div>
+      <div class="regles" data-t="regles"></div>
+      <div id="mNouvo"></div>
+      <div class="acts"><button class="btn" id="bPibliye" onclick="pibliye()" data-t="pibliye"></button><button class="btn sec" onclick="vue('lis')" data-t="anile"></button></div>
+    </div>
+  </section>
+  <!-- Sujet -->
+  <section id="vSije" class="hidden">
+    <button class="act disc" onclick="vue('lis')" data-t="retou"></button>
+    <div class="card post" id="post"></div>
+    <div class="card"><h3 style="margin:0 0 4px" id="nbKom"></h3><div id="koms"></div></div>
+    <div class="card" id="zKomante">
+      <div id="repa" class="hint"></div>
+      <div id="zPseudo2"></div>
+      <textarea id="kTeks" maxlength="1000"></textarea>
+      <div class="emo" id="emo2"></div>
+      <div id="mKom"></div>
+      <button class="btn" id="bKom" onclick="komante()" data-t="voye"></button>
+    </div>
+  </section>
+</main>
+<button class="btn fab" id="fab" onclick="ouvriNouvo()" data-t="fab"></button>
+<nav class="navapp" id="nav"></nav>
+<script>
+"use strict";
+var API = window.MASBET_CONTENU || '', DEMO = !API;
+var TXT = {
+  ht: { kom:'Kominote', slogan:'Temwayaj, kesyon, lide : pale ak tout moun nan kominote Masbet la.', aktif:'🔥 Aktif', nouvo:'🆕 Nouvo', popile:'❤️ Popilè', plis:'Wè plis',
+    fab:'+ Nouvo sijè', nouvoTit:'Nouvo sijè', tit:'Tit', teks:'Sa w vle di', pibliye:'Pibliye', anile:'Anile', retou:'← Tout sijè yo', voye:'Voye',
+    pseudo:'Non ou (pseudo) — 2 a 20 lèt', regles:'Tèks ak emoji sèlman. Pa gen lyen ni nimewo telefòn. Respekte tout moun : yon mesaj ki siyale 5 fwa ap kache.',
+    jaime:'❤️', repon:'Reponn', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
+    kom1:'kòmantè', komN:'kòmantè', okenn:'Poko gen sijè. Kòmanse premye a !', okennKom:'Poko gen kòmantè. Bay pa w !', repaA:function(p){ return 'Repons pou '+p+' · '; }, anileRep:'Anile',
+    ekri:'Ekri kòmantè w…', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', kounyeA:'kounye a', minit:'min', e:'è', jou:'j', ou:'(ou)',
+    nav:['Akèy','Achte','Match','Live','Kominote'] },
+  fr: { kom:'Communauté', slogan:'Témoignages, questions, idées : échangez avec toute la communauté Masbet.', aktif:'🔥 Actifs', nouvo:'🆕 Récents', popile:'❤️ Populaires', plis:'Voir plus',
+    fab:'+ Nouveau sujet', nouvoTit:'Nouveau sujet', tit:'Titre', teks:'Votre message', pibliye:'Publier', anile:'Annuler', retou:'← Tous les sujets', voye:'Envoyer',
+    pseudo:'Votre nom (pseudo) — 2 à 20 caractères', regles:'Texte et émojis seulement. Pas de lien ni de numéro de téléphone. Respect pour tous : un message signalé 5 fois est masqué.',
+    jaime:'❤️', repon:'Répondre', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
+    kom1:'commentaire', komN:'commentaires', okenn:'Aucun sujet pour l\'instant. Lancez le premier !', okennKom:'Aucun commentaire. Donnez votre avis !', repaA:function(p){ return 'Réponse à '+p+' · '; }, anileRep:'Annuler',
+    ekri:'Écrivez votre commentaire…', reseau:'Pas de connexion. Vérifiez internet.', kounyeA:'à l\'instant', minit:'min', e:'h', jou:'j', ou:'(vous)',
+    nav:['Accueil','Acheter','Matchs','Live','Communauté'] }
+};
+var EMOJI = ['😀','😂','😍','🙏','👍','👏','🔥','💪','🎉','❤️','😢','🤔','⚽','🇭🇹','📶','🎓'];
+var LANG='ht', TRI='aktif', PAGE=0, LIS=[], SIJE=null, PARENT='', POLL=null;
+function T(k){ var v=TXT[LANG][k]; return v===undefined?TXT.ht[k]:v; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function el(id){ return document.getElementById(id); }
+function msg(id,t,c){ el(id).innerHTML=t?'<div class="msg '+(c||'err')+'">'+t+'</div>':''; }
+function appareil(){ var a=lire('masbet_appareil'); if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); } return a; }
+function couleur(p){ var h=0; for(var i=0;i<p.length;i++) h=(h*31+p.charCodeAt(i))>>>0; return ['#173a8c','#0f766e','#b45309','#9f1239','#4b2a8f','#1d6b3a','#c2410c'][h%7]; }
+function avatar(p){ return '<span class="av" style="background:'+couleur(p||'?')+'">'+esc(String(p||'?').charAt(0).toUpperCase())+'</span>'; }
+function depi(t){ if(!t) return ''; var s=(Date.now()-t)/1000; if(s<60) return T('kounyeA'); if(s<3600) return Math.floor(s/60)+' '+T('minit'); if(s<86400) return Math.floor(s/3600)+' '+T('e'); if(s<30*86400) return Math.floor(s/86400)+' '+T('jou'); return new Date(t).toLocaleDateString(LANG==='fr'?'fr-FR':'fr-HT'); }
+
+// ---------- Réseau ----------
+function get(action,p){ if(DEMO) return demo(action,p); var q='api='+action; Object.keys(p||{}).forEach(function(k){ q+='&'+encodeURIComponent(k)+'='+encodeURIComponent(p[k]); });
+  return repons(fetch(API+'?'+q+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'})); }
+function post(action,p){ if(DEMO) return demo(action,p);
+  return repons(fetch(API,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({api:action},p))})); }
+function repons(pr){ return pr.then(function(r){ return r.json(); },function(){ throw new Error(T('reseau')); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||T('reseau')); return j.data; }); }
+
+// ---------- Démo (sans adresse Contenu) ----------
+var D={s:[{id:'KSDEMO0001',date:Date.now()-3*3600e3,pseudo:'Masbet',titre:'Byenvini nan Kominote Masbet 🎉',texte:'Pataje eksperyans ou ak Wi-Fi a, Quiz la, lives yo… epi poze kesyon ou.',likes:4,nb:1,act:Date.now()-3600e3,app:'X'}],k:[{id:'KKDEMO0001',sije:'KSDEMO0001',parent:'',date:Date.now()-3600e3,pseudo:'Mari',texte:'Mèsi pou Wi-Fi nan plas la 🙏',likes:2,app:'Y'}],l:{}};
+function demo(a,p){ return new Promise(function(ok,ko){ setTimeout(function(){ try{
+  var app=appareil(), pub=function(x){ var y=JSON.parse(JSON.stringify(x)); y.moi=x.app===app; y.jaime=!!D.l[x.id+app]; delete y.app; return y; };
+  if(a==='kom_lis'){ var l=D.s.map(pub); var c=p.tri==='nouvo'?'date':p.tri==='popile'?'likes':'act'; l.sort(function(x,y){return y[c]-x[c];}); return ok({sujets:l,total:l.length,page:0,parPage:20}); }
+  if(a==='kom_sije'){ var s=D.s.filter(function(x){return x.id===p.id;})[0]; if(!s) throw new Error('Sijè sa a pa disponib.'); return ok({sujet:pub(s),commentaires:D.k.filter(function(x){return x.sije===p.id;}).map(pub)}); }
+  if(/lyen|http|www\./i.test((p.titre||'')+(p.texte||''))) throw new Error('Pa gen lyen nan Kominote a : tèks ak emoji sèlman.');
+  if(a==='kom_nouvo'){ var id='KS'+Math.random().toString(36).slice(2,10).toUpperCase(); D.s.push({id:id,date:Date.now(),pseudo:p.pseudo,titre:p.titre,texte:p.texte,likes:0,nb:0,act:Date.now(),app:app}); return ok({id:id}); }
+  if(a==='kom_komante'){ var cid='KK'+Math.random().toString(36).slice(2,10).toUpperCase(); D.k.push({id:cid,sije:p.sije,parent:p.parent||'',date:Date.now(),pseudo:p.pseudo,texte:p.texte,likes:0,app:app}); D.s.forEach(function(x){ if(x.id===p.sije){x.nb++;x.act=Date.now();} }); return ok({id:cid}); }
+  if(a==='kom_like'){ var o=D.s.concat(D.k).filter(function(x){return x.id===p.cible;})[0], k=p.cible+app; if(D.l[k]){ delete D.l[k]; o.likes--; } else { D.l[k]=1; o.likes++; } return ok({cible:p.cible,likes:o.likes,jaime:!!D.l[k]}); }
+  if(a==='kom_siyale') return ok({ok:true});
+  throw new Error('?'); }catch(e){ ko(e); } },200); }); }
+
+// ---------- Langue / vues ----------
+function langue(l){
+  LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
+  el('lHt').classList.toggle('on',LANG==='ht'); el('lFr').classList.toggle('on',LANG==='fr');
+  document.querySelectorAll('[data-t]').forEach(function(x){ x.textContent=T(x.getAttribute('data-t')); });
+  el('kTeks').placeholder=T('ekri'); zonesPseudo(); barre(); afficherLis(); if(SIJE) afficherSije();
+}
+function vue(v){ ['lis','nouvo','sije'].forEach(function(x){ el('v'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('hidden',x!==v); });
+  el('fab').classList.toggle('hidden', v!=='lis'); clearInterval(POLL);
+  if(v==='lis'){ SIJE=null; if(location.hash) history.replaceState(null,'',location.pathname); chaje(); }
+  window.scrollTo(0,0); }
+function barre(){ var n=TXT[LANG].nav; el('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="kominote.html" style="color:var(--navy)"><span>💬</span>'+n[4]+'</a>'; }
+function emojis(id, cible){ el(id).innerHTML=EMOJI.map(function(e){ return '<button type="button" onclick="mete(\''+cible+'\',\''+e+'\')">'+e+'</button>'; }).join(''); }
+function mete(id,e){ var t=el(id), a=t.selectionStart==null?t.value.length:t.selectionStart; t.value=t.value.slice(0,a)+e+t.value.slice(t.selectionEnd==null?a:t.selectionEnd); t.focus(); }
+function pseudo(){ return lire('masbet_pseudo')||''; }
+function zonesPseudo(){ var h=pseudo()?'':'<label for="ps__">'+esc(T('pseudo'))+'</label><input id="ps__" maxlength="20">';
+  el('zPseudo1').innerHTML=h.replace(/ps__/g,'ps1'); el('zPseudo2').innerHTML=h.replace(/ps__/g,'ps2'); }
+function pseudoDe(id){ var i=el(id); if(i){ var v=i.value.trim(); if(v) return v; } return pseudo(); }
+
+// ---------- Liste ----------
+function tri(t){ TRI=t; ['aktif','nouvo','popile'].forEach(function(x){ el('t'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('on',x===t); }); chaje(); }
+function chaje(plis){
+  PAGE = plis ? PAGE+1 : 0;
+  get('kom_lis',{tri:TRI,page:PAGE,appareil:appareil()}).then(function(d){ LIS = plis ? LIS.concat(d.sujets) : d.sujets; afficherLis(); el('plis').classList.toggle('hidden', LIS.length>=d.total); msg('mLis',''); })
+    .catch(function(e){ msg('mLis',esc(e.message)); });
+}
+function afficherLis(){
+  el('lis').innerHTML = LIS.length ? LIS.map(function(s){
+    return '<button class="sj" onclick="ouvri(\''+esc(s.id)+'\')"><div class="t">'+esc(s.titre)+'</div><div class="x">'+esc(s.texte)+'</div>'+
+      '<div class="meta">'+avatar(s.pseudo)+'<span>'+esc(s.pseudo)+(s.moi?' '+esc(T('ou')):'')+'</span><span>· '+esc(depi(s.date))+'</span><span>❤️ '+s.likes+'</span><span>💬 '+s.nb+'</span></div></button>'; }).join('')
+    : '<div class="card hint">'+esc(T('okenn'))+'</div>';
+}
+
+// ---------- Nouveau sujet ----------
+function ouvriNouvo(){ zonesPseudo(); msg('mNouvo',''); vue('nouvo'); }
+function pibliye(){
+  var ps=pseudoDe('ps1'), b=el('bPibliye'); b.disabled=true;
+  post('kom_nouvo',{appareil:appareil(),pseudo:ps,titre:el('nTit').value,texte:el('nTeks').value}).then(function(d){
+    ecrire('masbet_pseudo',ps); el('nTit').value=''; el('nTeks').value=''; ouvri(d.id);
+  }).catch(function(e){ msg('mNouvo',esc(e.message)); }).then(function(){ b.disabled=false; });
+}
+
+// ---------- Sujet ----------
+function ouvri(id){ history.replaceState(null,'','#sije='+id); PARENT=''; zonesPseudo();
+  get('kom_sije',{id:id,appareil:appareil()}).then(function(d){ SIJE=d; vue('sije'); afficherSije(); clearInterval(POLL); POLL=setInterval(rechaje,30000); })
+    .catch(function(e){ vue('lis'); msg('mLis',esc(e.message)); }); }
+function rechaje(){ if(!SIJE||document.hidden) return; get('kom_sije',{id:SIJE.sujet.id,appareil:appareil()}).then(function(d){ SIJE=d; afficherSije(); }).catch(function(){}); }
+function boutonLike(o){ return '<button class="act'+(o.jaime?' on':'')+'" onclick="like(\''+esc(o.id)+'\')">❤️ '+o.likes+'</button>'; }
+function afficherSije(){
+  var s=SIJE.sujet;
+  el('post').innerHTML='<div class="meta" style="margin:0">'+avatar(s.pseudo)+'<b style="color:var(--ink)">'+esc(s.pseudo)+(s.moi?' '+esc(T('ou')):'')+'</b><span>· '+esc(depi(s.date))+'</span></div>'+
+    '<div class="t">'+esc(s.titre)+'</div><div class="txt">'+esc(s.texte)+'</div><div class="acts">'+boutonLike(s)+(s.moi?'':'<button class="act disc" onclick="siyale(\''+esc(s.id)+'\')">⚑ '+esc(T('siyale'))+'</button>')+'</div>';
+  var ks=SIJE.commentaires, rasin=ks.filter(function(k){ return !k.parent || !ks.some(function(x){ return x.id===k.parent; }); });
+  el('nbKom').textContent=ks.length+' '+(ks.length>1?T('komN'):T('kom1'));
+  var un=function(k,rep){ return '<div class="kom'+(rep?' rep':'')+'"><div class="h">'+avatar(k.pseudo)+'<b>'+esc(k.pseudo)+(k.moi?' '+esc(T('ou')):'')+'</b><span class="hint">· '+esc(depi(k.date))+'</span></div>'+
+    '<div class="txt" style="margin:4px 0 0 34px">'+esc(k.texte)+'</div><div class="acts" style="margin-left:30px">'+boutonLike(k)+
+    '<button class="act disc" onclick="repon(\''+esc(rep?k.parent:k.id)+'\',\''+esc(k.pseudo).replace(/'/g,'')+'\')">↩ '+esc(T('repon'))+'</button>'+(k.moi?'':'<button class="act disc" onclick="siyale(\''+esc(k.id)+'\')">⚑</button>')+'</div></div>'; };
+  el('koms').innerHTML = ks.length ? rasin.map(function(k){ return un(k,false)+ks.filter(function(x){ return x.parent===k.id; }).map(function(x){ return un(x,true); }).join(''); }).join('') : '<p class="hint">'+esc(T('okennKom'))+'</p>';
+}
+function repon(id,p){ PARENT=id; el('repa').innerHTML=esc(T('repaA')(p))+'<a href="#" onclick="PARENT=\'\';el(\'repa\').innerHTML=\'\';return false">'+esc(T('anileRep'))+'</a>'; el('kTeks').focus(); el('zKomante').scrollIntoView({behavior:'smooth',block:'center'}); }
+function komante(){
+  var ps=pseudoDe('ps2'), b=el('bKom'); b.disabled=true;
+  post('kom_komante',{appareil:appareil(),pseudo:ps,sije:SIJE.sujet.id,parent:PARENT,texte:el('kTeks').value}).then(function(){
+    ecrire('masbet_pseudo',ps); el('kTeks').value=''; PARENT=''; el('repa').innerHTML=''; zonesPseudo(); msg('mKom',''); return rechaje();
+  }).catch(function(e){ msg('mKom',esc(e.message)); }).then(function(){ b.disabled=false; });
+}
+function like(id){ post('kom_like',{appareil:appareil(),cible:id}).then(function(r){
+  var maj=function(o){ if(o.id===r.cible){ o.likes=r.likes; o.jaime=r.jaime; } };
+  if(SIJE){ maj(SIJE.sujet); SIJE.commentaires.forEach(maj); afficherSije(); } }).catch(function(e){ alert(e.message); }); }
+function siyale(id){ if(!confirm(T('konfimeSiyale'))) return; post('kom_siyale',{appareil:appareil(),cible:id}).then(function(){ msg('mKom',esc(T('siyaleOk')),'ok'); }).catch(function(){}); }
+
+// ---------- Démarrage ----------
+emojis('emo1','nTeks'); emojis('emo2','kTeks');
+langue(lire('masbet_lang')||'ht');
+tri('aktif');
+(function(){ var m=/[#&]sije=([A-Z0-9]+)/i.exec(location.hash||''); if(m) ouvri(m[1]); })();
+</script>
+</body>
+</html>

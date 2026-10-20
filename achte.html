@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="author" content="Duckhens Lespérance — Masbet Education">
+<meta name="description" content="Achte kòd Wi-Fi MasbetAirNet ak MonCash oswa NatCash.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<title>MasbetAirNet — Achte kòd Wi-Fi</title>
+<style>
+  :root{--navy:#14213d;--blue:#173a8c;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--wait:#b76e00}
+  *{box-sizing:border-box}
+  html,body{overscroll-behavior-y:contain}
+  .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+  .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  .navapp a span{display:block;font-size:20px;line-height:1.2}
+  .navapp a.on{color:var(--navy)}
+  body.app main{padding-bottom:90px}
+  @media (min-width: 900px){
+    body.app .navapp{position:sticky;top:0;bottom:auto;justify-content:center;gap:4px;border-top:0;border-bottom:1px solid var(--line);padding:0}
+    body.app .navapp a{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:14px 18px;font-size:15px;border-bottom:3px solid transparent}
+    body.app .navapp a span{display:inline;font-size:18px}
+    body.app .navapp a.on{border-bottom-color:var(--gold)}
+    body.app main{padding-bottom:40px}
+  }
+  .retour{display:block;background:var(--navy);color:var(--gold);font-weight:800;font-size:15px;padding:13px 16px;text-decoration:none}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  .top{background:#fff;padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .top img{display:block;width:100%;max-width:230px;height:auto;min-width:0;flex:0 1 auto}
+  .lang{display:flex;border:1.5px solid var(--line);border-radius:20px;overflow:hidden;flex-shrink:0}
+  .lang button{border:0;background:#fff;color:var(--muted);font-weight:800;font-size:13px;padding:6px 10px}
+  .lang button.on{background:var(--navy);color:#fff}
+  header{background:var(--navy);color:#fff;padding:12px 16px 22px}
+  header .brand{font-weight:800;font-size:20px;letter-spacing:.3px}
+  header .brand span{color:var(--gold)}
+  header p{margin:2px 0 0;color:#c9d0e3;font-size:14px}
+  main{max-width:520px;margin:-10px auto 0;padding:0 16px 40px}
+  .tabs{display:flex;gap:6px;margin-bottom:12px}
+  .tab{flex:1;border:0;border-radius:10px;padding:11px;background:#fff;color:var(--muted);font-weight:700;font-size:15px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .tab.on{background:var(--gold);color:var(--navy)}
+  .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
+  h2{font-size:17px;margin:0 0 12px}
+  .step{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--navy);color:#fff;font-size:13px;align-items:center;justify-content:center;margin-right:8px}
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .plan{border:2px solid var(--line);border-radius:12px;padding:12px;background:#fff;text-align:left;color:var(--ink);font:inherit}
+  .plan .p{font-size:22px;font-weight:800}
+  .plan .p small{font-size:13px;font-weight:600;color:var(--muted)}
+  .plan .d{font-size:14px;color:var(--muted)}
+  .plan.on{border-color:var(--gold);background:#fff8ea}
+  .plan:disabled{opacity:.45}
+  .methods{display:flex;gap:10px}
+  .method{flex:1;border:2px solid var(--line);border-radius:12px;padding:12px;background:#fff;font:inherit;font-weight:800;color:var(--ink)}
+  .method.on{border-color:var(--gold);background:#fff8ea}
+  /* Masbet Pay : couleurs des opérateurs (MonCash rouge et blanc, NatCash orange et bleu foncé) */
+  #mMonCash{border-color:#e3001b;color:#e3001b;background:#fff}
+  #mMonCash.on{background:#e3001b;color:#fff;border-color:#e3001b;box-shadow:0 0 0 3px #ffd1d6}
+  #mNatCash{border-color:#f07d00;color:#0b2f6b;background:#fff}
+  #mNatCash.on{background:#f07d00;color:#0b2f6b;border-color:#0b2f6b;box-shadow:0 0 0 3px #ffe2bf}
+  .pay.moncash{background:#e3001b!important;color:#fff!important}
+  .pay.natcash{background:#0b2f6b!important;color:#fff!important;border-top:5px solid #f07d00}
+  .pay.moncash b,.pay.moncash .num{color:#fff}
+  .prods{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+  @media (min-width:640px){.prods{grid-template-columns:repeat(4,1fr)}}
+  .prod{border:2px solid var(--line);border-radius:12px;padding:9px 8px;background:#fff;font:inherit;font-weight:800;font-size:14px;color:var(--ink);white-space:nowrap}
+  .prod.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .pay{background:var(--navy);color:#fff;border-radius:12px;padding:14px;margin-top:12px;font-size:15px}
+  .pay b{color:var(--gold)}
+  .pay .num{font-size:24px;font-weight:800;letter-spacing:1px;color:#fff}
+  .pay .sub{margin-top:8px;color:#c9d0e3;font-size:13px}
+  label{display:block;font-weight:700;font-size:14px;margin:12px 0 6px}
+  input{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font-size:17px;background:#fff;color:var(--ink)}
+  input:focus{outline:none;border-color:var(--gold)}
+  .telgrp{display:flex}
+  select.pref{-webkit-appearance:none;appearance:none;cursor:pointer;font-family:inherit}
+  .telgrp .pref{display:flex;align-items:center;padding:0 12px;background:#eef0f6;border:1.5px solid var(--line);border-right:0;border-radius:10px 0 0 10px;font-weight:800;font-size:17px;color:var(--navy);white-space:nowrap}
+  .telgrp input{border-radius:0 10px 10px 0;min-width:0}
+  .telgrp:focus-within .pref{border-color:var(--gold)}
+  .hint{font-size:13px;color:var(--muted);margin-top:4px}
+  .btn{display:block;width:100%;margin-top:16px;padding:14px;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font-weight:800;font-size:17px}
+  .btn:disabled{opacity:.5}
+  .msg{padding:12px;border-radius:10px;margin-top:12px;font-size:15px}
+  .msg.err{background:#fdecea;color:var(--err)}
+  .msg.ok{background:#e8f6ee;color:var(--ok)}
+  .order{border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-top:10px}
+  .order .top2{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--muted)}
+  .badge{font-weight:800;font-size:13px;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .b-wait{background:#fff3df;color:var(--wait)}.b-ok{background:#e8f6ee;color:var(--ok)}.b-err{background:#fdecea;color:var(--err)}
+  .code{margin-top:10px;background:var(--navy);color:var(--gold);font-size:28px;font-weight:800;letter-spacing:3px;text-align:center;padding:12px;border-radius:10px;font-family:ui-monospace,Menlo,monospace;word-break:break-all;-webkit-user-select:all;user-select:all}
+  .copy{margin-top:6px;width:100%;padding:9px;border:0;border-radius:8px;background:#eef0f6;color:var(--navy);font-weight:700;font-size:14px}
+  .unlock{display:flex;gap:8px;margin-top:8px}
+  .unlock input{flex:1;min-width:0;font-size:15px;padding:10px}
+  .unlock button{border:0;border-radius:10px;background:var(--navy);color:#fff;font-weight:800;padding:0 14px;font-size:14px;white-space:nowrap}
+  .hidden{display:none}
+  footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
+  .demo{background:#fff3df;color:var(--wait);text-align:center;font-size:13px;padding:6px}
+.tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#fff4dc;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}
+</style>
+</head>
+<body>
+<div id="demoBar" class="demo hidden" data-t="demo"></div>
+<div class="top">
+  <img src="data:image/png;base64,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" alt="Masbet Education">
+  <div class="lang" role="group" aria-label="Langue / Lang">
+    <button id="lHt" onclick="langue('ht')">KR</button>
+    <button id="lFr" onclick="langue('fr')">FR</button>
+  </div>
+</div>
+<header>
+  <div class="brand">Masbet<span>Pay</span></div>
+  <p data-t="soustitre"></p>
+</header>
+<main>
+  <div class="tabs">
+    <button class="tab on" id="tBuy" onclick="vue('buy')" data-t="ongletAcheter"></button>
+    <button class="tab" id="tMine" onclick="vue('mine')" data-t="ongletMes"></button>
+  </div>
+
+  <section id="vBuy">
+    <div class="card">
+      <h2><span class="step">1</span><span data-t="etape1"></span></h2>
+      <div class="prods" id="prods" role="tablist"></div>
+      <div class="hint" id="prodAide" style="margin:-4px 0 10px"></div>
+      <div class="plans" id="plans"><div class="hint" data-t="chargement"></div></div>
+      <div id="tikes" class="hidden" style="margin-top:14px">
+        <h2 style="margin-bottom:4px" data-t="tikeTitre"></h2>
+        <div class="hint" data-t="tikeAide" style="margin-bottom:8px"></div>
+        <div class="plans" id="plansLive"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="step">2</span><span data-t="etape2"></span></h2>
+      <div class="methods">
+        <button class="method" id="mMonCash" onclick="choisirMethode('MonCash')">MonCash</button>
+        <button class="method" id="mNatCash" onclick="choisirMethode('NatCash')">NatCash</button>
+      </div>
+      <div class="pay hidden" id="payBox"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="step">3</span><span data-t="etape3"></span></h2>
+      <label for="tel" data-t="tel"></label>
+      <div class="telgrp"><select class="pref" id="pays" aria-label="Peyi / Pays" onchange="changerPays(this)"><option value="509">🇭🇹 +509</option><option value="1">🇺🇸 +1</option><option value="1">🇩🇴 +1</option><option value="33">🇫🇷 +33</option><option value="56">🇨🇱 +56</option><option value="55">🇧🇷 +55</option><option value="34">🇪🇸 +34</option><option value="32">🇧🇪 +32</option><option value="41">🇨🇭 +41</option><option value="x">🌍 +…</option></select><input id="tel" type="tel" inputmode="numeric" placeholder="3X XX XX XX" autocomplete="tel-national" maxlength="14" oninput="nettoyerTel(this)"></div>
+      <label for="tx" data-t="txLabel"></label>
+      <input id="tx" type="text" autocapitalize="characters" data-tp="txPlaceholder">
+      <div class="hint" data-th="txAide"></div>
+      <button class="btn" id="go" onclick="envoyer()" data-t="envoyer"></button>
+      <div id="msg"></div>
+    </div>
+  </section>
+
+  <section id="vMine" class="hidden">
+    <div class="card">
+      <h2 data-t="mesTitre"></h2>
+      <label for="tel2" data-t="tel"></label>
+      <div class="telgrp"><select class="pref" id="pays2" aria-label="Peyi / Pays" onchange="changerPays(this)"><option value="509">🇭🇹 +509</option><option value="1">🇺🇸 +1</option><option value="1">🇩🇴 +1</option><option value="33">🇫🇷 +33</option><option value="56">🇨🇱 +56</option><option value="55">🇧🇷 +55</option><option value="34">🇪🇸 +34</option><option value="32">🇧🇪 +32</option><option value="41">🇨🇭 +41</option><option value="x">🌍 +…</option></select><input id="tel2" type="tel" inputmode="numeric" placeholder="3X XX XX XX" maxlength="14" oninput="nettoyerTel(this)"></div>
+      <button class="btn" onclick="chercher()" data-t="voir"></button>
+      <div id="msg2"></div>
+      <div id="list"></div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</main>
+
+<script>
+// ---------- Textes : kreyòl (par défaut) et français ----------
+var TXT = {
+  ht: {
+    demo:'Se yon demonstrasyon — pa gen vrè acha',
+    soustitre:'Peye Wi-Fi ou ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la',
+    ongletAcheter:'Achte kòd', ongletMes:'Kòd mwen',
+    etape1:'Chwazi plan ou', etape2:'Peye', etape3:'Ekri kòd tranzaksyon an',
+    chargement:'Tann yon ti moman…', aucunForfait:'Pa gen plan disponib kounye a.', jours:'jou', epuise:'Pa disponib',
+    tel:'Nimewo telefòn ou', txLabel:'Kòd tranzaksyon an (Txn ID oswa TransCode)',
+    txPlaceholder:'Egzanp : 003548854486',
+    txAide:'Lè w fin peye, MonCash oswa NatCash ap voye yon SMS ba ou. Nan SMS sa a, gen yon nimewo apre <b>« Txn ID »</b> (MonCash) oswa <b>« TransCode »</b> (NatCash). Se nimewo sa a pou w ekri la a.',
+    envoyer:'Mwen fin peye — ban m kòd mwen', envoi:'Tann yon ti moman…',
+    payer:function(m,p){ return 'Voye <b>'+p+'</b> sou '+m+' nan nimewo sa a :'; },
+    montantForfait:'kòb plan an', nom:'Non : ',
+    garderSms:function(k){ return 'Lè w fin voye kòb la, gade SMS ou resevwa a : nimewo ki apre <b>'+k+'</b> a, se li w ap bezwen nan etap 3.'; },
+    choisirForfait:'Chwazi yon plan anvan (etap 1).', choisirMethode:'Chwazi MonCash oswa NatCash anvan (etap 2).',
+    payeOk:function(m){ return 'Nou resevwa '+m+' HTG ou ✓ '; },
+    ajuste:function(f,v,d){ return 'Kòb sa a bay plan <b>'+f+'</b> ('+v+', '+d+' jou). Men kòd ou :'; },
+    votreCode:'Men kòd ou :',
+    entrerSur:function(s){ return 'Konekte sou Wi-Fi <b>'+s+'</b>, epi tape kòd sa a sou paj ki parèt la. Kòd la rete anrejistre nan « Kòd mwen ».'; },
+    recue:function(id){ return 'Nou resevwa demann ou (nimewo <b>'+id+'</b>). N ap verifye peman an. Kòd ou ap parèt nan « Kòd mwen » nan kèk minit.'; },
+    mesTitre:'Jwenn kòd ou te achte', voir:'Chèche kòd mwen',
+    valide:'Kòd la prè', refuse:'Pa aksepte', attente:'N ap verifye',
+    copier:'Kopye kòd la', copie:'Kopye ✓', konekte:'Konekte ak kòd sa a', konekteAide:'Kòd la ap mete l poukont li nan paj koneksyon an.', diaspora:'🌍 Ou pa ann Ayiti ? Yon fanmi oswa yon zanmi ann Ayiti ka peye pou ou. Li voye kòd tranzaksyon an ba ou (WhatsApp), epi ou mete l nan etap 3 ak pwòp nimewo ou.', tipWifi:'🛜 Kòd Wi-Fi · peye', tipRek:'🏆 Kòd Wi-Fi · rekonpans Quiz', tipLive:'🎟️ Tikè live', tipPass:'🎓 Pass Pro', remWifi:'Kòd Wi-Fi ou achte a. Li valab pou volim ak kantite jou ki make a, apati premye koneksyon an.', remRek:'Kado pou bon repons ou nan Quiz la : se yon kòd Wi-Fi gratis. Li mache menm jan ak yon kòd ou achte, pou volim ak jou ki make a. Kòd la pèsonèl : pa vann li.', tikeTitre:'🎟️ Tikè live · Pass Pro', tikeAide:'Tikè live : 1 tikè = 1 live, nenpòt ki live. Ou ka achte plizyè davans, epi itilize youn pou chak live. Pass Pro : louvri etap 3 a 5 Espas pwofesyonèl la. Ou resevwa kòd la apre peman an.', ouvrirPass:'Aktive Pass Pro a', passUsage:'Antre kòd sa a nan Quiz → Espas pwofesyonèl. Li mache sou 2 telefòn maksimòm.', tike:'Tikè', votreTike:'Men kòd tikè ou :', tikeUsage:'Antre kòd sa a nan onglet <b>Live</b> aplikasyon an : chak tikè louvri yon live, nenpòt ki live. Li mache sou 2 telefòn maksimòm.', ouvrirLive:'Ouvri live la',
+    connecter:function(s){ return 'Konekte sou Wi-Fi <b>'+s+'</b>, epi tape kòd sa a sou paj ki parèt la.'; },
+    verif:'N ap verifye peman an. Pa fèmen paj la : kòd la ap parèt la a poukont li.',
+    motif:'Poukisa : ', aucune:'Nou pa jwenn okenn acha ak nimewo sa a.',
+    aide:'Ou bezwen èd ? Ekri nou sou WhatsApp (pa rele) : ', fondate:'Fondatè : ', maintenant:'kounye a',
+    erreurReseau:'Pa gen koneksyon. Tcheke entènèt ou epi eseye ankò.',
+    masqueAide:'Pou sekirite, kòd la kache. Ekri kòd tranzaksyon ki nan SMS peman ou a pou w wè l.', masqueRek:'Pou sekirite, kòd la kache. Li parèt an antye sou telefòn kote w te jwe Quiz la : louvri aplikasyon an sou telefòn sa a, apre sa « Kòd mwen ».',
+    copieEchec:'Kenbe dwèt ou sou kòd la pou w kopye l', voirCode:'Wè kòd la', txInconnu:'Kòd tranzaksyon sa a pa mache ak okenn acha pou nimewo sa a.'
+  },
+  fr: {
+    demo:'Mode démonstration — aucune vraie commande',
+    soustitre:'Achetez votre code Wi-Fi avec MonCash ou NatCash',
+    ongletAcheter:'Acheter', ongletMes:'Mes codes',
+    etape1:'Choisissez votre forfait', etape2:'Payez', etape3:'Entrez le numéro de transaction',
+    chargement:'Chargement…', aucunForfait:'Aucun forfait disponible.', jours:'jours', epuise:'Épuisé',
+    tel:'Votre numéro de téléphone', txLabel:'Numéro de transaction (Txn ID ou TransCode)',
+    txPlaceholder:'Exemple : 003548854486',
+    txAide:'Après le paiement, vous recevez un SMS de confirmation. Recopiez le numéro écrit après <b>« Txn ID »</b> (MonCash) ou <b>« TransCode »</b> (NatCash).',
+    envoyer:'J\'ai payé — obtenir mon code', envoi:'Envoi…',
+    payer:function(m,p){ return 'Envoyez <b>'+p+'</b> par '+m+' au :'; },
+    montantForfait:'le montant du forfait', nom:'Nom : ',
+    garderSms:function(k){ return 'Gardez le SMS de confirmation : le numéro après <b>'+k+'</b> est à saisir ci-dessous.'; },
+    choisirForfait:'Choisissez un forfait (étape 1).', choisirMethode:'Choisissez MonCash ou NatCash (étape 2).',
+    payeOk:function(m){ return 'Paiement de '+m+' HTG confirmé ✓ '; },
+    ajuste:function(f,v,d){ return 'Ce montant correspond au forfait <b>'+f+'</b> ('+v+', '+d+' jours). Votre code :'; },
+    votreCode:'Votre code :',
+    entrerSur:function(s){ return 'Entrez-le sur la page de connexion du Wi-Fi <b>'+s+'</b>. Il est aussi enregistré dans « Mes codes ».'; },
+    recue:function(id){ return 'Commande <b>'+id+'</b> reçue. Nous vérifions votre paiement : votre code apparaîtra dans « Mes codes ».'; },
+    mesTitre:'Retrouver mes codes', voir:'Voir mes commandes',
+    valide:'Validée', refuse:'Refusée', attente:'En attente',
+    copier:'Copier le code', copie:'Copié ✓', konekte:'Se connecter avec ce code', konekteAide:'Le code sera placé automatiquement sur la page de connexion.', diaspora:'🌍 Hors d\'Haïti ? Un parent ou un ami en Haïti peut payer pour vous. Il vous envoie le code de transaction (WhatsApp), et vous l\'entrez à l\'étape 3 avec votre propre numéro.', tipWifi:'🛜 Code Wi-Fi · payé', tipRek:'🏆 Code Wi-Fi · récompense Quiz', tipLive:'🎟️ Ticket live', tipPass:'🎓 Pass Pro', remWifi:'Code Wi-Fi acheté. Valable pour le volume et le nombre de jours indiqués, à partir de la première connexion.', remRek:'Cadeau pour vos bonnes réponses au Quiz : un code Wi-Fi gratuit. Il fonctionne comme un code acheté, pour le volume et les jours indiqués. Code personnel : ne pas le revendre.', tikeTitre:'🎟️ Tickets live · Pass Pro', tikeAide:'Ticket live : 1 ticket = 1 live, n\'importe lequel. Achetez-en plusieurs d\'avance et utilisez-en un par live. Pass Pro : ouvre les étapes 3 à 5 de l\'Espace professionnel. Vous recevez le code après le paiement.', ouvrirPass:'Activer le Pass Pro', passUsage:'Entrez ce code dans Quiz → Espace professionnel. Valable sur 2 téléphones au maximum.', tike:'Ticket', votreTike:'Votre code ticket :', tikeUsage:'Entrez ce code dans l\'onglet <b>Live</b> de l\'application : chaque ticket ouvre un live, n\'importe lequel. Valable sur 2 téléphones au maximum.', ouvrirLive:'Ouvrir le live',
+    connecter:function(s){ return 'Connectez-vous au Wi-Fi <b>'+s+'</b> et entrez ce code sur la page de connexion.'; },
+    verif:'Vérification du paiement en cours… cette page se met à jour toute seule.',
+    motif:'Motif : ', aucune:'Aucune commande pour ce numéro.',
+    aide:'Besoin d\'aide ? WhatsApp (texte uniquement) : ', fondate:'Fondateur : ', maintenant:'maintenant',
+    erreurReseau:'Connexion impossible. Vérifiez votre internet et réessayez.',
+    masqueAide:'Par sécurité, le code est masqué. Entrez le numéro de transaction de votre SMS de paiement pour le voir.', masqueRek:'Par sécurité, le code est masqué. Il s\'affiche en entier sur le téléphone où vous avez joué au Quiz : ouvrez l\'application sur ce téléphone, puis « Mes codes ».',
+    copieEchec:'Appuyez longuement sur le code pour le copier', voirCode:'Voir le code', txInconnu:'Ce numéro de transaction ne correspond à aucun achat pour ce numéro de téléphone.'
+  }
+};
+// Masbet Pay : un seul endroit pour payer Wi-Fi, lives, Quiz Pro et Masbet Suite
+Object.assign(TXT.ht, { soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Quiz Pro, Masbet Suite — ak MonCash oswa NatCash',
+  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
+  aideWifi:'Kòd pou konekte sou Wi-Fi Masbet la.', aideLive:'Tikè pou gade yon live peyan nan aplikasyon an.', aidePro:'Pass Pro : tout etap ak tout rubrik pwofesyonèl Quiz la.',
+  aideSuite:'Abònman lojisyèl devis Masbet Suite : 2 aparèy (yon telefòn ak yon òdinatè).',
+  tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite' });
+Object.assign(TXT.fr, { soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Quiz Pro, Masbet Suite — par MonCash ou NatCash',
+  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
+  aideWifi:'Code pour se connecter au Wi-Fi Masbet.', aideLive:'Ticket pour regarder un live payant dans l\'application.', aidePro:'Pass Pro : toutes les étapes et toutes les rubriques professionnelles du Quiz.',
+  aideSuite:'Abonnement au logiciel de devis Masbet Suite : 2 appareils (un téléphone et un ordinateur).',
+  tipSuite:'🧰 Masbet Suite', suiteUsage:'Votre code d\'abonnement. Ouvrez Masbet Suite et entrez-le : il marche sur 2 appareils.', ouvrirSuite:'Ouvrir Masbet Suite' });
+// Messages d'erreur du serveur (en français) traduits en créole
+var ERREURS_HT = [
+  [/^Numéro de téléphone invalide/, window.MASBET_PORTAIL?'Nimewo telefòn nan pa bon : mete 8 chif la (egzanp 3XXX XXXX).':'Nimewo telefòn nan pa bon. Ayiti : 8 chif. Lòt peyi : chwazi peyi a anvan.'],
+  [/^Choisissez MonCash ou NatCash/, 'Chwazi MonCash oswa NatCash.'],
+  [/^ID de transaction invalide/, 'Kòd tranzaksyon an pa bon. Kopye l egzakteman jan li ye nan SMS la.'],
+  [/^Forfait inconnu/, 'Plan sa a pa egziste.'],
+  [/^Cet ID de transaction a déjà été utilisé/, 'Kòd tranzaksyon sa a sèvi deja.'],
+  [/^Vous avez déjà (\d+) commandes en attente/, 'Ou gen $1 demann k ap tann deja. Tann yon ti moman.'],
+  [/^Ce forfait est épuisé/, 'Plan sa a pa disponib kounye a. Chwazi yon lòt.']
+];
+
+var LANG = 'ht', INFOS = null, FORFAIT = null, METHODE = null, POLL = null, DERNIER = null, LISTE = null;
+function T(k){ return (TXT[LANG][k] !== undefined) ? TXT[LANG][k] : TXT.fr[k]; }
+function erreur(e){
+  var m = (e && e.message) ? e.message : '';
+  if (!m || /NetworkError|Failed to fetch|network/i.test(m)) return T('erreurReseau');
+  if (LANG === 'ht') for (var i = 0; i < ERREURS_HT.length; i++) {
+    var x = m.match(ERREURS_HT[i][0]);
+    if (x) return ERREURS_HT[i][1].replace('$1', x[1] || '');
+  }
+  return m;
+}
+
+// ---------- Trois façons de joindre le serveur ----------
+// 1) Page servie par Google (lien /exec) : google.script.run.
+// 2) Page intégrée au portail GDMS : window.MASBET_API = adresse /exec, appels JSON (fetch).
+// 3) Ni l'un ni l'autre (aperçu hors ligne) : mode démo.
+var API = window.MASBET_API || '';
+var GSR = !!(window.google && google.script && google.script.run);
+var PORTAIL = !!window.MASBET_PORTAIL;
+var DEMO = !GSR && !API;
+var demoCmds = [{id:'MAOLD12',date:'12/10/2026 08:15',forfait:'50 goud',volume:'3 Go',duree:5,statut:'Validée',code:'ZX93KQ7M',note:'',tx:'26101208150001'}];
+var demoApi = {
+  getInfosPubliques: function(){ return {
+    forfaits:[{nom:'25 goud',prix:25,volume:'1,2 Go',duree:3,disponible:true},{nom:'50 goud',prix:50,volume:'3 Go',duree:5,disponible:true},
+              {nom:'100 goud',prix:100,volume:'7 Go',duree:7,disponible:true},{nom:'150 goud',prix:150,volume:'10 Go',duree:10,disponible:true},
+              {nom:'250 goud',prix:250,volume:'18 Go',duree:15,disponible:false},{nom:'500 goud',prix:500,volume:'30 Go',duree:30,disponible:true},
+              {nom:'Tikè live',prix:100,type:'LIVE',disponible:true},{nom:'Pass Pro 30 jou',prix:100,type:'LIVE',disponible:true},
+              {nom:'Masbet Suite 1 mwa',prix:1000,type:'LIVE',disponible:true},{nom:'Masbet Suite 1 an',prix:5000,type:'LIVE',disponible:true}],
+    moncash:{numero:'3XXX XXXX',nom:'Duckhens Lespérance'}, natcash:{numero:'4XXX XXXX',nom:'Duckhens Lespérance'}, whatsapp:'+509 3699 5259', ssid:'Masbet.AirNet'}; },
+  passerCommande: function(d){ if(!/^(\d{8}|\+\d{8,15})$/.test((d.telephone||'').replace(/[^\d+]/g,''))) throw new Error('Numéro de téléphone invalide (8 chiffres).');
+    if(!d.transaction || d.transaction.length<4) throw new Error('ID de transaction invalide. Copiez-le tel quel depuis le SMS de confirmation.');
+    var id='MA'+Math.random().toString(36).slice(2,7).toUpperCase();
+    var ty=/^(tik|pass|masbet suite)/i.test(d.forfait)?'LIVE':'';
+    if(/^0035/.test(d.transaction)){ demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',note:'',tx:d.transaction,type:ty}); return {id:id,statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',montant:parseInt(d.forfait,10)||100,forfait:d.forfait,type:ty}; }
+    demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'En attente',code:'',note:'',t:Date.now(),tx:d.transaction}); return {id:id,statut:'En attente'}; },
+  mesCommandes: function(tel, pr){ pr=pr||{}; var ids=pr.ids||[], txt=null;
+    demoCmds.forEach(function(c){ if(c.statut==='En attente' && Date.now()-c.t>8000){c.statut='Validée';c.code='AB7K29QX';} });
+    if(pr.tx) txt=false;
+    var l=demoCmds.map(function(c){ var x=JSON.parse(JSON.stringify(c)); var ok=ids.indexOf(c.id)>=0||(pr.tx&&pr.tx.replace(/^0+/,'')===String(c.tx).replace(/^0+/,'')); if(pr.tx&&ok&&ids.indexOf(c.id)<0) txt=true;
+      x.masque=!!c.code&&!ok; if(x.masque) x.code=c.code.substring(0,2)+'••••••'; if(pr.tx&&ok&&ids.indexOf(c.id)<0) x._tx=1; return x; });
+    return {commandes:l, txTrouve:txt, idsTx:l.filter(function(x){return x._tx;}).map(function(x){return x.id;})}; }
+};
+function appelApi(fn,args){
+  var q;
+  if(fn==='getInfosPubliques') q={api:'infos',live:'1'};
+  else if(fn==='passerCommande'){ var d=args[0]||{}; q={api:'commander',forfait:d.forfait,methode:d.methode,telephone:d.telephone,transaction:d.transaction,live:'1'}; }
+  else if(fn==='mesCommandes'){ var pr=args[1]||{}; q={api:'mes',telephone:args[0],ids:(pr.ids||[]).join(','),tx:pr.tx||'',live:'1'}; }
+  else return Promise.reject(new Error('Action inconnue.'));
+  q._=Date.now();
+  var url=API+'?'+Object.keys(q).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(q[k]==null?'':q[k]); }).join('&');
+  var ctl=window.AbortController?new AbortController():null, minuterie=ctl?setTimeout(function(){ ctl.abort(); },30000):null;
+  return fetch(url,{method:'GET',credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if(minuterie) clearTimeout(minuterie); if(!j || !j.ok) throw new Error(j&&j.erreur||''); return j.data; },
+          function(e){ if(minuterie) clearTimeout(minuterie); throw new Error('NetworkError'); });
+}
+function appel(fn){ var args=[].slice.call(arguments,1);
+  if(!GSR && API) return appelApi(fn,args);
+  return new Promise(function(ok,ko){
+    if(DEMO){ setTimeout(function(){ try{ ok(demoApi[fn].apply(null,args)); }catch(e){ ko(e); } },300); return; }
+    var r=google.script.run.withSuccessHandler(ok).withFailureHandler(ko); r[fn].apply(r,args); }); }
+
+// ---------- Stockage local (facultatif) ----------
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+function jsid(s){ return String(s==null?'':s).replace(/[^A-Za-z0-9_\-]/g,''); }  // valeur sûre dans onclick="…('…')"
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function msg(id,t,cls){ document.getElementById(id).innerHTML = t ? '<div class="msg '+cls+'">'+t+'</div>' : ''; }
+
+// ---------- Commandes passées depuis ce téléphone (preuve pour voir les codes) ----------
+function mesIds(){ try{ var a=JSON.parse(lire('masbet_cmds')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function ajouterIds(l){ var a=mesIds(); l.forEach(function(id){ if(id && a.indexOf(id)<0) a.unshift(id); }); ecrire('masbet_cmds', JSON.stringify(a.slice(0,50))); }
+
+// ---------- Téléphone : +509 déjà affiché, on garde les 8 chiffres ----------
+function paysDe(el){ var s=document.getElementById(el.id==='tel2'?'pays2':'pays'); return s?s.value:'509'; }
+function nettoyerTel(el){
+  var p=paysDe(el);
+  if(p==='509'){
+    var d = el.value.replace(/\D/g,'');
+    if (d.length > 8 && d.indexOf('509') === 0) d = d.substring(3);
+    d = d.substring(0, 8);
+    var f = d.replace(/^(\d{2})(\d{0,2})(\d{0,2})(\d{0,2}).*$/, function(_,a,b,c,e){ return [a,b,c,e].filter(Boolean).join(' '); });
+    if (el.value !== f) el.value = f;
+  } else if(p==='x'){
+    var v=el.value.replace(/[^\d+ ]/g,''); if(v && v.charAt(0)!=='+') v='+'+v.replace(/\+/g,''); if(el.value!==v) el.value=v;
+  } else {
+    var g=el.value.replace(/[^\d ]/g,'').substring(0,18); if(el.value!==g) el.value=g;
+  }
+}
+// Numéro complet envoyé au serveur : 8 chiffres en Haïti, sinon +indicatif + numéro
+function telComplet(id){
+  var el=document.getElementById(id), p=paysDe(el), v=el.value.trim();
+  if(p==='509' || p==='x') return v;
+  return '+'+p+v.replace(/\D/g,'');
+}
+function changerPays(s){
+  var el=document.getElementById(s.id==='pays2'?'tel2':'tel');
+  el.placeholder = s.value==='509' ? '3X XX XX XX' : s.value==='x' ? '+44 7700 900123' : '';
+  el.setAttribute('maxlength', s.value==='509' ? '14' : '22');
+  el.setAttribute('inputmode', s.value==='x' ? 'tel' : 'numeric');
+  nettoyerTel(el);
+  // les deux cases (Achte / Kòd mwen) gardent le même pays
+  var autre=document.getElementById(s.id==='pays2'?'pays':'pays2'); if(autre && autre.selectedIndex!==s.selectedIndex){ autre.selectedIndex=s.selectedIndex; changerPays(autre); }
+  ecrire('masbet_pays', String(s.selectedIndex));
+}
+
+// ---------- Langue ----------
+function langue(l){
+  LANG = (l === 'fr') ? 'fr' : 'ht';
+  ecrire('masbet_lang', LANG);
+  document.documentElement.lang = LANG;
+  document.title = LANG === 'fr' ? 'MasbetAirNet — Acheter un code Wi-Fi' : 'MasbetAirNet — Achte kòd Wi-Fi';
+  document.getElementById('lHt').classList.toggle('on', LANG === 'ht');
+  document.getElementById('lFr').classList.toggle('on', LANG === 'fr');
+  document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent = T(el.getAttribute('data-t')); });
+  document.querySelectorAll('[data-th]').forEach(function(el){ el.innerHTML = T(el.getAttribute('data-th')); });
+  document.querySelectorAll('[data-tp]').forEach(function(el){ el.placeholder = T(el.getAttribute('data-tp')); });
+  afficherPied();
+  if (INFOS) { afficherForfaits(); majPaiement(); }
+  if (LISTE) afficherListe(LISTE);
+  if (DERNIER) afficherResultat(DERNIER);
+  if (typeof majBarreAppli === 'function') majBarreAppli();
+}
+
+function vue(v){
+  document.getElementById('vBuy').classList.toggle('hidden', v!=='buy');
+  document.getElementById('vMine').classList.toggle('hidden', v!=='mine');
+  document.getElementById('tBuy').classList.toggle('on', v==='buy');
+  document.getElementById('tMine').classList.toggle('on', v==='mine');
+  if(v==='mine' && document.getElementById('tel2').value) chercher();
+  if(typeof majBarreAppli==='function') majBarreAppli();
+}
+
+// ---------- Étape 1 : forfaits ----------
+function charger(){
+  appel('getInfosPubliques',{live:true}).then(function(i){
+    INFOS=i; afficherForfaits(); afficherPied();
+  }).catch(function(e){ document.getElementById('plans').innerHTML='<div class="msg err">'+esc(erreur(e))+'</div>'; });
+}
+// Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
+function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':'live'; }
+var PRODUIT=(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':'wifi'; })();
+function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement(); }
+function afficherForfaits(){
+  var presents={wifi:true}, h='';
+  INFOS.forfaits.forEach(function(f){ if(f.type==='LIVE' && f.disponible) presents[produitDe(f)]=true; });
+  if(!presents[PRODUIT]) PRODUIT='wifi';
+  var noms={wifi:'prodWifi',live:'prodLive',pro:'prodPro',suite:'prodSuite'}, aides={wifi:'aideWifi',live:'aideLive',pro:'aidePro',suite:'aideSuite'};
+  document.getElementById('prods').innerHTML=['wifi','live','pro','suite'].filter(function(p){ return presents[p]; }).map(function(p){
+    return '<button class="prod'+(p===PRODUIT?' on':'')+'" role="tab" aria-selected="'+(p===PRODUIT)+'" onclick="choisirProduit(\''+p+'\')">'+T(noms[p])+'</button>'; }).join('');
+  document.getElementById('prods').classList.toggle('hidden', Object.keys(presents).length<2);
+  document.getElementById('prodAide').textContent=T(aides[PRODUIT]);
+  INFOS.forfaits.forEach(function(f,k){
+    if(produitDe(f)!==PRODUIT) return;
+    var on=(FORFAIT&&FORFAIT.nom===f.nom?' on':''), dis=(f.disponible?'':'disabled');
+    if(f.type==='LIVE'){
+      if(!f.disponible) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
+      h+='<button class="plan'+on+'" id="p'+k+'" onclick="choisirForfait('+k+')">'+
+        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(f.nom)+'</b></div><div class="d">'+T(PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':'tike')+'</div></button>';
+      return;
+    }
+    h+='<button class="plan'+on+'" '+dis+' id="p'+k+'" onclick="choisirForfait('+k+')">'+
+       '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d">'+esc(f.volume)+' · '+esc(f.duree)+' '+T('jours')+'</div>'+
+       (f.disponible?'':'<div class="d"><b>'+T('epuise')+'</b></div>')+'</button>';
+  });
+  document.getElementById('plans').innerHTML=h||'<div class="hint">'+T('aucunForfait')+'</div>';
+  document.getElementById('tikes').classList.add('hidden');
+  if(PRODUIT!=='wifi' && !window.TIKES_VU){ window.TIKES_VU=true; setTimeout(function(){ document.getElementById('prods').scrollIntoView({behavior:'smooth',block:'start'}); },150); }
+}
+function afficherPied(){ var w=INFOS&&INFOS.whatsapp; document.getElementById('foot').innerHTML=(w?T('aide')+'<b>'+esc(w)+'</b>':'')+'<div style="margin-top:6px;font-size:12.5px;opacity:.75">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div>'; }
+
+function choisirForfait(k){
+  FORFAIT=INFOS.forfaits[k];
+  document.querySelectorAll('.plan').forEach(function(b){b.classList.remove('on');});
+  document.getElementById('p'+k).classList.add('on');
+  majPaiement();
+}
+
+// ---------- Étape 2 : paiement ----------
+function choisirMethode(m){
+  METHODE=m;
+  document.getElementById('mMonCash').classList.toggle('on',m==='MonCash');
+  document.getElementById('mNatCash').classList.toggle('on',m==='NatCash');
+  majPaiement();
+}
+function majPaiement(){
+  var box=document.getElementById('payBox');
+  if(!METHODE || !INFOS){ box.classList.add('hidden'); return; }
+  var c = METHODE==='MonCash' ? INFOS.moncash : INFOS.natcash;
+  box.innerHTML = TXT[LANG].payer(METHODE, FORFAIT ? esc(FORFAIT.prix)+' HTG' : T('montantForfait'))+
+    '<div class="num">'+esc(c.numero||'—')+'</div>'+(c.nom?T('nom')+esc(c.nom):'')+
+    '<div class="sub">'+TXT[LANG].garderSms(METHODE==='MonCash'?'« Txn ID »':'« TransCode »')+'</div>'+
+    (PORTAIL?'':'<div class="sub" style="margin-top:10px;border-top:1px solid rgba(255,255,255,.2);padding-top:8px">'+T('diaspora')+'</div>');
+  box.classList.remove('moncash','natcash'); box.classList.add(METHODE==='MonCash'?'moncash':'natcash');
+  box.classList.remove('hidden');
+}
+
+// ---------- Étape 3 : commande ----------
+function envoyer(){
+  msg('msg',''); DERNIER=null;
+  if(!FORFAIT) return msg('msg',T('choisirForfait'),'err');
+  if(!METHODE) return msg('msg',T('choisirMethode'),'err');
+  var tel=telComplet('tel'), tx=document.getElementById('tx').value;
+  var b=document.getElementById('go'); b.disabled=true; b.textContent=T('envoi');
+  appel('passerCommande',{forfait:FORFAIT.nom,methode:METHODE,telephone:tel,transaction:tx,live:true}).then(function(r){
+    ecrire('masbet_tel',document.getElementById('tel').value); ajouterIds([r.id]);
+    document.getElementById('tx').value='';
+    document.getElementById('tel2').value=document.getElementById('tel').value;
+    DERNIER=r; afficherResultat(r);
+    if(r.statut!=='Validée') setTimeout(function(){ vue('mine'); },1500);
+  }).catch(function(e){ msg('msg',esc(erreur(e)),'err'); })
+    .then(function(){ b.disabled=false; b.textContent=T('envoyer'); });
+}
+function afficherResultat(r){
+  if(r.statut==='Validée' && r.type==='LIVE'){
+    msg('msg',TXT[LANG].payeOk(esc(r.montant))+T('votreTike')+'<div class="code">'+esc(r.code)+'</div>'+boutonLive(r.code,r.forfait)+'<div class="hint">'+T(usageCode(r.forfait))+'</div>','ok');
+  } else if(r.statut==='Validée'){
+    msg('msg',TXT[LANG].payeOk(esc(r.montant))+(r.ajuste?TXT[LANG].ajuste(esc(r.forfait),esc(r.volume),esc(r.duree)):T('votreCode'))+
+      '<div class="code">'+esc(r.code)+'</div>'+boutonKonekte(r.code)+(PORTAIL?'':TXT[LANG].entrerSur(esc(INFOS.ssid))),'ok');
+  } else {
+    msg('msg',TXT[LANG].recue(esc(r.id)),'ok');
+  }
+}
+
+// ---------- Mes codes ----------
+function badge(s){ return s==='Validée'?'<span class="badge b-ok">'+T('valide')+'</span>':s==='Refusée'?'<span class="badge b-err">'+T('refuse')+'</span>':'<span class="badge b-wait">'+T('attente')+'</span>'; }
+
+function chercher(silencieux, tx){
+  var tel=telComplet('tel2');
+  if(!silencieux) msg('msg2','');
+  appel('mesCommandes',tel,{ids:mesIds(), tx:tx||'', live:true}).then(function(res){
+    ecrire('masbet_tel',document.getElementById('tel2').value);
+    var l=res.commandes||[];
+    if(tx){
+      if(res.txTrouve){ ajouterIds(res.idsTx||[]); }
+      else msg('msg2',T('txInconnu'),'err');
+    }
+    LISTE=l; afficherListe(l);
+    clearTimeout(POLL);
+    var attente=l.some(function(c){ return c.statut==='En attente'; });
+    if(attente) POLL=setTimeout(function(){ chercher(true); }, DEMO?4000:20000);
+  }).catch(function(e){ if(!silencieux) msg('msg2',esc(erreur(e)),'err'); });
+}
+function debloquer(id){
+  var v=document.getElementById('u-'+id).value.trim();
+  if(!v) return;
+  chercher(false, v);
+}
+function afficherListe(l){
+  var ssid = esc(INFOS && INFOS.ssid || 'Masbet.AirNet');
+  var h='';
+  l.forEach(function(c){
+    h+='<div class="order"><div class="top2"><span>'+esc(c.id)+' · '+esc(c.date||T('maintenant'))+'</span>'+badge(c.statut)+'</div>'+
+       '<div class="tip tip-'+typeCode(c).toLowerCase()+'">'+T('tip'+typeCode(c))+'</div>'+
+       '<div><b>'+esc(c.forfait)+'</b>'+(c.volume?' — '+esc(c.volume)+', '+esc(c.duree)+' '+T('jours'):'')+'</div>'+
+       (c.code && c.masque && c.type==='RECOMPENSE' ? '<div class="code" style="opacity:.55">'+esc(c.code)+'</div><div class="hint">'+T('masqueRek')+'</div>' : '')+
+       (c.code && c.masque && c.type!=='RECOMPENSE' ? '<div class="code" style="opacity:.55">'+esc(c.code)+'</div>'+
+         '<div class="hint">'+T('masqueAide')+'</div>'+
+         '<div class="unlock"><input id="u-'+esc(c.id)+'" type="text" inputmode="numeric" placeholder="'+esc(T('txPlaceholder'))+'"><button onclick="debloquer(\''+jsid(c.id)+'\')">'+T('voirCode')+'</button></div>' : '')+
+       (c.code && !c.masque && c.type==='LIVE' ?'<div class="code">'+esc(c.code)+'</div>'+boutonLive(c.code,c.forfait)+'<button class="copy" onclick="copier(\''+jsid(c.code)+'\',this)">'+T('copier')+'</button><div class="hint">'+T(usageCode(c.forfait))+'</div>':'')+
+       (c.code && !c.masque && c.type!=='LIVE' ?'<div class="code">'+esc(c.code)+'</div>'+boutonKonekte(c.code)+'<button class="copy" onclick="copier(\''+jsid(c.code)+'\',this)">'+T('copier')+'</button>'+
+         '<div class="hint">'+T(c.type==='RECOMPENSE'?'remRek':'remWifi')+'</div><div class="hint">'+TXT[LANG].connecter(ssid)+'</div>':'')+
+       (c.statut==='En attente'?'<div class="hint">'+T('verif')+'</div>':'')+
+       (c.note?'<div class="hint">'+T('motif')+esc(c.note)+'</div>':'')+'</div>';
+  });
+  document.getElementById('list').innerHTML = h || '<div class="hint" style="margin-top:10px">'+T('aucune')+'</div>';
+}
+
+// ---------- Dans le portail GDMS : renvoyer le code à la page de connexion ----------
+function boutonKonekte(code){
+  if(!PORTAIL) return '';
+  return '<button class="btn" style="margin-top:10px" onclick="konekte(\''+jsid(code)+'\')">'+T('konekte')+'</button><div class="hint">'+T('konekteAide')+'</div>';
+}
+// Adresse de la page de connexion (passée après « # », jamais envoyée au serveur)
+function adresseRetour(){
+  var m=/[#&]r=([^&]*)/.exec(location.hash||''), u='';
+  try{ u=m?decodeURIComponent(m[1]):''; }catch(e){ u=''; }
+  return (u && u.indexOf(location.origin+'/')===0) ? u : '';   // uniquement le portail lui-même
+}
+function retourner(code){
+  var u=adresseRetour();
+  var suffixe = code ? '#masbetcode='+encodeURIComponent(code) : '';
+  if(u) location.href = u.split('#')[0] + suffixe;
+  else if(code) location.href = 'paiement.html' + suffixe;
+  else history.back();
+}
+function konekte(code){ retourner(String(code)); }
+// Ticket live : dans l'application, bouton qui ouvre l'onglet Live avec le code déjà rempli
+function typeCode(c){ return c.type==='LIVE' ? (estPass(c.forfait)?'Pass':estSuite(c.forfait)?'Suite':'Live') : (c.type==='RECOMPENSE'?'Rek':'Wifi'); }
+function estSuite(nom){ return /^masbet\s*suite/i.test(String(nom||'')); }
+function usageCode(nom){ return estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':'tikeUsage'; }
+function estPass(nom){ return /^pass\s*pro/i.test(String(nom||'')); }
+function boutonLive(code, nom){
+  if(!window.MASBET_APP && !estSuite(nom)) return '';
+  if(estPass(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#quiz&pro&pass='+encodeURIComponent(code)+'">'+T('ouvrirPass')+'</a>';
+  if(estSuite(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="suite.html#kod='+encodeURIComponent(code)+'">'+T('ouvrirSuite')+'</a>';
+  return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#videyo&tike='+encodeURIComponent(code)+'">'+T('ouvrirLive')+'</a>';
+}
+if(PORTAIL){
+  ['pays','pays2'].forEach(function(id){ var s=document.getElementById(id); if(s){ s.selectedIndex=0; s.disabled=true; s.title='+509'; } });
+  var barre=document.createElement('a'); barre.href='#'; barre.className='retour'; barre.textContent='← Retounen pou konekte';
+  barre.onclick=function(){ retourner(''); return false; };
+  document.body.insertBefore(barre, document.body.firstChild);
+}
+
+function copier(code,btn){
+  var reussi=function(){ btn.textContent=T('copie'); setTimeout(function(){btn.textContent=T('copier');},1500); };
+  var secours=function(){
+    // Méthode ancienne, acceptée par plus de téléphones
+    var ok=false;
+    try{ var ta=document.createElement('textarea'); ta.value=code; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0';
+         document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,99); ok=document.execCommand('copy'); document.body.removeChild(ta); }catch(e){ ok=false; }
+    if(ok) reussi(); else btn.textContent=T('copieEchec');
+  };
+  try{ if(navigator.clipboard && window.isSecureContext){ navigator.clipboard.writeText(code).then(reussi, secours); } else secours(); }catch(e){ secours(); }
+}
+
+// ---------- Dans l'application MasbetAirNet : barre du bas ----------
+var APPLI = !!window.MASBET_APP;
+function barreAppli(){
+  if(!APPLI) return;
+  document.body.classList.add('app');
+  var n=document.createElement('nav'); n.className='navapp'; n.id='navapp';
+  if(window.innerWidth>=900) document.body.insertBefore(n, document.querySelector('main')); else document.body.appendChild(n);
+  majBarreAppli();
+}
+function majBarreAppli(){
+  var n=document.getElementById('navapp'); if(!n) return;
+  var mine=!document.getElementById('vMine').classList.contains('hidden');
+  var L=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Mes codes']:['Akèy','Achte','Match','Live','Kòd mwen'];
+  n.innerHTML='<a href="index.html#akey"><span>🏠</span>'+L[0]+'</a>'+
+    '<a href="#" onclick="vue(\'buy\');return false" class="'+(mine?'':'on')+'"><span>📶</span>'+L[1]+'</a>'+
+    '<a href="index.html#match"><span>⚽</span>'+L[2]+'</a>'+
+    '<a href="index.html#videyo"><span>🔴</span>'+L[3]+'</a>'+
+    '<a href="#" onclick="vue(\'mine\');return false" class="'+(mine?'on':'')+'"><span>🔑</span>'+L[4]+'</a>'+
+    (window.innerWidth>=900?'<a href="apropo.html"><span>ℹ️</span>'+(LANG==='fr'?'À propos':'Konsènan nou')+'</a>':'');
+}
+
+// ---------- Démarrage ----------
+if(DEMO) document.getElementById('demoBar').classList.remove('hidden');
+var ip=Number(lire('masbet_pays')); if(!PORTAIL && ip>0){ ['pays','pays2'].forEach(function(id){ var s=document.getElementById(id); if(ip<s.options.length) s.selectedIndex=ip; }); changerPays(document.getElementById('pays')); }
+var t=lire('masbet_tel'); if(t){ ['tel','tel2'].forEach(function(id){ var el=document.getElementById(id); el.value=t; nettoyerTel(el); }); }
+barreAppli();
+langue(lire('masbet_lang') || 'ht');
+charger();
+if(APPLI && /mine/.test(location.hash)) vue('mine');
+</script>
+</body>
+</html>

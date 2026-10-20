@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14213d">
+<meta name="author" content="Duckhens Lespérance — Masbet Education">
+<meta name="description" content="MasbetAirNet : Wi-Fi Ansavo. Achte kòd ak MonCash oswa NatCash, ofri, match an dirèk, meteyo.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>MasbetAirNet — Wi-Fi, match, lives Ansavo</title>
+<link rel="canonical" href="https://masbeteducation-bit.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MasbetAirNet">
+<meta property="og:title" content="MasbetAirNet — Wi-Fi, match, lives Ansavo">
+<meta property="og:description" content="Achte kòd Wi-Fi ak MonCash oswa NatCash, gade match ak lives Masbet, jwe quiz la.">
+<meta property="og:url" content="https://masbeteducation-bit.github.io/">
+<meta property="og:image" content="https://masbeteducation-bit.github.io/photos/parapli-teren.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
+  *{box-sizing:border-box}
+  html,body{overscroll-behavior-y:contain}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  a{color:inherit}
+  .top{background:#fff;padding:12px 16px 8px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .top img{display:block;width:100%;max-width:200px;height:auto}
+  .lang{display:flex;border:1.5px solid var(--line);border-radius:20px;overflow:hidden;flex-shrink:0}
+  .lang button{border:0;background:#fff;color:var(--muted);font-weight:800;font-size:13px;padding:6px 10px}
+  .lang button.on{background:var(--navy);color:#fff}
+  header{background:var(--navy);color:#fff;padding:12px 16px 26px}
+  header .brand{font-weight:800;font-size:20px}
+  header .brand span{color:var(--gold)}
+  header p{margin:2px 0 0;color:#c9d0e3;font-size:14px}
+  main{max-width:560px;margin:-14px auto 0;padding:0 16px 24px}
+  .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
+  h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+  h2 small{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted)}
+  .hint{font-size:13px;color:var(--muted)}
+  .btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font-weight:800;font-size:17px;text-align:center;text-decoration:none}
+  .btn.sec{background:#eef0f6;font-size:15px;padding:11px}
+  .hero{background:linear-gradient(135deg,#173a8c,#14213d);color:#fff}
+  .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media(min-width:700px){.svc{grid-template-columns:repeat(5,1fr)}}
+  .svc a{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;text-decoration:none;color:var(--ink);background:#f6f7fb;border-radius:12px;padding:10px 4px;font-weight:800;font-size:12.5px;line-height:1.2}
+  .svc a span{font-size:24px}
+  .hero h2{color:#fff}
+  .hero p{margin:0 0 12px;color:#dfe4f2;font-size:15px}
+  /* Offres */
+  .offres{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;margin:0 -4px}
+  .offre{flex:0 0 82%;scroll-snap-align:start;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin:0 4px;display:flex;flex-direction:column}
+  .offre img{width:100%;height:140px;object-fit:cover;display:block;background:#eef0f6}
+  .offre .c{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
+  .offre b{font-size:16px}
+  .offre .m{color:var(--gold);font-weight:800;font-size:18px}
+  .offre .t{font-size:14px;color:var(--muted);flex:1}
+  .offre a{margin-top:6px;display:inline-block;text-align:center;background:var(--navy);color:#fff;border-radius:10px;padding:9px;font-weight:700;text-decoration:none;font-size:14px}
+  /* Météo */
+  .meteo{display:flex;align-items:center;gap:14px}
+  .meteo .ic{font-size:46px;line-height:1}
+  .meteo .tp{font-size:36px;font-weight:800}
+  .meteo .ds{font-size:14px;color:var(--muted)}
+  .jours{display:flex;gap:8px;margin-top:12px}
+  .jour{flex:1;background:#f4f6fb;border-radius:10px;padding:8px;text-align:center;font-size:13px}
+  .jour .ic{font-size:22px}
+  .soleil{display:flex;gap:16px;margin-top:10px;font-size:13px;color:var(--muted)}
+  /* Éphéméride */
+  .date{font-size:20px;font-weight:800;text-transform:capitalize}
+  .evt{border-left:3px solid var(--gold);padding:4px 0 4px 10px;margin-top:10px;font-size:14.5px}
+  .evt.ht{border-color:#173a8c}
+  .evt .a{font-weight:800;margin-right:4px}
+  /* Matchs */
+  .comp{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 6px}
+  .comp:first-child{margin-top:0}
+  .match{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+  .match .eq{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14.5px;min-width:0}
+  .match .eq span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .match .eq.d{justify-content:flex-end;text-align:right}
+  .match .eq img{width:22px;height:22px;object-fit:contain;flex-shrink:0}
+  .score{min-width:64px;text-align:center;font-weight:800;font-size:17px}
+  .score small{display:block;font-size:11.5px;font-weight:700;color:var(--muted)}
+  .score.live small{color:var(--live)}
+  .pastille{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--live);margin-right:4px;animation:p 1.2s infinite}
+  @keyframes p{50%{opacity:.25}}
+  /* Lives */
+  .livebar{display:flex;align-items:center;gap:12px;background:var(--live);color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:12px;text-decoration:none;box-shadow:0 2px 8px rgba(214,40,40,.35)}
+  .livebar .dot{width:12px;height:12px;border-radius:50%;background:#fff;animation:p 1.2s infinite;flex-shrink:0}
+  .livebar b{display:block;font-size:13px;letter-spacing:.6px}
+  .livebar span{font-size:16px;font-weight:700}
+  .livebar i{margin-left:auto;font-style:normal;background:#fff;color:var(--live);border-radius:20px;padding:6px 12px;font-weight:800;font-size:13px;white-space:nowrap}
+  .prochain{display:flex;gap:10px;align-items:center;background:#eef2ff;border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px;text-decoration:none}
+  .tag{display:inline-block;font-size:11.5px;font-weight:800;border-radius:20px;padding:2px 8px;margin-bottom:4px}
+  .tag.l{background:var(--live);color:#fff}.tag.p{background:#eef2ff;color:#173a8c}.tag.f{background:#eef0f6;color:var(--muted)}
+  .liveitem{margin-bottom:16px}
+  .avenir{border-top:1px solid var(--line);padding:10px 0;display:flex;gap:12px;align-items:center}
+  .avenir .q{min-width:82px;text-align:center;background:#eef2ff;border-radius:10px;padding:6px;font-weight:800;color:#173a8c;font-size:13px;line-height:1.25}
+  .fb{aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;position:relative}
+  .fb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .fbph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;color:#fff;background:linear-gradient(135deg,#1877f2,#14213d);border:0;width:100%;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+  .fbph span{font-size:48px}
+  .verrou{background:linear-gradient(135deg,#14213d,#173a8c);color:#fff;border-radius:12px;padding:16px}
+  .verrou .pr{color:var(--gold);font-weight:800;font-size:18px;margin:4px 0 8px}
+  .verrou .vt{font-size:19px;font-weight:900;line-height:1.25}
+  .affiche{position:relative;border-radius:14px;overflow:hidden;color:#fff;
+    background:radial-gradient(circle at 88% 12%,rgba(252,163,17,.55),transparent 42%),radial-gradient(circle at 8% 95%,rgba(46,196,182,.38),transparent 46%),repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px),linear-gradient(160deg,#0b1430 0%,#173a8c 58%,#14213d 100%);
+    box-shadow:0 8px 24px rgba(20,33,61,.25)}
+  .affiche .afh{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:12px 14px}
+  .affiche .afmil{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .affiche .aflogo{align-self:flex-start;background:rgba(255,255,255,.93);border-radius:10px;padding:5px 9px;line-height:0}
+  .affiche .aflogo img{height:30px;width:auto}
+  .affiche .aft{font-size:20px;font-weight:900;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.45)}
+  .affiche .afpr{display:inline-block;margin-top:6px;background:rgba(0,0,0,.35);color:var(--gold);font-weight:800;border-radius:999px;padding:3px 10px;font-size:14px}
+  .affiche .afplay{width:68px;height:68px;border-radius:50%;border:0;background:var(--gold);color:var(--navy);font-size:30px;font-weight:900;box-shadow:0 0 0 10px rgba(252,163,17,.25),0 6px 18px rgba(0,0,0,.35);cursor:pointer;padding:0}
+  .affiche .aflbl{font-weight:800;font-size:15px;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+  .affiche.ouvert .afmil{display:none}.affiche.ouvert .afh{min-height:0}
+  .affiche .afchoix{background:rgba(8,14,34,.82);padding:14px;border-top:1px solid rgba(255,255,255,.12)}
+  .affiche .afchoix .btn{display:block;text-align:center;text-decoration:none;margin:0 0 12px}
+  .affiche .row{display:flex;gap:8px;margin-top:8px}
+  .affiche input{flex:1;min-width:0;padding:11px;border-radius:10px;border:0;font-size:16px;text-transform:uppercase;letter-spacing:1px}
+  .affiche .row button{border:0;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:800;padding:0 14px;font-size:15px}
+  .affiche .e{color:#ffb4ab;font-size:13.5px;margin-top:6px;font-weight:700}
+  .reseaux{margin-top:16px;background:#eef2ff;border-radius:12px;padding:12px}
+  .reseaux b{display:block;color:#173a8c;margin-bottom:8px;font-size:14.5px}
+  .reseaux div{display:flex;flex-wrap:wrap;gap:8px}
+  .reseaux a{background:#fff;border:1px solid #d6def5;border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;color:#14213d;text-decoration:none}
+  .verrou .row{display:flex;gap:8px;margin-top:10px}
+  .verrou input{flex:1;min-width:0;padding:11px;border-radius:10px;border:0;font-size:16px;text-transform:uppercase;letter-spacing:1px}
+  .verrou button{border:0;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:800;padding:0 14px;font-size:15px}
+  .verrou a{display:block;margin-top:10px;text-align:center;color:#fff;font-weight:700}
+  .verrou .e{color:#ffd2d2;font-size:14px;margin-top:8px}
+  /* Quiz */
+  .quizhome{background:linear-gradient(135deg,#fca311,#f77f00);color:var(--navy)}
+  .quizhome h2{color:var(--navy)}
+  .quizhome p{margin:0 0 10px;font-size:14.5px}
+  .quizhome .btn{background:var(--navy);color:#fff}
+  .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px}
+  .qbar{height:6px;background:#eef0f6;border-radius:4px;overflow:hidden;margin-bottom:14px}
+  .qbar div{height:100%;background:var(--gold);width:100%;transition:width .25s linear}
+  .qbar div.bas{background:var(--live)}
+  .qtxt{font-size:19px;font-weight:800;margin:6px 0 14px;line-height:1.3}
+  .qchoix{display:grid;gap:9px}
+  .qchoix button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:13px 14px;text-align:left;font:inherit;font-size:16px;font-weight:600;color:var(--ink);display:flex;gap:10px;align-items:center}
+  .qchoix button b{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#eef0f6;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .qchoix button.bon{border-color:var(--ok);background:#e8f6ee}
+  .qchoix button.bon b{background:var(--ok);color:#fff}
+  .qchoix button.faux{border-color:var(--err);background:#fdecea}
+  .qchoix button.faux b{background:var(--err);color:#fff}
+  .qchoix button:disabled{opacity:1}
+  .qexpl{margin-top:12px;padding:12px;border-radius:10px;font-size:14.5px}
+  .qexpl.ok{background:#e8f6ee;color:var(--ok)}.qexpl.ko{background:#fdecea;color:var(--err)}
+  .qexpl span{display:block;color:var(--ink);font-weight:500;margin-top:4px;white-space:pre-line}
+  .qscore{text-align:center;padding:10px 0}
+  .qscore .gros{font-size:54px;font-weight:900;line-height:1}
+  .qscore .gros small{font-size:22px;color:var(--muted)}
+  .onglets{display:flex;gap:6px;margin:6px 0 8px}
+  .onglets button{flex:1;border:0;border-radius:10px;padding:9px;background:#eef0f6;font-weight:700;color:var(--muted);font:inherit;font-size:14px}
+  .onglets button.on{background:var(--navy);color:#fff}
+  .rang{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .rang .n{width:28px;height:28px;border-radius:50%;background:#eef0f6;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+  .rang:nth-child(1) .n{background:#fca311;color:#14213d}.rang:nth-child(2) .n{background:#cfd6e4}.rang:nth-child(3) .n{background:#e6b98a}
+  .rang .p{flex:1;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rang .s{font-weight:800}.rang .t{font-size:12.5px;color:var(--muted);min-width:52px;text-align:right}
+  .champ{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:10px;font-size:16px;margin:6px 0 10px;font-family:inherit}
+  .rubs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}
+  .rubs button{border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 10px;text-align:left;font:inherit;font-size:14.5px;font-weight:700;color:var(--ink);display:flex;flex-direction:column;gap:2px;min-width:0}
+  .rubs button span{font-size:12.5px;color:var(--muted);font-weight:600}
+  .rubs button.tout{grid-column:1 / -1;background:var(--navy);border-color:var(--navy);color:#fff}
+  .rubs button.tout span{color:#dfe4f2}
+  .cadeau{display:block;background:#14213d;color:#fff;border-radius:12px;padding:12px 14px;margin:0 0 10px;font-weight:700;font-size:14.5px;text-decoration:none}
+  .cadeau span{display:block;color:#fca311;font-size:13.5px;margin-top:3px}
+  .quizhome .lien2{display:inline-block;margin-top:10px;color:var(--navy);font-weight:700;font-size:14px}
+  .recomp{background:#fff8ea;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:10px}
+  /* Parcours par étapes */
+  .konkou{background:#eef2ff;border-radius:12px;padding:12px;margin-bottom:8px;font-size:14px}
+  .konkou b{display:block;font-size:15px}
+  .konkou span{display:block;margin-top:3px}
+  .konkou.inv{background:linear-gradient(135deg,#14213d,#173a8c);color:#fff}
+  .konkou.inv .hint{color:#dfe4f2}
+  .konkou .row{display:flex;gap:8px;margin-top:8px}
+  .konkou input{flex:1;min-width:0;padding:10px;border-radius:10px;border:0;font-size:16px}
+  .konkou button{border:0;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:800;padding:0 14px;font-size:15px}
+  .konkou .ok{color:#9be3b8;font-weight:700}
+  .kbar{height:8px;background:#d9e0f5;border-radius:6px;overflow:hidden;margin:8px 0 4px}
+  .kbar div{height:100%;background:var(--gold)}
+  .paks{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:8px}
+  .pak{border:2px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+  .pak .pt{font-weight:800;font-size:15.5px}
+  .pak .pe{font-weight:700;font-size:14px}
+  .pak .btn{font-size:15px;padding:11px;margin-top:4px}
+  .pak .btn:disabled{opacity:.6}
+  .dots{display:flex;gap:6px}
+  .dots i{font-style:normal;width:30px;height:30px;border-radius:50%;background:#eef0f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+  .dots i.v{background:#fff3dc;font-size:16px}
+  .dots i.c{background:var(--navy);color:#fff;box-shadow:0 0 0 3px rgba(252,163,17,.45)}
+  .pfini{background:#fff3dc;border-radius:10px;padding:10px;text-align:center;font-weight:800;margin-top:4px}
+  .fete{border-radius:12px;padding:12px;margin:10px 0;font-weight:700;text-align:center}
+  .fete.ok{background:#e8f6ee;color:var(--ok)}.fete.ko{background:#fff3dc;color:#8a5a00}
+  .fete.inv{background:linear-gradient(135deg,#14213d,#173a8c);color:#fff;font-size:17px}
+  .fete span{display:block;font-weight:600;font-size:14px;margin-top:4px;color:var(--ink)}
+  .fete.inv span{color:#dfe4f2}
+  .attest{border:5px double var(--navy);border-radius:10px;padding:18px 12px;text-align:center;background:#fffdf7}
+  .attest .at1{font-weight:900;font-size:19px;color:var(--navy)}.attest .at2{letter-spacing:1px;text-transform:uppercase;font-weight:800;font-size:13px;color:var(--gold);margin:4px 0 12px}
+  .attest .at3{font-size:13.5px;color:var(--muted);margin-top:8px}.attest .at4{font-size:24px;font-weight:900;margin:2px 0}.attest .at5{font-size:17px;font-weight:800;color:#173a8c}.attest .at6{font-family:ui-monospace,Menlo,monospace;font-weight:700;margin:12px 0 6px}
+  .attest .atsig{margin:16px auto 0;font-size:14px;line-height:1.35}.attest .atl{width:180px;max-width:70%;border-top:1px solid var(--navy);margin:0 auto 6px}
+  .pfond{margin-top:6px;font-size:12.5px;color:var(--muted)}
+  .smscode{font:800 26px/1.2 ui-monospace,Menlo,Consolas,monospace;letter-spacing:2px;background:#fff;border:2px dashed var(--navy);border-radius:10px;padding:10px;text-align:center;margin:8px 0;user-select:all}
+  .regles{background:#f4f6fb;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+  .avert{background:#fff3dc;border-radius:10px;padding:10px 12px;font-size:13.5px;margin:8px 0}
+  @media (min-width:520px){ .paks{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  /* Vidéos */
+  .vids{display:grid;grid-template-columns:1fr;gap:12px}
+  .vid{border-radius:12px;overflow:hidden;background:#000;position:relative;aspect-ratio:16/9}
+  .vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9}
+  .vid button{position:absolute;inset:0;border:0;background:transparent;color:#fff;font-size:54px;cursor:pointer}
+  .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .vidt{font-weight:700;margin:6px 2px 0}
+  .vidd{font-size:13px;color:var(--muted);margin:0 2px}
+  .vide{text-align:center;color:var(--muted);padding:18px 6px;font-size:14px}
+  .err{background:#fdecea;color:var(--err);padding:10px;border-radius:10px;font-size:14px}
+  .hidden{display:none!important}
+  .install{display:flex;gap:10px;align-items:center;background:#fff8ea;border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+  .install button{border:0;background:var(--navy);color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;white-space:nowrap}
+  nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+  nav a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  nav a span{display:block;font-size:20px;line-height:1.2}
+  nav a.on{color:var(--navy)}
+  nav a.live b{color:var(--live)}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
+  .apropo{display:inline-block;margin-top:6px;color:var(--gold);font-weight:700;font-size:14px;text-decoration:none}
+  .navlien{display:none}
+  /* ===== Ordinateur et tablette en largeur ===== */
+  @media (min-width: 900px){
+    body{padding-bottom:0}
+    .top{max-width:1180px;margin:0 auto;padding:14px 24px 10px}
+    header{padding:14px 0 30px}
+    header .brand,header p{max-width:1180px;margin-left:auto;margin-right:auto;padding:0 24px}
+    nav{position:sticky;top:0;bottom:auto;max-width:none;justify-content:center;gap:4px;border-top:0;border-bottom:1px solid var(--line);padding:0;box-shadow:0 2px 6px rgba(20,33,61,.06)}
+    nav a{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:14px 18px;font-size:15px;border-bottom:3px solid transparent}
+    nav a span{display:inline;font-size:18px}
+    nav a.on{border-bottom-color:var(--gold)}
+    nav .navlien{display:flex}
+    main{max-width:1180px;padding:0 24px 40px}
+    #vAkey:not(.hidden){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+    #vAkey .card{margin:0}
+    #liveHome,#vAkey .hero{grid-column:1 / -1}
+    #liveHome:empty{display:none}
+    #cOffres{grid-column:span 2}
+    .offre{flex:0 0 calc(50% - 8px)}
+    #vVideyo:not(.hidden){display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}
+    #vVideyo .card,#vQuiz .card{margin:0}
+    #vVideyo .vids{grid-template-columns:1fr}
+    #vQuiz:not(.hidden){display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}
+    #quizZone{grid-row:span 2}
+    #cAntren,#cPakou,#cKonkou,#cPro,#cVerif{grid-column:1 / -1}
+    .paks{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .rubs{grid-template-columns:repeat(4,minmax(0,1fr))}
+    #vMatch .card{max-width:820px;margin:0 auto}
+    .hero{display:grid;grid-template-columns:1fr auto;align-items:center;gap:6px 30px}
+    .hero h2{grid-column:1}.hero p{grid-column:1;margin:0}.hero .btn{grid-column:2;grid-row:1 / span 2;min-width:260px}
+    .install{max-width:1180px}
+  }
+  .skel{background:linear-gradient(90deg,#eef0f6,#f7f8fb,#eef0f6);background-size:200% 100%;animation:s 1.2s infinite;border-radius:8px;height:16px;margin:8px 0}
+  @keyframes s{to{background-position:-200% 0}}
+</style>
+</head>
+<body>
+<div class="top">
+  <img src="logo.png" alt="Masbet Education" width="560" height="166">
+  <div class="lang" role="group" aria-label="Langue / Lang">
+    <button id="lHt" onclick="langue('ht')">KR</button>
+    <button id="lFr" onclick="langue('fr')">FR</button>
+  </div>
+</div>
+<header>
+  <div class="brand">Masbet<span>AirNet</span></div>
+  <p><span data-t="slogan"></span><br><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
+</header>
+
+<main>
+  <div class="install hidden" id="install"><span data-t="installTxt"></span><button id="btnInstall" data-t="installBtn"></button></div>
+
+  <!-- ===== Akèy ===== -->
+  <section id="vAkey">
+    <div class="card hidden" id="cVerif">
+      <h2>📜 <span data-t="attVerifTitre"></span></h2>
+      <div id="verifZone"></div>
+    </div>
+    <div id="liveHome"></div>
+    <div class="card hero">
+      <h2>📶 <span data-t="heroTitre"></span></h2>
+      <p data-t="heroTxt"></p>
+      <a class="btn" href="achte.html" data-t="heroBtn"></a>
+    </div>
+
+    <div class="card" id="cSvc">
+      <h2>✨ <span data-t="svcTitre"></span></h2>
+      <div class="svc">
+        <a href="achte.html"><span>💳</span><b data-t="svcPay"></b></a>
+        <a href="suite.html"><span>🧰</span><b>Masbet Suite</b></a>
+        <a href="kominote.html"><span>💬</span><b data-t="svcKom"></b></a>
+        <a href="biblio.html"><span>📚</span><b data-t="svcBib"></b></a>
+        <a href="meditasyon.html"><span>🕊️</span><b data-t="svcMed"></b></a>
+      </div>
+    </div>
+
+    <div class="card quizhome hidden" id="cQuizHome">
+      <h2>🧠 <span data-t="quizTitre"></span></h2>
+      <div id="cadeauHome"></div>
+      <p id="quizHomeTxt"></p>
+      <div id="konHome"></div>
+      <div id="pakHome"></div>
+      <a class="btn" href="#quiz" id="quizHomeBtn" data-t="quizJwe"></a>
+      <a class="lien2" href="#quiz&antren" data-t="antLien"></a>
+    </div>
+
+    <div class="card" id="cOffres">
+      <h2>🎁 <span data-t="offres"></span></h2>
+      <div id="offres"><div class="skel"></div><div class="skel"></div></div>
+    </div>
+
+    <div class="card" id="cMeteo">
+      <h2>🌤️ <span data-t="meteo"></span><small id="meteoLieu"></small></h2>
+      <div id="meteo"><div class="skel"></div><div class="skel"></div></div>
+    </div>
+
+    <div class="card">
+      <h2>📅 <span data-t="ephem"></span></h2>
+      <div class="date" id="date"></div>
+      <div id="ephem"><div class="skel"></div></div>
+    </div>
+
+    <div class="card" id="cMatchMini">
+      <h2>⚽ <span data-t="matchJodi"></span></h2>
+      <div id="matchMini"><div class="skel"></div></div>
+      <a class="btn sec" href="#match" style="margin-top:10px" data-t="toutMatch"></a>
+    </div>
+  </section>
+
+  <!-- ===== Quiz ===== -->
+  <section id="vQuiz" class="hidden">
+    <div class="card" id="quizZone"><div class="skel"></div><div class="skel"></div></div>
+    <div class="card">
+      <h2>🏆 <span data-t="klasman"></span></h2>
+      <div class="onglets"><button id="kJ" class="on" onclick="ongletKlas('jour')" data-t="kJodi"></button><button id="kS" onclick="ongletKlas('semaine')" data-t="kSemen"></button></div>
+      <div id="klasman"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cKonkou">
+      <h2>🏆 <span data-t="konkouTitre"></span></h2>
+      <div id="konZone"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cPakou">
+      <h2>🎯 <span data-t="pakTitre"></span></h2>
+      <div id="pakZone"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cPro">
+      <h2>💼 <span data-t="proTitre"></span></h2>
+      <div id="proZone"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cAntren">
+      <h2>📚 <span data-t="antTitre"></span></h2>
+      <div id="antZone"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cGenies">
+      <h2>🎓 Les Génies d'Haïti</h2>
+      <div class="hint" data-t="geniesTxt" style="margin-bottom:10px"></div>
+      <a class="btn sec" id="geniesLien" target="_blank" rel="noopener" data-t="geniesBtn"></a>
+    </div>
+  </section>
+
+  <!-- ===== Match ===== -->
+  <section id="vMatch" class="hidden">
+    <div class="card">
+      <h2>⚽ <span data-t="matchJodi"></span><small id="matchMaj"></small></h2>
+      <div id="matchs"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+    </div>
+  </section>
+
+  <!-- ===== Videyo ===== -->
+  <section id="vVideyo" class="hidden">
+    <div class="card" id="cLives">
+      <h2>🔴 <span data-t="lives"></span></h2>
+      <div id="lives"></div>
+    </div>
+    <div class="card">
+      <h2>▶️ <span data-t="videyo"></span></h2>
+      <div class="hint" data-t="videyoAide" style="margin-bottom:10px"></div>
+      <div class="vids" id="vids"><div class="skel"></div></div>
+    </div>
+  </section>
+
+  <footer id="foot"></footer>
+</main>
+
+<nav id="nav">
+  <a href="#akey" id="nAkey"><span>🏠</span><b data-t="nAkey"></b></a>
+  <a href="achte.html"><span>📶</span><b data-t="nAchte"></b></a>
+  <a href="#match" id="nMatch"><span>⚽</span><b data-t="nMatch"></b></a>
+  <a href="#videyo" id="nVideyo"><span>🔴</span><b data-t="nVideyo"></b></a>
+  <a href="achte.html#mine"><span>🔑</span><b data-t="nKod"></b></a>
+  <a href="apropo.html" class="navlien"><span>ℹ️</span><b data-t="nApropo"></b></a>
+</nav>
+
+<script>
+var CONTENU = window.MASBET_CONTENU || '';   // projet Google « Contenu » (offres, météo, matchs…)
+var TXT = {
+  ht: {
+    slogan:'Wi-Fi Ansavo · Rapid, pa chè, toupre w', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
+    heroBtn:'Achte kounye a', offres:'Ofri yo', meteo:'Meteyo', ephem:'Jodi a', matchJodi:'Match jodi a', toutMatch:'Wè tout match yo',
+    videyo:'Videyo', videyoAide:'Videyo yo konsome done. Gade yo lè w konekte sou Wi-Fi a.', nAkey:'Akèy', nAchte:'Achte', nMatch:'Match', nVideyo:'Live', nKod:'Kòd mwen',
+    apropo:'Konsènan MasbetAirNet →', nApropo:'Konsènan nou', quizTitre:'Quiz jodi a', quizJwe:'Jwe kounye a', quizWe:'Wè rezilta ak klasman', quizTxt:'5 kesyon (2 fasil, 2 mwayen, 1 difisil), 20 segonn pou chak. Yon sèl chans pa jou !', quizDeja:function(s){ return 'Ou fè '+s+'/5 jodi a. Tounen demen pou yon lòt quiz !'; },
+    pseudo:'Non jwè w (ap parèt nan klasman an)', telQuiz:'Telefòn ou (pa obligatwa, pou nou rele w si w genyen)', komanse:'Kòmanse', kesyon:'Kesyon', swivan:'Kesyon swivan', wèRezilta:'Wè rezilta a',
+    bon:'Bravo, se sa !', pabon:'Non, se pa sa.', tanFini:'Tan an fini !', repons:'Bon repons lan :', rezilta:'Rezilta ou jodi a', segonn:'s',
+    klasman:'Klasman', kJodi:'Jodi a', kSemen:'Semèn nan', pakoJwe:'Pèsonn poko jwe. Se ou ki premye ?', geniesTxt:'Plis quiz ak defi sou platfòm Les Génies d\'Haïti.', geniesBtn:'Ale sou Les Génies d\'Haïti ↗', quizPoko:'Quiz la poko pare. Tounen pita.', jou:'jou',
+    kdTitre:function(s){ return '🎁 Bravo ! Ou genyen Quiz semèn '+s+' la.'; }, kdTxt:'Kòd Wi-Fi ou ap tann ou nan « Kòd mwen » →',
+    antTitre:'Antrene w pa rubrik', antLien:'Oswa antrene w pa rubrik →', antTxt:'Gratis, san tan, otan fwa ou vle. 10 kesyon chak fwa, ak koreksyon an. Pou egzèsis yo, pran yon fèy ak yon plim !', antTout:'Tout rubrik yo', antKes:function(n){ return n+' kesyon'; }, antMeyo:function(s){ return 'Pi bon nòt ou : '+s; }, antFin:'Fini !', antRejwe:'Rejwe', antLot:'Lòt rubrik', antPoko:'Pa gen kesyon pou antrennman an kounye a.', antKom:function(s,n){ return s===n?'Bravo, ou konn tout !':s>=n*0.7?'Trè byen !':s>=n*0.4?'Pa mal, kontinye antrene w.':'Kontinye, w ap pwogrese !'; },
+    pakTitre:'Pakou mwen', pakTxt:'Monte etap pa etap nan chak pakou. Pou w pase nan etap swivan an, reyisi yon tès 10 kesyon. Ou pa janm desann.',
+    etapes:['Debitan','Aprantisaj','Konfime','Ekspè','Jeni'], etap:'Etap', pakSeuil:function(s,n){ return s+'/'+n+' pou pase'; }, pakRest:function(r){ return r+' tès rete jodi a'; },
+    pakPase:function(e){ return 'Pase tès etap '+e+' →'; }, pakKontinye:'Kontinye tès la →', pakPoko:'Poko gen ase kesyon', pakDemen:'Tounen demen', pakFini:'Pakou fini !',
+    pakRegles:function(n,s,sec){ return n+' kesyon, '+sec+' segonn pou chak (90 segonn pou egzèsis yo). Fò w jwenn '+s+' bon repons pou w pase. Kesyon yo chanje chak fwa.'; },
+    pakAnile:function(nom){ return 'Atansyon : tès ou te kòmanse nan '+nom+' ap fèmen, l ap konte kòm yon tès rate.'; }, pakRetounen:'Retounen nan pakou yo',
+    pakReyisi:function(e,nom){ return '🎉 Bravo ! Ou pase etap '+e+' : '+nom+' !'; }, pakBadj:function(b,nom){ return 'Ou genyen badj '+b+' '+nom+'.'; },
+    pakRate:function(s,seuil){ return 'Ou te bezwen '+seuil+', ou fè '+s+'. Pa dekouraje : revize erè ou yo epi eseye ankò.'; }, pakSwiv:function(e,nom){ return 'Pwochen etap : '+e+' · '+nom; },
+    pakTout:'👑 Ou fini tout pakou sa a. Ou se yon Jeni !', pakRetire:'Kesyon sa a te retire nan bank lan : li konte kòm yon bon repons.', pakTan:'Tan an fini pou kesyon sa a.',
+    konkouTitre:'Konkou Masbet', konkouTxt:function(e,n){ return 'Valide etap '+e+' nan '+n+' pakou pou w resevwa envitasyon nan Konkou a.'; }, konkouPwo:function(v,n){ return v+' / '+n+' pakou'; },
+    invTitre:'Ou envite nan Konkou Masbet !', invMsg:'N ap kontakte w pou dat manch kalifikasyon yo.', invTel:'Kite nimewo telefòn ou pou nou ka kontakte w :', invTelOk:'Nimewo w anrejistre ✓', voye:'Voye', invVoir:'Wè detay yo →',
+    pakHome:function(b,v,n){ return '🎯 Pakou mwen : '+b+' badj · Konkou '+v+'/'+n+' →'; },
+    revBtn:function(n){ return 'Revize erè m yo ('+n+')'; }, revTitre:'Revizyon', revTxt:'Kesyon ou te rate yo. Lè w jwenn yon kesyon, li soti nan lis la.', revFin:function(s,n,r){ return 'Ou jwenn '+s+' sou '+n+'. Rete '+r+' kesyon pou revize.'; },
+    proTitre:'Espas pwofesyonèl', proTxt:'Pou pwofesyonèl ak etidyan : 12 rubrik metye ak syans, 5 etap chak. Rubrik sa yo pa antre nan Quiz jou a ni nan Konkou a.',
+    etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proGratis:function(n){ return 'Etap 1 a '+n+' gratis pou tout moun.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
+    passAktif:function(d){ return 'Pass Pro aktif jiska '+d+'.'; }, passTout:'Tout etap ak tout rubrik yo louvri.', proByento:'Byento', proPokoKesyon:'Kesyon yo ap vini byento.', proFini:'Rubrik fini : atestasyon disponib',
+    proBezwenPass:'Etap sa a mande Pass Pro', proAntrene:'Antrene w (san tan)', proRetounen:'Retounen nan Espas pwofesyonèl', proRegles:function(n,s){ return n+' kesyon, 40 segonn chak (90 segonn pou kalkil yo). Fò w jwenn '+s+' bon repons pou w pase.'; },
+    proReyisi:function(e,nom){ return '🎉 Bravo ! Ou pase etap '+e+' : '+nom+' !'; }, proTout:'🏆 Ou fini rubrik la : ou se yon Ekspè. Atestasyon w pare.',
+    attTitre:'Atestasyon nivo', attCertifie:'Masbet Education sètifye ke', attNivo:function(n){ return 'rive nan nivo « '+n+' » nan'; }, attVerifye:'Verifye atestasyon sa a :', attEnprime:'Enprime / anrejistre an PDF', attFondate:'Fondatè, Masbet Education', fondate:'Fondatè : ',
+    attNouvo:'Atestasyon w lan pare ! Gade l nan Espas pwofesyonèl la.', attVerifTitre:'Verifikasyon atestasyon', attValab:'Atestasyon valab',
+    pwen:'pwen', konManch:'Manch', konDemi:'Demi-final', konVo:function(n){ return n+' pwen'; },
+    konAtann:function(n){ return 'Konkou a ap kòmanse otomatikman lè '+n+' moun envite.'; }, konEnvite:function(v,n){ return v+' / '+n+' envite'; },
+    konDejaEnvite:'✓ Ou deja envite. N ap tann lòt yo !', konKijan:'Pou w patisipe : valide etap 3 nan 4 pakou (gade « Pakou mwen »).',
+    konKomanse:function(d){ return 'Konkou a kòmanse '+d+' !'; }, konOuLa:'✓ Ou nan lis patisipan yo.', konPwochen:'Ou envite pou pwochen Konkou a.',
+    konManchOuvet:function(n,d){ return 'Manch '+n+' louvri jiska '+d+' (minwi).'; }, konRegles:'20 kesyon (4 nan chak etap), 20 segonn chak. Etap 1 = 1 pwen … etap 5 = 5 pwen. Yon sèl chans pa manch.',
+    konJwe:function(n){ return 'Jwe manch '+n+' →'; }, konFe:function(p,b){ return 'Ou fè '+p+' pwen ('+b+' bon repons).'; }, konPwochenManch:function(d){ return 'Pwochen manch : '+d+'.'; },
+    konKalandriye:'Kalandriye', konFenet:function(a,b){ return a+' → '+b; }, konEnKou:'an kou', konOuvet:'louvri', konAvini:'ap vini',
+    konDemiLe:function(n,d,h){ return 'Demi-final ('+n+' premye) : '+d+' a '+h+'.'; }, konRang:function(r,p){ return 'Ou nan '+(r===1?'1ye':r+'yèm')+' plas ak '+p+' pwen.'; },
+    konTwaMeyo:'Nou konte 3 pi bon manch ou yo sou 4.', konKlasman:'Klasman kalifikasyon', konOuDemi:'Ou kalifye pou demi-final la !',
+    konVerifye:'Telefòn ou verifye ✓', konPokoVerifye:'Ekip Masbet ap rele w pou verifye telefòn ou anvan demi-final la.', konDemiBtn:'Kòmanse demi-final la →',
+    konDemiTit:function(n){ return 'Demi-final : '+n+' premye kalifikasyon an.'; }, konMesi:'Mèsi paske w te patisipe ! Kontinye antrene w pou pwochen Konkou a.',
+    konFinalis:'Ou nan final Konkou Masbet la !', konFinalInfoPoko:'N ap voye enfòmasyon final la ba ou byento.', konFinalTit:function(n){ return 'Final la : '+n+' finalis.'; },
+    konBon:function(b,t){ return b+' bon repons sou '+t; }, konMesiJwe:'Rezilta w anrejistre. Bòn chans !', konRetounen:'Retounen nan Konkou a',
+    konSmsTit:'Dènye etap : verifye telefòn ou pa SMS.', konSms:function(n){ return 'Voye mesaj sa a bay '+n+' :'; }, konSmsAide:'Voye l ak telefòn ou te bay la. Yon telefòn pou yon sèl jwè.', konSmsVoye:'Mwen voye l : tcheke ankò', konAncien:'✓ Ou kalifye otomatikman : ou te finalis dènye Konkou a.',
+    konJweHome:function(n){ return 'Konkou Masbet : manch '+n+' louvri !'; }, konDemiHome:'Konkou Masbet : demi-final la kòmanse !',
+    lives:'Live Masbet', peyan:'LIVE PEYAN', tikeKod:'Kòd tikè', ouvri:'Ouvri', achteTike:'Achte tikè', tikePri:function(p){ return 'Tikè : '+p+' HTG'; }, tikeAide:'Tout live yo peyan. Yon tikè louvri yon live, nenpòt ki live. Ou ka achte plizyè davans : chak live sèvi ak yon tikè. Antre kòd la isit la.', tikeMwen:'Tikè ou yo :', pasLive:'Pa gen live kounye a', pwochenAnons:'Pwochen live la ap anonse isit la.', achteDavans:'Achte tikè ou davans', gratisSou:'Lives gratis : swiv Masbet sou', klikeGade:'Klike pou gade', achteYonTike:'Achte yon tikè', mwenGenKod:'Mwen gen yon kòd tikè :', tikeRegle:'1 tikè = 1 live. Chak nouvo live mande yon nouvo tikè. Kòd la mache sou 2 telefòn pou menm live la.', tikeRete:function(n){ return n>0?'Kòd sa a rete '+n+' live.':'Kòd sa a fin itilize ; pwochen live la ap mande yon lòt tikè.'; }, tikeDavans:'Achte tikè ou davans.', tikeOk:'Tikè valab ✓', anDirek:'AN DIREK', gade:'Gade', gadeFb:'Gade sou Facebook', prochainLive:'Pwochen live', aucunLive:'Pa gen live kounye a. Gade pwogram nan anba a.', pwograme:'PWOGRAME', replay:'REPLAY', liveDonnees:'Yon live konsome anpil done.', a:'a',
+    installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', aucuneOffre:'Pa gen ofri pou kounye a.',
+    meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
+    pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Nan listwa', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
+    aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Rubrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
+    reporte:'Ranvwaye', annule:'Anile', quota:'Nou rive nan limit mizajou pou jodi a. Rezilta yo ka an reta.', erreurMatch:'Pa ka chaje match yo kounye a.',
+    majA:'Mete ajou', aucuneVideo:'Poko gen videyo.', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', aide:'Ou bezwen èd ? WhatsApp : ',
+    meteoSrc:'Meteyo : Open-Meteo', liveN:function(n){ return n+' match an dirèk'; },
+    jours:['Dimanch','Lendi','Madi','Mèkredi','Jedi','Vandredi','Samdi'], mois:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm'],
+    w:{0:'Syèl klè',1:'Prèske klè',2:'Kèk nyaj',3:'Syèl kouvri',45:'Bwouya',48:'Bwouya',51:'Ti farinaj',53:'Farinaj',55:'Farinaj fò',61:'Ti lapli',63:'Lapli',65:'Gwo lapli',80:'Ti avès',81:'Avès',82:'Gwo avès',95:'Loraj',96:'Loraj ak lagrèl',99:'Gwo loraj'}
+  },
+  fr: {
+    slogan:'Wi-Fi d\'Anse-à-Veau · Rapide, pas cher, près de vous', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
+    heroBtn:'Acheter maintenant', offres:'Offres', meteo:'Météo', ephem:'Aujourd\'hui', matchJodi:'Matchs du jour', toutMatch:'Voir tous les matchs',
+    videyo:'Vidéos', videyoAide:'Les vidéos consomment des données. Regardez-les une fois connecté au Wi-Fi.', nAkey:'Accueil', nAchte:'Acheter', nMatch:'Matchs', nVideyo:'Live', nKod:'Mes codes',
+    apropo:'À propos de MasbetAirNet →', nApropo:'À propos', quizTitre:'Quiz du jour', quizJwe:'Jouer maintenant', quizWe:'Voir le résultat et le classement', quizTxt:'5 questions (2 faciles, 2 moyennes, 1 difficile), 20 secondes chacune. Une seule chance par jour !', quizDeja:function(s){ return 'Vous avez fait '+s+'/5 aujourd\'hui. Revenez demain pour un autre quiz !'; },
+    pseudo:'Votre nom de joueur (affiché dans le classement)', telQuiz:'Votre téléphone (facultatif, pour vous contacter si vous gagnez)', komanse:'Commencer', kesyon:'Question', swivan:'Question suivante', wèRezilta:'Voir le résultat',
+    bon:'Bravo, c\'est ça !', pabon:'Non, ce n\'est pas ça.', tanFini:'Temps écoulé !', repons:'Bonne réponse :', rezilta:'Votre résultat du jour', segonn:'s',
+    klasman:'Classement', kJodi:'Aujourd\'hui', kSemen:'Cette semaine', pakoJwe:'Personne n\'a encore joué. Serez-vous le premier ?', geniesTxt:'Plus de quiz et de défis sur la plateforme Les Génies d\'Haïti.', geniesBtn:'Aller sur Les Génies d\'Haïti ↗', quizPoko:'Le quiz n\'est pas encore prêt. Revenez plus tard.', jou:'jours',
+    kdTitre:function(s){ return '🎁 Bravo ! Vous avez gagné le Quiz de la semaine '+s+'.'; }, kdTxt:'Votre code Wi-Fi vous attend dans « Mes codes » →',
+    antTitre:'S\'entraîner par rubrique', antLien:'Ou entraînez-vous par rubrique →', antTxt:'Gratuit, sans chrono, autant de fois que vous voulez. 10 questions à chaque fois, avec la correction. Pour les exercices, prenez une feuille et un stylo !', antTout:'Toutes les rubriques', antKes:function(n){ return n+' questions'; }, antMeyo:function(s){ return 'Meilleur score : '+s; }, antFin:'Terminé !', antRejwe:'Rejouer', antLot:'Autre rubrique', antPoko:'Pas de questions d\'entraînement pour le moment.', antKom:function(s,n){ return s===n?'Bravo, sans faute !':s>=n*0.7?'Très bien !':s>=n*0.4?'Pas mal, continuez à vous entraîner.':'Continuez, vous progressez !'; },
+    pakTitre:'Mes parcours', pakTxt:'Montez étape par étape dans chaque parcours. Pour passer à l\'étape suivante, réussissez un test de 10 questions. On ne redescend jamais.',
+    etapes:['Débutant','Apprentissage','Confirmé','Expert','Génie'], etap:'Étape', pakSeuil:function(s,n){ return s+'/'+n+' pour réussir'; }, pakRest:function(r){ return r+' test(s) restant(s) aujourd\'hui'; },
+    pakPase:function(e){ return 'Passer le test de l\'étape '+e+' →'; }, pakKontinye:'Continuer le test →', pakPoko:'Pas encore assez de questions', pakDemen:'Revenez demain', pakFini:'Parcours terminé !',
+    pakRegles:function(n,s,sec){ return n+' questions, '+sec+' secondes chacune (90 secondes pour les exercices). Il faut '+s+' bonnes réponses pour réussir. Les questions changent à chaque fois.'; },
+    pakAnile:function(nom){ return 'Attention : le test commencé en '+nom+' sera fermé et compté comme raté.'; }, pakRetounen:'Retour aux parcours',
+    pakReyisi:function(e,nom){ return '🎉 Bravo ! Étape '+e+' réussie : '+nom+' !'; }, pakBadj:function(b,nom){ return 'Vous gagnez le badge '+b+' '+nom+'.'; },
+    pakRate:function(s,seuil){ return 'Il fallait '+seuil+', vous avez fait '+s+'. Ne vous découragez pas : révisez vos erreurs et réessayez.'; }, pakSwiv:function(e,nom){ return 'Prochaine étape : '+e+' · '+nom; },
+    pakTout:'👑 Parcours terminé : vous êtes un Génie !', pakRetire:'Cette question a été retirée de la banque : elle compte comme une bonne réponse.', pakTan:'Temps écoulé pour cette question.',
+    konkouTitre:'Concours Masbet', konkouTxt:function(e,n){ return 'Validez l\'étape '+e+' dans '+n+' parcours pour recevoir l\'invitation au Concours.'; }, konkouPwo:function(v,n){ return v+' / '+n+' parcours'; },
+    invTitre:'Vous êtes invité au Concours Masbet !', invMsg:'Nous vous contacterons pour les dates des manches de qualification.', invTel:'Laissez votre numéro pour que nous puissions vous contacter :', invTelOk:'Numéro enregistré ✓', voye:'Envoyer', invVoir:'Voir les détails →',
+    pakHome:function(b,v,n){ return '🎯 Mes parcours : '+b+' badge(s) · Concours '+v+'/'+n+' →'; },
+    revBtn:function(n){ return 'Réviser mes erreurs ('+n+')'; }, revTitre:'Révision', revTxt:'Les questions que vous avez manquées. Une question réussie sort de la liste.', revFin:function(s,n,r){ return 'Vous avez trouvé '+s+' sur '+n+'. Il reste '+r+' question(s) à réviser.'; },
+    proTitre:'Espace professionnel', proTxt:'Pour les professionnels et les étudiants : 12 rubriques métiers et sciences, 5 étapes chacune. Ces rubriques n\'entrent ni dans le Quiz du jour ni dans le Concours.',
+    etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proGratis:function(n){ return 'Étapes 1 à '+n+' gratuites pour tous.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
+    passAktif:function(d){ return 'Pass Pro actif jusqu\'au '+d+'.'; }, passTout:'Toutes les étapes et toutes les rubriques sont ouvertes.', proByento:'Bientôt', proPokoKesyon:'Les questions arrivent bientôt.', proFini:'Rubrique terminée : attestation disponible',
+    proBezwenPass:'Cette étape demande le Pass Pro', proAntrene:'S\'entraîner (sans chrono)', proRetounen:'Retour à l\'Espace professionnel', proRegles:function(n,s){ return n+' questions, 40 secondes chacune (90 secondes pour les calculs). Il faut '+s+' bonnes réponses pour réussir.'; },
+    proReyisi:function(e,nom){ return '🎉 Bravo ! Étape '+e+' réussie : '+nom+' !'; }, proTout:'🏆 Rubrique terminée : vous êtes Expert. Votre attestation est prête.',
+    attTitre:'Attestation de niveau', attCertifie:'Masbet Education atteste que', attNivo:function(n){ return 'a atteint le niveau « '+n+' » en'; }, attVerifye:'Vérifier cette attestation :', attEnprime:'Imprimer / enregistrer en PDF', attFondate:'Fondateur, Masbet Education', fondate:'Fondateur : ',
+    attNouvo:'Votre attestation est prête ! Retrouvez-la dans l\'Espace professionnel.', attVerifTitre:'Vérification d\'attestation', attValab:'Attestation valide',
+    pwen:'points', konManch:'Manche', konDemi:'Demi-finale', konVo:function(n){ return n+' point(s)'; },
+    konAtann:function(n){ return 'Le Concours démarre automatiquement dès '+n+' invités.'; }, konEnvite:function(v,n){ return v+' / '+n+' invités'; },
+    konDejaEnvite:'✓ Vous êtes déjà invité. Encore un peu de patience !', konKijan:'Pour participer : validez l\'étape 3 dans 4 parcours (voir « Mes parcours »).',
+    konKomanse:function(d){ return 'Le Concours commence '+d+' !'; }, konOuLa:'✓ Vous êtes sur la liste des participants.', konPwochen:'Vous êtes invité au prochain Concours.',
+    konManchOuvet:function(n,d){ return 'Manche '+n+' ouverte jusqu\'au '+d+' (minuit).'; }, konRegles:'20 questions (4 par étape), 20 secondes chacune. Étape 1 = 1 point … étape 5 = 5 points. Une seule chance par manche.',
+    konJwe:function(n){ return 'Jouer la manche '+n+' →'; }, konFe:function(p,b){ return 'Vous avez fait '+p+' points ('+b+' bonnes réponses).'; }, konPwochenManch:function(d){ return 'Prochaine manche : '+d+'.'; },
+    konKalandriye:'Calendrier', konFenet:function(a,b){ return a+' → '+b; }, konEnKou:'en cours', konOuvet:'ouverte', konAvini:'à venir',
+    konDemiLe:function(n,d,h){ return 'Demi-finale ('+n+' premiers) : '+d+' à '+h+'.'; }, konRang:function(r,p){ return 'Vous êtes '+r+(r===1?'er':'e')+' avec '+p+' points.'; },
+    konTwaMeyo:'On compte vos 3 meilleures manches sur 4.', konKlasman:'Classement de la qualification', konOuDemi:'Vous êtes qualifié pour la demi-finale !',
+    konVerifye:'Téléphone vérifié ✓', konPokoVerifye:'L\'équipe Masbet va vous appeler pour vérifier votre téléphone avant la demi-finale.', konDemiBtn:'Commencer la demi-finale →',
+    konDemiTit:function(n){ return 'Demi-finale : les '+n+' premiers de la qualification.'; }, konMesi:'Merci d\'avoir participé ! Continuez à vous entraîner pour le prochain Concours.',
+    konFinalis:'Vous êtes en finale du Concours Masbet !', konFinalInfoPoko:'Les informations de la finale vous seront envoyées bientôt.', konFinalTit:function(n){ return 'La finale : '+n+' finalistes.'; },
+    konBon:function(b,t){ return b+' bonnes réponses sur '+t; }, konMesiJwe:'Résultat enregistré. Bonne chance !', konRetounen:'Retour au Concours',
+    konSmsTit:'Dernière étape : vérifiez votre téléphone par SMS.', konSms:function(n){ return 'Envoyez ce message au '+n+' :'; }, konSmsAide:'Envoyez-le depuis le téléphone que vous avez donné. Un téléphone pour un seul joueur.', konSmsVoye:'Je l\'ai envoyé : vérifier', konAncien:'✓ Qualifié d\'office : vous étiez finaliste du dernier Concours.',
+    konJweHome:function(n){ return 'Concours Masbet : la manche '+n+' est ouverte !'; }, konDemiHome:'Concours Masbet : la demi-finale commence !',
+    lives:'Lives Masbet', peyan:'LIVE PAYANT', tikeKod:'Code ticket', ouvri:'Ouvrir', achteTike:'Acheter un ticket', tikePri:function(p){ return 'Ticket : '+p+' HTG'; }, tikeAide:'Tous les lives sont payants. Un ticket ouvre un live, n\'importe lequel. Vous pouvez en acheter plusieurs d\'avance : chaque live utilise un ticket. Entrez le code ici.', tikeMwen:'Vos tickets :', pasLive:'Pas de live en ce moment', pwochenAnons:'Le prochain live sera annoncé ici.', achteDavans:'Acheter mon ticket d\'avance', gratisSou:'Lives gratuits : suivez Masbet sur', klikeGade:'Cliquer pour regarder', achteYonTike:'Acheter un ticket', mwenGenKod:'J\'ai un code ticket :', tikeRegle:'1 ticket = 1 live. Chaque nouveau live demande un nouveau ticket. Le code marche sur 2 téléphones pour ce même live.', tikeRete:function(n){ return n>0?'Ce code ouvre encore '+n+' live'+(n>1?'s':'')+'.':'Ce code est épuisé ; le prochain live demandera un autre ticket.'; }, tikeDavans:'Achetez votre ticket à l\'avance.', tikeOk:'Ticket valide ✓', anDirek:'EN DIRECT', gade:'Regarder', gadeFb:'Regarder sur Facebook', prochainLive:'Prochain live', aucunLive:'Pas de live en ce moment. Voir le programme ci-dessous.', pwograme:'PROGRAMMÉ', replay:'REDIFFUSION', liveDonnees:'Un live consomme beaucoup de données.', a:'à',
+    installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', aucuneOffre:'Aucune offre pour le moment.',
+    meteoIndispo:'Météo indisponible pour le moment.', ressenti:'Ressenti', humidite:'Humidité', vent:'Vent', lever:'Lever du soleil', coucher:'Coucher du soleil',
+    pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
+    aucunMatch:'Aucun match des compétitions suivies aujourd\'hui.', footOff:'La rubrique matchs n\'est pas encore activée.', direct:'EN DIRECT', mt:'MT', fini:'Terminé',
+    reporte:'Reporté', annule:'Annulé', quota:'Limite de mises à jour atteinte pour aujourd\'hui. Les scores peuvent être en retard.', erreurMatch:'Impossible de charger les matchs pour le moment.',
+    majA:'Mis à jour', aucuneVideo:'Pas encore de vidéos.', reseau:'Pas de connexion. Vérifiez votre internet.', aide:'Besoin d\'aide ? WhatsApp : ',
+    meteoSrc:'Météo : Open-Meteo', liveN:function(n){ return n+' match(s) en direct'; },
+    jours:['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'], mois:['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],
+    w:{0:'Ciel clair',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie faible',63:'Pluie',65:'Forte pluie',80:'Averses faibles',81:'Averses',82:'Fortes averses',95:'Orage',96:'Orage et grêle',99:'Fort orage'}
+  }
+};
+var LANG='ht', ACC=null, MAT=null, TMATCH=null, DEJA=false;
+Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliotèk', svcMed:'Meditasyon'});
+Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
+function T(k){ return TXT[LANG][k]!==undefined ? TXT[LANG][k] : TXT.fr[k]; }
+function jsid(s){ return String(s==null?'':s).replace(/[^A-Za-z0-9_\-]/g,''); }  // valeur sûre dans onclick="…('…')"
+function lienSur(u){ u=String(u||'').trim(); return /^(https:\/\/|#|[\w\-]+\.html(#[\w&=\-]*)?$)/i.test(u)?u:'#'; }  // pas de javascript:
+function lienFb(u){ return /^https:\/\/(www\.|m\.|web\.)?(facebook\.com|fb\.watch)\//i.test(String(u||''))?u:''; }
+function idYt(s){ return /^[A-Za-z0-9_-]{11}$/.test(String(s||''))?s:''; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+function api(action, params){
+  if(!CONTENU) return Promise.reject(new Error('config'));
+  var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); });
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
+  return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if(t) clearTimeout(t); if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; },
+          function(e){ if(t) clearTimeout(t); throw e; });
+}
+
+// ---------- Météo ----------
+function icone(c,jour){
+  if(c===0) return jour===0?'🌙':'☀️'; if(c===1||c===2) return jour===0?'☁️':'⛅'; if(c===3) return '☁️';
+  if(c===45||c===48) return '🌫️'; if(c>=51&&c<=57) return '🌦️'; if(c>=61&&c<=67) return '🌧️';
+  if(c>=80&&c<=82) return '🌦️'; if(c>=95) return '⛈️'; if(c>=71&&c<=77) return '🌨️'; return '🌡️';
+}
+function libelle(c){ var w=T('w'); if(w[c]) return w[c]; var k=Object.keys(w).map(Number).filter(function(x){return x<=c;}).pop(); return w[k]||''; }
+function heure(iso){ var m=String(iso||'').match(/T(\d{2}):(\d{2})/); return m?m[1]+':'+m[2]:''; }
+function afficherMeteo(){
+  var el=document.getElementById('meteo'), m=ACC&&ACC.meteo;
+  if(!m){ el.innerHTML='<div class="hint">'+T('meteoIndispo')+'</div>'; return; }
+  document.getElementById('meteoLieu').textContent=m.lieu||'';
+  var j=(m.jours||[]).map(function(d,i){
+    var lab=i===0?T('auj'):i===1?T('dem'):T('jours')[new Date(d.date+'T12:00:00').getDay()];
+    return '<div class="jour"><div>'+esc(lab)+'</div><div class="ic">'+icone(d.code,1)+'</div><b>'+Math.round(d.max)+'°</b> / '+Math.round(d.min)+'°<div class="hint">💧 '+esc(d.pluie==null?'–':d.pluie)+'%</div></div>';
+  }).join('');
+  el.innerHTML='<div class="meteo"><div class="ic">'+icone(m.code,m.jour)+'</div><div><div class="tp">'+Math.round(m.temp)+'°C</div>'+
+    '<div class="ds">'+esc(libelle(m.code))+' · '+T('ressenti')+' '+Math.round(m.ressenti)+'°</div>'+
+    '<div class="ds">'+T('humidite')+' '+esc(m.humidite)+'% · '+T('vent')+' '+Math.round(m.vent)+' km/h</div></div></div>'+
+    '<div class="jours">'+j+'</div>'+
+    '<div class="soleil"><span>🌅 '+T('lever')+' '+esc(heure(m.lever))+'</span><span>🌇 '+T('coucher')+' '+esc(heure(m.coucher))+'</span></div>'+
+    '<div class="hint" style="margin-top:6px;font-size:11px">'+T('meteoSrc')+'</div>';
+}
+
+// ---------- Éphéméride ----------
+function afficherDate(){
+  var d=new Date();
+  var s=LANG==='fr' ? T('jours')[d.getDay()]+' '+d.getDate()+' '+T('mois')[d.getMonth()]+' '+d.getFullYear()
+                    : T('jours')[d.getDay()]+' '+d.getDate()+' '+T('mois')[d.getMonth()]+' '+d.getFullYear();
+  document.getElementById('date').textContent=s;
+}
+function afficherEphem(){
+  var el=document.getElementById('ephem'), e=ACC&&ACC.ephemeride;
+  if(!e){ el.innerHTML=''; return; }
+  var h='';
+  (e.haiti||[]).forEach(function(x){ h+='<div class="evt ht"><span class="a">🇭🇹 '+T('aHaiti')+' —</span>'+esc(LANG==='fr'?x.fr:x.ht)+'</div>'; });
+  if((e.monde||[]).length){
+    h+='<div class="hint" style="margin-top:12px;font-weight:700">'+T('ceJour')+' '+T('fr')+'</div>';
+    e.monde.slice(0,4).forEach(function(x){ h+='<div class="evt"><span class="a">'+esc(x.annee)+'</span>'+esc(x.texte)+'</div>'; });
+  }
+  el.innerHTML=h||'<div class="hint" style="margin-top:8px">'+T('rienEphem')+'</div>';
+}
+
+// ---------- Offres ----------
+function afficherOffres(){
+  var el=document.getElementById('offres'), o=ACC&&ACC.offres||[];
+  if(!o.length){ el.innerHTML='<div class="hint">'+T('aucuneOffre')+'</div>'; return; }
+  el.innerHTML='<div class="offres">'+o.map(function(x){
+    var lien=lienSur(x.lien||'achte.html'), bt=x.bouton||T('heroBtn');
+    var ext=x.lien?' target="_blank" rel="noopener"':'';
+    return '<div class="offre">'+(x.image?'<img loading="lazy" src="'+esc(x.image)+'" alt="">':'')+
+      '<div class="c"><b>'+esc(x.titre)+'</b>'+(x.mention?'<div class="m">'+esc(x.mention)+'</div>':'')+
+      '<div class="t">'+esc(x.texte)+'</div><a href="'+esc(lien)+'"'+ext+'>'+esc(bt)+'</a></div></div>';
+  }).join('')+'</div>';
+}
+
+// ---------- Quiz ----------
+var QZ=null, QPOS=0, QTIMER=null, QFIN=0, KLAS=null, KONG='jour', QATTENTE=false;
+function chargerQuiz(){
+  if(!CONTENU) return;
+  api('quiz',{appareil:appareil()}).then(function(d){ QZ=d; noterCadeaux(); afficherQuizHome(); if(vueActive()==='quiz') afficherQuiz(); }, function(){ if(vueActive()==='quiz') document.getElementById('quizZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; });
+  chargerKlas();
+  chargerPakou();
+  chargerKonkou();
+  chargerPro();
+}
+// Récompense gagnée : le n° de commande est ajouté aux preuves de « Kòd mwen » (même stockage que achte.html)
+function noterCadeaux(){
+  var l=(QZ&&QZ.cadeaux)||[]; if(!l.length) return;
+  var a=[]; try{ a=JSON.parse(lire('masbet_cmds')||'[]'); if(!Array.isArray(a)) a=[]; }catch(e){ a=[]; }
+  l.forEach(function(c){ if(/^[A-Z0-9]{4,12}$/.test(c.id) && a.indexOf(c.id)<0) a.unshift(c.id); });
+  ecrire('masbet_cmds', JSON.stringify(a.slice(0,50)));
+}
+function afficherCadeau(){
+  var el=document.getElementById('cadeauHome'), l=(QZ&&QZ.cadeaux)||[], c=l[l.length-1];
+  if(!c || lire('masbet_cadeau_vu')===c.id){ el.innerHTML=''; return; }
+  var sem=String(c.semaine).replace(/^\d{4}-S/,'');
+  el.innerHTML='<a class="cadeau" href="achte.html#mine" onclick="ouvrirCadeau(\''+jsid(c.id)+'\')">'+esc(T('kdTitre')(sem))+'<span>'+esc(T('kdTxt'))+'</span></a>';
+}
+function ouvrirCadeau(id){
+  var l=(QZ&&QZ.cadeaux)||[], c=l.filter(function(x){ return x.id===id; })[0];
+  ecrire('masbet_cadeau_vu', id);
+  if(c && c.tel){ var d=String(c.tel).replace(/\D/g,''); if(d.length===11&&d.indexOf('509')===0) d=d.slice(3); if(d.length===8){ ecrire('masbet_tel', d); ecrire('masbet_pays','0'); } }
+}
+function chargerKlas(){ api('classement').then(function(d){ KLAS=d; afficherKlas(); }, function(){}); }
+function vueActive(){ return (location.hash||'#akey').slice(1).split('&')[0]; }
+function afficherQuizHome(){
+  var c=document.getElementById('cQuizHome');
+  var aCadeau=QZ&&QZ.cadeaux&&QZ.cadeaux.length;
+  if(!QZ || ((!QZ.questions || !QZ.questions.length) && !aCadeau)){ c.classList.add('hidden'); return; }
+  c.classList.remove('hidden'); afficherCadeau(); afficherPakouHome(); afficherKonkouHome();
+  if(!QZ.questions || !QZ.questions.length){ document.getElementById('quizHomeTxt').textContent=T('quizPoko'); document.getElementById('quizHomeBtn').textContent=T('quizWe'); return; }
+  var e=QZ.etat||{};
+  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):T('quizTxt'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(QZ.recompense)+'</b>':'');
+  document.getElementById('quizHomeBtn').textContent=e.fini?T('quizWe'):T('quizJwe');
+  var g=document.getElementById('cGenies'); g.classList.toggle('hidden',!QZ.genies); if(QZ.genies) document.getElementById('geniesLien').href=QZ.genies;
+}
+function qTxt(q){ return LANG==='fr'?q.fr:q.ht; }
+function afficherQuiz(){
+  var z=document.getElementById('quizZone'); clearInterval(QTIMER);
+  if(!QZ){ z.innerHTML='<div class="skel"></div>'; return; }
+  if(!QZ.questions || !QZ.questions.length){ z.innerHTML='<div class="hint">'+T('quizPoko')+'</div>'; return; }
+  var e=QZ.etat||{joue:false};
+  if(e.fini) return afficherResultatQuiz();
+  if(!e.joue){
+    z.innerHTML='<h2>🧠 '+T('quizTitre')+'</h2><div class="hint" style="margin-bottom:8px">'+T('quizTxt')+'</div>'+
+      (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+
+      '<label class="hint" for="qPseudo">'+T('pseudo')+'</label><input class="champ" id="qPseudo" maxlength="20" value="'+esc(lire('masbet_pseudo')||'')+'">'+
+      '<label class="hint" for="qTel">'+T('telQuiz')+'</label><input class="champ" id="qTel" type="tel" inputmode="tel" placeholder="+509 3X XX XX XX" value="'+esc(lire('masbet_qtel')||'')+'">'+
+      '<button class="btn" id="qGo" onclick="commencerQuiz()">'+T('komanse')+'</button><div id="qMsg"></div>';
+    return;
+  }
+  // reprise : première question sans réponse
+  var faites={}; (e.reponses||[]).forEach(function(r){ faites[r.n]=true; });
+  QPOS=0; while(faites[QPOS]) QPOS++;
+  montrerQuestion();
+}
+function commencerQuiz(){
+  var ps=document.getElementById('qPseudo').value.trim(), tel=document.getElementById('qTel').value.trim(), b=document.getElementById('qGo');
+  b.disabled=true;
+  api('quizdebut',{appareil:appareil(), pseudo:ps, telephone:tel}).then(function(etat){
+    ecrire('masbet_pseudo',ps); ecrire('masbet_qtel',tel); QZ.etat=etat; afficherQuiz();
+  }, function(e){ b.disabled=false; var m=(e&&e.message)||''; document.getElementById('qMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(/fetch|abort|network/i.test(m)||!m?T('reseau'):m)+'</div>'; });
+}
+function montrerQuestion(){
+  var z=document.getElementById('quizZone'), q=QZ.questions[QPOS];
+  if(!q){ return afficherResultatQuiz(); }
+  z.innerHTML='<div class="qhead"><span>'+T('kesyon')+' '+(QPOS+1)+' / '+QZ.questions.length+'</span><span>'+esc(nomRub(q.cat))+(q.nivo?' · '+BADJ[q.nivo-1]:'')+'</span><span id="qT">20 '+T('segonn')+'</span></div>'+
+    '<div class="qbar"><div id="qB"></div></div><div class="qtxt">'+esc(qTxt(q))+'</div>'+
+    '<div class="qchoix">'+q.choix.map(function(c,i){ return '<button id="qc'+i+'" onclick="repondre('+i+')"><b>'+'ABCD'.charAt(i)+'</b>'+esc(c)+'</button>'; }).join('')+'</div><div id="qExpl"></div>';
+  QFIN=Date.now()+20000; QATTENTE=false;
+  QTIMER=setInterval(function(){
+    var r=Math.max(0,QFIN-Date.now()), b=document.getElementById('qB'), t=document.getElementById('qT');
+    if(!b){ clearInterval(QTIMER); return; }
+    b.style.width=(r/200)+'%'; b.classList.toggle('bas',r<6000); t.textContent=Math.ceil(r/1000)+' '+T('segonn');
+    if(r<=0){ clearInterval(QTIMER); repondre(-1); }
+  },250);
+}
+function repondre(i){
+  if(QATTENTE) return; QATTENTE=true; clearInterval(QTIMER);
+  var q=QZ.questions[QPOS];
+  document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=true; });
+  api('quizrep',{appareil:appareil(), n:QPOS, choix:i<0?'temps':i}).then(function(r){
+    if(r.bonne>=0) document.getElementById('qc'+r.bonne).classList.add('bon');
+    if(r.choix>=0 && !r.correct) document.getElementById('qc'+r.choix).classList.add('faux');
+    if(!r.correct && r.bonne>=0) noterErreur(q, r.bonne, r.explHt, r.explFr);
+    var titre=r.correct?T('bon'):(r.choix<0?T('tanFini'):T('pabon'));
+    var expl=LANG==='fr'?r.explFr:r.explHt;
+    document.getElementById('qExpl').innerHTML='<div class="qexpl '+(r.correct?'ok':'ko')+'"><b>'+titre+'</b>'+(!r.correct&&r.bonne>=0?'<span>'+T('repons')+' <b>'+esc(q.choix[r.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+      '<button class="btn" style="margin-top:12px" onclick="suivante()">'+(r.fini?T('wèRezilta'):T('swivan'))+'</button>';
+    QZ.etat.score=r.score; QZ.etat.fini=r.fini; QZ.etat.temps=r.temps;
+    QZ.etat.reponses=(QZ.etat.reponses||[]).concat([{n:QPOS,choix:r.choix,bonne:r.bonne}]);
+    if(r.fini){ afficherQuizHome(); chargerKlas(); }
+  }, function(){
+    QATTENTE=false; document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=false; });
+    document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+T('reseau')+'</div>';
+  });
+}
+function suivante(){ if(QZ.etat.fini) return afficherResultatQuiz(); QPOS++; montrerQuestion(); }
+function afficherResultatQuiz(){
+  var e=QZ.etat||{}, z=document.getElementById('quizZone');
+  var revue=(e.reponses||[]).slice().sort(function(a,b){return a.n-b.n;}).map(function(r){
+    var q=QZ.questions[r.n]; if(!q) return '';
+    var ok=r.choix===r.bonne;
+    return '<div class="rang" style="align-items:flex-start"><span class="n" style="background:'+(ok?'#e8f6ee':'#fdecea')+'">'+(ok?'✓':'✗')+'</span><span style="flex:1;font-size:14px">'+esc(qTxt(q))+'<br><b>'+esc(q.choix[r.bonne]||'')+'</b></span></div>';
+  }).join('');
+  z.innerHTML='<h2>🧠 '+T('rezilta')+'</h2><div class="qscore"><div class="gros">'+esc(e.score||0)+'<small>/'+QZ.questions.length+'</small></div>'+
+    (e.temps?'<div class="hint">⏱️ '+esc(e.temps)+' '+T('segonn')+'</div>':'')+'</div>'+
+    (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+revue;
+}
+function ongletKlas(o){ KONG=o; document.getElementById('kJ').classList.toggle('on',o==='jour'); document.getElementById('kS').classList.toggle('on',o==='semaine'); afficherKlas(); }
+function afficherKlas(){
+  var el=document.getElementById('klasman'); if(!KLAS){ return; }
+  var l=KLAS[KONG]||[], moi=lire('masbet_pseudo')||'';
+  el.innerHTML=l.length?l.map(function(x,i){
+    return '<div class="rang"><span class="n">'+(i+1)+'</span><span class="p">'+esc(x.pseudo)+(x.pseudo===moi?' 👈':'')+'</span><span class="s">'+esc(x.score)+'</span><span class="t">'+esc(x.temps)+' '+T('segonn')+(KONG==='semaine'&&x.jours?' · '+esc(x.jours)+' '+T('jou'):'')+'</span></div>';
+  }).join(''):'<div class="hint">'+T('pakoJwe')+'</div>';
+}
+
+// ---------- Entraînement par rubrique ----------
+var RUB=null, ANT=null, APOS=0, ASCORE=0, ACAT='', AREP=false;
+var RUBFR={'Sante':'Santé','Swen Enfimye':'Soins infirmiers','Egzèsis Swen':'Calculs de soins','Enfòmatik':'Informatique','Mizik':'Musique','Sinema':'Cinéma','Dekouvèt':'Découvertes','Pèsonaj':'Personnages','Egzèsis Matematik':'Exercices de maths','Egzèsis Fizik':'Exercices de physique','Egzèsis Chimi':'Exercices de chimie','Istwa Ayiti':'Histoire d\'Haïti','Jewografi':'Géographie','Syans':'Sciences','Kilti':'Culture','Espò':'Sport','Istwa mond':'Histoire du monde','Teknoloji':'Technologie','Aktyalite':'Actualité','Relijyon':'Religions','Matematik':'Mathématiques'};
+var RUBIC={'Sante':'🩺','Swen Enfimye':'💉','Egzèsis Swen':'💊','Enfòmatik':'💾','Mizik':'🎵','Sinema':'🎬','Dekouvèt':'💡','Pèsonaj':'👤','Egzèsis Matematik':'🧮','Egzèsis Fizik':'⚡','Egzèsis Chimi':'🧪','Istwa Ayiti':'🇭🇹','Jewografi':'🌍','Syans':'🔬','Kilti':'🎭','Espò':'⚽','Istwa mond':'🏛️','Teknoloji':'💻','Aktyalite':'📰','Relijyon':'🕊️','Matematik':'➗'};
+function nomRub(c){ return (RUBIC[c]?RUBIC[c]+' ':'')+(LANG==='fr'&&RUBFR[c]?RUBFR[c]:c); }
+function chargerRubriques(){
+  if(!CONTENU) return;
+  api('rubriques').then(function(d){ RUB=d; if(!ANT) afficherRubriques(); },
+    function(){ if(!RUB){ document.getElementById('cAntren').classList.remove('hidden'); document.getElementById('antZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
+}
+function meilleur(cat){ return lire('masbet_ant_'+(cat||'*')); }
+function afficherRubriques(){
+  var c=document.getElementById('cAntren'), z=document.getElementById('antZone');
+  if(!RUB){ return; }
+  c.classList.remove('hidden'); ANT=null;
+  if(!RUB.total){ z.innerHTML='<div class="hint">'+T('antPoko')+'</div>'; return; }
+  var b=function(i,cat,n,cls){ var m=meilleur(cat); return '<button class="'+(cls||'')+'" onclick="antCommencer('+i+')">'+esc(i<0?'🎲 '+T('antTout'):nomRub(cat))+'<span>'+esc(T('antKes')(n))+(m?' · '+esc(T('antMeyo')(m)):'')+'</span></button>'; };
+  z.innerHTML='<div class="hint">'+T('antTxt')+'</div><div class="rubs">'+b(-1,'',RUB.total,'tout')+
+    RUB.rubriques.map(function(r,i){ return b(i,r.cat,r.n); }).join('')+'</div>';
+}
+function antCommencer(i){
+  if(!RUB) return;
+  ACAT=i<0||!RUB.rubriques[i]?'':RUB.rubriques[i].cat;
+  var z=document.getElementById('antZone'); z.innerHTML='<div class="skel"></div><div class="skel"></div>';
+  api('entrainement',{cat:ACAT}).then(function(d){ ANT=d; APOS=0; ASCORE=0; antQuestion(); },
+    function(e){ var m=(e&&e.message)||''; z.innerHTML='<div class="err">'+esc(!m||/fetch|abort|network|config/i.test(m)?T('reseau'):m)+'</div><button class="btn sec" style="margin-top:10px" onclick="afficherRubriques()">'+T('antLot')+'</button>'; });
+}
+function antQuestion(){
+  var z=document.getElementById('antZone'), q=ANT&&ANT.questions[APOS];
+  if(!q) return antFin();
+  AREP=false;
+  z.innerHTML='<div class="qhead"><span>'+T('kesyon')+' '+(APOS+1)+' / '+ANT.questions.length+'</span><span>'+esc(nomRub(q.cat))+'</span><span>✓ '+ASCORE+'</span></div>'+
+    '<div class="qtxt">'+esc(qTxt(q))+'</div><div class="qchoix">'+q.choix.map(function(c,j){ return '<button id="ac'+j+'" onclick="antRep('+j+')"><b>'+'ABCD'.charAt(j)+'</b>'+esc(c)+'</button>'; }).join('')+'</div><div id="antExpl"></div>';
+}
+function antRep(j){
+  if(AREP) return; AREP=true;
+  var q=ANT.questions[APOS], ok=j===q.bonne;
+  document.querySelectorAll('#antZone .qchoix button').forEach(function(b){ b.disabled=true; });
+  document.getElementById('ac'+q.bonne).classList.add('bon');
+  if(!ok){ document.getElementById('ac'+j).classList.add('faux'); noterErreur(q,q.bonne,q.explHt,q.explFr); } else ASCORE++;
+  var expl=LANG==='fr'?q.explFr:q.explHt, der=APOS>=ANT.questions.length-1;
+  document.getElementById('antExpl').innerHTML='<div class="qexpl '+(ok?'ok':'ko')+'"><b>'+(ok?T('bon'):T('pabon'))+'</b>'+(!ok?'<span>'+T('repons')+' <b>'+esc(q.choix[q.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+    '<button class="btn" style="margin-top:12px" onclick="APOS++;antQuestion()">'+(der?T('wèRezilta'):T('swivan'))+'</button>';
+}
+function antFin(){
+  var n=ANT.questions.length, z=document.getElementById('antZone'), cle='masbet_ant_'+(ACAT||'*');
+  var avant=lire(cle), pa=avant?Number(avant.split('/')[0])/Number(avant.split('/')[1]):-1;
+  if(ASCORE/n>pa) ecrire(cle, ASCORE+'/'+n);
+  z.innerHTML='<div class="qscore"><div class="hint">'+esc(ACAT?nomRub(ACAT):T('antTout'))+'</div><div class="gros">'+ASCORE+'<small>/'+n+'</small></div><div style="font-weight:700;margin-top:6px">'+esc(T('antKom')(ASCORE,n))+'</div>'+
+    '<div class="hint">'+esc(T('antMeyo')(lire(cle)))+'</div></div>'+
+    '<button class="btn" onclick="antCommencer('+(ACAT?RUB.rubriques.map(function(r){return r.cat;}).indexOf(ACAT):-1)+')">'+T('antRejwe')+'</button>'+
+    '<button class="btn sec" style="margin-top:8px" onclick="afficherRubriques()">'+T('antLot')+'</button>';
+  ANT={questions:ANT.questions, fini:true};
+}
+
+// ---------- Parcours par étapes (v1.1) : tests corrigés sur le serveur ----------
+var PAK=null, PT=null, PQ=null, PFIN=0, PTIMER=null, PATT=false, PREP=null, PECRAN='', PI=-1, REV=null;
+var RUN_ETAPE={zone:'pakZone', q:'etapeq', r:'etaperep', mode:'etape'}, RUN_KON={zone:'konZone', q:'konkouq', r:'konkourep', mode:'konkou'}, PRUN=RUN_ETAPE;
+var PAKFR={'Sante':'Santé','Istwa Ayiti':'Histoire d\'Haïti','Jewografi':'Géographie','Syans':'Sciences','Matematik':'Mathématiques','Lèt ak Kilti':'Lettres et culture','Konesans jeneral':'Culture générale'};
+var PAKIC={'Sante':'🩺','Istwa Ayiti':'🇭🇹','Jewografi':'🌍','Syans':'🔬','Matematik':'➗','Lèt ak Kilti':'📖','Konesans jeneral':'🧠'};
+var BADJ=['🌱','📘','⭐','🏅','👑'];
+function nomPak(n){ return (PAKIC[n]?PAKIC[n]+' ':'')+(LANG==='fr'&&PAKFR[n]?PAKFR[n]:n); }
+function nomEtape(e){ return T('etapes')[e-1]||''; }
+function errMsg(e){ var m=(e&&e.message)||''; return !m||/fetch|abort|network|config|json/i.test(m)?T('reseau'):m; }
+function nbBadj(){ return PAK?PAK.parcours.reduce(function(s,p){ return s+Math.min(5,p.etape-1); },0):0; }
+function chargerPakou(){
+  if(!CONTENU) return;
+  api('pakou',{appareil:appareil()}).then(function(d){ PAK=d; afficherPakouHome(); if(!PT && !REV && PECRAN!=='intro') afficherPakou(); },
+    function(){ if(!PAK){ document.getElementById('cPakou').classList.remove('hidden'); document.getElementById('pakZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
+}
+function afficherPakouHome(){
+  var el=document.getElementById('pakHome'); if(!el) return;
+  if(!PAK){ el.innerHTML=''; return; }
+  var k=PAK.concours||{};
+  el.innerHTML=k.invite?'<a class="cadeau" href="#quiz&pakou">🎓 '+esc(T('invTitre'))+'<span>'+esc(T('invVoir'))+'</span></a>'
+    :'<a class="lien2" style="margin:0 0 10px;display:block" href="#quiz&pakou">'+esc(T('pakHome')(nbBadj(),k.valides||0,k.requis||4))+'</a>';
+}
+function blocKonkou(){
+  var k=PAK.concours||{};
+  if(k.invite) return '<div class="konkou inv"><b>🎓 '+esc(T('invTitre'))+'</b><span>'+esc(LANG==='fr'||!k.message?T('invMsg'):k.message)+'</span>'+
+    (k.telDonne?'<span class="ok">'+T('invTelOk')+'</span>':'<span class="hint">'+T('invTel')+'</span><div class="row"><input id="invTel" type="tel" inputmode="tel" placeholder="+509 3X XX XX XX" value="'+esc(lire('masbet_qtel')||'')+'"><button onclick="envoyerTelInvite()">'+T('voye')+'</button></div><div id="invMsg"></div>')+'</div>';
+  var pct=Math.round(100*Math.min(k.valides||0,k.requis||4)/(k.requis||4));
+  return '<div class="konkou"><b>🎓 '+T('konkouTitre')+'</b><span>'+esc(T('konkouTxt')(k.etape||3,k.requis||4))+'</span><div class="kbar"><div style="width:'+pct+'%"></div></div><span class="hint">'+esc(T('konkouPwo')(k.valides||0,k.requis||4))+'</span></div>';
+}
+function afficherPakou(){
+  var c=document.getElementById('cPakou'), z=document.getElementById('pakZone');
+  if(!PAK) return;
+  c.classList.remove('hidden'); PT=null; PQ=null; REV=null; PECRAN='tiles'; clearInterval(PTIMER);
+  var h=blocKonkou()+'<div class="hint" style="margin:10px 0 2px">'+T('pakTxt')+'</div><div class="paks">'+PAK.parcours.map(function(p,i){
+    var fini=p.etape>5, dots='';
+    for(var e=1;e<=5;e++) dots+='<i class="'+(e<p.etape?'v':e===p.etape?'c':'')+'" title="'+esc(nomEtape(e))+'">'+(e<p.etape?BADJ[e-1]:e)+'</i>';
+    var enc=PAK.enCours&&PAK.enCours.parcours===p.nom, bt;
+    if(fini) bt='<div class="pfini">👑 '+T('pakFini')+'</div>';
+    else if(enc) bt='<button class="btn" onclick="pakIntro('+i+')">'+T('pakKontinye')+'</button>';
+    else if(p.questions<5) bt='<button class="btn sec" disabled>'+T('pakPoko')+'</button>';
+    else if(!p.restants) bt='<button class="btn sec" disabled>'+T('pakDemen')+'</button>';
+    else bt='<button class="btn" onclick="pakIntro('+i+')">'+esc(T('pakPase')(p.etape))+'</button>';
+    return '<div class="pak"><div class="pt">'+esc(nomPak(p.nom))+'</div><div class="dots">'+dots+'</div>'+
+      '<div class="pe">'+esc(fini?nomEtape(5)+' 👑':T('etap')+' '+p.etape+' · '+nomEtape(p.etape))+'</div>'+
+      (fini?'':'<div class="hint">'+esc(T('pakSeuil')(p.seuil,PAK.nbQuestions))+' · '+esc(T('pakRest')(p.restants))+'</div>')+bt+'</div>';
+  }).join('')+'</div>';
+  var ne=erreurs().length;
+  if(ne) h+='<button class="btn sec" style="margin-top:12px" onclick="revCommencer()">🔁 '+esc(T('revBtn')(ne))+'</button>';
+  z.innerHTML=h;
+}
+function envoyerTelInvite(){
+  var t=document.getElementById('invTel').value.trim(), m=document.getElementById('invMsg');
+  api('concourstel',{appareil:appareil(), telephone:t}).then(function(){ ecrire('masbet_qtel',t); PAK.concours.telDonne=true; afficherPakou(); },
+    function(e){ m.innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+}
+function pakIntro(i){
+  var p=PAK&&PAK.parcours[i]; if(!p) return;
+  PI=i; PECRAN='intro';
+  var z=document.getElementById('pakZone'), enc=PAK.enCours, seuil=Math.ceil(p.seuil*PAK.nbQuestions/10-1e-9);
+  if(enc && enc.parcours===p.nom) return pakReprendre(enc);
+  z.innerHTML='<h2 style="margin-top:0">'+esc(nomPak(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+nomEtape(p.etape))+'</div>'+
+    '<div class="regles">'+esc(T('pakRegles')(PAK.nbQuestions,seuil,PAK.secondes||20))+'</div>'+
+    (enc?'<div class="avert">'+esc(T('pakAnile')(nomPak(enc.parcours)))+'</div>':'')+
+    (lire('masbet_pseudo')?'':'<label class="hint" for="pPseudo">'+T('pseudo')+'</label><input class="champ" id="pPseudo" maxlength="20">')+
+    '<button class="btn" id="pGo" onclick="pakCommencer('+i+')">'+T('komanse')+'</button>'+
+    '<button class="btn sec" style="margin-top:8px" onclick="afficherPakou()">'+T('pakRetounen')+'</button><div id="pMsg"></div>';
+}
+function pakCommencer(i){
+  var p=PAK.parcours[i], inp=document.getElementById('pPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('pGo');
+  b.disabled=true;
+  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){
+    if(inp) ecrire('masbet_pseudo',ps);
+    pakReprendre(etat);
+  }, function(e){ b.disabled=false; document.getElementById('pMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+}
+function pakReprendre(etat){ PRUN=RUN_ETAPE; PT=etat; PREP=null; pakQuestion(); }
+function pakQuestion(){
+  var z=document.getElementById(PRUN.zone); clearInterval(PTIMER); PATT=false; PECRAN='q';
+  z.innerHTML='<div class="skel"></div><div class="skel"></div>';
+  api(PRUN.q,{appareil:appareil(), id:PT.id}).then(function(d){
+    PT=d.etat;
+    if(d.etat.fini || !d.question){ PT=null; if(PRUN.mode==='konkou'){ PECRAN=''; chargerKonkou(); } else if(PRUN.mode==='pro'){ PECRAN=''; PRUN=RUN_ETAPE; afficherPro(); chargerPro(); } else { PECRAN='tiles'; afficherPakou(); chargerPakou(); } return; }
+    PQ=d.question; PFIN=Date.now()+Math.max(0,PQ.reste)*1000; pakRendre();
+    PTIMER=setInterval(function(){
+      var r=Math.max(0,PFIN-Date.now()), b=document.getElementById('pB'), t=document.getElementById('pT');
+      if(!b){ clearInterval(PTIMER); return; }
+      b.style.width=(100*r/(PQ.temps*1000))+'%'; b.classList.toggle('bas',r<6000); t.textContent=Math.ceil(r/1000)+' '+T('segonn');
+      if(r<=0){ clearInterval(PTIMER); pakRep(-1); }
+    },250);
+  }, function(e){ z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn" style="margin-top:10px" onclick="pakQuestion()">'+T('swivan')+'</button>'; });
+}
+function pakRendre(){
+  var z=document.getElementById(PRUN.zone), q=PQ, r=Math.max(0,PFIN-Date.now());
+  var mil=PRUN.mode==='konkou'?(PT.epreuve==='DEMI'?T('konDemi'):T('konManch')+' '+PT.epreuve.slice(1))+' · '+PT.points+' '+T('pwen'):T('etap')+' '+PT.etape+' · ✓ '+PT.score;
+  z.innerHTML='<div class="qhead"><span>'+T('kesyon')+' '+(q.n+1)+' / '+PT.total+'</span><span>'+esc(mil)+'</span><span id="pT">'+Math.ceil(r/1000)+' '+T('segonn')+'</span></div>'+
+    '<div class="qbar"><div id="pB" style="width:'+(100*r/(q.temps*1000))+'%"></div></div>'+
+    (q.retiree?'<div class="regles">'+T('pakRetire')+'</div><button class="btn" onclick="pakRep(0)">'+T('swivan')+'</button>':
+    '<div class="hint">'+esc(nomRub(q.cat))+(PRUN.mode==='konkou'&&q.nivo?' · '+BADJ[q.nivo-1]+' '+esc(T('konVo')(q.points)):'')+'</div><div class="qtxt">'+esc(qTxt(q))+'</div>'+
+    '<div class="qchoix">'+q.choix.map(function(c,j){ return '<button id="pc'+j+'" onclick="pakRep('+j+')"><b>'+'ABCD'.charAt(j)+'</b>'+esc(c)+'</button>'; }).join('')+'</div>')+'<div id="pExpl"></div>';
+}
+function pakRep(j){
+  if(PATT||!PQ) return; PATT=true; clearInterval(PTIMER);
+  var q=PQ;
+  document.querySelectorAll('#'+PRUN.zone+' .qchoix button').forEach(function(b){ b.disabled=true; });
+  api(PRUN.r,{appareil:appareil(), id:PT.id, n:q.n, choix:j<0?'temps':j}).then(function(r){
+    PECRAN='corr'; PT.score=r.score; PT.points=r.points; PT.pos=q.n+1;
+    if(r.bonne>=0 && document.getElementById('pc'+r.bonne)) document.getElementById('pc'+r.bonne).classList.add('bon');
+    if(r.choix>=0 && !r.correct && document.getElementById('pc'+r.choix)) document.getElementById('pc'+r.choix).classList.add('faux');
+    if(!r.correct && r.bonne>=0) noterErreur(q, r.bonne, r.explHt, r.explFr);
+    var titre=(r.correct?T('bon'):(r.choix<0?T('pakTan'):T('pabon')))+(PRUN.mode==='konkou'&&r.correct?' +'+r.gain+' '+T('pwen'):''), expl=LANG==='fr'?r.explFr:r.explHt;
+    document.getElementById('pExpl').innerHTML='<div class="qexpl '+(r.correct?'ok':'ko')+'"><b>'+titre+'</b>'+(!r.correct&&r.bonne>=0&&q.choix?'<span>'+T('repons')+' <b>'+esc(q.choix[r.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+      '<button class="btn" style="margin-top:12px" onclick="'+(r.fini?(PRUN.mode==='konkou'?'konResultat()':PRUN.mode==='pro'?'proResultat()':'pakResultat()'):'pakQuestion()')+'">'+(r.fini?T('wèRezilta'):T('swivan'))+'</button>';
+    if(r.fini){ PREP=r; if(PRUN.mode==='konkou') chargerKonkou(true); else if(PRUN.mode==='pro') chargerPro(true); else chargerPakou(); }
+  }, function(e){
+    var m=errMsg(e);
+    if(m===T('reseau')){ PATT=false; document.querySelectorAll('#'+PRUN.zone+' .qchoix button').forEach(function(b){ b.disabled=false; });
+      document.getElementById('pExpl').innerHTML='<div class="err" style="margin-top:10px">'+T('reseau')+'</div>'; }
+    else pakQuestion();   // réponse déjà enregistrée (réseau coupé au retour) : on se resynchronise
+  });
+}
+function pakResultat(){
+  var r=PREP; if(!r) return afficherPakou();
+  PECRAN='res'; PT={fini:true};
+  var parc=PI>=0&&PAK?PAK.parcours[PI]:null, nom=parc?nomPak(parc.nom):'', e=r.reussi?r.etape-1:r.etape;
+  var h='<div class="qscore"><div class="hint">'+esc(nom)+'</div><div class="gros">'+esc(r.score)+'<small>/'+esc(r.total)+'</small></div></div>';
+  if(r.reussi) h+='<div class="fete ok">'+esc(T('pakReyisi')(e,nomEtape(e)))+'<span>'+esc(T('pakBadj')(BADJ[e-1],nomEtape(e)))+'</span>'+
+    '<span>'+esc(r.etape>5?T('pakTout'):T('pakSwiv')(r.etape,nomEtape(r.etape)))+'</span></div>';
+  else h+='<div class="fete ko">'+esc(T('pakRate')(r.score,r.seuil))+'</div>';
+  if(r.nouvelleInvitation) h+='<div class="fete inv">🎓 '+esc(T('invTitre'))+'<span>'+esc(T('invMsg'))+'</span></div>';
+  var ne=erreurs().length;
+  if(ne && !r.reussi) h+='<button class="btn" onclick="revCommencer()">🔁 '+esc(T('revBtn')(ne))+'</button>';
+  h+='<button class="btn '+(ne&&!r.reussi?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
+  document.getElementById('pakZone').innerHTML=h;
+}
+// ---------- Révision des erreurs (sur ce téléphone, sans chrono) ----------
+function erreurs(){ try{ var a=JSON.parse(lire('masbet_erreurs')||'[]'); return Array.isArray(a)?a.filter(function(x){ return x&&x.choix&&x.choix.length===4&&x.bonne>=0; }):[]; }catch(e){ return []; } }
+function cleQ(q){ return String(q.fr||q.ht||'').slice(0,90); }
+function noterErreur(q,bonne,eh,ef){
+  if(!q||!q.choix||bonne<0||bonne>3) return;
+  var k=cleQ(q), a=erreurs().filter(function(x){ return x.k!==k; });
+  a.unshift({k:k,cat:q.cat||'',ht:q.ht||q.fr,fr:q.fr||q.ht,choix:q.choix.map(String),bonne:bonne,explHt:eh||'',explFr:ef||''});
+  ecrire('masbet_erreurs', JSON.stringify(a.slice(0,60)));
+}
+function oublierErreur(k){ ecrire('masbet_erreurs', JSON.stringify(erreurs().filter(function(x){ return x.k!==k; }))); }
+function revCommencer(){
+  var l=erreurs(); if(!l.length) return afficherPakou();
+  document.getElementById('cPakou').classList.remove('hidden');
+  REV={questions:l.slice(0,10), pos:0, score:0, att:false}; PECRAN='rev'; PT=null; clearInterval(PTIMER); revQuestion();
+  document.getElementById('cPakou').scrollIntoView({block:'start'});
+}
+function revQuestion(){
+  var z=document.getElementById('pakZone'), q=REV.questions[REV.pos];
+  if(!q) return revFin();
+  REV.att=false;
+  z.innerHTML='<div class="qhead"><span>🔁 '+T('revTitre')+' '+(REV.pos+1)+' / '+REV.questions.length+'</span><span>'+esc(nomRub(q.cat))+'</span><span>✓ '+REV.score+'</span></div>'+
+    (REV.pos===0?'<div class="hint" style="margin-bottom:6px">'+T('revTxt')+'</div>':'')+
+    '<div class="qtxt">'+esc(qTxt(q))+'</div><div class="qchoix">'+q.choix.map(function(c,j){ return '<button id="rc'+j+'" onclick="revRep('+j+')"><b>'+'ABCD'.charAt(j)+'</b>'+esc(c)+'</button>'; }).join('')+'</div><div id="rExpl"></div>';
+}
+function revRep(j){
+  if(REV.att) return; REV.att=true;
+  var q=REV.questions[REV.pos], ok=j===q.bonne;
+  document.querySelectorAll('#pakZone .qchoix button').forEach(function(b){ b.disabled=true; });
+  document.getElementById('rc'+q.bonne).classList.add('bon');
+  if(!ok) document.getElementById('rc'+j).classList.add('faux'); else { REV.score++; oublierErreur(q.k); }
+  var expl=LANG==='fr'?q.explFr:q.explHt;
+  document.getElementById('rExpl').innerHTML='<div class="qexpl '+(ok?'ok':'ko')+'"><b>'+(ok?T('bon'):T('pabon'))+'</b>'+(!ok?'<span>'+T('repons')+' <b>'+esc(q.choix[q.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+    '<button class="btn" style="margin-top:12px" onclick="REV.pos++;revQuestion()">'+(REV.pos>=REV.questions.length-1?T('wèRezilta'):T('swivan'))+'</button>';
+}
+function revFin(){
+  var z=document.getElementById('pakZone'), n=REV.questions.length;
+  z.innerHTML='<div class="qscore"><div class="hint">🔁 '+T('revTitre')+'</div><div class="gros">'+REV.score+'<small>/'+n+'</small></div><div style="font-weight:700;margin-top:6px">'+esc(T('revFin')(REV.score,n,erreurs().length))+'</div></div>'+
+    (erreurs().length?'<button class="btn" onclick="revCommencer()">🔁 '+esc(T('revBtn')(erreurs().length))+'</button>':'')+
+    '<button class="btn sec" style="margin-top:8px" onclick="afficherPakou()">'+T('pakRetounen')+'</button>';
+  REV.fini=true;
+}
+
+// ---------- Concours Masbet (v1.3) ----------
+var KON=null, KREP=null, KECRAN='';
+function dateLongue(j){ var p=String(j||'').split('-').map(Number); if(p.length<3) return ''; var d=new Date(Date.UTC(p[0],p[1]-1,p[2])); return T('jours')[d.getUTCDay()].toLowerCase()+' '+p[2]+' '+T('mois')[p[1]-1]+(p[0]!==new Date().getFullYear()?' '+p[0]:''); }
+function jourAuj(){ var d=new Date(Date.now()-4*3600e3); return d.toISOString().slice(0,10); }   // heure d'Haïti
+function chargerKonkou(resultat){
+  if(!CONTENU) return;
+  api('konkou',{appareil:appareil()}).then(function(d){ KON=d; afficherKonkouHome(); if(!resultat && !(PRUN===RUN_KON && PT)) afficherKonkou(); }, function(){});
+}
+function afficherKonkouHome(){
+  var el=document.getElementById('konHome'); if(!el) return;
+  var k=KON, m=k&&k.moi||{}, t='';
+  if(!k) { el.innerHTML=''; return; }
+  if(k.phase==='manche' && m.participant && !(m.manches&&m.manches[k.manche-1]&&m.manches[k.manche-1].fini)) t='🏆 '+T('konJweHome')(k.manche);
+  else if(k.phase==='demi' && m.demi && m.verifie && !(m.demiEpreuve&&m.demiEpreuve.fini)) t='🏆 '+T('konDemiHome');
+  else if(k.phase==='annonce' && m.participant) t='🏆 '+T('konKomanse')(dateLongue(k.manches[0].debut));
+  else if(k.phase==='finale' && m.finaliste) t='🏆 '+T('konFinalis');
+  el.innerHTML=t?'<a class="cadeau" href="#quiz&konkou">'+esc(t)+'<span>'+esc(T('invVoir'))+'</span></a>':'';
+}
+function ligneManche(x, moi, k){
+  var e=moi&&moi.manches?moi.manches[x.n-1]:null, auj=jourAuj(), etat;
+  if(e&&e.fini) etat='✓ '+e.points+' '+T('pwen');
+  else if(k.phase==='manche'&&k.manche===x.n) etat=e?'⏳ '+T('konEnKou'):'🔓 '+T('konOuvet');
+  else if(auj>x.fin) etat=e?e.points+' '+T('pwen'):'—';
+  else etat=T('konAvini');
+  return '<div class="rang"><span class="n">'+x.n+'</span><span class="p" style="white-space:normal">'+esc(T('konManch')+' '+x.n)+'<br><span class="hint">'+esc(T('konFenet')(dateLongue(x.debut),dateLongue(x.fin)))+'</span></span><span class="t" style="min-width:auto">'+esc(etat)+'</span></div>';
+}
+function afficherKonkou(){
+  var c=document.getElementById('cKonkou'), z=document.getElementById('konZone'), k=KON;
+  if(!k) return;
+  c.classList.remove('hidden'); KECRAN='info';
+  var m=k.moi||{}, h='';
+  if(k.phase==='attente'){
+    var pct=Math.round(100*Math.min(k.invites,k.seuil)/k.seuil);
+    h+='<div class="konkou"><b>'+esc(T('konAtann')(k.seuil))+'</b><div class="kbar"><div style="width:'+pct+'%"></div></div><span class="hint">'+esc(T('konEnvite')(k.invites,k.seuil))+'</span></div>';
+    h+='<div class="hint" style="margin-top:8px">'+esc(m.ancienFinaliste?T('konAncien'):m.invite?T('konDejaEnvite'):T('konKijan'))+'</div>';
+  } else {
+    if(k.phase==='annonce') h+='<div class="fete inv">🏆 '+esc(T('konKomanse')(dateLongue(k.manches[0].debut)))+'<span>'+esc(m.ancienFinaliste?T('konAncien'):m.participant?T('konOuLa'):m.invite?T('konPwochen'):T('konKijan'))+'</span></div>';
+    if(k.phase==='manche'){
+      var e=m.manches?m.manches[k.manche-1]:null, mf=k.manches[k.manche-1].fin;
+      h+='<div class="konkou"><b>🔓 '+esc(T('konManchOuvet')(k.manche,dateLongue(mf)))+'</b><span>'+esc(T('konRegles'))+'</span></div>';
+      if(m.participant){
+        if(!e||!e.fini) h+='<button class="btn" onclick="konCommencer()">'+esc(e?T('pakKontinye'):T('konJwe')(k.manche))+'</button>';
+        else h+='<div class="fete ok">'+esc(T('konFe')(e.points,e.bonnes))+'</div>';
+      } else h+='<div class="hint">'+esc(m.invite?T('konPwochen'):T('konKijan'))+'</div>';
+    }
+    if(k.phase==='entre') h+='<div class="konkou"><b>'+esc(T('konPwochenManch')(dateLongue(k.prochaine)))+'</b></div>';
+    if(['demiAttente','demi','demiFin'].indexOf(k.phase)>=0){
+      var dj=dateLongue(k.demi.jour)+' · '+k.demi.heure;
+      if(m.demi){
+        h+='<div class="fete inv">🎉 '+esc(T('konOuDemi'))+'<span>'+esc(dj)+'</span><span>'+esc(m.verifie?T('konVerifye'):(m.codeSms&&m.smsNumero?T('konSmsTit'):T('konPokoVerifye')))+'</span></div>';
+        if(!m.verifie && m.codeSms && m.smsNumero) h+='<div class="konkou"><b>📱 '+esc(T('konSms')(m.smsNumero))+'</b><div class="smscode">MASBET '+esc(m.codeSms)+'</div><span class="hint">'+esc(T('konSmsAide'))+'</span><button class="btn sec" style="margin-top:8px" onclick="KON=null;chargerKonkou()">'+T('konSmsVoye')+'</button></div>';
+        if(k.phase==='demi' && m.verifie && !(m.demiEpreuve&&m.demiEpreuve.fini)) h+='<button class="btn" onclick="konCommencer()">'+esc(m.demiEpreuve?T('pakKontinye'):T('konDemiBtn'))+'</button>';
+        if(m.demiEpreuve&&m.demiEpreuve.fini) h+='<div class="fete ok">'+esc(T('konFe')(m.demiEpreuve.points,m.demiEpreuve.bonnes))+'</div>';
+      } else h+='<div class="konkou"><b>'+esc(T('konDemiTit')(k.demiNb))+'</b><span>'+esc(dj)+'</span><span>'+esc(m.participant?T('konMesi'):'')+'</span></div>';
+    }
+    if(k.phase==='finale'){
+      if(m.finaliste) h+='<div class="fete inv">🏆 '+esc(T('konFinalis'))+(m.finaleInfo?'<span style="white-space:pre-line">'+esc(m.finaleInfo)+'</span>':'<span>'+esc(T('konFinalInfoPoko'))+'</span>')+'</div>';
+      else h+='<div class="konkou"><b>'+esc(T('konFinalTit')(k.finaleNb))+'</b><span>'+esc(m.participant?T('konMesi'):'')+'</span></div>';
+    }
+    if(k.finaleAnnonce && k.phase==='finale') h+='<div class="recomp" style="white-space:pre-line">📣 '+esc(k.finaleAnnonce)+'</div>';
+    // calendrier + résultats du joueur
+    if(['annonce','manche','entre'].indexOf(k.phase)>=0){
+      h+='<div class="hint" style="font-weight:700;margin:12px 0 2px">'+T('konKalandriye')+'</div>'+k.manches.map(function(x){ return ligneManche(x,m,k); }).join('');
+      if(k.demi) h+='<div class="hint" style="margin-top:6px">'+esc(T('konDemiLe')(k.demiNb,dateLongue(k.demi.jour),k.demi.heure))+'</div>';
+    }
+    if(m.rang && k.phase!=='finale') h+='<div class="konkou" style="margin-top:10px"><b>'+esc(T('konRang')(m.rang,m.points))+'</b><span class="hint">'+esc(T('konTwaMeyo'))+'</span></div>';
+    if(k.classement&&k.classement.length&&k.phase!=='finale'){
+      var moi=lire('masbet_pseudo')||'';
+      h+='<div class="hint" style="font-weight:700;margin:12px 0 2px">'+T('konKlasman')+'</div>'+k.classement.map(function(x,i){ return '<div class="rang"><span class="n">'+(i+1)+'</span><span class="p">'+esc(x.pseudo)+(x.pseudo===moi?' 👈':'')+'</span><span class="s">'+esc(x.points)+'</span><span class="t">'+T('pwen')+'</span></div>'; }).join('');
+    }
+  }
+  z.innerHTML=h;
+}
+function konCommencer(){
+  var z=document.getElementById('konZone'), b=z.querySelector('.btn'); if(b) b.disabled=true;
+  api('konkoudebut',{appareil:appareil()}).then(function(etat){ PRUN=RUN_KON; PT=etat; PREP=null; pakQuestion(); },
+    function(e){ if(b) b.disabled=false; z.insertAdjacentHTML('beforeend','<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'); });
+}
+function konResultat(){
+  var r=PREP; if(!r){ PT=null; return afficherKonkou(); }
+  PECRAN='konres'; KECRAN='res'; PT=null; clearInterval(PTIMER);
+  document.getElementById('konZone').innerHTML='<div class="qscore"><div class="hint">🏆 '+esc(r.epreuve==='DEMI'?T('konDemi'):T('konManch')+' '+r.epreuve.slice(1))+'</div><div class="gros">'+esc(r.points)+'<small> '+T('pwen')+'</small></div>'+
+    '<div class="hint">'+esc(T('konBon')(r.bonnes,r.total))+' · ⏱️ '+esc(r.temps)+' '+T('segonn')+'</div></div>'+
+    '<div class="fete ok">'+esc(T('konMesiJwe'))+'</div><button class="btn" onclick="PRUN=RUN_ETAPE;afficherKonkou()">'+T('konRetounen')+'</button>';
+  PRUN=RUN_ETAPE;
+}
+
+// ---------- Espace professionnel (v1.6) ----------
+var PRO=null, PROECRAN='', PA=null, RUN_PRO={zone:'proZone', q:'etapeq', r:'etaperep', mode:'pro'}, PROI=-1;
+var PROFR={'Pro Jeni sivil':'Architecture et génie civil','Pro Elektrisite ak plonbri':'Électricité bâtiment et plomberie','Pro Karo':'Carrelage','Pro Klimatizasyon':'Climatisation','Pro Enfòmatik biwo':'Informatique bureautique','Pro Kontablite':'Comptabilité','Pro Jesyon':'Gestion','Pro Finans ak bank':'Finance et banque','Pro Agrikilti':'Technique agricole','Pro Dwa':'Sciences juridiques','Pro Medsin':'Médecine','Pro Ekonomi':'Économie de la production'};
+var PROHT={'Pro Jeni sivil':'Jeni sivil ak achitekti','Pro Elektrisite ak plonbri':'Elektrisite ak plonbri','Pro Karo':'Karo','Pro Klimatizasyon':'Klimatizasyon','Pro Enfòmatik biwo':'Enfòmatik biwo','Pro Kontablite':'Kontablite','Pro Jesyon':'Jesyon','Pro Finans ak bank':'Finans ak bank','Pro Agrikilti':'Teknik agrikòl','Pro Dwa':'Syans jiridik','Pro Medsin':'Medsin','Pro Ekonomi':'Ekonomi pwodiksyon'};
+var PROIC={'Pro Jeni sivil':'🏗️','Pro Elektrisite ak plonbri':'🔌','Pro Karo':'🧱','Pro Klimatizasyon':'❄️','Pro Enfòmatik biwo':'🖥️','Pro Kontablite':'📒','Pro Jesyon':'📊','Pro Finans ak bank':'🏦','Pro Agrikilti':'🌾','Pro Dwa':'⚖️','Pro Medsin':'🩻','Pro Ekonomi':'🏭'};
+function nomPro(n){ return (PROIC[n]?PROIC[n]+' ':'')+((LANG==='fr'?PROFR[n]:PROHT[n])||n); }
+function etapePro(e){ return T('etapesPro')[e-1]||''; }
+function passUrl(){ var m=/[#&]pass=([A-Za-z0-9-]+)/.exec(location.hash||''); return m?m[1]:''; }
+function chargerPro(resultat){
+  if(!CONTENU) return;
+  api('pro',{appareil:appareil()}).then(function(d){ PRO=d; if(!resultat && !(PRUN===RUN_PRO&&PT) && !PA && PROECRAN!=='intro' && PROECRAN!=='att') afficherPro();
+      essayerPassUrl(); },
+    function(){ if(!PRO){ document.getElementById('cPro').classList.remove('hidden'); document.getElementById('proZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
+}
+function essayerPassUrl(){ var c=passUrl(); if(c && PRO && !(PRO.pass&&PRO.pass.valide) && window.PASS_TENTE!==c){ window.PASS_TENTE=c; activerPass(c); } }
+function blocPass(){
+  var p=PRO.pass||{};
+  if(p.valide) return '<div class="konkou"><b>✓ '+esc(T('passAktif')(dateLongue(p.jusqua)))+'</b><span class="hint">'+esc(T('passTout'))+'</span></div>';
+  return '<div class="konkou"><b>🔓 '+esc(T('proGratis')(PRO.gratuites))+'</b><span>'+esc(PRO.passTexte||'')+'</span>'+
+    '<div class="row"><input id="passCode" placeholder="'+T('passKod')+'" autocapitalize="characters" value="'+esc(passUrl())+'"><button onclick="activerPass()">'+T('passAktive')+'</button></div>'+
+    '<div id="passMsg"></div><a class="hint" href="achte.html" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:6px">'+T('passAchte')+' →</a>'+(p.expire?'<div class="hint">'+T('passEkspire')+'</div>':'')+'</div>';
+}
+function afficherPro(){
+  var c=document.getElementById('cPro'), z=document.getElementById('proZone');
+  if(!PRO) return;
+  c.classList.remove('hidden'); PROECRAN='tiles'; PA=null; if(PRUN===RUN_PRO){ PT=null; clearInterval(PTIMER); }
+  var pass=PRO.pass&&PRO.pass.valide;
+  var avenir=PRO.rubriques.filter(function(p){ return !p.total; }).map(function(p){ return nomPro(p.nom); });
+  z.innerHTML='<div class="hint" style="margin-bottom:8px">'+T('proTxt')+'</div>'+blocPass()+'<div class="paks">'+PRO.rubriques.map(function(p,i){
+    if(!p.total) return '';
+    var fini=p.etape>5, dots='';
+    for(var e=1;e<=5;e++) dots+='<i class="'+(e<p.etape?'v':e===p.etape?'c':'')+'" title="'+esc(etapePro(e))+'">'+(e<p.etape?'✓':e)+'</i>';
+    var bt, bloque=!fini && p.etape>PRO.gratuites && !pass, enc=PRO.enCours&&PRO.enCours.parcours===p.nom;
+    if(!p.total) bt='<button class="btn sec" disabled>'+T('proByento')+'</button>';
+    else if(fini) bt='<div class="pfini">🏆 '+T('proFini')+'</div>';
+    else if(bloque) bt='<button class="btn sec" onclick="document.getElementById(\'passCode\').focus()">🔒 '+T('proBezwenPass')+'</button>';
+    else if(enc) bt='<button class="btn" onclick="proIntro('+i+')">'+T('pakKontinye')+'</button>';
+    else if(p.questions<5) bt='<button class="btn sec" disabled>'+T('pakPoko')+'</button>';
+    else if(!p.restants) bt='<button class="btn sec" disabled>'+T('pakDemen')+'</button>';
+    else bt='<button class="btn" onclick="proIntro('+i+')">'+esc(T('pakPase')(p.etape))+'</button>';
+    return '<div class="pak"><div class="pt">'+esc(nomPro(p.nom))+'</div>'+(p.total?'<div class="dots">'+dots+'</div><div class="pe">'+esc(fini?etapePro(5)+' 🏆':T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>':'<div class="hint">'+T('proPokoKesyon')+'</div>')+bt+
+      (p.total?'<button class="btn sec" style="margin-top:6px" onclick="proAntrene('+i+')">'+T('proAntrene')+'</button>':'')+
+      (p.attestation?'<button class="btn sec" style="margin-top:6px" onclick="proAttestation('+i+')">📜 '+T('attTitre')+'</button>':'')+'</div>';
+  }).join('')+'</div>'+(avenir.length?'<div class="konkou" style="margin-top:10px"><b>🕒 '+T('proByento')+'</b><span>'+esc(avenir.join(' · '))+'</span></div>':'');
+}
+function activerPass(code){
+  var inp=document.getElementById('passCode'), m=document.getElementById('passMsg');
+  code=String(code||(inp&&inp.value)||'').trim(); if(!code) return;
+  api('pass',{appareil:appareil(), code:code}).then(function(p){ PRO.pass=p; afficherPro(); },
+    function(e){ if(m) m.innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+}
+function proIntro(i){
+  var p=PRO&&PRO.rubriques[i]; if(!p) return;
+  PROI=i; PROECRAN='intro';
+  var z=document.getElementById('proZone'), seuil=Math.ceil(p.seuil*PRO.nbQuestions/10-1e-9);
+  if(PRO.enCours && PRO.enCours.parcours===p.nom){ PRUN=RUN_PRO; PT=PRO.enCours; PREP=null; return pakQuestion(); }
+  z.innerHTML='<h2 style="margin-top:0">'+esc(nomPro(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>'+
+    '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+
+    (lire('masbet_pseudo')?'':'<label class="hint" for="prPseudo">'+T('pseudo')+'</label><input class="champ" id="prPseudo" maxlength="20">')+
+    '<button class="btn" id="prGo" onclick="proCommencer('+i+')">'+T('komanse')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button><div id="prMsg"></div>';
+}
+function proCommencer(i){
+  var p=PRO.rubriques[i], inp=document.getElementById('prPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('prGo');
+  b.disabled=true;
+  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps); PRUN=RUN_PRO; PT=etat; PREP=null; pakQuestion(); },
+    function(e){ b.disabled=false; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+}
+function proResultat(){
+  var r=PREP; if(!r) return afficherPro();
+  PROECRAN='res'; PT=null; clearInterval(PTIMER);
+  var p=PROI>=0?PRO.rubriques[PROI]:null, e=r.reussi?r.etape-1:r.etape;
+  var h='<div class="qscore"><div class="hint">'+esc(p?nomPro(p.nom):'')+'</div><div class="gros">'+esc(r.score)+'<small>/'+esc(r.total)+'</small></div></div>';
+  if(r.reussi) h+='<div class="fete ok">'+esc(T('proReyisi')(e,etapePro(e)))+'<span>'+esc(r.etape>5?T('proTout'):T('pakSwiv')(r.etape,etapePro(r.etape)))+'</span></div>';
+  else h+='<div class="fete ko">'+esc(T('pakRate')(r.score,r.seuil))+'</div>';
+  if(r.attestation) h+='<div class="fete inv">📜 '+esc(T('attNouvo'))+'<span>'+esc(r.attestation)+'</span></div>';
+  h+='<button class="btn" onclick="PRUN=RUN_ETAPE;afficherPro();chargerPro()">'+T('proRetounen')+'</button>';
+  document.getElementById('proZone').innerHTML=h; PRUN=RUN_ETAPE;
+}
+// Entraînement libre dans une rubrique pro (niveaux 1-2 sans Pass, 1-5 avec)
+function proAntrene(i){
+  var p=PRO.rubriques[i], z=document.getElementById('proZone'); PROI=i; PROECRAN='ant';
+  z.innerHTML='<div class="skel"></div>';
+  api('entrainement',{cat:p.nom, appareil:appareil()}).then(function(d){ PA={questions:d.questions,pos:0,score:0,att:false,nom:p.nom}; proAntQ(); },
+    function(e){ z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>'; });
+}
+function proAntQ(){
+  var z=document.getElementById('proZone'), q=PA.questions[PA.pos];
+  if(!q) return proAntFin();
+  PA.att=false;
+  z.innerHTML='<div class="qhead"><span>'+T('kesyon')+' '+(PA.pos+1)+' / '+PA.questions.length+'</span><span>'+esc(etapePro(q.nivo))+'</span><span>✓ '+PA.score+'</span></div>'+
+    '<div class="qtxt">'+esc(qTxt(q))+'</div><div class="qchoix">'+q.choix.map(function(c,j){ return '<button id="xc'+j+'" onclick="proAntR('+j+')"><b>'+'ABCD'.charAt(j)+'</b>'+esc(c)+'</button>'; }).join('')+'</div><div id="xExpl"></div>';
+}
+function proAntR(j){
+  if(PA.att) return; PA.att=true;
+  var q=PA.questions[PA.pos], ok=j===q.bonne;
+  document.querySelectorAll('#proZone .qchoix button').forEach(function(b){ b.disabled=true; });
+  document.getElementById('xc'+q.bonne).classList.add('bon');
+  if(!ok){ document.getElementById('xc'+j).classList.add('faux'); noterErreur(q,q.bonne,q.explHt,q.explFr); } else PA.score++;
+  var expl=LANG==='fr'?q.explFr:q.explHt;
+  document.getElementById('xExpl').innerHTML='<div class="qexpl '+(ok?'ok':'ko')+'"><b>'+(ok?T('bon'):T('pabon'))+'</b>'+(!ok?'<span>'+T('repons')+' <b>'+esc(q.choix[q.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+    '<button class="btn" style="margin-top:12px" onclick="PA.pos++;proAntQ()">'+(PA.pos>=PA.questions.length-1?T('wèRezilta'):T('swivan'))+'</button>';
+}
+function proAntFin(){
+  var n=PA.questions.length;
+  document.getElementById('proZone').innerHTML='<div class="qscore"><div class="hint">'+esc(nomPro(PA.nom))+'</div><div class="gros">'+PA.score+'<small>/'+n+'</small></div><div style="font-weight:700;margin-top:6px">'+esc(T('antKom')(PA.score,n))+'</div></div>'+
+    '<button class="btn" onclick="proAntrene(PROI)">'+T('antRejwe')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>';
+  PA.fini=true;
+}
+// Attestation (affichage, impression, vérification)
+function lienVerif(id){ return location.href.split('#')[0]+'#atestasyon='+encodeURIComponent(id); }
+function htmlAttestation(a){
+  return '<div class="attest"><div class="at1">Masbet Education</div><div class="at2">'+esc(T('attTitre'))+'</div>'+
+    '<div class="at3">'+esc(T('attCertifie'))+'</div><div class="at4">'+esc(a.pseudo)+'</div>'+
+    '<div class="at3">'+esc(T('attNivo')(etapePro(5)))+'</div><div class="at5">'+esc(nomPro(a.rubrique))+'</div>'+
+    '<div class="at3">'+esc(dateLongue(a.date))+'</div><div class="atsig"><div class="atl"></div><b>Duckhens Lespérance</b><br><small>'+esc(T('attFondate'))+'</small></div><div class="at6">N° '+esc(a.id)+'</div><div class="hint">'+esc(T('attVerifye'))+'<br>'+esc(lienVerif(a.id))+'</div></div>';
+}
+function proAttestation(i){
+  var p=PRO.rubriques[i], z=document.getElementById('proZone'); PROECRAN='att';
+  var a={id:p.attestation, pseudo:lire('masbet_pseudo')||'', rubrique:p.nom, date:''};
+  z.innerHTML='<div class="skel"></div>';
+  api('attestation',{id:p.attestation}).then(function(d){ a=d; afficher(); }, function(){ afficher(); });
+  function afficher(){
+    z.innerHTML=htmlAttestation(a)+'<button class="btn" style="margin-top:10px" onclick="imprimerAttestation()">🖨️ '+T('attEnprime')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>';
+    window.ATT_COURANTE=a;
+  }
+}
+function imprimerAttestation(){
+  var a=window.ATT_COURANTE; if(!a) return;
+  var w=window.open('','_blank'); if(!w) return;
+  w.document.write('<!doctype html><meta charset="utf-8"><title>'+esc(a.id)+'</title><style>body{font-family:Georgia,serif;margin:40px}.attest{border:6px double #14213d;padding:40px;text-align:center}.at1{font-size:28px;font-weight:bold;color:#14213d}.at2{font-size:22px;margin:10px 0 30px;letter-spacing:2px;text-transform:uppercase}.at3{font-size:16px;margin-top:16px}.at4{font-size:34px;font-weight:bold;margin:8px 0}.at5{font-size:24px;font-weight:bold;color:#173a8c}.at6{margin-top:30px;font-family:monospace;font-size:16px}.hint{color:#555;font-size:12px;margin-top:14px}.atsig{margin:36px auto 0;font-size:16px}.atl{width:240px;border-top:1px solid #14213d;margin:0 auto 6px}</style>'+htmlAttestation(a));
+  w.document.close(); w.focus(); w.print();
+}
+function verifierAttestationUrl(){
+  var m=/[#&]atestasyon=([A-Za-z0-9-]+)/.exec(location.hash||''), c=document.getElementById('cVerif');
+  if(!m){ c.classList.add('hidden'); return; }
+  c.classList.remove('hidden'); var z=document.getElementById('verifZone'); z.innerHTML='<div class="skel"></div>';
+  api('attestation',{id:m[1]}).then(function(a){ z.innerHTML='<div class="fete ok">✓ '+esc(T('attValab'))+'</div>'+htmlAttestation(a); },
+    function(e){ z.innerHTML='<div class="err">✗ '+esc(errMsg(e))+'</div>'; });
+}
+
+// ---------- Lives ----------
+function quandLive(iso){
+  var d=new Date(iso); if(isNaN(d)) return '';
+  var auj=new Date(); auj.setHours(0,0,0,0);
+  var j=new Date(d); j.setHours(0,0,0,0);
+  var diff=Math.round((j-auj)/864e5);
+  var h=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  var jour=diff===0?T('auj'):diff===1?T('dem'):T('jours')[d.getDay()]+' '+d.getDate()+' '+T('mois')[d.getMonth()];
+  return jour+' · '+h;
+}
+function lecteurLive(x, auto){
+  if(x.plateforme==='youtube'){ if(!idYt(x.id)) return ''; } 
+  if(x.plateforme==='youtube') return '<div class="vid" id="v-'+esc(x.id)+'">'+(auto?
+      '<iframe src="https://www.youtube-nocookie.com/embed/'+esc(x.id)+'?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>':
+      '<img loading="lazy" src="https://i.ytimg.com/vi/'+esc(x.id)+'/hqdefault.jpg" alt=""><button aria-label="Play" onclick="jouer(\''+jsid(x.id)+'\')">▶</button>')+'</div>';
+  if(x.plateforme==='cloudflare'){
+    if(!/^https:\/\/customer-[a-z0-9]+\.cloudflarestream\.com\/[A-Za-z0-9._-]+\/iframe$/.test(String(x.lien||''))) return '';
+    return '<div class="vid"><iframe src="'+esc(x.lien)+'?autoplay=true&preload=true" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+  }
+  if(x.plateforme==='facebook'){
+    if(!lienFb(x.lien)) return '';
+    var k='fb'+Math.abs(hash(x.lien));
+    return '<div class="fb" id="'+k+'"><button class="fbph" onclick="jouerFb(\''+k+'\')" data-href="'+esc(x.lien)+'"><span>▶</span>'+T('gade')+' · Facebook</button></div>'+
+      '<a class="hint" href="'+esc(x.lien)+'" target="_blank" rel="noopener">'+T('gadeFb')+' ↗</a>';
+  }
+  return '';
+}
+function hash(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return h; }
+function jouerFb(k){
+  var box=document.getElementById(k), b=box&&box.querySelector('button'); if(!b) return;
+  var u=b.getAttribute('data-href');
+  if(!/^https:\/\/(www\.|m\.|web\.)?(facebook\.com|fb\.watch)\//i.test(u)) return;
+  box.innerHTML='<iframe src="https://www.facebook.com/plugins/video.php?href='+encodeURIComponent(u)+'&show_text=false&autoplay=true&allowfullscreen=true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share; fullscreen" allowfullscreen></iframe>';
+}
+function afficherLives(){
+  var l=ACC&&ACC.lives||[], home=document.getElementById('liveHome'), el=document.getElementById('lives');
+  var direk=l.filter(function(x){return x.statut==='direk';}), avenir=l.filter(function(x){return x.statut==='pwograme';}), fini=l.filter(function(x){return x.statut==='fini';});
+  // Accueil : bandeau rouge si en direct, sinon prochain live
+  if(direk.length) home.innerHTML='<a class="livebar" href="#videyo"><div class="dot"></div><div><b>'+T('anDirek')+'</b><span>'+esc(direk[0].titre)+'</span>'+(direk[0].payant?'<div style="font-size:13px">🔒 '+esc(T('tikePri')(direk[0].prix))+'</div>':'')+'</div><i>'+T('gade')+' ▶</i></a>';
+  else if(avenir.length) home.innerHTML='<a class="prochain" href="#videyo">📅 <div><b>'+T('prochainLive')+'</b> — '+esc(avenir[0].titre)+(avenir[0].quand?'<div class="hint">'+esc(quandLive(avenir[0].quand))+'</div>':'')+'</div></a>';
+  else home.innerHTML='';
+  document.getElementById('nVideyo').classList.toggle('live', direk.length>0);
+  // Onglet Live
+  var h='';
+  direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':'')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'</div>'; });
+  if(!direk.length) h+=afficheRepo(avenir[0]);
+  (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p">🔒 '+esc(T('tikePri')(x.prix))+'</span>':'')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
+  fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':'')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
+  h+=blocReseaux();
+  if(l.length) h+='<div class="hint" style="margin-top:6px">'+T('liveDonnees')+'</div>';
+  el.innerHTML=h;
+  // Tickets déjà validés sur ce téléphone : ouvrir directement
+  l.forEach(function(x,i){ if(x.payant && x.verrouille){ var k=(x.statut==='direk'?'d':'f')+(x.statut==='direk'?direk.indexOf(x):fini.indexOf(x)); var c=lire('masbet_tike_'+x.titre); if(c) ouvrirTike(k, c, true); } });
+}
+// ---------- Lives payants ----------
+var LIVES_PAR_CLE={}, TIKE_URL=(function(){ var m=/[#&]tike=([A-Za-z0-9-]+)/.exec(location.hash||''); return m?m[1]:''; })();
+function appareil(){
+  var a=lire('masbet_appareil');
+  if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); }
+  return a;
+}
+// Pas de live en cours : affiche Masbet avec le prochain live (ou l'annonce à venir)
+function afficheRepo(x){
+  return '<div class="affiche" style="margin-bottom:14px"><div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
+    '<div class="afmil"><div style="font-size:42px;line-height:1">📡</div><div class="aflbl">'+T('pasLive')+'</div></div>'+
+    '<div>'+(x?'<div style="font-size:12.5px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.5px">'+T('prochainLive')+'</div><div class="aft">'+esc(x.titre)+'</div>'+
+      (x.quand?'<span class="afpr" style="margin-right:6px">📅 '+esc(quandLive(x.quand))+'</span>':'')+'<span class="afpr">🔒 '+esc(T('tikePri')(x.prix))+'</span>'
+      :'<div style="font-size:15px;color:#dfe4f2;text-shadow:0 1px 4px rgba(0,0,0,.4)">'+T('pwochenAnons')+'</div>')+'</div></div>'+
+    '<div class="afchoix"><a class="btn" href="achte.html#tikes">💳 '+T('achteDavans')+'</a><div style="font-size:12.5px;color:#c9d1e6">'+T('tikeRegle')+'</div></div></div>';
+}
+// Lives gratuits : pages publiques de Masbet (Config RESEAUX_MASBET)
+function blocReseaux(){
+  var r=(ACC&&ACC.reseaux||[]).filter(function(x){ return /^https:\/\/[^\s"'<>]+$/.test(String(x.lien||'')); }); if(!r.length) return '';
+  return '<div class="reseaux"><b>🆓 '+T('gratisSou')+'</b><div>'+r.map(function(x){ return '<a href="'+esc(x.lien)+'" target="_blank" rel="noopener">'+esc(x.nom)+' ↗</a>'; }).join('')+'</div></div>';
+}
+function blocLecteur(x,k){
+  LIVES_PAR_CLE[k]=x;
+  if(!x.payant) return lecteurLive(x,false);
+  if(!x.verrouille) return '';
+  var ouvert=!!TIKE_URL;
+  return '<div id="lk-'+k+'"><div class="affiche'+(ouvert?' ouvert':'')+'">'+
+    '<div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
+      '<div class="afmil"><button class="afplay" aria-label="'+esc(T('klikeGade'))+'" onclick="choixTike(\''+k+'\')">▶</button><div class="aflbl">'+T('klikeGade')+'</div></div>'+
+      '<div><div class="aft">'+esc(x.titre)+'</div><span class="afpr">🔒 '+esc(T('tikePri')(x.prix))+'</span></div></div>'+
+    '<div class="afchoix'+(ouvert?'':' hidden')+'" id="ch-'+k+'">'+
+      '<a class="btn" href="achte.html#tikes">💳 '+T('achteYonTike')+' · '+esc(String(x.prix))+' HTG</a>'+
+      '<div style="font-size:14px;font-weight:700">'+T('mwenGenKod')+'</div>'+
+      '<div class="row"><input id="tk-'+k+'" placeholder="'+T('tikeKod')+'" autocapitalize="characters" value="'+esc(TIKE_URL)+'"><button onclick="ouvrirTike(\''+k+'\')">'+T('ouvri')+'</button></div>'+
+      puceTikets(k)+'<div class="e" id="te-'+k+'"></div><div style="font-size:12.5px;color:#c9d1e6;margin-top:8px">'+T('tikeRegle')+'</div></div>'+
+  '</div></div>';
+}
+// Tickets déjà utilisés sur ce téléphone qui ont encore des lives : boutons pour les réutiliser
+function tiketsMwen(){ try{ var a=JSON.parse(lire('masbet_tikets')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function noterTike(code, restants){
+  if(restants===null||restants===undefined) return;
+  var a=tiketsMwen().filter(function(x){ return x.c!==code; }); if(restants>0) a.unshift({c:code, r:restants}); ecrire('masbet_tikets', JSON.stringify(a.slice(0,10)));
+}
+function puceTikets(k){ return '<div id="pc-'+k+'">'+puceTiketsIn(k)+'</div>'; }
+function majPuces(){ for(var k in LIVES_PAR_CLE){ var el=document.getElementById('pc-'+k); if(el) el.innerHTML=puceTiketsIn(k); } }
+function puceTiketsIn(k){
+  var a=tiketsMwen(); if(!a.length) return '';
+  return '<div style="font-size:13px;margin-top:6px;color:#dfe4f2">'+T('tikeMwen')+' '+a.map(function(x){ return '<button style="margin:4px 4px 0 0;padding:4px 10px;border-radius:999px;border:0;font-weight:700" onclick="ouvrirTike(\''+k+'\',\''+jsid(x.c)+'\')">'+esc(x.c)+' · '+x.r+'</button>'; }).join('')+'</div>';
+}
+function choixTike(k){ var c=document.getElementById('ch-'+k); if(!c) return; c.classList.remove('hidden'); c.parentNode.classList.add('ouvert'); var i=document.getElementById('tk-'+k); if(i && !i.value) i.focus(); c.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+function ouvrirTike(k, code, silencieux){
+  var x=LIVES_PAR_CLE[k]; if(!x) return;
+  var inp=document.getElementById('tk-'+k), err=document.getElementById('te-'+k);
+  code=String(code||(inp&&inp.value)||'').trim(); if(!code) return;
+  if(err) err.textContent='';
+  api('tike',{code:code, appareil:appareil(), live:x.titre}).then(function(d){
+    ecrire('masbet_tike_'+x.titre, code); if(!silencieux){ noterTike(String(code).toUpperCase().replace(/[^A-Z0-9]/g,''), d.restants); setTimeout(majPuces,0); }
+    var box=document.getElementById('lk-'+k); if(!box) return;
+    box.innerHTML='<div class="vidt" style="margin:6px 0 2px">'+esc(x.titre)+'</div><div class="hint" style="color:var(--ok);font-weight:700;margin-bottom:4px">'+T('tikeOk')+(!silencieux&&d.restants!==null&&d.restants!==undefined?' · '+esc(T('tikeRete')(d.restants)):'')+'</div>'+lecteurLive({plateforme:d.plateforme,id:d.id,lien:d.lien},false);
+  }, function(e){
+    if(silencieux){ if(lire('masbet_tike_'+x.titre)===code && /pa mache|2 telefòn|lòt live|deja sèvi/.test(e.message||'')){ try{ localStorage.removeItem('masbet_tike_'+x.titre); }catch(_){} } return; }
+    var m=(e&&e.message)||''; if(err) err.textContent=(!m||/fetch|abort|network|config/i.test(m))?T('reseau'):m;
+  });
+}
+
+// ---------- Vidéos ----------
+function afficherVideos(){
+  var el=document.getElementById('vids'), v=(ACC&&ACC.videos||[]).filter(function(x){ return idYt(x.id); });
+  if(!v.length){ el.innerHTML='<div class="vide">'+T('aucuneVideo')+'</div>'; return; }
+  el.innerHTML=v.map(function(x){
+    return '<div><div class="vid" id="v-'+esc(x.id)+'"><img loading="lazy" src="https://i.ytimg.com/vi/'+esc(x.id)+'/hqdefault.jpg" alt="">'+
+      '<button aria-label="Play" onclick="jouer(\''+jsid(x.id)+'\')">▶</button></div>'+
+      (x.titre?'<div class="vidt">'+esc(x.titre)+'</div>':'')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'</div>';
+  }).join('');
+}
+function jouer(id){
+  if(!/^[A-Za-z0-9_-]{11}$/.test(id)) return;
+  var b=document.getElementById('v-'+id);
+  b.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+}
+
+// ---------- Matchs ----------
+var DIRECT=['1H','HT','2H','ET','BT','P','LIVE','INT','SUSP'];
+function etatMatch(m){
+  if(DIRECT.indexOf(m.statut)>=0) return {live:true, txt:m.statut==='HT'?T('mt'):(m.minute?m.minute+"'":T('direct'))};
+  if(['FT','AET','PEN'].indexOf(m.statut)>=0) return {live:false, txt:T('fini')};
+  if(m.statut==='PST') return {live:false, txt:T('reporte')};
+  if(['CANC','ABD','AWD','WO'].indexOf(m.statut)>=0) return {live:false, txt:T('annule')};
+  return {live:false, txt:heure(m.heure)};
+}
+function ligneMatch(m){
+  var e=etatMatch(m), joue=m.butsDom!=null && m.butsExt!=null && m.statut!=='NS';
+  var logo=function(u){ return /^https:\/\//.test(u||'')?'<img loading="lazy" src="'+esc(u)+'" alt="">':''; };
+  return '<div class="match"><div class="eq d"><span>'+esc(m.domicile)+'</span>'+logo(m.logoDom)+'</div>'+
+    '<div class="score'+(e.live?' live':'')+'">'+(joue?esc(m.butsDom)+' – '+esc(m.butsExt):'–')+'<small>'+(e.live?'<span class="pastille"></span>':'')+esc(e.txt)+'</small></div>'+
+    '<div class="eq">'+logo(m.logoExt)+'<span>'+esc(m.exterieur)+'</span></div></div>';
+}
+function afficherMatchs(){
+  var el=document.getElementById('matchs'), mini=document.getElementById('matchMini');
+  if(!MAT){ return; }
+  if(MAT.erreurReseau){ el.innerHTML=mini.innerHTML='<div class="err">'+T('erreurMatch')+'</div>'; return; }
+  document.getElementById('cMatchMini').classList.toggle('hidden', !MAT.actif);
+  if(!MAT.actif){ el.innerHTML=mini.innerHTML='<div class="hint">'+T('footOff')+'</div>'; return; }
+  var l=MAT.matchs||[], av=MAT.avis==='quota'?'<div class="hint" style="margin-bottom:8px">'+T('quota')+'</div>':MAT.avis==='erreur'&&!l.length?'<div class="err">'+T('erreurMatch')+'</div>':'';
+  if(!l.length){ el.innerHTML=av+'<div class="hint">'+T('aucunMatch')+'</div>'; mini.innerHTML=el.innerHTML; return; }
+  var groupes={}, ordre=[];
+  l.forEach(function(m){ if(!groupes[m.competition]){ groupes[m.competition]=[]; ordre.push(m.competition); } groupes[m.competition].push(m); });
+  el.innerHTML=av+ordre.map(function(c){ return '<div class="comp">'+esc(c)+'</div>'+groupes[c].map(ligneMatch).join(''); }).join('');
+  if(MAT.maj) document.getElementById('matchMaj').textContent=T('majA')+' '+heureLocale(MAT.maj);
+  var vivants=l.filter(function(m){ return etatMatch(m).live; });
+  var montrer=(vivants.length?vivants:l).slice(0,3);
+  mini.innerHTML=(vivants.length?'<div class="hint" style="color:var(--live);font-weight:700"><span class="pastille"></span>'+esc(T('liveN')(vivants.length))+'</div>':'')+montrer.map(ligneMatch).join('');
+}
+function heureLocale(iso){ var d=new Date(iso); return isNaN(d)?'':('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+function chargerMatchs(){
+  if(!CONTENU) return;
+  api('matchs').then(function(d){ MAT=d; }, function(){ MAT=MAT&&!MAT.erreurReseau?MAT:{erreurReseau:true}; })
+    .then(function(){ afficherMatchs(); planifierMatchs(); });
+}
+function planifierMatchs(){
+  clearTimeout(TMATCH);
+  var vivant=MAT&&MAT.matchs&&MAT.matchs.some(function(m){ return etatMatch(m).live; });
+  TMATCH=setTimeout(function(){ if(!document.hidden) chargerMatchs(); else planifierMatchs(); }, vivant?120000:600000);
+}
+
+// ---------- Accueil ----------
+function chargerAccueil(){
+  if(!CONTENU){   // projet Contenu pas encore branché : on garde seulement l'achat et la date
+    ['cOffres','cMeteo','cMatchMini'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
+    document.getElementById('ephem').innerHTML=''; document.getElementById('matchs').innerHTML=''; document.getElementById('vids').innerHTML='';
+    return;
+  }
+  api('accueil').then(function(d){
+      var ancien=ACC; ACC=d; ecrire('masbet_accueil', JSON.stringify(d));
+      if(!ancien || !DEJA){ DEJA=true; toutAfficher(); return; }
+      // Mise à jour discrète : on ne redessine que ce qui a changé (une vidéo en cours n'est pas coupée)
+      var ch=function(k){ return JSON.stringify(ancien[k])!==JSON.stringify(d[k]); };
+      if(ch('offres')) afficherOffres();
+      if(ch('meteo')) afficherMeteo();
+      if(ch('ephemeride')) afficherEphem();
+      if(ch('videos')) afficherVideos();
+      if(ch('lives')) afficherLives();
+    },
+    function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
+}
+function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div>'; }
+function toutAfficher(){
+  afficherDate();
+  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives();
+    document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<b>'+esc(ACC.whatsapp)+'</b>':'')+piedFondateur(); }
+  if(MAT) afficherMatchs();
+  if(QZ){ afficherQuizHome(); if(vueActive()==='quiz' && !(QZ.etat&&QZ.etat.joue&&!QZ.etat.fini)) afficherQuiz(); }
+  afficherKlas();
+  if(RUB){ if(!ANT) afficherRubriques(); else if(ANT.fini) antFin(); else if(!AREP) antQuestion(); }
+  if(PAK){ afficherPakouHome();
+    if(PECRAN==='tiles') afficherPakou(); else if(PECRAN==='intro'&&PI>=0) pakIntro(PI); else if(PECRAN==='q'&&PQ&&!PATT) pakRendre(); else if(PECRAN==='res') pakResultat();
+    else if(PECRAN==='rev'&&REV){ if(REV.fini) revFin(); else if(!REV.att) revQuestion(); } }
+  if(PRO){ if(PROECRAN==='tiles') afficherPro(); else if(PROECRAN==='res') proResultat(); else if(PROECRAN==='intro'&&PROI>=0) proIntro(PROI); else if(PROECRAN==='ant'&&PA){ if(PA.fini) proAntFin(); else if(!PA.att) proAntQ(); } }
+  if(KON){ afficherKonkouHome(); if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); else if(KECRAN==='res') konResultat(); }
+}
+
+// ---------- Navigation ----------
+function vue(){
+  var v=(location.hash||'#akey').slice(1).split('&')[0]; if(['akey','match','videyo','quiz'].indexOf(v)<0) v='akey';
+  document.getElementById('vAkey').classList.toggle('hidden',v!=='akey');
+  document.getElementById('vMatch').classList.toggle('hidden',v!=='match');
+  document.getElementById('vVideyo').classList.toggle('hidden',v!=='videyo');
+  document.getElementById('vQuiz').classList.toggle('hidden',v!=='quiz');
+  if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
+  else clearInterval(QTIMER);
+  ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
+  if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
+  else if(/[#&]konkou/.test(location.hash)){ var ck=document.getElementById('cKonkou'); ck.classList.remove('hidden'); setTimeout(function(){ ck.scrollIntoView({block:'start'}); },60); }
+  else if(/[#&]pro\b/.test(location.hash)){ var cr=document.getElementById('cPro'); cr.classList.remove('hidden'); setTimeout(function(){ cr.scrollIntoView({block:'start'}); },60); }
+  else if(/[#&]pakou/.test(location.hash)){ var cp=document.getElementById('cPakou'); cp.classList.remove('hidden'); setTimeout(function(){ cp.scrollIntoView({block:'start'}); },60); }
+  else window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',function(){ vue(); verifierAttestationUrl(); });
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) chargerMatchs(); });
+
+// ---------- Langue ----------
+function langue(l){
+  LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
+  document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
+  document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=T(el.getAttribute('data-t')); });
+  toutAfficher();
+}
+
+// ---------- Installation ----------
+var invite=null;
+window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); invite=e; document.getElementById('install').classList.remove('hidden'); });
+document.getElementById('btnInstall').onclick=function(){ if(!invite) return; invite.prompt(); invite=null; document.getElementById('install').classList.add('hidden'); };
+if('serviceWorker' in navigator && location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
+
+// ---------- Démarrage ----------
+try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c) ACC=c; }catch(e){}
+langue(lire('masbet_lang')||'ht');
+vue();
+verifierAttestationUrl();
+chargerAccueil();
+chargerMatchs();
+chargerQuiz();
+setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
+</script>
+</body>
+</html>
