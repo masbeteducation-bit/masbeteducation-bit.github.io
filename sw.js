@@ -1,6 +1,6 @@
 // Service worker MasbetAirNet : l'application s'ouvre même sans réseau (pages en mémoire).
 // Les données (offres, matchs, commandes) viennent toujours en direct du système Google.
-var VERSION = 'masbet-v19';
+var VERSION = 'masbet-v20';
 var FICHIERS = ['./', './index.html', './achte.html', './config.js', './logo.png', './manifest.webmanifest',
   './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './apropo.html', './suite.html', './kominote.html', './meditasyon.html', './biblio.html',
   './biblio/livre-sante.js', './biblio/livre-agronomie.js', './biblio/livre-gestion-projet.js', './biblio/livre-ethique.js', './biblio/livre-finance.js', './biblio/livre-fiscalite.js', './biblio/livre-metre-devis.js', './photos/parapli-teren.jpg', './photos/parapli-teren-p.jpg'];
