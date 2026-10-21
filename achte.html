@@ -69,6 +69,12 @@
   @media (min-width:640px){.prods{grid-template-columns:repeat(4,1fr)}}
   .prod{border:2px solid var(--line);border-radius:12px;padding:9px 8px;background:#fff;font:inherit;font-weight:800;font-size:14px;color:var(--ink);white-space:nowrap}
   .prod.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .prods.choix{grid-template-columns:1fr!important;gap:8px}
+  .prods.choix .prod{display:flex;align-items:center;gap:12px;text-align:left;white-space:normal;padding:12px;cursor:pointer}
+  .prods.choix .prod:hover{border-color:var(--navy)}
+  .prod .pi,.prodOn .pi{font-size:26px;flex-shrink:0;width:34px;text-align:center}.prod .pt{flex:1;min-width:0}.prod .pt b{display:block;font-size:15.5px}.prod .pt small{display:block;font-weight:500;color:var(--muted);font-size:13px;line-height:1.35;margin-top:2px}.prod i{font-style:normal;font-size:22px;color:var(--muted)}
+  .prodOn{display:flex;align-items:center;gap:10px;border:2px solid var(--navy);border-radius:12px;padding:8px 10px;grid-column:1/-1;background:#f3f6ff}.prodOn b{flex:1;font-size:16px}
+  .prodOn .chg{border:0;background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;font:inherit;font-weight:800;font-size:13px;color:var(--navy);cursor:pointer}
   .pay{background:var(--navy);color:#fff;border-radius:12px;padding:14px;margin-top:12px;font-size:15px}
   .pay b{color:var(--gold)}
   .pay .num{font-size:24px;font-weight:800;letter-spacing:1px;color:#fff}
@@ -100,7 +106,7 @@
   footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
   .demo{background:#fff3df;color:var(--wait);text-align:center;font-size:13px;padding:6px}
 .recap{margin:14px 0 2px;padding:10px 12px;border-radius:12px;background:#f1f5ff;border:1.5px solid #c9d6f5;font-size:15px;line-height:1.35}.recap b{font-size:16px}
-.tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#fff4dc;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}
+.tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#fff4dc;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}.tip-defi{background:#fff4dc;color:#8a5a00}
 </style>
 </head>
 <body>
@@ -125,9 +131,9 @@
   <section id="vBuy">
     <div class="card">
       <h2><span class="step">1</span><span data-t="etape1"></span></h2>
-      <div class="prods" id="prods" role="tablist"></div>
+      <div class="prods" id="prods"><div class="hint" data-t="chargement"></div></div>
       <div class="hint" id="prodAide" style="margin:-4px 0 10px"></div>
-      <div class="plans" id="plans"><div class="hint" data-t="chargement"></div></div>
+      <div id="cPlan"><div class="plans" id="plans"></div></div>
       <div id="tikes" class="hidden" style="margin-top:14px">
         <h2 style="margin-bottom:4px" data-t="tikeTitre"></h2>
         <div class="hint" data-t="tikeAide" style="margin-bottom:8px"></div>
@@ -135,7 +141,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card hidden" id="cPay">
       <h2><span class="step">2</span><span data-t="etape2"></span></h2>
       <div class="methods">
         <button class="method" id="mMonCash" onclick="choisirMethode('MonCash')">MonCash</button>
@@ -144,7 +150,7 @@
       <div class="pay hidden" id="payBox"></div>
     </div>
 
-    <div class="card">
+    <div class="card hidden" id="cTx">
       <h2><span class="step">3</span><span data-t="etape3"></span></h2>
       <label for="tel" data-t="tel"></label>
       <div class="telgrp"><select class="pref" id="pays" aria-label="Peyi / Pays" onchange="changerPays(this)"><option value="509">🇭🇹 +509</option><option value="1">🇺🇸 +1</option><option value="1">🇩🇴 +1</option><option value="33">🇫🇷 +33</option><option value="56">🇨🇱 +56</option><option value="55">🇧🇷 +55</option><option value="34">🇪🇸 +34</option><option value="32">🇧🇪 +32</option><option value="41">🇨🇭 +41</option><option value="x">🌍 +…</option></select><input id="tel" type="tel" inputmode="numeric" placeholder="3X XX XX XX" autocomplete="tel-national" maxlength="14" oninput="nettoyerTel(this)"></div>
@@ -178,7 +184,7 @@ var TXT = {
     demo:'Se yon demonstrasyon — pa gen vrè acha',
     soustitre:'Peye Wi-Fi ou ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la',
     ongletAcheter:'Achte kòd', ongletMes:'Kòd mwen',
-    etape1:'Chwazi plan ou', etape2:'Peye', etape3:'Ekri kòd tranzaksyon an',
+    etape1:'Chwazi sa w ap achte', chanje:'Chanje', etape2:'Peye', etape3:'Ekri kòd tranzaksyon an',
     chargement:'Tann yon ti moman…', aucunForfait:'Pa gen plan disponib kounye a.', jours:'jou', epuise:'Pa disponib',
     tel:'Nimewo telefòn ou', txLabel:'Kòd tranzaksyon an (Txn ID oswa TransCode)',
     txPlaceholder:'Egzanp : 003548854486',
@@ -195,7 +201,7 @@ var TXT = {
     recue:function(id){ return 'Nou resevwa demann ou (nimewo <b>'+id+'</b>). N ap verifye peman an. Kòd ou ap parèt nan « Kòd mwen » nan kèk minit.'; },
     mesTitre:'Jwenn kòd ou te achte', voir:'Chèche kòd mwen',
     valide:'Kòd la prè', refuse:'Pa aksepte', attente:'N ap verifye',
-    copier:'Kopye kòd la', copie:'Kopye ✓', konekte:'Konekte ak kòd sa a', konekteAide:'Kòd la ap mete l poukont li nan paj koneksyon an.', diaspora:'🌍 Ou pa ann Ayiti ? Yon fanmi oswa yon zanmi ann Ayiti ka peye pou ou. Li voye kòd tranzaksyon an ba ou (WhatsApp), epi ou mete l nan etap 3 ak pwòp nimewo ou.', tipWifi:'🛜 Kòd Wi-Fi · peye', tipRek:'🏆 Kòd Wi-Fi · rekonpans Quiz', tipLive:'🎟️ Tikè live', tipPass:'🎓 Pass Pro', remWifi:'Kòd Wi-Fi ou achte a. Li valab pou volim ak kantite jou ki make a, apati premye koneksyon an.', remRek:'Kado pou bon repons ou nan Quiz la : se yon kòd Wi-Fi gratis. Li mache menm jan ak yon kòd ou achte, pou volim ak jou ki make a. Kòd la pèsonèl : pa vann li.', tikeTitre:'🎟️ Tikè live · Pass Pro', tikeAide:'Tikè live : 1 tikè = 1 live, nenpòt ki live. Ou ka achte plizyè davans, epi itilize youn pou chak live. Pass Pro : louvri etap 3 a 5 Espas pwofesyonèl la. Ou resevwa kòd la apre peman an.', ouvrirPass:'Aktive Pass Pro a', passUsage:'Antre kòd sa a nan Quiz → Espas pwofesyonèl. Li mache sou 2 telefòn maksimòm.', tike:'Tikè', votreTike:'Men kòd tikè ou :', tikeUsage:'Antre kòd sa a nan onglet <b>Live</b> aplikasyon an : chak tikè louvri yon live, nenpòt ki live. Li mache sou 2 telefòn maksimòm.', ouvrirLive:'Ouvri live la',
+    copier:'Kopye kòd la', copie:'Kopye ✓', konekte:'Konekte ak kòd sa a', konekteAide:'Kòd la ap mete l poukont li nan paj koneksyon an.', diaspora:'🌍 Ou pa ann Ayiti ? Yon fanmi oswa yon zanmi ann Ayiti ka peye pou ou. Li voye kòd tranzaksyon an ba ou (WhatsApp), epi ou mete l nan etap 3 ak pwòp nimewo ou.', tipWifi:'🛜 Kòd Wi-Fi · peye', tipRek:'🏆 Kòd Wi-Fi · rekonpans Quiz', tipLive:'🎟️ Tikè live', tipPass:'🎓 Pass Pro', remWifi:'Kòd Wi-Fi ou achte a. Li valab pou volim ak kantite jou ki make a, apati premye koneksyon an.', remRek:'Kado pou bon repons ou nan Quiz la : se yon kòd Wi-Fi gratis. Li mache menm jan ak yon kòd ou achte, pou volim ak jou ki make a. Kòd la pèsonèl : pa vann li.', tikeTitre:'🎟️ Tikè live · Pass Pro', tikeAide:'Tikè live : 1 tikè = 1 live, nenpòt ki live. Ou ka achte plizyè davans, epi itilize youn pou chak live. Pass Pro : tout Espas pwofesyonèl la san limit (apre 25 kesyon gratis yo). Ou resevwa kòd la apre peman an.', ouvrirPass:'Aktive Pass Pro a', passUsage:'Antre kòd sa a nan Quiz → Espas pwofesyonèl. Li mache sou 2 telefòn maksimòm.', tike:'Tikè', votreTike:'Men kòd tikè ou :', tikeUsage:'Antre kòd sa a nan onglet <b>Live</b> aplikasyon an : chak tikè louvri yon live, nenpòt ki live. Li mache sou 2 telefòn maksimòm.', ouvrirLive:'Ouvri live la',
     connecter:function(s){ return 'Konekte sou Wi-Fi <b>'+s+'</b>, epi tape kòd sa a sou paj ki parèt la.'; },
     verif:'N ap verifye peman an. Pa fèmen paj la : kòd la ap parèt la a poukont li.',
     motif:'Poukisa : ', aucune:'Nou pa jwenn okenn acha ak nimewo sa a.',
@@ -209,7 +215,7 @@ var TXT = {
     demo:'Mode démonstration — aucune vraie commande',
     soustitre:'Achetez votre code Wi-Fi avec MonCash ou NatCash',
     ongletAcheter:'Acheter', ongletMes:'Mes codes',
-    etape1:'Choisissez votre forfait', etape2:'Payez', etape3:'Entrez le numéro de transaction',
+    etape1:'Choisissez ce que vous achetez', chanje:'Changer', etape2:'Payez', etape3:'Entrez le numéro de transaction',
     chargement:'Chargement…', aucunForfait:'Aucun forfait disponible.', jours:'jours', epuise:'Épuisé',
     tel:'Votre numéro de téléphone', txLabel:'Numéro de transaction (Txn ID ou TransCode)',
     txPlaceholder:'Exemple : 003548854486',
@@ -226,7 +232,7 @@ var TXT = {
     recue:function(id){ return 'Commande <b>'+id+'</b> reçue. Nous vérifions votre paiement : votre code apparaîtra dans « Mes codes ».'; },
     mesTitre:'Retrouver mes codes', voir:'Voir mes commandes',
     valide:'Validée', refuse:'Refusée', attente:'En attente',
-    copier:'Copier le code', copie:'Copié ✓', konekte:'Se connecter avec ce code', konekteAide:'Le code sera placé automatiquement sur la page de connexion.', diaspora:'🌍 Hors d\'Haïti ? Un parent ou un ami en Haïti peut payer pour vous. Il vous envoie le code de transaction (WhatsApp), et vous l\'entrez à l\'étape 3 avec votre propre numéro.', tipWifi:'🛜 Code Wi-Fi · payé', tipRek:'🏆 Code Wi-Fi · récompense Quiz', tipLive:'🎟️ Ticket live', tipPass:'🎓 Pass Pro', remWifi:'Code Wi-Fi acheté. Valable pour le volume et le nombre de jours indiqués, à partir de la première connexion.', remRek:'Cadeau pour vos bonnes réponses au Quiz : un code Wi-Fi gratuit. Il fonctionne comme un code acheté, pour le volume et les jours indiqués. Code personnel : ne pas le revendre.', tikeTitre:'🎟️ Tickets live · Pass Pro', tikeAide:'Ticket live : 1 ticket = 1 live, n\'importe lequel. Achetez-en plusieurs d\'avance et utilisez-en un par live. Pass Pro : ouvre les étapes 3 à 5 de l\'Espace professionnel. Vous recevez le code après le paiement.', ouvrirPass:'Activer le Pass Pro', passUsage:'Entrez ce code dans Quiz → Espace professionnel. Valable sur 2 téléphones au maximum.', tike:'Ticket', votreTike:'Votre code ticket :', tikeUsage:'Entrez ce code dans l\'onglet <b>Live</b> de l\'application : chaque ticket ouvre un live, n\'importe lequel. Valable sur 2 téléphones au maximum.', ouvrirLive:'Ouvrir le live',
+    copier:'Copier le code', copie:'Copié ✓', konekte:'Se connecter avec ce code', konekteAide:'Le code sera placé automatiquement sur la page de connexion.', diaspora:'🌍 Hors d\'Haïti ? Un parent ou un ami en Haïti peut payer pour vous. Il vous envoie le code de transaction (WhatsApp), et vous l\'entrez à l\'étape 3 avec votre propre numéro.', tipWifi:'🛜 Code Wi-Fi · payé', tipRek:'🏆 Code Wi-Fi · récompense Quiz', tipLive:'🎟️ Ticket live', tipPass:'🎓 Pass Pro', remWifi:'Code Wi-Fi acheté. Valable pour le volume et le nombre de jours indiqués, à partir de la première connexion.', remRek:'Cadeau pour vos bonnes réponses au Quiz : un code Wi-Fi gratuit. Il fonctionne comme un code acheté, pour le volume et les jours indiqués. Code personnel : ne pas le revendre.', tikeTitre:'🎟️ Tickets live · Pass Pro', tikeAide:'Ticket live : 1 ticket = 1 live, n\'importe lequel. Achetez-en plusieurs d\'avance et utilisez-en un par live. Pass Pro : tout l\'Espace professionnel sans limite (après les 25 questions gratuites). Vous recevez le code après le paiement.', ouvrirPass:'Activer le Pass Pro', passUsage:'Entrez ce code dans Quiz → Espace professionnel. Valable sur 2 téléphones au maximum.', tike:'Ticket', votreTike:'Votre code ticket :', tikeUsage:'Entrez ce code dans l\'onglet <b>Live</b> de l\'application : chaque ticket ouvre un live, n\'importe lequel. Valable sur 2 téléphones au maximum.', ouvrirLive:'Ouvrir le live',
     connecter:function(s){ return 'Connectez-vous au Wi-Fi <b>'+s+'</b> et entrez ce code sur la page de connexion.'; },
     verif:'Vérification du paiement en cours… cette page se met à jour toute seule.',
     motif:'Motif : ', aucune:'Aucune commande pour ce numéro.',
@@ -238,16 +244,18 @@ var TXT = {
   }
 };
 // Masbet Pay : un seul endroit pour payer Wi-Fi, lives, Quiz Pro et Masbet Suite
-Object.assign(TXT.ht, { recapTitre:'🧾 W ap peye pou :', soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Quiz Pro, Masbet Suite — ak MonCash oswa NatCash',
+Object.assign(TXT.ht, { recapTitre:'🧾 W ap peye pou :', soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Pass Pro, Defi Masbet, Masbet Suite — ak MonCash oswa NatCash',
   prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Kòd pou konekte sou Wi-Fi Masbet la.', aideLive:'Tikè pou gade yon live peyan nan aplikasyon an.', aidePro:'Pass Pro : tout etap ak tout rubrik pwofesyonèl Quiz la.',
   aideSuite:'Abònman lojisyèl devis Masbet Suite : 2 aparèy (yon telefòn ak yon òdinatè).',
-  tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite' });
-Object.assign(TXT.fr, { recapTitre:'🧾 Vous payez pour :', soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Quiz Pro, Masbet Suite — par MonCash ou NatCash',
+  tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite',
+  prodDefi:'🏁 Defi', aideDefi:'Tikè Defi Masbet : 1 tikè = 1 chans pou 10 kesyon difisil. Ganyan semèn nan : Pass Pro gratis 24 è.', tipDefi:'🏁 Tikè Defi', defiUsage:'Antre kòd sa a nan Quiz → Defi Masbet. 1 tikè = 1 chans.', ouvrirDefi:'Jwe Defi a' });
+Object.assign(TXT.fr, { recapTitre:'🧾 Vous payez pour :', soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Pass Pro, Défi Masbet, Masbet Suite — par MonCash ou NatCash',
   prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Code pour se connecter au Wi-Fi Masbet.', aideLive:'Ticket pour regarder un live payant dans l\'application.', aidePro:'Pass Pro : toutes les étapes et toutes les rubriques professionnelles du Quiz.',
   aideSuite:'Abonnement au logiciel de devis Masbet Suite : 2 appareils (un téléphone et un ordinateur).',
-  tipSuite:'🧰 Masbet Suite', suiteUsage:'Votre code d\'abonnement. Ouvrez Masbet Suite et entrez-le : il marche sur 2 appareils.', ouvrirSuite:'Ouvrir Masbet Suite' });
+  tipSuite:'🧰 Masbet Suite', suiteUsage:'Votre code d\'abonnement. Ouvrez Masbet Suite et entrez-le : il marche sur 2 appareils.', ouvrirSuite:'Ouvrir Masbet Suite',
+  prodDefi:'🏁 Défi', aideDefi:'Ticket Défi Masbet : 1 ticket = 1 chance pour 10 questions difficiles. Le gagnant de la semaine : Pass Pro gratuit 24 heures.', tipDefi:'🏁 Ticket Défi', defiUsage:'Entrez ce code dans Quiz → Défi Masbet. 1 ticket = 1 chance.', ouvrirDefi:'Jouer au Défi' });
 // Messages d'erreur du serveur (en français) traduits en créole
 var ERREURS_HT = [
   [/^Numéro de téléphone invalide/, window.MASBET_PORTAIL?'Nimewo telefòn nan pa bon : mete 8 chif la (egzanp 3XXX XXXX).':'Nimewo telefòn nan pa bon. Ayiti : 8 chif. Lòt peyi : chwazi peyi a anvan.'],
@@ -285,13 +293,13 @@ var demoApi = {
     forfaits:[{nom:'25 goud',prix:25,volume:'1,2 Go',duree:3,disponible:true},{nom:'50 goud',prix:50,volume:'3 Go',duree:5,disponible:true},
               {nom:'100 goud',prix:100,volume:'7 Go',duree:7,disponible:true},{nom:'150 goud',prix:150,volume:'10 Go',duree:10,disponible:true},
               {nom:'250 goud',prix:250,volume:'18 Go',duree:15,disponible:false},{nom:'500 goud',prix:500,volume:'30 Go',duree:30,disponible:true},
-              {nom:'Tikè live',prix:100,type:'LIVE',disponible:true},{nom:'Pass Pro 30 jou',prix:100,type:'LIVE',disponible:true},
+              {nom:'Tikè live',prix:100,type:'LIVE',disponible:true},{nom:'Pass Pro 7 jou',prix:100,type:'LIVE',disponible:true},{nom:'Tikè Defi Masbet',prix:50,type:'LIVE',disponible:true},
               {nom:'Masbet Suite 1 mwa',prix:1000,type:'LIVE',disponible:true},{nom:'Masbet Suite 1 an',prix:5000,type:'LIVE',disponible:true}],
     moncash:{numero:'3XXX XXXX',nom:'Duckhens Lespérance'}, natcash:{numero:'4XXX XXXX',nom:'Duckhens Lespérance'}, whatsapp:'+509 3699 5259', ssid:'Masbet.AirNet'}; },
   passerCommande: function(d){ if(!/^(\d{8}|\+\d{8,15})$/.test((d.telephone||'').replace(/[^\d+]/g,''))) throw new Error('Numéro de téléphone invalide (8 chiffres).');
     if(!d.transaction || d.transaction.length<4) throw new Error('ID de transaction invalide. Copiez-le tel quel depuis le SMS de confirmation.');
     var id='MA'+Math.random().toString(36).slice(2,7).toUpperCase();
-    var ty=/^(tik|pass|masbet suite)/i.test(d.forfait)?'LIVE':'';
+    var ty=/^(tik|pass|masbet suite|d[eé]fi)/i.test(d.forfait)?'LIVE':'';
     if(/^0035/.test(d.transaction)){ demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',note:'',tx:d.transaction,type:ty}); return {id:id,statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',montant:parseInt(d.forfait,10)||100,forfait:d.forfait,type:ty}; }
     demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'En attente',code:'',note:'',t:Date.now(),tx:d.transaction}); return {id:id,statut:'En attente'}; },
   mesCommandes: function(tel, pr){ pr=pr||{}; var ids=pr.ids||[], txt=null;
@@ -409,25 +417,36 @@ function charger(essai){
   });
 }
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
-function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':'live'; }
-var PRODUIT=(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':'wifi'; })();
-function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement(); }
+function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
+var PRODUIT=(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
+function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement();
+  if(p) setTimeout(function(){ document.getElementById('cPlan').scrollIntoView({behavior:'smooth',block:'start'}); },60); }
+var ICONES={wifi:'📶',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰'};
+function etapesSuivantes(){ ['cPay','cTx'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('hidden',!FORFAIT); }); }
 function afficherForfaits(){
   var presents={wifi:true}, h='';
   INFOS.forfaits.forEach(function(f){ if(f.type==='LIVE' && f.disponible) presents[produitDe(f)]=true; });
-  if(!presents[PRODUIT]) PRODUIT='wifi';
-  var noms={wifi:'prodWifi',live:'prodLive',pro:'prodPro',suite:'prodSuite'}, aides={wifi:'aideWifi',live:'aideLive',pro:'aidePro',suite:'aideSuite'};
-  document.getElementById('prods').innerHTML=['wifi','live','pro','suite'].filter(function(p){ return presents[p]; }).map(function(p){
-    return '<button class="prod'+(p===PRODUIT?' on':'')+'" role="tab" aria-selected="'+(p===PRODUIT)+'" onclick="choisirProduit(\''+p+'\')">'+T(noms[p])+'</button>'; }).join('');
-  document.getElementById('prods').classList.toggle('hidden', Object.keys(presents).length<2);
-  document.getElementById('prodAide').textContent=T(aides[PRODUIT]);
+  var liste=['wifi','live','pro','defi','suite'].filter(function(p){ return presents[p]; });
+  if(liste.length<2) PRODUIT='wifi';                 // un seul produit : directement ses prix
+  else if(PRODUIT && !presents[PRODUIT]) PRODUIT='';
+  var noms={wifi:'prodWifi',live:'prodLive',pro:'prodPro',suite:'prodSuite',defi:'prodDefi'}, aides={wifi:'aideWifi',live:'aideLive',pro:'aidePro',suite:'aideSuite',defi:'aideDefi'};
+  var z=document.getElementById('prods');
+  if(!PRODUIT){   // 1) choisir ce qu'on achète : aucun prix affiché avant ce choix
+    z.className='prods choix';
+    z.innerHTML=liste.map(function(p){ return '<button class="prod" onclick="choisirProduit(\''+p+'\')"><span class="pi">'+ICONES[p]+'</span><span class="pt"><b>'+esc(T(noms[p]).replace(/^\S+\s/,''))+'</b><small>'+esc(T(aides[p]))+'</small></span><i>›</i></button>'; }).join('');
+    document.getElementById('prodAide').textContent=''; document.getElementById('cPlan').classList.add('hidden');
+    document.getElementById('tikes').classList.add('hidden'); etapesSuivantes(); return;
+  }
+  z.className='prods'+(liste.length<2?' hidden':'');
+  z.innerHTML='<div class="prodOn"><span class="pi">'+ICONES[PRODUIT]+'</span><b>'+esc(T(noms[PRODUIT]).replace(/^\S+\s/,''))+'</b><button class="chg" onclick="choisirProduit(\'\')">'+T('chanje')+'</button></div>';
+  document.getElementById('prodAide').textContent=T(aides[PRODUIT]); document.getElementById('cPlan').classList.remove('hidden');
   INFOS.forfaits.forEach(function(f,k){
     if(produitDe(f)!==PRODUIT) return;
     var on=(FORFAIT&&FORFAIT.nom===f.nom?' on':''), dis=(f.disponible?'':'disabled');
     if(f.type==='LIVE'){
       if(!f.disponible) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
       h+='<button class="plan'+on+'" id="p'+k+'" onclick="choisirForfait('+k+')">'+
-        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(f.nom)+'</b></div><div class="d">'+T(PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':'tike')+'</div></button>';
+        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(f.nom)+'</b></div><div class="d">'+T(PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
       return;
     }
     h+='<button class="plan'+on+'" '+dis+' id="p'+k+'" onclick="choisirForfait('+k+')">'+
@@ -436,6 +455,7 @@ function afficherForfaits(){
   });
   document.getElementById('plans').innerHTML=h||'<div class="hint">'+T('aucunForfait')+'</div>';
   document.getElementById('tikes').classList.add('hidden');
+  etapesSuivantes();
   if(PRODUIT!=='wifi' && !window.TIKES_VU){ window.TIKES_VU=true; setTimeout(function(){ document.getElementById('prods').scrollIntoView({behavior:'smooth',block:'start'}); },150); }
 }
 function afficherPied(){ var w=INFOS&&INFOS.whatsapp; document.getElementById('foot').innerHTML=(w?T('aide')+'<b>'+esc(w)+'</b>':'')+'<div style="margin-top:6px;font-size:12.5px;opacity:.75">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div>'; }
@@ -444,7 +464,8 @@ function choisirForfait(k){
   FORFAIT=INFOS.forfaits[k];
   document.querySelectorAll('.plan').forEach(function(b){b.classList.remove('on');});
   document.getElementById('p'+k).classList.add('on');
-  majPaiement();
+  majPaiement(); var neuf=document.getElementById('cPay').classList.contains('hidden'); etapesSuivantes();
+  if(neuf) setTimeout(function(){ document.getElementById('cPay').scrollIntoView({behavior:'smooth',block:'start'}); },80);
 }
 
 // ---------- Étape 2 : paiement ----------
@@ -456,7 +477,7 @@ function choisirMethode(m){
 }
 function libelleAchat(f){ if(!f) return ''; var p=produitDe(f);
   if(p==='wifi') return T('prodWifi')+' — '+esc(f.volume)+' · '+esc(f.duree)+' '+T('jours');
-  return T(p==='pro'?'prodPro':p==='suite'?'prodSuite':'prodLive')+' — '+esc(f.nom); }
+  return T(p==='pro'?'prodPro':p==='suite'?'prodSuite':p==='defi'?'prodDefi':'prodLive')+' — '+esc(f.nom); }
 function majRecap(){ var r=document.getElementById('recap'); if(!r) return;
   if(!FORFAIT){ r.classList.add('hidden'); return; }
   r.innerHTML=T('recapTitre')+'<br><b>'+libelleAchat(FORFAIT)+'</b> · <b>'+esc(FORFAIT.prix)+' HTG</b>'+(METHODE?' · '+esc(METHODE):'');
@@ -565,14 +586,16 @@ function retourner(code){
 }
 function konekte(code){ retourner(String(code)); }
 // Ticket live : dans l'application, bouton qui ouvre l'onglet Live avec le code déjà rempli
-function typeCode(c){ return c.type==='LIVE' ? (estPass(c.forfait)?'Pass':estSuite(c.forfait)?'Suite':'Live') : (c.type==='RECOMPENSE'?'Rek':'Wifi'); }
+function typeCode(c){ return c.type==='LIVE' ? (estPass(c.forfait)?'Pass':estSuite(c.forfait)?'Suite':estDefi(c.forfait)?'Defi':'Live') : (c.type==='RECOMPENSE'?'Rek':'Wifi'); }
 function estSuite(nom){ return /^masbet\s*suite/i.test(String(nom||'')); }
-function usageCode(nom){ return estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':'tikeUsage'; }
+function usageCode(nom){ return estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':estDefi(nom)?'defiUsage':'tikeUsage'; }
+function estDefi(nom){ return /^t[iì]k[eè]?\s*d[eé]fi|^d[eé]fi/i.test(String(nom||'')); }
 function estPass(nom){ return /^pass\s*pro/i.test(String(nom||'')); }
 function boutonLive(code, nom){
-  if(!window.MASBET_APP && !estSuite(nom)) return '';
+  if(!window.MASBET_APP && !estSuite(nom) && !estDefi(nom)) return '';
   if(estPass(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#quiz&pro&pass='+encodeURIComponent(code)+'">'+T('ouvrirPass')+'</a>';
   if(estSuite(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="suite.html#kod='+encodeURIComponent(code)+'">'+T('ouvrirSuite')+'</a>';
+  if(estDefi(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#quiz&defi&defikod='+encodeURIComponent(code)+'">'+T('ouvrirDefi')+'</a>';
   return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#videyo&tike='+encodeURIComponent(code)+'">'+T('ouvrirLive')+'</a>';
 }
 if(PORTAIL){

@@ -352,10 +352,19 @@
   .kontBtn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 10px;font-weight:800;font-size:13px;color:var(--navy);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .kontBtn.on{background:#eef2ff;border-color:#c7d0f0}
   .top img{min-width:0;flex:1 1 auto}
-  @media (max-width:420px){.top{padding:10px 12px 6px;gap:8px}.kontBtn{padding:6px 9px;max-width:92px}.kontBtn:not(.on) .kl{display:none}.lang button{padding:6px 8px}}
+  @media (max-width:420px){.top{padding:10px 12px 6px;gap:8px}.kontBtn{padding:6px 9px;max-width:118px}.kontBtn:not(.on) .kl{display:none}.lang button{padding:6px 8px}}
   .sheetFond{position:fixed;inset:0;background:rgba(10,15,30,.38);z-index:60}
   .sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:#fff;border-radius:18px 18px 0 0;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.22);padding-bottom:env(safe-area-inset-bottom);max-width:640px;margin:0 auto}
   .sheet.bas{max-height:48vh}
+  .konkou.flash{outline:3px solid #f5a524;outline-offset:2px;transition:outline .3s}
+  .jweTete{display:flex;align-items:center;gap:12px;margin-bottom:6px}.jweTete img{width:78px;height:auto;flex-shrink:0}
+  .jwe a{display:flex;align-items:center;gap:12px;padding:11px 4px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.jwe a:first-child{border-top:0}
+  .jwe .ji{font-size:26px;width:34px;text-align:center;flex-shrink:0}.jwe b{display:block;font-size:15px}.jwe small{display:block;color:var(--muted);font-size:13px;line-height:1.3}.jwe i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
+  .jwe .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;background:#e8f6ee;color:var(--ok)}.jwe .tag.p{background:#fff4dc;color:#8a5a00}
+  .etaps{display:flex;flex-direction:column;gap:0;margin:4px 0 12px}.etaps div{display:flex;gap:10px;align-items:flex-start;padding:7px 0;position:relative}
+  .etaps div span.o{width:26px;height:26px;border-radius:50%;background:#eef0f5;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
+  .etaps div.f span.o{background:var(--ok);color:#fff}.etaps div.c span.o{background:var(--navy);color:#fff}.etaps div.c b{color:var(--navy)}.etaps small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
+  .rang.moi{background:#fff8e6;border-radius:10px;font-weight:800}.rang.moi .t{color:var(--ink)}
   .nOk{margin-top:10px;background:#e8f6ee;color:var(--ok);padding:10px;border-radius:10px;font-size:14px;font-weight:700}
   .notifC{display:flex;gap:12px;align-items:flex-start}.notifC .ic{font-size:30px;line-height:1}
   .nSuj{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}.nSuj input{width:20px;height:20px;flex-shrink:0}
@@ -412,7 +421,7 @@
     <div class="card hero">
       <h2>📶 <span data-t="heroTitre"></span></h2>
       <p data-t="heroTxt"></p>
-      <a class="btn" href="achte.html" data-t="heroBtn"></a>
+      <a class="btn" href="achte.html#wifi" data-t="heroBtn"></a>
     </div>
 
     <div class="card" id="cSvc">
@@ -434,6 +443,11 @@
       <div id="pakHome"></div>
       <a class="btn" href="#quiz" id="quizHomeBtn" data-t="quizJwe"></a>
       <a class="lien2" href="#quiz&antren" data-t="antLien"></a>
+    </div>
+
+    <div class="card" id="cJwe">
+      <div class="jweTete"><img src="jwe-logo.png" alt="Masbet : Jwe · Fòme · Genyen" width="78" height="92"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
+      <div class="jwe" id="jweZone"></div>
     </div>
 
     <div class="card" id="cOffres">
@@ -466,6 +480,10 @@
       <h2>🏆 <span data-t="klasman"></span></h2>
       <div class="onglets"><button id="kJ" class="on" onclick="ongletKlas('jour')" data-t="kJodi"></button><button id="kS" onclick="ongletKlas('semaine')" data-t="kSemen"></button></div>
       <div id="klasman"><div class="skel"></div></div>
+    </div>
+    <div class="card hidden" id="cDefi">
+      <h2>🏁 <span data-t="defiTitre"></span></h2>
+      <div id="defiZone"><div class="skel"></div></div>
     </div>
     <div class="card hidden" id="cKonkou">
       <h2>🏆 <span data-t="konkouTitre"></span></h2>
@@ -564,9 +582,9 @@ var TXT = {
     pakHome:function(b,v,n){ return '🎯 Pakou mwen : '+b+' badj · Konkou '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Revize erè m yo ('+n+')'; }, revTitre:'Revizyon', revTxt:'Kesyon ou te rate yo. Lè w jwenn yon kesyon, li soti nan lis la.', revFin:function(s,n,r){ return 'Ou jwenn '+s+' sou '+n+'. Rete '+r+' kesyon pou revize.'; },
     proTitre:'Espas pwofesyonèl', proTxt:'Pou pwofesyonèl ak etidyan : 12 rubrik metye ak syans, 5 etap chak. Rubrik sa yo pa antre nan Quiz jou a ni nan Konkou a.',
-    etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proGratis:function(n){ return 'Etap 1 a '+n+' gratis pou tout moun.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
+    etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proEssaiKont:function(n){ return n+' kesyon gratis pou w eseye : kreye yon kont Masbet (yon non ase).'; }, proEssaiReste:function(r,n){ return 'Rete '+r+' kesyon gratis sou '+n+'.'; }, proEssaiFini:function(n){ return 'Ou fin itilize '+n+' kesyon gratis yo. Pran Pass Pro a pou w kontinye.'; }, proKreyeKont:'👤 Kreye kont mwen', proDenyeTes:function(r){ return 'Atansyon : rete '+r+' kesyon gratis. Tès sa a ap dènye tès gratis ou.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
     passAktif:function(d){ return 'Pass Pro aktif jiska '+d+'.'; }, passTout:'Tout etap ak tout rubrik yo louvri.', proByento:'Byento', proPokoKesyon:'Kesyon yo ap vini byento.', proFini:'Rubrik fini : atestasyon disponib',
-    proBezwenPass:'Etap sa a mande Pass Pro', proAntrene:'Antrene w (san tan)', proRetounen:'Retounen nan Espas pwofesyonèl', proRegles:function(n,s){ return n+' kesyon, 40 segonn chak (90 segonn pou kalkil yo). Fò w jwenn '+s+' bon repons pou w pase.'; },
+    proBezwenPass:'Pass Pro pou w kontinye', proAntrene:'Antrene w (san tan)', proRetounen:'Retounen nan Espas pwofesyonèl', proRegles:function(n,s){ return n+' kesyon, 40 segonn chak (90 segonn pou kalkil yo). Fò w jwenn '+s+' bon repons pou w pase.'; },
     proReyisi:function(e,nom){ return '🎉 Bravo ! Ou pase etap '+e+' : '+nom+' !'; }, proTout:'🏆 Ou fini rubrik la : ou se yon Ekspè. Atestasyon w pare.',
     attTitre:'Atestasyon nivo', attCertifie:'Masbet Education sètifye ke', attNivo:function(n){ return 'rive nan nivo « '+n+' » nan'; }, attVerifye:'Verifye atestasyon sa a :', attEnprime:'Enprime / anrejistre an PDF', attFondate:'Fondatè, Masbet Education', fondate:'Fondatè : ',
     attNouvo:'Atestasyon w lan pare ! Gade l nan Espas pwofesyonèl la.', attVerifTitre:'Verifikasyon atestasyon', attValab:'Atestasyon valab',
@@ -619,9 +637,9 @@ var TXT = {
     pakHome:function(b,v,n){ return '🎯 Mes parcours : '+b+' badge(s) · Concours '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Réviser mes erreurs ('+n+')'; }, revTitre:'Révision', revTxt:'Les questions que vous avez manquées. Une question réussie sort de la liste.', revFin:function(s,n,r){ return 'Vous avez trouvé '+s+' sur '+n+'. Il reste '+r+' question(s) à réviser.'; },
     proTitre:'Espace professionnel', proTxt:'Pour les professionnels et les étudiants : 12 rubriques métiers et sciences, 5 étapes chacune. Ces rubriques n\'entrent ni dans le Quiz du jour ni dans le Concours.',
-    etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proGratis:function(n){ return 'Étapes 1 à '+n+' gratuites pour tous.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
+    etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proEssaiKont:function(n){ return n+' questions gratuites pour essayer : créez un compte Masbet (un nom suffit).'; }, proEssaiReste:function(r,n){ return 'Il reste '+r+' questions gratuites sur '+n+'.'; }, proEssaiFini:function(n){ return 'Vous avez utilisé les '+n+' questions gratuites. Prenez le Pass Pro pour continuer.'; }, proKreyeKont:'👤 Créer mon compte', proDenyeTes:function(r){ return 'Attention : il reste '+r+' questions gratuites. Ce test sera votre dernier test gratuit.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
     passAktif:function(d){ return 'Pass Pro actif jusqu\'au '+d+'.'; }, passTout:'Toutes les étapes et toutes les rubriques sont ouvertes.', proByento:'Bientôt', proPokoKesyon:'Les questions arrivent bientôt.', proFini:'Rubrique terminée : attestation disponible',
-    proBezwenPass:'Cette étape demande le Pass Pro', proAntrene:'S\'entraîner (sans chrono)', proRetounen:'Retour à l\'Espace professionnel', proRegles:function(n,s){ return n+' questions, 40 secondes chacune (90 secondes pour les calculs). Il faut '+s+' bonnes réponses pour réussir.'; },
+    proBezwenPass:'Pass Pro pour continuer', proAntrene:'S\'entraîner (sans chrono)', proRetounen:'Retour à l\'Espace professionnel', proRegles:function(n,s){ return n+' questions, 40 secondes chacune (90 secondes pour les calculs). Il faut '+s+' bonnes réponses pour réussir.'; },
     proReyisi:function(e,nom){ return '🎉 Bravo ! Étape '+e+' réussie : '+nom+' !'; }, proTout:'🏆 Rubrique terminée : vous êtes Expert. Votre attestation est prête.',
     attTitre:'Attestation de niveau', attCertifie:'Masbet Education atteste que', attNivo:function(n){ return 'a atteint le niveau « '+n+' » en'; }, attVerifye:'Vérifier cette attestation :', attEnprime:'Imprimer / enregistrer en PDF', attFondate:'Fondateur, Masbet Education', fondate:'Fondateur : ',
     attNouvo:'Votre attestation est prête ! Retrouvez-la dans l\'Espace professionnel.', attVerifTitre:'Vérification d\'attestation', attValab:'Attestation valide',
@@ -653,6 +671,28 @@ var TXT = {
   }
 };
 var LANG='ht', ACC=null, MAT=null, TMATCH=null, DEJA=false;
+Object.assign(TXT.ht,{
+    defiTitre:'Defi Masbet', defiRegles:function(n,s){ return n+' kesyon difisil, '+s+' segonn chak. Bon repons = 10 pwen + segonn ki rete yo. 1 tikè = 1 chans ; pi bon nòt ou nan semèn nan konte.'; },
+    defiKont:'Fò w gen yon kont Masbet pou w jwe Defi a (gratis, yon non ase).', defiKod:'Kòd tikè Defi a', defiKodVid:'Antre kòd tikè Defi a.',
+    defiJwe:'Kòmanse Defi a', defiAchte:'Achte yon tikè Defi', defiKlasman:'Klasman semèn nan', defiJwe2:function(n){ return n+' jwè'; }, defiPokoMoun:'Pèsonn poko jwe semèn sa a. Se ou ki premye ?',
+    defiPase:function(n,p){ return 'Genyen semèn pase a : '+n+' ('+p+' pwen)'; }, defiOuGenyen:'🎉 Ou genyen Defi semèn pase a !', defiPriByento:'Pri a ap rive byento : Pass Pro a ap aktive poukont li sou telefòn ou.',
+    defiBon:function(b,t){ return b+' bon repons sou '+t; }, defiRang:function(r,n){ return r===1?'🥇 Ou premye nan semèn nan ('+n+' jwè) !':'Ou '+r+'e nan semèn nan ('+n+' jwè).'; }, defiMeyo:function(m){ return 'Pi bon nòt ou semèn sa a : '+m+' pwen.'; },
+    defiRetou:'Retounen nan Defi a', defiPataje:function(p,r){ return '🏁 Mwen fè '+p+' pwen nan Defi Masbet la ('+r+'e nan semèn nan). Vin eseye !'; },
+    jweTitre:'Jwe · Fòme · Genyen', jweSou:'Aprann pandan w ap jwe, epi genyen pri.',
+    jwe:[['🧠','Quiz jou a','5 kesyon chak jou · pi bon nan semèn nan genyen','#quiz','Gratis'],['🏁','Defi Masbet','10 kesyon difisil · ganyan semèn nan : Pass Pro gratis 24 è','#quiz&defi','Tikè'],['🏆','Konkou Masbet','Manch, demi-final, final : gwo konkou nasyonal la','#quiz&konkou','Gratis'],['🎯','Pakou ak badj','Monte etap pa etap nan chak rubrik, ranmase badj','#quiz&pakou','Gratis'],['💼','Espas pwofesyonèl','12 metye ak syans · atestasyon Masbet','#quiz&pro','25 gratis'],['📚','Antrene w pa rubrik','San tan, otan fwa ou vle, ak koreksyon','#quiz&antren','Gratis']],
+    konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
+});
+Object.assign(TXT.fr,{
+    defiTitre:'Défi Masbet', defiRegles:function(n,s){ return n+' questions difficiles, '+s+' secondes chacune. Bonne réponse = 10 points + les secondes restantes. 1 ticket = 1 chance ; votre meilleur score de la semaine compte.'; },
+    defiKont:'Il faut un compte Masbet pour jouer au Défi (gratuit, un nom suffit).', defiKod:'Code du ticket Défi', defiKodVid:'Entrez le code du ticket Défi.',
+    defiJwe:'Commencer le Défi', defiAchte:'Acheter un ticket Défi', defiKlasman:'Classement de la semaine', defiJwe2:function(n){ return n+' joueur(s)'; }, defiPokoMoun:'Personne n\'a encore joué cette semaine. Serez-vous le premier ?',
+    defiPase:function(n,p){ return 'Gagnant de la semaine passée : '+n+' ('+p+' points)'; }, defiOuGenyen:'🎉 Vous avez gagné le Défi de la semaine passée !', defiPriByento:'Votre prix arrive bientôt : le Pass Pro s\'active tout seul sur votre téléphone.',
+    defiBon:function(b,t){ return b+' bonnes réponses sur '+t; }, defiRang:function(r,n){ return r===1?'🥇 Vous êtes 1er de la semaine ('+n+' joueurs) !':'Vous êtes '+r+'e de la semaine ('+n+' joueurs).'; }, defiMeyo:function(m){ return 'Votre meilleur score cette semaine : '+m+' points.'; },
+    defiRetou:'Retour au Défi', defiPataje:function(p,r){ return '🏁 J\'ai fait '+p+' points au Défi Masbet ('+r+'e de la semaine). Venez essayer !'; },
+    jweTitre:'Jouer · Se former · Gagner', jweSou:'Apprenez en jouant, et gagnez des prix.',
+    jwe:[['🧠','Quiz du jour','5 questions par jour · le meilleur de la semaine gagne','#quiz','Gratuit'],['🏁','Défi Masbet','10 questions difficiles · le gagnant de la semaine : Pass Pro gratuit 24 h','#quiz&defi','Ticket'],['🏆','Concours Masbet','Manches, demi-finale, finale : le grand concours national','#quiz&konkou','Gratuit'],['🎯','Parcours et badges','Montez étape par étape dans chaque rubrique, gagnez des badges','#quiz&pakou','Gratuit'],['💼','Espace professionnel','12 métiers et sciences · attestation Masbet','#quiz&pro','25 gratuites'],['📚','S\'entraîner par rubrique','Sans chrono, autant de fois que vous voulez, avec correction','#quiz&antren','Gratuit']],
+    konEtaps:function(e,n,man,demi){ return [['Parcours','Validez l\'étape '+e+' dans '+n+' parcours : vous recevez une invitation.'],['Invitation','Le Concours démarre quand il y a assez d\'invités.'],['Manches',man+' manches en ligne. Chaque bonne réponse donne des points (étape 5 = 5 points).'],['Demi-finale','Les '+demi+' meilleurs se qualifient. Vérification par SMS.'],['Finale','La grande finale : le vainqueur du Concours Masbet.']]; }, konKijanTit:'Comment marche le Concours',
+});
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
 function T(k){ return TXT[LANG][k]!==undefined ? TXT[LANG][k] : TXT.fr[k]; }
@@ -886,7 +926,7 @@ function afficherRubriques(){
   if(!RUB){ return; }
   c.classList.remove('hidden'); ANT=null;
   if(!RUB.total){ z.innerHTML='<div class="hint">'+T('antPoko')+'</div>'; return; }
-  var b=function(i,cat,n,cls){ var m=meilleur(cat); return '<button class="'+(cls||'')+'" onclick="antCommencer('+i+')">'+esc(i<0?'🎲 '+T('antTout'):nomRub(cat))+'<span>'+esc(T('antKes')(n))+(m?' · '+esc(T('antMeyo')(m)):'')+'</span></button>'; };
+  var b=function(i,cat,n,cls){ var m=meilleur(cat); return '<button class="'+(cls||'')+'" onclick="antCommencer('+i+')">'+esc(i<0?'🎲 '+T('antTout'):nomRub(cat))+(m?'<span>'+esc(T('antMeyo')(m))+'</span>':'')+'</button>'; };
   z.innerHTML='<div class="hint">'+T('antTxt')+'</div><div class="rubs">'+b(-1,'',RUB.total,'tout')+
     RUB.rubriques.map(function(r,i){ return b(i,r.cat,r.n); }).join('')+'</div>';
 }
@@ -1131,7 +1171,7 @@ function afficherKonkou(){
   var c=document.getElementById('cKonkou'), z=document.getElementById('konZone'), k=KON;
   if(!k) return;
   c.classList.remove('hidden'); KECRAN='info';
-  var m=k.moi||{}, h='';
+  var m=k.moi||{}, h=etapsKonkou(k,m);
   if(k.phase==='attente'){
     var pct=Math.round(100*Math.min(k.invites,k.seuil)/k.seuil);
     h+='<div class="konkou"><b>'+esc(T('konAtann')(k.seuil))+'</b><div class="kbar"><div style="width:'+pct+'%"></div></div><span class="hint">'+esc(T('konEnvite')(k.invites,k.seuil))+'</span></div>';
@@ -1206,9 +1246,13 @@ function essayerPassUrl(){ var c=passUrl(); if(c && PRO && !(PRO.pass&&PRO.pass.
 function blocPass(){
   var p=PRO.pass||{};
   if(p.valide) return '<div class="konkou"><b>✓ '+esc(T('passAktif')(dateLongue(p.jusqua)))+'</b><span class="hint">'+esc(T('passTout'))+'</span></div>';
-  return '<div class="konkou"><b>🔓 '+esc(T('proGratis')(PRO.gratuites))+'</b><span>'+esc(PRO.passTexte||'')+'</span>'+
+  var es=PRO.essai||{compte:false,total:25,reste:0,utilise:0}, tete;
+  if(!es.compte) tete='<b>🎁 '+esc(T('proEssaiKont')(es.total))+'</b><button class="btn" style="margin:8px 0" onclick="kontOuvrir({pro:1})">'+T('proKreyeKont')+'</button>';
+  else if(es.reste>0) tete='<b>🎁 '+esc(T('proEssaiReste')(es.reste,es.total))+'</b><div class="kbar"><div style="width:'+Math.round(100*es.reste/Math.max(1,es.total))+'%"></div></div>';
+  else tete='<b>🔒 '+esc(T('proEssaiFini')(es.total))+'</b>';
+  return '<div class="konkou" id="blocPass">'+tete+'<span>'+esc(PRO.passTexte||'')+'</span>'+
     '<div class="row"><input id="passCode" placeholder="'+T('passKod')+'" autocapitalize="characters" value="'+esc(passUrl())+'"><button onclick="activerPass()">'+T('passAktive')+'</button></div>'+
-    '<div id="passMsg"></div><a class="hint" href="achte.html" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:6px">'+T('passAchte')+' →</a>'+(p.expire?'<div class="hint">'+T('passEkspire')+'</div>':'')+'</div>';
+    '<div id="passMsg"></div><a class="hint" href="achte.html#pro" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:6px">'+T('passAchte')+' →</a>'+(p.expire?'<div class="hint">'+T('passEkspire')+'</div>':'')+'</div>';
 }
 function afficherPro(){
   var c=document.getElementById('cPro'), z=document.getElementById('proZone');
@@ -1220,16 +1264,17 @@ function afficherPro(){
     if(!p.total) return '';
     var fini=p.etape>5, dots='';
     for(var e=1;e<=5;e++) dots+='<i class="'+(e<p.etape?'v':e===p.etape?'c':'')+'" title="'+esc(etapePro(e))+'">'+(e<p.etape?'✓':e)+'</i>';
-    var bt, bloque=!fini && p.etape>PRO.gratuites && !pass, enc=PRO.enCours&&PRO.enCours.parcours===p.nom;
+    var es=PRO.essai, sansKont=!pass&&(!es||!es.compte), bloque=!fini && !pass && !sansKont && es.reste<=0, enc=PRO.enCours&&PRO.enCours.parcours===p.nom, bt;
     if(!p.total) bt='<button class="btn sec" disabled>'+T('proByento')+'</button>';
     else if(fini) bt='<div class="pfini">🏆 '+T('proFini')+'</div>';
-    else if(bloque) bt='<button class="btn sec" onclick="document.getElementById(\'passCode\').focus()">🔒 '+T('proBezwenPass')+'</button>';
     else if(enc) bt='<button class="btn" onclick="proIntro('+i+')">'+T('pakKontinye')+'</button>';
+    else if(sansKont) bt='<button class="btn sec" onclick="kontOuvrir({pro:1})">'+T('proKreyeKont')+'</button>';
+    else if(bloque) bt='<button class="btn sec" onclick="proVersPass()">🔒 '+T('proBezwenPass')+'</button>';
     else if(p.questions<5) bt='<button class="btn sec" disabled>'+T('pakPoko')+'</button>';
     else if(!p.restants) bt='<button class="btn sec" disabled>'+T('pakDemen')+'</button>';
     else bt='<button class="btn" onclick="proIntro('+i+')">'+esc(T('pakPase')(p.etape))+'</button>';
     return '<div class="pak"><div class="pt">'+esc(nomPro(p.nom))+'</div>'+(p.total?'<div class="dots">'+dots+'</div><div class="pe">'+esc(fini?etapePro(5)+' 🏆':T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>':'<div class="hint">'+T('proPokoKesyon')+'</div>')+bt+
-      (p.total?'<button class="btn sec" style="margin-top:6px" onclick="proAntrene('+i+')">'+T('proAntrene')+'</button>':'')+
+      (p.total&&!sansKont&&!bloque?'<button class="btn sec" style="margin-top:6px" onclick="proAntrene('+i+')">'+T('proAntrene')+'</button>':'')+
       (p.attestation?'<button class="btn sec" style="margin-top:6px" onclick="proAttestation('+i+')">📜 '+T('attTitre')+'</button>':'')+'</div>';
   }).join('')+'</div>'+(avenir.length?'<div class="konkou" style="margin-top:10px"><b>🕒 '+T('proByento')+'</b><span>'+esc(avenir.join(' · '))+'</span></div>':'');
 }
@@ -1239,21 +1284,26 @@ function activerPass(code){
   api('pass',{appareil:appareil(), code:code}).then(function(p){ PRO.pass=p; afficherPro(); },
     function(e){ if(m) m.innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
+/** Essai gratuit fini ou sans compte (erreur « PRO_ESSAI: » du serveur) : on recharge l'espace pro, qui montre l'offre dans la bonne langue. */
+function proEssaiErr(e){ if(!/^PRO_ESSAI:/.test((e&&e.message)||'')) return false; api('pro',{appareil:appareil()}).then(function(d){ PRO=d; afficherPro(); proVersPass(); },function(){ afficherPro(); }); return true; }
+function proVersPass(){ var b=document.getElementById('blocPass'); if(b){ b.scrollIntoView({behavior:'smooth',block:'center'}); b.classList.add('flash'); setTimeout(function(){ b.classList.remove('flash'); },1600); var c=document.getElementById('passCode'); if(c&&PRO.essai&&PRO.essai.compte) setTimeout(function(){ c.focus(); },500); } }
 function proIntro(i){
   var p=PRO&&PRO.rubriques[i]; if(!p) return;
   PROI=i; PROECRAN='intro';
   var z=document.getElementById('proZone'), seuil=Math.ceil(p.seuil*PRO.nbQuestions/10-1e-9);
   if(PRO.enCours && PRO.enCours.parcours===p.nom){ PRUN=RUN_PRO; PT=PRO.enCours; PREP=null; return pakQuestion(); }
   z.innerHTML='<h2 style="margin-top:0">'+esc(nomPro(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>'+
-    '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+
+    '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+(PRO.essai&&PRO.essai.compte&&PRO.essai.reste<PRO.nbQuestions&&!(PRO.pass&&PRO.pass.valide)?'<div class="fete ko" style="margin-bottom:10px">'+esc(T('proDenyeTes')(PRO.essai.reste))+'</div>':'')+
     (lire('masbet_pseudo')?'':'<label class="hint" for="prPseudo">'+T('pseudo')+'</label><input class="champ" id="prPseudo" maxlength="20">')+
     '<button class="btn" id="prGo" onclick="proCommencer('+i+')">'+T('komanse')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button><div id="prMsg"></div>';
 }
 function proCommencer(i){
   var p=PRO.rubriques[i], inp=document.getElementById('prPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('prGo');
   b.disabled=true;
-  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps); PRUN=RUN_PRO; PT=etat; PREP=null; pakQuestion(); },
-    function(e){ b.disabled=false; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps);
+      if(PRO.essai&&PRO.essai.compte&&!(PRO.pass&&PRO.pass.valide)) PRO.essai.reste=Math.max(0,PRO.essai.reste-PRO.nbQuestions);
+      PRUN=RUN_PRO; PT=etat; PREP=null; pakQuestion(); },
+    function(e){ b.disabled=false; if(proEssaiErr(e)) return; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
 function proResultat(){
   var r=PREP; if(!r) return afficherPro();
@@ -1270,8 +1320,8 @@ function proResultat(){
 function proAntrene(i){
   var p=PRO.rubriques[i], z=document.getElementById('proZone'); PROI=i; PROECRAN='ant';
   z.innerHTML='<div class="skel"></div>';
-  api('entrainement',{cat:p.nom, appareil:appareil()}).then(function(d){ PA={questions:d.questions,pos:0,score:0,att:false,nom:p.nom}; proAntQ(); },
-    function(e){ z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>'; });
+  api('entrainement',{cat:p.nom, appareil:appareil()}).then(function(d){ if(d.essai) PRO.essai=d.essai; PA={questions:d.questions,pos:0,score:0,att:false,nom:p.nom}; proAntQ(); },
+    function(e){ if(proEssaiErr(e)) return; z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>'; });
 }
 function proAntQ(){
   var z=document.getElementById('proZone'), q=PA.questions[PA.pos];
@@ -1448,6 +1498,20 @@ function ouvrirTike(k, code, silencieux){
 }
 
 // ---------- Pilotage des lives (code administrateur) ----------
+function afficherJwe(){
+  var z=document.getElementById('jweZone'); if(!z) return;
+  z.innerHTML=T('jwe').map(function(j){ return '<a href="'+j[3]+'"><span class="ji">'+j[0]+'</span><span style="min-width:0"><b>'+esc(j[1])+'<span class="tag'+(/25|Tik|Tick/.test(j[4])?' p':'')+'">'+esc(j[4])+'</span></b><small>'+esc(j[2])+'</small></span><i>›</i></a>'; }).join('');
+}
+function etapsKonkou(k,m){
+  var c=PAK&&PAK.concours||{}, cur;
+  if(k.phase==='attente') cur=m.invite||m.ancienFinaliste?1:0;
+  else if(['annonce','manche','entre'].indexOf(k.phase)>=0) cur=2;
+  else if(['demiAttente','demi','demiFin'].indexOf(k.phase)>=0) cur=3;
+  else cur=4;
+  var L=T('konEtaps')(c.etape||3,c.requis||4,(k.manches||[]).length||3,k.demiNb||10);
+  return '<div class="hint" style="font-weight:800;margin-bottom:2px">'+esc(T('konKijanTit'))+'</div><div class="etaps">'+L.map(function(x,i){
+    return '<div class="'+(i<cur?'f':i===cur?'c':'')+'"><span class="o">'+(i<cur?'✓':i+1)+'</span><span><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></span></div>'; }).join('')+'</div>';
+}
 function recompTxt(){ return LANG==='fr'&&QZ&&QZ.recompenseFr?QZ.recompenseFr:(QZ&&QZ.recompense||''); }
 function AL(ht,fr){ return LANG==='fr'?fr:ht; }
 function apiPost(action, corps){
@@ -1748,6 +1812,7 @@ function vue(){
   else clearInterval(QTIMER);
   ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
   if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
+  else if(/[#&]defi/.test(location.hash)){ var cd=document.getElementById('cDefi'); cd.classList.remove('hidden'); if(!DT) chargerDefi(); setTimeout(function(){ cd.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]konkou/.test(location.hash)){ var ck=document.getElementById('cKonkou'); ck.classList.remove('hidden'); setTimeout(function(){ ck.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]pro\b/.test(location.hash)){ var cr=document.getElementById('cPro'); cr.classList.remove('hidden'); setTimeout(function(){ cr.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]pakou/.test(location.hash)){ var cp=document.getElementById('cPakou'); cp.classList.remove('hidden'); setTimeout(function(){ cp.scrollIntoView({block:'start'}); },60); }
@@ -1757,7 +1822,7 @@ window.addEventListener('hashchange',function(){ vue(); verifierAttestationUrl()
 document.addEventListener('visibilitychange',function(){ if(!document.hidden) chargerMatchs(); });
 
 // ---------- Langue ----------
-function langue(l){ setTimeout(function(){ if(typeof kontBouton==='function') kontBouton(); },0);
+function langue(l){ setTimeout(function(){ if(typeof kontBouton==='function') kontBouton(); if(typeof afficherJwe==='function') afficherJwe(); if(typeof notifCarte==='function') notifCarte(); },0);
   LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
   document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
   document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=T(el.getAttribute('data-t')); });
@@ -1839,7 +1904,7 @@ function kontKite(){
   if(!confirm(AL('Dekonekte kont ','Se déconnecter du compte ')+KONT+' ?')) return;
   apiPost('kont_kite',{appareil:appareil()}).then(function(){ kontMete(''); fermerSheets(); }, kontErr);
 }
-function kontFini(){ var a=KONT_APRES; KONT_APRES=null; fermerSheets(); if(a&&a.reac) reacOuvrir(a.reac); }
+function kontFini(){ var a=KONT_APRES; KONT_APRES=null; fermerSheets(); if(a&&a.reac) reacOuvrir(a.reac); if(a&&a.pro) chargerPro(); if(a&&a.defi) chargerDefi(); }
 
 // ---------- Réactions pendant les matchs en direct ----------
 var REACM=null, REACD={}, REACT={}, TREAC=null;
@@ -1932,6 +1997,87 @@ function statEnvoyer(ev,page){
 function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecrire('masbet_st_j',j); statEnvoyer('jou'); } }
 function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
+
+// ---------- 🏁 Défi Masbet (ticket, 10 questions difficiles, classement de la semaine) ----------
+var DEFI=null, DT=null, DQ=null, DFIN=0, DTIMER=null, DATT=false, DREP=null;
+function defiKodUrl(){ var m=/[#&]defikod=([A-Za-z0-9-]+)/.exec(location.hash||''); return m?m[1]:''; }
+function chargerDefi(){
+  if(!CONTENU) return;
+  api('defi',{appareil:appareil()}).then(function(d){ DEFI=d; if(!DT) afficherDefi(); },
+    function(){ if(!DEFI){ document.getElementById('cDefi').classList.remove('hidden'); document.getElementById('defiZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
+}
+function afficherDefi(msg){
+  var c=document.getElementById('cDefi'), z=document.getElementById('defiZone'), d=DEFI; if(!d) return;
+  c.classList.remove('hidden'); DT=null; clearInterval(DTIMER);
+  var h='<div class="konkou"><b>🎁 '+esc(LANG==='fr'?d.priFr:d.pri)+'</b><span>'+esc(T('defiRegles')(d.nb,d.secondes))+'</span></div>';
+  if(d.passe) h+='<div class="fete '+(d.passe.moi?'ok':'inv')+'" style="margin-top:10px">'+esc(d.passe.moi?T('defiOuGenyen'):T('defiPase')(d.passe.nom,d.passe.points))+(d.passe.moi&&d.passe.attente?'<span>'+esc(T('defiPriByento'))+'</span>':'')+'</div>';
+  if(d.enCours) h+='<button class="btn" style="margin-top:12px" onclick="defiReprendre()">'+T('pakKontinye')+'</button>';
+  else if(!d.compte) h+='<div class="hint" style="margin-top:10px">'+esc(T('defiKont'))+'</div><button class="btn" style="margin-top:8px" onclick="kontOuvrir({defi:1})">'+T('proKreyeKont')+'</button>';
+  else {
+    h+='<label class="hint" for="dKod" style="display:block;margin-top:12px">'+T('defiKod')+'</label><input class="champ" id="dKod" autocapitalize="characters" placeholder="TK…" value="'+esc(defiKodUrl())+'">'+
+      '<button class="btn" id="dGo" style="margin-top:10px" onclick="defiCommencer()">🏁 '+T('defiJwe')+'</button>'+
+      '<a class="hint" href="achte.html#defi" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:8px">'+T('defiAchte')+' →</a>';
+  }
+  h+='<div id="dMsg">'+(msg||'')+'</div>';
+  h+='<h3 style="margin:16px 0 6px;font-size:15px">🏆 '+esc(T('defiKlasman'))+(d.joueurs?' <small class="hint">· '+esc(T('defiJwe2')(d.joueurs))+'</small>':'')+'</h3>';
+  h+=d.top.length?d.top.map(function(x){ return '<div class="rang'+(x.moi?' moi':'')+'"><span class="n">'+x.rang+'</span><span class="p">'+esc(x.nom)+'</span><span class="t">'+x.points+' '+T('pwen')+'</span></div>'; }).join(''):'<div class="hint">'+esc(T('defiPokoMoun'))+'</div>';
+  if(d.moi && d.moi.rang>10) h+='<div class="rang moi"><span class="n">'+d.moi.rang+'</span><span class="p">'+esc(d.compte)+'</span><span class="t">'+d.moi.points+' '+T('pwen')+'</span></div>';
+  z.innerHTML=h;
+}
+function defiErr(e){ var m=(e&&e.message)||''; if(/^DEFI_KONT:/.test(m)) return T('defiKont'); return errMsg(e); }
+function defiCommencer(){
+  var b=document.getElementById('dGo'), k=(document.getElementById('dKod').value||'').trim();
+  if(!k){ document.getElementById('dMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(T('defiKodVid'))+'</div>'; return; }
+  b.disabled=true;
+  apiPost('defi_debut',{appareil:appareil(), code:k}).then(function(e){ DT=e; defiQuestion(); },
+    function(e){ b.disabled=false; document.getElementById('dMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(defiErr(e))+'</div>'; });
+}
+function defiReprendre(){ apiPost('defi_debut',{appareil:appareil()}).then(function(e){ DT=e; defiQuestion(); },function(e){ afficherDefi('<div class="err" style="margin-top:8px">'+esc(defiErr(e))+'</div>'); }); }
+function defiQuestion(){
+  var z=document.getElementById('defiZone'); clearInterval(DTIMER); DATT=false;
+  z.innerHTML='<div class="skel"></div><div class="skel"></div>';
+  apiPost('defi_q',{appareil:appareil(), id:DT.id}).then(function(d){
+    DT=d.etat; if(d.etat.fini||!d.question){ DT=null; chargerDefi(); return; }
+    DQ=d.question; DFIN=Date.now()+Math.max(0,DQ.reste)*1000; defiRendre();
+    DTIMER=setInterval(function(){
+      var r=Math.max(0,DFIN-Date.now()), b=document.getElementById('dB'), t=document.getElementById('dT');
+      if(!b){ clearInterval(DTIMER); return; }
+      b.style.width=(100*r/(DQ.temps*1000))+'%'; b.classList.toggle('bas',r<6000); t.textContent=Math.ceil(r/1000)+' '+T('segonn');
+      if(r<=0){ clearInterval(DTIMER); defiRep(-1); }
+    },250);
+  }, function(e){ z.innerHTML='<div class="err">'+esc(defiErr(e))+'</div><button class="btn" style="margin-top:10px" onclick="defiQuestion()">'+T('swivan')+'</button>'; });
+}
+function defiRendre(){
+  var z=document.getElementById('defiZone'), q=DQ, r=Math.max(0,DFIN-Date.now());
+  z.innerHTML='<div class="qhead"><span>'+T('kesyon')+' '+(q.n+1)+' / '+DT.total+'</span><span>🏁 '+DT.points+' '+T('pwen')+'</span><span id="dT">'+Math.ceil(r/1000)+' '+T('segonn')+'</span></div>'+
+    '<div class="qbar"><div id="dB" style="width:'+(100*r/(q.temps*1000))+'%"></div></div>'+
+    (q.retiree?'<div class="regles">'+T('pakRetire')+'</div><button class="btn" onclick="defiRep(0)">'+T('swivan')+'</button>':
+    '<div class="hint">'+esc(nomRub(q.cat))+'</div><div class="qtxt">'+esc(qTxt(q))+'</div>'+
+    '<div class="qchoix">'+q.choix.map(function(c,j){ return '<button id="dc'+j+'" onclick="defiRep('+j+')"><b>'+'ABCD'.charAt(j)+'</b>'+esc(c)+'</button>'; }).join('')+'</div>')+'<div id="dExpl"></div>';
+}
+function defiRep(j){
+  if(DATT||!DQ) return; DATT=true; clearInterval(DTIMER);
+  var q=DQ; document.querySelectorAll('#defiZone .qchoix button').forEach(function(b){ b.disabled=true; });
+  apiPost('defi_rep',{appareil:appareil(), id:DT.id, n:q.n, choix:j<0?'temps':j}).then(function(r){
+    DT.points=r.points; DT.pos=q.n+1;
+    if(r.bonne>=0&&document.getElementById('dc'+r.bonne)) document.getElementById('dc'+r.bonne).classList.add('bon');
+    if(r.choix>=0&&!r.correct&&document.getElementById('dc'+r.choix)) document.getElementById('dc'+r.choix).classList.add('faux');
+    if(!r.correct&&r.bonne>=0) noterErreur(q,r.bonne,r.explHt,r.explFr);
+    var expl=LANG==='fr'?r.explFr:r.explHt, titre=(r.correct?T('bon')+' +'+r.gain+' '+T('pwen'):(r.choix<0?T('pakTan'):T('pabon')));
+    document.getElementById('dExpl').innerHTML='<div class="qexpl '+(r.correct?'ok':'ko')+'"><b>'+titre+'</b>'+(!r.correct&&r.bonne>=0&&q.choix?'<span>'+T('repons')+' <b>'+esc(q.choix[r.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
+      '<button class="btn" style="margin-top:12px" onclick="'+(r.fini?'defiResultat()':'defiQuestion()')+'">'+(r.fini?T('wèRezilta'):T('swivan'))+'</button>';
+    if(r.fini) DREP=r;
+  }, function(e){ DATT=false; document.querySelectorAll('#defiZone .qchoix button').forEach(function(b){ b.disabled=false; });
+    document.getElementById('dExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(defiErr(e))+'</div>'; });
+}
+function defiResultat(){
+  var r=DREP||{}, z=document.getElementById('defiZone'); DT=null;
+  z.innerHTML='<div class="qscore"><div class="hint">🏁 '+T('defiTitre')+'</div><div class="gros">'+esc(r.points)+'<small> '+T('pwen')+'</small></div><div style="font-weight:700;margin-top:6px">'+esc(T('defiBon')(r.bonnes,r.total))+'</div></div>'+
+    (r.rang?'<div class="fete '+(r.rang===1?'ok':'inv')+'">'+esc(T('defiRang')(r.rang,r.joueurs))+(r.meilleur>r.points?'<span>'+esc(T('defiMeyo')(r.meilleur))+'</span>':'')+'</div>':'')+
+    '<div style="text-align:center;margin:10px 0">'+btnPataje('patajeDefi()')+'</div>'+
+    '<button class="btn" onclick="chargerDefi()">'+T('defiRetou')+'</button>';
+}
+function patajeDefi(){ var r=DREP||{}; pataje(T('defiPataje')(r.points,r.rang||1)); }
 
 // ---------- Notifications (Firebase Cloud Messaging) ----------
 // Configuration Web publique du projet Firebase « masbet-c9815 » (sans secret : faite pour être dans l'application).
@@ -2032,7 +2178,7 @@ chargerAccueil();
 chargerMatchs();
 chargerLokal();
 chargerQuiz();
-kontBouton(); kontSync(); notifCarte(); notifBell(); notifRafraichir(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
+kontBouton(); kontSync(); afficherJwe(); notifCarte(); notifBell(); notifRafraichir(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
 setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
 </script>
 </body>
