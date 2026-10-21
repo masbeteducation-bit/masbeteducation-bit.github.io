@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
 <meta name="description" content="MasbetAirNet : Wi-Fi Ansavo. Achte kòd ak MonCash oswa NatCash, ofri, match an dirèk, meteyo.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MasbetAirNet — Wi-Fi, match, lives Ansavo</title>
 <link rel="canonical" href="https://masbeteducation-bit.github.io/">
@@ -356,6 +356,10 @@
   .sheetFond{position:fixed;inset:0;background:rgba(10,15,30,.38);z-index:60}
   .sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:#fff;border-radius:18px 18px 0 0;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.22);padding-bottom:env(safe-area-inset-bottom);max-width:640px;margin:0 auto}
   .sheet.bas{max-height:48vh}
+  .nOk{margin-top:10px;background:#e8f6ee;color:var(--ok);padding:10px;border-radius:10px;font-size:14px;font-weight:700}
+  .notifC{display:flex;gap:12px;align-items:flex-start}.notifC .ic{font-size:30px;line-height:1}
+  .nSuj{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}.nSuj input{width:20px;height:20px;flex-shrink:0}
+  .bellBtn{margin-left:auto;border:1.5px solid var(--line);background:#fff;border-radius:50%;width:34px;height:34px;font-size:16px;flex-shrink:0;cursor:pointer}.bellBtn.on{background:#eef2ff;border-color:#c7d0f0}
   .sheet .sh{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-weight:800}
   .sheet .sh .x{margin-left:auto;border:0;background:#f1f3f8;border-radius:50%;width:32px;height:32px;font-size:16px;flex-shrink:0}
   .sheet .sc{overflow:auto;padding:10px 14px;flex:1;-webkit-overflow-scrolling:touch}
@@ -404,6 +408,7 @@
     </div>
     <div id="lokHome"></div>
     <div id="liveHome"></div>
+    <div class="card hidden" id="cNotif"></div>
     <div class="card hero">
       <h2>📶 <span data-t="heroTitre"></span></h2>
       <p data-t="heroTxt"></p>
@@ -494,7 +499,7 @@
       <div id="lkZone"></div>
     </div>
     <div class="card">
-      <h2>⚽ <span data-t="matchJodi"></span><small id="matchMaj"></small></h2>
+      <h2>⚽ <span data-t="matchJodi"></span><small id="matchMaj"></small><button class="bellBtn" id="bNotif" onclick="notifOuvrir()">🔕</button></h2>
       <div id="matchs"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
     </div>
   </section>
@@ -523,6 +528,7 @@
 <div class="sheetFond hidden" id="sheetFond" onclick="fermerSheets()"></div>
 <div class="sheet hidden" id="kontSheet" role="dialog" aria-modal="true"></div>
 <div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
+<div class="sheet hidden" id="notifSheet" role="dialog" aria-modal="true"></div>
 <nav id="nav">
   <a href="#akey" id="nAkey"><span>🏠</span><b data-t="nAkey"></b></a>
   <a href="achte.html"><span>📶</span><b data-t="nAchte"></b></a>
@@ -1783,7 +1789,7 @@ function kontMete(nom){
 function kontBouton(){ var b=document.getElementById('bKont'); if(!b) return; b.innerHTML='👤<span class="kl"> '+esc(KONT||AL('Kont','Compte'))+'</span>'; b.classList.toggle('on',!!KONT); b.setAttribute('aria-label',AL('Kont Masbet','Compte Masbet')); }
 function kontSync(){ if(!CONTENU) return; api('kont_moi',{appareil:appareil()}).then(function(d){ if(d && (d.nom||'')!==KONT) kontMete(d.nom||''); },function(){}); }
 function sheetMontrer(id,fond){ var e=document.getElementById(id); e.classList.remove('hidden'); document.getElementById('sheetFond').classList.toggle('hidden',!fond); }
-function fermerSheets(){ ['kontSheet','reacSheet'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); }); document.getElementById('sheetFond').classList.add('hidden'); REACM=null; clearTimeout(TREAC); }
+function fermerSheets(){ ['kontSheet','reacSheet','notifSheet'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); }); document.getElementById('sheetFond').classList.add('hidden'); REACM=null; clearTimeout(TREAC); }
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') fermerSheets(); });
 function kontOuvrir(apres){ KONT_APRES=apres||null; document.getElementById('reacSheet').classList.add('hidden'); kontRendre(KONT?'moi':'kreye'); sheetMontrer('kontSheet',true); }
 function kontTete(t){ return '<div class="sh">👤 '+esc(t)+'<button class="x" aria-label="'+AL('Fèmen','Fermer')+'" onclick="fermerSheets()">✕</button></div>'; }
@@ -1926,6 +1932,96 @@ function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecri
 function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
 
+// ---------- Notifications (Firebase Cloud Messaging) ----------
+// Configuration Web publique du projet Firebase « masbet-c9815 » (sans secret : faite pour être dans l'application).
+var FCM_CFG={apiKey:'AIzaSyDfr2tKlm9pM7JO6HZgM3wbmZ0YY_UqBu0',authDomain:'masbet-c9815.firebaseapp.com',projectId:'masbet-c9815',storageBucket:'masbet-c9815.firebasestorage.app',messagingSenderId:'851536715289',appId:'1:851536715289:web:784b58ebe83444096dd488'};
+var FCM_VAPID='BEIPAREHmmZqSNG1aW0jAvid-Z989EYw9gKcvyKNndB2wQ7OpCi4qdyHZteNpN9t8zvShk_m6AdDbEzqba_BRBc';
+var FCM_SDK='https://www.gstatic.com/firebasejs/10.14.1/';
+var NOTIF_SUJ=[['matchs','⚽','Match lokal yo : kòmansman, gòl, rezilta','Matchs locaux : coup d\'envoi, buts, résultat'],['lives','🔴','Lè yon live kòmanse','Quand un live commence'],['nouvo','📣','Nouvèl Masbet : quiz, konkou, Wi-Fi','Nouvelles Masbet : quiz, concours, Wi-Fi']];
+function notifEtat(){ try{ var x=JSON.parse(lire('masbet_notif')||'null'); return x&&x.sujets?x:null; }catch(e){ return null; } }
+function notifIos(){ return /iPhone|iPad|iPod/.test(navigator.userAgent||''); }
+function notifStandalone(){ return (window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true; }
+function notifPossible(){ return !!(window.Notification&&'serviceWorker' in navigator&&window.PushManager) && window.isSecureContext!==false; }
+function chargerScript(src){ return new Promise(function(ok,ko){ var s=document.createElement('script'); s.src=src; s.async=true; s.onload=ok; s.onerror=function(){ ko(new Error('sdk')); }; document.head.appendChild(s); }); }
+var FCM_PRET=null;
+function fcmPret(){
+  if(FCM_PRET) return FCM_PRET;
+  FCM_PRET=(window.firebase&&firebase.messaging?Promise.resolve():chargerScript(FCM_SDK+'firebase-app-compat.js').then(function(){ return chargerScript(FCM_SDK+'firebase-messaging-compat.js'); }))
+    .then(function(){ if(!firebase.apps.length) firebase.initializeApp(FCM_CFG); return firebase.messaging(); });
+  FCM_PRET.catch(function(){ FCM_PRET=null; });
+  return FCM_PRET;
+}
+function swPret(){ return navigator.serviceWorker.getRegistration().then(function(r){ return r||navigator.serviceWorker.register('sw.js'); }).then(function(){ return navigator.serviceWorker.ready; }); }
+/** Demande l'autorisation (au toucher du bouton), obtient le jeton Firebase et l'envoie au système Masbet. */
+function notifActiver(sujets){
+  if(!notifPossible()) return Promise.reject(new Error(AL('Telefòn sa a pa ka resevwa notifikasyon.','Ce téléphone ne peut pas recevoir de notifications.')));
+  var perm=Notification.permission==='granted'?Promise.resolve('granted'):Notification.requestPermission();
+  return Promise.resolve(perm).then(function(p){
+    if(p!=='granted') throw new Error(AL('Ou pa bay otorizasyon an. Pou chanje sa : paramèt navigatè a → Notifikasyon → Pèmèt.','Autorisation refusée. Pour changer : réglages du navigateur → Notifications → Autoriser.'));
+    return Promise.all([fcmPret(),swPret()]);
+  }).then(function(x){ return x[0].getToken({vapidKey:FCM_VAPID,serviceWorkerRegistration:x[1]}); })
+    .then(function(jeton){
+      if(!jeton) throw new Error(AL('Pa t ka jwenn kòd notifikasyon an. Eseye ankò.','Impossible d\'obtenir le jeton de notification. Réessayez.'));
+      return apiPost('notif_abonne',{appareil:appareil(),jeton:jeton,sujets:sujets.join(','),langue:LANG}).then(function(d){
+        ecrire('masbet_notif',JSON.stringify({sujets:d.sujets,jeton:jeton,t:Date.now(),l:LANG})); return d; });
+    });
+}
+function notifDesactiver(){
+  var e=notifEtat(); ecrire('masbet_notif','');
+  var fin=apiPost('notif_kite',{appareil:appareil()}).catch(function(){});
+  try{ if(window.firebase&&firebase.apps&&firebase.apps.length) firebase.messaging().deleteToken().catch(function(){}); }catch(_){}
+  return fin;
+}
+/** Au démarrage : jeton renouvelé une fois par semaine (ou si la langue a changé). Sans bruit en cas d'échec. */
+function notifRafraichir(force){
+  var e=notifEtat(); if(!e||!notifPossible()||Notification.permission!=='granted'||!CONTENU) return;
+  if(!force && Date.now()-(e.t||0)<7*864e5 && e.l===LANG) return;
+  setTimeout(function(){ notifActiver(e.sujets).catch(function(){}); }, force?0:4000);
+}
+function notifCarte(){
+  var c=document.getElementById('cNotif'); if(!c) return;
+  var vu=lire('masbet_notif_non'), e=notifEtat();
+  if(e||vu||!CONTENU||(!notifPossible()&&!notifIos())||(window.Notification&&Notification.permission==='denied')){ c.classList.add('hidden'); return; }
+  c.innerHTML='<div class="notifC"><div class="ic">🔔</div><div style="flex:1;min-width:0"><b>'+AL('Pa rate anyen !','Ne ratez rien !')+'</b><div class="hint">'+AL('Gòl, match ki kòmanse, live an direk : resevwa yon ti alèt sou telefòn ou.','Buts, coups d\'envoi, lives en direct : recevez une petite alerte sur votre téléphone.')+'</div>'+
+    '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><button class="btn" style="width:auto;padding:10px 16px;margin:0" onclick="notifOuvrir()">'+AL('Aktive','Activer')+'</button><button class="btn sec" style="width:auto;padding:10px 16px;margin:0" onclick="notifPlusTard()">'+AL('Pa kounye a','Pas maintenant')+'</button></div></div></div>';
+  c.classList.remove('hidden');
+}
+function notifPlusTard(){ ecrire('masbet_notif_non','1'); notifCarte(); }
+function notifBell(){ var b=document.getElementById('bNotif'); if(b){ var e=notifEtat(); b.textContent=e?'🔔':'🔕'; b.classList.toggle('on',!!e); b.setAttribute('aria-label',AL('Notifikasyon','Notifications')); } }
+function notifOuvrir(){
+  document.getElementById('reacSheet').classList.add('hidden'); document.getElementById('kontSheet').classList.add('hidden');
+  var el=document.getElementById('notifSheet'), e=notifEtat(), h=kontTete(AL('Notifikasyon','Notifications')).replace('👤 ','🔔 ')+'<div class="sc">';
+  if(notifIos()&&!notifStandalone()){
+    h+='<div class="hint">'+AL('Sou iPhone, notifikasyon yo mache sèlman si aplikasyon an sou ekran dakèy ou :','Sur iPhone, les notifications ne marchent que si l\'application est sur votre écran d\'accueil :')+'</div>'+
+      '<ol class="hint" style="padding-left:20px;margin:8px 0"><li>'+AL('Louvri paj la nan <b>Safari</b>','Ouvrez la page dans <b>Safari</b>')+'</li><li>'+AL('Touche bouton <b>Pataje</b> ⬆️','Touchez le bouton <b>Partager</b> ⬆️')+'</li><li>'+AL('Chwazi <b>« Sou ekran dakèy »</b>','Choisissez <b>« Sur l\'écran d\'accueil »</b>')+'</li><li>'+AL('Louvri Masbet depi ekran dakèy la, epi tounen isit la.','Ouvrez Masbet depuis l\'écran d\'accueil, puis revenez ici.')+'</li></ol>'+
+      '<div class="hint">'+AL('Fòk iPhone lan gen iOS 16.4 oswa pi nouvo.','Il faut iOS 16.4 ou plus récent.')+'</div></div>';
+    el.innerHTML=h; sheetMontrer('notifSheet',true); return;
+  }
+  if(!notifPossible()){ el.innerHTML=h+'<div class="hint">'+AL('Navigatè sa a pa ka resevwa notifikasyon. Eseye ak Chrome.','Ce navigateur ne peut pas recevoir de notifications. Essayez avec Chrome.')+'</div></div>'; sheetMontrer('notifSheet',true); return; }
+  var actifs=e?e.sujets:['matchs','lives','nouvo'];
+  h+='<div class="hint" style="margin-bottom:6px">'+AL('Chwazi sa w vle resevwa :','Choisissez ce que vous voulez recevoir :')+'</div>'+
+    NOTIF_SUJ.map(function(s){ return '<label class="nSuj"><input type="checkbox" value="'+s[0]+'"'+(actifs.indexOf(s[0])>=0?' checked':'')+'><span>'+s[1]+'</span><span style="flex:1">'+esc(AL(s[2],s[3]))+'</span></label>'; }).join('')+
+    '<button class="btn" id="nGo" style="margin-top:12px" onclick="notifSauver()">'+(e?AL('Anrejistre','Enregistrer'):AL('🔔 Aktive notifikasyon yo','🔔 Activer les notifications'))+'</button>'+
+    (e?'<button class="btn sec" style="margin-top:8px" onclick="notifArreter()">'+AL('Pa voye m anyen ankò','Ne plus rien recevoir')+'</button>':'')+
+    '<div id="nMsg"></div>'+(Notification.permission==='denied'?'<div class="hint" style="margin-top:8px;color:#b42318">'+AL('Notifikasyon yo bloke pou sit sa a. Ale nan paramèt navigatè a → Notifikasyon → Pèmèt.','Les notifications sont bloquées pour ce site. Allez dans les réglages du navigateur → Notifications → Autoriser.')+'</div>':'')+'</div>';
+  el.innerHTML=h; sheetMontrer('notifSheet',true);
+}
+function notifSauver(){
+  var s=[].slice.call(document.querySelectorAll('#notifSheet .nSuj input:checked')).map(function(i){ return i.value; });
+  var b=document.getElementById('nGo'), m=document.getElementById('nMsg');
+  if(!s.length) return notifArreter();
+  b.disabled=true; b.textContent=AL('Tann yon ti moman…','Un instant…');
+  notifActiver(s).then(function(){
+    m.innerHTML='<div class="nOk">✓ '+AL('Notifikasyon yo aktive. Ou ka fèmen fenèt sa a.','Notifications activées. Vous pouvez fermer cette fenêtre.')+'</div>';
+    b.disabled=false; b.textContent=AL('Anrejistre','Enregistrer'); notifCarte(); notifBell();
+    setTimeout(function(){ if(!document.getElementById('notifSheet').classList.contains('hidden')) fermerSheets(); },1600);
+  }).catch(function(e){
+    b.disabled=false; b.textContent=AL('Eseye ankò','Réessayer');
+    m.innerHTML='<div class="err" style="margin-top:10px">'+esc(e&&e.message&&e.message!=='sdk'?e.message:AL('Pa gen koneksyon. Eseye ankò.','Pas de connexion. Réessayez.'))+'</div>';
+  });
+}
+function notifArreter(){ notifDesactiver().then(function(){ notifCarte(); notifBell(); fermerSheets(); }); }
+
 // ---------- Démarrage ----------
 try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c) ACC=c; }catch(e){}
 langue(lire('masbet_lang')||'ht');
@@ -1935,7 +2031,7 @@ chargerAccueil();
 chargerMatchs();
 chargerLokal();
 chargerQuiz();
-kontBouton(); kontSync(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
+kontBouton(); kontSync(); notifCarte(); notifBell(); notifRafraichir(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
 setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
 </script>
 </body>
