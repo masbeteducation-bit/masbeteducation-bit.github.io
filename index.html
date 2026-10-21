@@ -781,7 +781,7 @@ function afficherQuizHome(){
   c.classList.remove('hidden'); afficherCadeau(); afficherPakouHome(); afficherKonkouHome();
   if(!QZ.questions || !QZ.questions.length){ document.getElementById('quizHomeTxt').textContent=T('quizPoko'); document.getElementById('quizHomeBtn').textContent=T('quizWe'); return; }
   var e=QZ.etat||{};
-  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):T('quizTxt'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(QZ.recompense)+'</b>':'');
+  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):T('quizTxt'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(recompTxt())+'</b>':'');
   document.getElementById('quizHomeBtn').textContent=e.fini?T('quizWe'):T('quizJwe');
   var g=document.getElementById('cGenies'); g.classList.toggle('hidden',!QZ.genies); if(QZ.genies) document.getElementById('geniesLien').href=QZ.genies;
 }
@@ -794,7 +794,7 @@ function afficherQuiz(){
   if(e.fini) return afficherResultatQuiz();
   if(!e.joue){
     z.innerHTML='<h2>🧠 '+T('quizTitre')+'</h2><div class="hint" style="margin-bottom:8px">'+T('quizTxt')+'</div>'+
-      (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+
+      (QZ.recompense?'<div class="recomp">🎁 '+esc(recompTxt())+'</div>':'')+
       '<label class="hint" for="qPseudo">'+T('pseudo')+'</label><input class="champ" id="qPseudo" maxlength="20" value="'+esc(KONT||lire('masbet_pseudo')||'')+'"'+(KONT?' readonly style="background:#eef2ff" title="'+esc(AL('Non kont ou','Nom de votre compte'))+'"':'')+'>'+
       '<label class="hint" for="qTel">'+T('telQuiz')+'</label><input class="champ" id="qTel" type="tel" inputmode="tel" placeholder="+509 3X XX XX XX" value="'+esc(lire('masbet_qtel')||'')+'">'+
       '<button class="btn" id="qGo" onclick="commencerQuiz()">'+T('komanse')+'</button><div id="qMsg"></div>';
@@ -859,7 +859,7 @@ function afficherResultatQuiz(){
   }).join('');
   z.innerHTML='<h2>🧠 '+T('rezilta')+'</h2><div class="qscore"><div class="gros">'+esc(e.score||0)+'<small>/'+QZ.questions.length+'</small></div>'+
     (e.temps?'<div class="hint">⏱️ '+esc(e.temps)+' '+T('segonn')+'</div>':'')+'</div>'+
-    (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+'<div style="text-align:center;margin-bottom:10px">'+btnPataje('patajeQuiz()')+'</div>'+revue;
+    (QZ.recompense?'<div class="recomp">🎁 '+esc(recompTxt())+'</div>':'')+'<div style="text-align:center;margin-bottom:10px">'+btnPataje('patajeQuiz()')+'</div>'+revue;
 }
 function ongletKlas(o){ KONG=o; document.getElementById('kJ').classList.toggle('on',o==='jour'); document.getElementById('kS').classList.toggle('on',o==='semaine'); afficherKlas(); }
 function afficherKlas(){
@@ -1448,6 +1448,7 @@ function ouvrirTike(k, code, silencieux){
 }
 
 // ---------- Pilotage des lives (code administrateur) ----------
+function recompTxt(){ return LANG==='fr'&&QZ&&QZ.recompenseFr?QZ.recompenseFr:(QZ&&QZ.recompense||''); }
 function AL(ht,fr){ return LANG==='fr'?fr:ht; }
 function apiPost(action, corps){
   if(!CONTENU) return Promise.reject(new Error('config'));
