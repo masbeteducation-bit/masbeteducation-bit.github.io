@@ -99,6 +99,7 @@
   .hidden{display:none}
   footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
   .demo{background:#fff3df;color:var(--wait);text-align:center;font-size:13px;padding:6px}
+.recap{margin:14px 0 2px;padding:10px 12px;border-radius:12px;background:#f1f5ff;border:1.5px solid #c9d6f5;font-size:15px;line-height:1.35}.recap b{font-size:16px}
 .tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#fff4dc;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}
 </style>
 </head>
@@ -150,6 +151,7 @@
       <label for="tx" data-t="txLabel"></label>
       <input id="tx" type="text" autocapitalize="characters" data-tp="txPlaceholder">
       <div class="hint" data-th="txAide"></div>
+      <div id="recap" class="recap hidden"></div>
       <button class="btn" id="go" onclick="envoyer()" data-t="envoyer"></button>
       <div id="msg"></div>
     </div>
@@ -236,12 +238,12 @@ var TXT = {
   }
 };
 // Masbet Pay : un seul endroit pour payer Wi-Fi, lives, Quiz Pro et Masbet Suite
-Object.assign(TXT.ht, { soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Quiz Pro, Masbet Suite — ak MonCash oswa NatCash',
+Object.assign(TXT.ht, { recapTitre:'🧾 W ap peye pou :', soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Quiz Pro, Masbet Suite — ak MonCash oswa NatCash',
   prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Kòd pou konekte sou Wi-Fi Masbet la.', aideLive:'Tikè pou gade yon live peyan nan aplikasyon an.', aidePro:'Pass Pro : tout etap ak tout rubrik pwofesyonèl Quiz la.',
   aideSuite:'Abònman lojisyèl devis Masbet Suite : 2 aparèy (yon telefòn ak yon òdinatè).',
   tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite' });
-Object.assign(TXT.fr, { soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Quiz Pro, Masbet Suite — par MonCash ou NatCash',
+Object.assign(TXT.fr, { recapTitre:'🧾 Vous payez pour :', soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Quiz Pro, Masbet Suite — par MonCash ou NatCash',
   prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'🎓 Quiz Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Code pour se connecter au Wi-Fi Masbet.', aideLive:'Ticket pour regarder un live payant dans l\'application.', aidePro:'Pass Pro : toutes les étapes et toutes les rubriques professionnelles du Quiz.',
   aideSuite:'Abonnement au logiciel de devis Masbet Suite : 2 appareils (un téléphone et un ordinateur).',
@@ -452,7 +454,15 @@ function choisirMethode(m){
   document.getElementById('mNatCash').classList.toggle('on',m==='NatCash');
   majPaiement();
 }
+function libelleAchat(f){ if(!f) return ''; var p=produitDe(f);
+  if(p==='wifi') return T('prodWifi')+' — '+esc(f.volume)+' · '+esc(f.duree)+' '+T('jours');
+  return T(p==='pro'?'prodPro':p==='suite'?'prodSuite':'prodLive')+' — '+esc(f.nom); }
+function majRecap(){ var r=document.getElementById('recap'); if(!r) return;
+  if(!FORFAIT){ r.classList.add('hidden'); return; }
+  r.innerHTML=T('recapTitre')+'<br><b>'+libelleAchat(FORFAIT)+'</b> · <b>'+esc(FORFAIT.prix)+' HTG</b>'+(METHODE?' · '+esc(METHODE):'');
+  r.classList.remove('hidden'); }
 function majPaiement(){
+  majRecap();
   var box=document.getElementById('payBox');
   if(!METHODE || !INFOS){ box.classList.add('hidden'); return; }
   var c = METHODE==='MonCash' ? INFOS.moncash : INFOS.natcash;

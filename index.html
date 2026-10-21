@@ -347,16 +347,46 @@
   }
   .skel{background:linear-gradient(90deg,#eef0f6,#f7f8fb,#eef0f6);background-size:200% 100%;animation:s 1.2s infinite;border-radius:8px;height:16px;margin:8px 0}
   @keyframes s{to{background-position:-200% 0}}
+  /* v3.8 : compte, réactions en direct, partage, hors connexion */
+  .topd{display:flex;align-items:center;gap:6px;flex-shrink:0}
+  .kontBtn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 10px;font-weight:800;font-size:13px;color:var(--navy);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .kontBtn.on{background:#eef2ff;border-color:#c7d0f0}
+  .top img{min-width:0;flex:1 1 auto}
+  @media (max-width:420px){.top{padding:10px 12px 6px;gap:8px}.kontBtn{padding:6px 9px;max-width:92px}.kontBtn:not(.on) .kl{display:none}.lang button{padding:6px 8px}}
+  .sheetFond{position:fixed;inset:0;background:rgba(10,15,30,.38);z-index:60}
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:#fff;border-radius:18px 18px 0 0;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.22);padding-bottom:env(safe-area-inset-bottom);max-width:640px;margin:0 auto}
+  .sheet.bas{max-height:48vh}
+  .sheet .sh{padding:10px 14px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-weight:800}
+  .sheet .sh .x{margin-left:auto;border:0;background:#f1f3f8;border-radius:50%;width:32px;height:32px;font-size:16px;flex-shrink:0}
+  .sheet .sc{overflow:auto;padding:10px 14px;flex:1;-webkit-overflow-scrolling:touch}
+  .sheet .sf{border-top:1px solid var(--line);padding:8px 10px;display:flex;gap:6px;align-items:center}
+  .sheet .sf input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:9px 14px;font-size:15px}
+  .sheet .sf button{border:0;background:var(--navy);color:#fff;border-radius:999px;padding:9px 14px;font-weight:800}
+  .sheet .scoreMini{display:flex;align-items:center;gap:6px;min-width:0;font-size:15px}
+  .sheet .scoreMini b{font-size:17px}
+  .reac{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .reac button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-weight:700;font-size:13px;color:var(--ink)}
+  .reac button.on{background:#fdecef;border-color:#f3b8c3;color:#c2185b}
+  .kom{padding:7px 0;border-bottom:1px solid #f0f2f7;font-size:14.5px;word-wrap:break-word}
+  .kom b{color:var(--navy)} .kom small{color:var(--muted);margin-left:6px;font-size:11.5px}
+  .kom.moi b{color:#c2185b}
+  .horsLigne{position:sticky;top:0;z-index:55;background:#5d6782;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:7px 10px}
+  .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#fff7e6;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
+  .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#25d366;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
 </style>
 </head>
 <body>
 <div class="top">
   <img src="logo.png" alt="Masbet Education" width="560" height="166">
+  <div class="topd">
+  <button class="kontBtn" id="bKont" onclick="kontOuvrir()">👤</button>
   <div class="lang" role="group" aria-label="Langue / Lang">
     <button id="lHt" onclick="langue('ht')">KR</button>
     <button id="lFr" onclick="langue('fr')">FR</button>
   </div>
+  </div>
 </div>
+<div class="horsLigne hidden" id="horsLigne"></div>
 <header>
   <div class="brand">Masbet<span>AirNet</span></div>
   <p><span data-t="slogan"></span><br><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
@@ -490,6 +520,9 @@
   <footer id="foot"></footer>
 </main>
 
+<div class="sheetFond hidden" id="sheetFond" onclick="fermerSheets()"></div>
+<div class="sheet hidden" id="kontSheet" role="dialog" aria-modal="true"></div>
+<div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
 <nav id="nav">
   <a href="#akey" id="nAkey"><span>🏠</span><b data-t="nAkey"></b></a>
   <a href="achte.html"><span>📶</span><b data-t="nAchte"></b></a>
@@ -629,13 +662,21 @@ function api(action, params){
   action_courante=action;
   if(!CONTENU) return Promise.reject(new Error('config'));
   var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); });
+  var cleM=(typeof API_MEMOIRE!=='undefined'&&API_MEMOIRE[action])?'masbet_c_'+action+extra:'';
   var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
   return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
     .then(function(r){ return r.text().then(function(x){
       try{ return JSON.parse(x); }
       catch(e){ var er=new Error(''); er.detail='Google '+r.status+' : '+x.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,160); throw er; } }); })
-    .then(function(j){ if(t) clearTimeout(t); if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; },
-          function(e){ if(t) clearTimeout(t); if(e && !e.detail) e.detail=(e.name==='AbortError'?'délai 30 s dépassé':(e.name||'')+' '+(e.message||'')); throw e; });
+    .then(function(j){ if(t) clearTimeout(t); if(!j||!j.ok) throw new Error(j&&j.erreur||'');
+        if(typeof HORS!=='undefined'&&HORS) horsLigne(false);
+        if(cleM){ try{ localStorage.setItem(cleM, JSON.stringify(j.data)); }catch(e){} }
+        return j.data; },
+          function(e){ if(t) clearTimeout(t); if(e && !e.detail) e.detail=(e.name==='AbortError'?'délai 30 s dépassé':(e.name||'')+' '+(e.message||''));
+        // Pas de réseau : on montre la dernière réponse gardée sur le téléphone (si elle existe)
+        if(cleM && !e.message){ var m=lire(cleM); if(m){ try{ var d=JSON.parse(m); horsLigne(true); return d; }catch(_){} } }
+        if(cleM && /fetch|network|abort|load failed/i.test((e.message||'')+' '+e.name)){ var m2=lire(cleM); if(m2){ try{ var d2=JSON.parse(m2); horsLigne(true); return d2; }catch(_){} } }
+        throw e; });
 }
 // Petit détail technique sous un message d'erreur (aide au diagnostic, sans données personnelles)
 function detailErr(e){ return e&&e.detail?'<div class="hint" style="margin-top:4px;font-size:12px;opacity:.75">'+esc(action_courante+' — '+e.detail)+'</div>':''; }
@@ -748,7 +789,7 @@ function afficherQuiz(){
   if(!e.joue){
     z.innerHTML='<h2>🧠 '+T('quizTitre')+'</h2><div class="hint" style="margin-bottom:8px">'+T('quizTxt')+'</div>'+
       (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+
-      '<label class="hint" for="qPseudo">'+T('pseudo')+'</label><input class="champ" id="qPseudo" maxlength="20" value="'+esc(lire('masbet_pseudo')||'')+'">'+
+      '<label class="hint" for="qPseudo">'+T('pseudo')+'</label><input class="champ" id="qPseudo" maxlength="20" value="'+esc(KONT||lire('masbet_pseudo')||'')+'"'+(KONT?' readonly style="background:#eef2ff" title="'+esc(AL('Non kont ou','Nom de votre compte'))+'"':'')+'>'+
       '<label class="hint" for="qTel">'+T('telQuiz')+'</label><input class="champ" id="qTel" type="tel" inputmode="tel" placeholder="+509 3X XX XX XX" value="'+esc(lire('masbet_qtel')||'')+'">'+
       '<button class="btn" id="qGo" onclick="commencerQuiz()">'+T('komanse')+'</button><div id="qMsg"></div>';
     return;
@@ -812,7 +853,7 @@ function afficherResultatQuiz(){
   }).join('');
   z.innerHTML='<h2>🧠 '+T('rezilta')+'</h2><div class="qscore"><div class="gros">'+esc(e.score||0)+'<small>/'+QZ.questions.length+'</small></div>'+
     (e.temps?'<div class="hint">⏱️ '+esc(e.temps)+' '+T('segonn')+'</div>':'')+'</div>'+
-    (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+revue;
+    (QZ.recompense?'<div class="recomp">🎁 '+esc(QZ.recompense)+'</div>':'')+'<div style="text-align:center;margin-bottom:10px">'+btnPataje('patajeQuiz()')+'</div>'+revue;
 }
 function ongletKlas(o){ KONG=o; document.getElementById('kJ').classList.toggle('on',o==='jour'); document.getElementById('kS').classList.toggle('on',o==='semaine'); afficherKlas(); }
 function afficherKlas(){
@@ -1325,7 +1366,7 @@ function afficherLives(){
   document.getElementById('nVideyo').classList.toggle('live', direk.length>0);
   // Onglet Live
   var h='';
-  direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':'')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'</div>'; });
+  direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':'')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'<div>'+btnPataje('patajeLive(LIVES_PAR_CLE[\'d'+i+'\']?LIVES_PAR_CLE[\'d'+i+'\'].titre:\'\')')+'</div></div>'; });
   if(!direk.length) h+=afficheRepo(avenir[0]);
   (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p">🔒 '+esc(T('tikePri')(x.prix))+'</span>':'')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
   fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':'')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
@@ -1471,7 +1512,7 @@ var LOKD=null, LOKI=-1, LOKT='match', LOKJ='', LOKLIBRE=false, TLOK=null;
 try{ LOKD=JSON.parse(lire('masbet_lokal')||'null'); var li=lire('masbet_lokal_i'); LOKI=li===null||li===''?-1:Number(li); if(isNaN(LOKI)) LOKI=-1; }catch(e){}
 function chargerLokal(){
   if(!CONTENU) return;
-  api('lokal').then(function(d){ LOKD=d; ecrire('masbet_lokal', JSON.stringify(d)); afficherLokal(); lokHome(); }, function(){ afficherLokal(); });
+  api('lokal').then(function(d){ LOKD=d; ecrire('masbet_lokal', JSON.stringify(d)); afficherLokal(); lokHome(); if(REACM) reacRendre(); }, function(){ afficherLokal(); });
   clearTimeout(TLOK);
   var direct=lokEnDirect().length>0;
   TLOK=setTimeout(function(){ if(!document.hidden && (direct || vueActive()==='match')) chargerLokal(); else { TLOK=null; } }, direct?30000:300000);
@@ -1505,7 +1546,7 @@ function lokLigne(c,m){
   if(dir){ gd=ge=false; tab=false; }
   var l=function(nom,sc,g,p,t){ return '<div class="l'+(g?' g':'')+(p?' p':'')+'">'+bdg(c,nom)+'<span class="n">'+esc(nom)+'</span>'+(fini?'<span class="sc">'+esc(sc)+(tab?' <small>('+esc(t)+')</small>':'')+'</span>':'')+'</div>'; };
   return '<div class="lkm'+(dir?' dir':'')+'"><div class="h'+(fini&&!dir?' fini':'')+'">'+(dir?'<span class="pastille"></span>':'')+esc(etat)+(dir?'<small>'+AL('Direk','Direct')+'</small>':fini||m.st!=='PWOGRAME'?'<small>'+esc(h)+'</small>':'')+'</div><div class="eqs">'+
-    l(m.d,m.bd,gd,ge,m.td)+l(m.e,m.be,ge,gd,m.te)+'</div>'+lokButs(c,m)+(m.lieu||m.note?'<div class="lieu">'+esc([m.lieu,m.note].filter(Boolean).join(' · '))+'</div>':'')+'</div>';
+    l(m.d,m.bd,gd,ge,m.td)+l(m.e,m.be,ge,gd,m.te)+'</div>'+lokButs(c,m)+(m.lieu||m.note?'<div class="lieu">'+esc([m.lieu,m.note].filter(Boolean).join(' · '))+'</div>':'')+lokReacBar(c,m)+'</div>';
 }
 function lokButs(c,m){
   if(m.dir&&m.dir.ev&&m.dir.ev.length){   // match suivi en direct : buts et cartons, minute par minute
@@ -1588,6 +1629,7 @@ function afficherLokal(){
   }
   z.innerHTML=h;
   var on=document.querySelector('#lkDates button.on'); if(on) on.scrollIntoView({block:'nearest',inline:'center'});
+  if(typeof reacCharger==='function') setTimeout(reacCharger,0);
 }
 
 // ---------- Vidéos ----------
@@ -1689,6 +1731,7 @@ function toutAfficher(){ afficherLokal();
 // ---------- Navigation ----------
 function vue(){
   var v=(location.hash||'#akey').slice(1).split('&')[0]; if(['akey','match','videyo','quiz'].indexOf(v)<0) v='akey';
+  if(typeof statVue==='function' && typeof STAT_DERN!=='undefined' && STAT_DERN) statVue(v);
   document.getElementById('vAkey').classList.toggle('hidden',v!=='akey');
   document.getElementById('vMatch').classList.toggle('hidden',v!=='match');
   if(v==='match'){ afficherLokal(); chargerLokal(); }
@@ -1707,7 +1750,7 @@ window.addEventListener('hashchange',function(){ vue(); verifierAttestationUrl()
 document.addEventListener('visibilitychange',function(){ if(!document.hidden) chargerMatchs(); });
 
 // ---------- Langue ----------
-function langue(l){
+function langue(l){ setTimeout(function(){ if(typeof kontBouton==='function') kontBouton(); },0);
   LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
   document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
   document.querySelectorAll('[data-t]').forEach(function(el){ el.textContent=T(el.getAttribute('data-t')); });
@@ -1728,6 +1771,161 @@ document.getElementById('btnInstall').onclick=function(){
 };
 if('serviceWorker' in navigator && location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
 
+// ---------- Kont Masbet (v3.8) : un nom d'utilisateur + un code de secours facile à retenir ----------
+var KONT=lire('masbet_kont')||'', KONT_APRES=null;
+function kontMete(nom){
+  KONT=nom||'';
+  if(KONT){ ecrire('masbet_kont',KONT); ecrire('masbet_pseudo',KONT); }
+  else { try{ localStorage.removeItem('masbet_kont'); if(lire('masbet_pseudo')) localStorage.removeItem('masbet_pseudo'); }catch(e){} }
+  kontBouton();
+  if(vueActive()==='quiz' && QZ && !(QZ.etat&&QZ.etat.joue)) afficherQuiz();
+}
+function kontBouton(){ var b=document.getElementById('bKont'); if(!b) return; b.innerHTML='👤<span class="kl"> '+esc(KONT||AL('Kont','Compte'))+'</span>'; b.classList.toggle('on',!!KONT); b.setAttribute('aria-label',AL('Kont Masbet','Compte Masbet')); }
+function kontSync(){ if(!CONTENU) return; api('kont_moi',{appareil:appareil()}).then(function(d){ if(d && (d.nom||'')!==KONT) kontMete(d.nom||''); },function(){}); }
+function sheetMontrer(id,fond){ var e=document.getElementById(id); e.classList.remove('hidden'); document.getElementById('sheetFond').classList.toggle('hidden',!fond); }
+function fermerSheets(){ ['kontSheet','reacSheet'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); }); document.getElementById('sheetFond').classList.add('hidden'); REACM=null; clearTimeout(TREAC); }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape') fermerSheets(); });
+function kontOuvrir(apres){ KONT_APRES=apres||null; document.getElementById('reacSheet').classList.add('hidden'); kontRendre(KONT?'moi':'kreye'); sheetMontrer('kontSheet',true); }
+function kontTete(t){ return '<div class="sh">👤 '+esc(t)+'<button class="x" aria-label="'+AL('Fèmen','Fermer')+'" onclick="fermerSheets()">✕</button></div>'; }
+function kontRendre(e, data){
+  var h='', el=document.getElementById('kontSheet');
+  if(e==='moi'){
+    h=kontTete(AL('Kont Masbet mwen','Mon compte Masbet'))+'<div class="sc"><div style="font-size:22px;font-weight:900;margin:6px 0">'+esc(KONT)+'</div>'+
+      '<div class="hint">'+AL('Non sa a parèt nan Quiz la, Kominote a ak kòmantè match yo. Pèsonn lòt pa ka pran l.','Ce nom apparaît dans le Quiz, la Communauté et les commentaires des matchs. Personne d\'autre ne peut le prendre.')+'</div>'+
+      '<div class="hint" style="margin-top:10px">'+AL('Nouvo telefòn ? Antre non ou ak kòd sekou ou (egz. MANGO-47). Ou pèdi kòd la ? Mande Masbet sou WhatsApp.','Nouveau téléphone ? Entrez votre nom et votre code de secours (ex. MANGO-47). Code perdu ? Demandez à Masbet sur WhatsApp.')+'</div>'+
+      '<button class="btn sec" style="margin-top:14px" onclick="kontKite()">'+AL('Dekonekte sou telefòn sa a','Se déconnecter sur ce téléphone')+'</button><div id="kMsg"></div></div>';
+  } else if(e==='kod'){
+    h=kontTete(AL('Kont ou kreye ✓','Compte créé ✓'))+'<div class="sc"><div class="hint">'+AL('Men kòd sekou ou. Ekri l oswa pran yon foto ekran : ou p ap wè l ankò.','Voici votre code de secours. Notez-le ou faites une capture d\'écran : il ne sera plus affiché.')+'</div>'+
+      '<div class="kodGwo" id="kKod">'+esc(data.kod)+'</div>'+
+      '<div class="hint">'+AL('Ou bezwen l sèlman si w chanje telefòn : non ou','Il ne sert que si vous changez de téléphone : votre nom')+' <b>'+esc(data.nom)+'</b> + '+AL('kòd sa a.','ce code.')+'</div>'+
+      '<button class="btn" style="margin-top:14px" onclick="kontFini()">'+AL('Mwen note l ✓','Je l\'ai noté ✓')+'</button></div>';
+  } else if(e==='rekipere'){
+    h=kontTete(AL('Mwen gen yon kont deja','J\'ai déjà un compte'))+'<div class="sc">'+
+      '<label class="hint" for="kNom">'+AL('Non itilizatè','Nom d\'utilisateur')+'</label><input class="champ" id="kNom" maxlength="20" autocomplete="username" value="'+esc(lire('masbet_pseudo')||'')+'">'+
+      '<label class="hint" for="kKodIn">'+AL('Kòd sekou (egz. MANGO-47)','Code de secours (ex. MANGO-47)')+'</label><input class="champ" id="kKodIn" maxlength="16" autocapitalize="characters" autocomplete="off" placeholder="MANGO-47">'+
+      '<button class="btn" id="kGo" onclick="kontRekipere()">'+AL('Antre','Entrer')+'</button><div id="kMsg"></div>'+
+      '<button class="btn sec" style="margin-top:8px" onclick="kontRendre(\'kreye\')">← '+AL('Kreye yon nouvo kont','Créer un nouveau compte')+'</button></div>';
+  } else {
+    h=kontTete(AL('Kreye kont Masbet ou','Créer votre compte Masbet'))+'<div class="sc">'+
+      '<div class="hint">'+AL('Yon non sèlman. Ak kont ou, ou ka kòmante match an direk, epi non ou pwoteje nan Quiz la ak Kominote a.','Un nom suffit. Avec votre compte, vous pouvez commenter les matchs en direct, et votre nom est protégé dans le Quiz et la Communauté.')+'</div>'+
+      '<label class="hint" for="kNom" style="margin-top:8px;display:block">'+AL('Non itilizatè (3 a 20 lèt)','Nom d\'utilisateur (3 à 20 caractères)')+'</label><input class="champ" id="kNom" maxlength="20" autocomplete="username" value="'+esc(lire('masbet_pseudo')||'')+'">'+
+      '<button class="btn" id="kGo" onclick="kontKreye()">'+AL('Kreye kont mwen','Créer mon compte')+'</button><div id="kMsg"></div>'+
+      '<button class="btn sec" style="margin-top:8px" onclick="kontRendre(\'rekipere\')">'+AL('Mwen gen yon kont deja (nouvo telefòn)','J\'ai déjà un compte (nouveau téléphone)')+'</button></div>';
+  }
+  el.innerHTML=h;
+  var i=el.querySelector('input'); if(i && window.innerWidth>700) setTimeout(function(){ i.focus(); },50);
+}
+function kontErr(e){ var m=(e&&e.message)||''; var z=document.getElementById('kMsg'); if(z) z.innerHTML='<div class="err" style="margin-top:8px">'+esc(!m||/fetch|abort|network|config/i.test(m)?T('reseau'):m)+'</div>'; var b=document.getElementById('kGo'); if(b) b.disabled=false; }
+function kontKreye(){
+  var nom=document.getElementById('kNom').value.replace(/\s+/g,' ').trim(), b=document.getElementById('kGo');
+  if(nom.length<3) return kontErr(new Error(AL('Non an dwe gen omwen 3 lèt.','Le nom doit avoir au moins 3 caractères.')));
+  b.disabled=true;
+  apiPost('kont_kreye',{appareil:appareil(), nom:nom}).then(function(d){ kontMete(d.nom); kontRendre('kod',d); }, kontErr);
+}
+function kontRekipere(){
+  var nom=document.getElementById('kNom').value.trim(), kod=document.getElementById('kKodIn').value.trim(), b=document.getElementById('kGo');
+  if(!nom||!kod) return kontErr(new Error(AL('Ekri non ou ak kòd ou.','Entrez votre nom et votre code.')));
+  b.disabled=true;
+  apiPost('kont_rekipere',{appareil:appareil(), nom:nom, kod:kod}).then(function(d){ kontMete(d.nom); kontFini(); }, kontErr);
+}
+function kontKite(){
+  if(!confirm(AL('Dekonekte kont ','Se déconnecter du compte ')+KONT+' ?')) return;
+  apiPost('kont_kite',{appareil:appareil()}).then(function(){ kontMete(''); fermerSheets(); }, kontErr);
+}
+function kontFini(){ var a=KONT_APRES; KONT_APRES=null; fermerSheets(); if(a&&a.reac) reacOuvrir(a.reac); }
+
+// ---------- Réactions pendant les matchs en direct ----------
+var REACM=null, REACD={}, REACT={}, TREAC=null;
+function lokTrouve(id){ var r=null; ((LOKD&&LOKD.championnats)||[]).forEach(function(c){ c.matchs.forEach(function(m){ if(m.id===id) r={c:c,m:m}; }); }); return r; }
+function lokReacBar(c,m){ if(!m.id||(m.st!=='DIREK'&&m.st!=='FINI')) return ''; return '<div class="reac" id="rb-'+jsid(m.id)+'">'+reacBarIn(m)+'</div>'; }
+function reacBarIn(m){
+  var d=REACD[m.id]||{}, id=jsid(m.id);
+  return '<button class="'+(d.jaime?'on':'')+'" aria-label="'+AL('Mwen renmen','J\'aime')+'" onclick="reacLike(\''+id+'\')">❤️ '+(d.likes||0)+'</button>'+
+    (m.st==='DIREK'||d.nbKom?'<button onclick="reacOuvrir(\''+id+'\')">💬 '+(d.nbKom||0)+(m.st==='DIREK'?' · '+AL('Kòmante','Commenter'):'')+'</button>':'')+
+    '<button onclick="patajeMatch(\''+id+'\')">↗ '+AL('Pataje','Partager')+'</button>';
+}
+function reacMajBars(id){ var x=lokTrouve(id), el=document.getElementById('rb-'+id); if(x&&el) el.innerHTML=reacBarIn(x.m); }
+/** Charge les compteurs des matchs affichés (en direct ou terminés), au plus 8, pas plus d'une fois par 25 s. */
+function reacCharger(){
+  if(!CONTENU) return;
+  var ids=[].slice.call(document.querySelectorAll('.reac')).map(function(e){ return e.id.slice(3); }).filter(function(id){ return !REACT[id]||Date.now()-REACT[id]>25000; }).slice(0,8);
+  ids.forEach(function(id){ REACT[id]=Date.now(); api('lok_reac',{m:id, appareil:appareil()}).then(function(d){ REACD[id]=d; reacMajBars(id); if(REACM===id) reacRendre(); }, function(){}); });
+}
+function reacLike(id){
+  var d=REACD[id]||{likes:0}; d.jaime=!d.jaime; d.likes=Math.max(0,(d.likes||0)+(d.jaime?1:-1)); REACD[id]=d; reacMajBars(id);   // réponse immédiate à l'écran
+  apiPost('lok_like',{appareil:appareil(), m:id}).then(function(r){ REACD[id]=r; reacMajBars(id); if(REACM===id) reacRendre(); },
+    function(e){ d.jaime=!d.jaime; d.likes=Math.max(0,d.likes+(d.jaime?1:-1)); reacMajBars(id); var m=(e&&e.message)||''; if(m&&!/fetch|abort|network/i.test(m)) alert(m); });
+}
+function reacOuvrir(id){
+  REACM=id; document.getElementById('kontSheet').classList.add('hidden');
+  reacRendre(true); sheetMontrer('reacSheet',false); reacPoll();
+}
+function reacPoll(){
+  clearTimeout(TREAC); if(!REACM) return;
+  api('lok_reac',{m:REACM, appareil:appareil()}).then(function(d){ if(!REACM||d.m!==REACM) return; var avant=(REACD[REACM]||{}).nbKom; REACD[REACM]=d; reacMajBars(REACM); reacRendre(d.nbKom!==avant); }, function(){});
+  TREAC=setTimeout(reacPoll, document.hidden?30000:8000);
+}
+function reacEntete(x){
+  var m=x.m, c=x.c, dir=m.st==='DIREK';
+  return '<div class="scoreMini">'+bdg(c,m.d)+'<b>'+(m.bd==null?0:m.bd)+' – '+(m.be==null?0:m.be)+'</b>'+bdg(c,m.e)+
+    '<span class="hint" style="margin-left:4px;white-space:nowrap">'+(dir?'<span class="pastille"></span> '+esc(lokMin(m)):AL('Fini','Terminé'))+'</span></div>';
+}
+function reacRendre(enBas){
+  var el=document.getElementById('reacSheet'), x=REACM&&lokTrouve(REACM); if(!x){ return; }
+  var d=REACD[REACM]||{kom:[]}, dir=x.m.st==='DIREK', sc=el.querySelector('.sc'), bas=!sc||sc.scrollTop+sc.clientHeight>=sc.scrollHeight-30;
+  var txt=document.getElementById('rIn'), garde=txt?txt.value:'';
+  var kom=(d.kom||[]).map(function(k){ return '<div class="kom'+(KONT&&k.nom===KONT?' moi':'')+'"><b>'+esc(k.nom)+'</b> '+esc(k.texte)+'<small>'+esc(depuisCourt(k.t))+'</small></div>'; }).join('');
+  el.innerHTML='<div class="sh">'+reacEntete(x)+'<button class="x" aria-label="'+AL('Fèmen','Fermer')+'" onclick="fermerSheets()">✕</button></div>'+
+    '<div class="sc">'+(kom||'<div class="hint">'+(dir?AL('Pa gen kòmantè ankò. Ou ka premye !','Pas encore de commentaire. Soyez le premier !'):AL('Pa gen kòmantè.','Aucun commentaire.'))+'</div>')+'</div>'+
+    '<div class="sf">'+(dir?(KONT?'<input id="rIn" maxlength="200" placeholder="'+AL('Ekri yon kòmantè…','Écrire un commentaire…')+'" onkeydown="if(event.key===\'Enter\')reacEnvoyer()"><button id="rGo" onclick="reacEnvoyer()">'+AL('Voye','Envoyer')+'</button>'
+        :'<button style="flex:1" onclick="kontOuvrir({reac:\''+jsid(REACM)+'\'})">👤 '+AL('Kreye yon kont pou kòmante (yon non sèlman)','Créer un compte pour commenter (un nom suffit)')+'</button>')
+      :'<div class="hint" style="flex:1;text-align:center">'+AL('Kòmantè yo fèmen apre match la.','Commentaires fermés après le match.')+'</div>')+'</div><div id="rMsg" style="padding:0 12px 6px"></div>';
+  var n=document.getElementById('rIn'); if(n){ n.value=garde; }
+  sc=el.querySelector('.sc'); if(enBas||bas) sc.scrollTop=sc.scrollHeight;
+}
+function depuisCourt(t){ var s=Math.max(0,Math.round((Date.now()-t)/1000)); if(s<60) return AL('kounye a','à l\'instant'); if(s<3600) return Math.floor(s/60)+' min'; return Math.floor(s/3600)+' h'; }
+function reacEnvoyer(){
+  var i=document.getElementById('rIn'), b=document.getElementById('rGo'), t=i?i.value.trim():''; if(!t) return;
+  b.disabled=true; i.disabled=true;
+  apiPost('lok_kom',{appareil:appareil(), m:REACM, texte:t}).then(function(d){ REACD[d.m]=d; i.value=''; reacMajBars(d.m); reacRendre(true); var n=document.getElementById('rIn'); if(n) n.focus(); },
+    function(e){ b.disabled=false; i.disabled=false; var m=(e&&e.message)||''; if(/Kreye yon kont/.test(m)) kontMete(''); var z=document.getElementById('rMsg'); if(z) z.innerHTML='<div class="err">'+esc(!m||/fetch|abort|network/i.test(m)?T('reseau'):m)+'</div>'; });
+}
+
+// ---------- Partage (WhatsApp ou menu du téléphone) ----------
+var SITE='https://masbeteducation-bit.github.io/';
+function pataje(txt){
+  statEnvoyer('partage');
+  if(navigator.share){ navigator.share({text:txt, url:SITE}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+SITE),'_blank','noopener');
+}
+function patajeMatch(id){
+  var x=lokTrouve(id); if(!x) return; var m=x.m, dir=m.st==='DIREK';
+  pataje((dir?'🔴 '+AL('AN DIREK','EN DIRECT')+' · ':'⚽ ')+x.c.nom+' : '+m.d+' '+(m.bd==null?0:m.bd)+' – '+(m.be==null?0:m.be)+' '+m.e+(dir?' ('+lokMin(m)+')':' · '+AL('Fini','Terminé'))+
+    '\n'+AL('Swiv match yo sou aplikasyon Masbet :','Suivez les matchs sur l\'application Masbet :'));
+}
+function patajeQuiz(){ var e=QZ&&QZ.etat||{}, n=QZ&&QZ.questions?QZ.questions.length:5; pataje('🧠 '+AL('Mwen fè ','J\'ai fait ')+(e.score||0)+'/'+n+AL(' nan Quiz Masbet jodi a ! Eseye tou :',' au Quiz Masbet aujourd\'hui ! Essayez aussi :')); }
+function patajeLive(titre){ pataje('🔴 '+AL('An direk sou Masbet : ','En direct sur Masbet : ')+titre); }
+function btnPataje(onclick){ return '<button class="patBtn" onclick="'+onclick+'">↗ '+AL('Pataje sou WhatsApp','Partager sur WhatsApp')+'</button>'; }
+
+// ---------- Hors connexion ----------
+var HORS=false;
+function horsLigne(v){ HORS=!!v; var b=document.getElementById('horsLigne'); if(!b) return; b.classList.toggle('hidden',!HORS); b.textContent='📵 '+AL('San koneksyon : w ap wè dènye enfòmasyon ki te anrejistre yo.','Pas de connexion : vous voyez les dernières informations enregistrées.'); }
+window.addEventListener('offline',function(){ horsLigne(true); });
+window.addEventListener('online',function(){ horsLigne(false); chargerAccueil(); chargerLokal(); });
+var API_MEMOIRE={accueil:1,lokal:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,lok_reac:1};
+
+// ---------- Statistiques anonymes (compteurs par jour, rien de personnel) ----------
+var STAT_DERN='';
+function statJourCle(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function statEnvoyer(ev,page){
+  if(!CONTENU) return;
+  var j=statJourCle(), n=Number(lire('masbet_st_n_'+j)||0); if(n>=40) return; ecrire('masbet_st_n_'+j,String(n+1));
+  apiPost('stat',{appareil:appareil(), ev:ev, page:page||''}).catch(function(){});
+}
+function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecrire('masbet_st_j',j); statEnvoyer('jou'); } }
+function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
+document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
+
 // ---------- Démarrage ----------
 try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c) ACC=c; }catch(e){}
 langue(lire('masbet_lang')||'ht');
@@ -1737,6 +1935,7 @@ chargerAccueil();
 chargerMatchs();
 chargerLokal();
 chargerQuiz();
+kontBouton(); kontSync(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
 setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
 </script>
 </body>
