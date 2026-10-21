@@ -199,6 +199,7 @@ var TXT = {
     motif:'Poukisa : ', aucune:'Nou pa jwenn okenn acha ak nimewo sa a.',
     aide:'Ou bezwen èd ? Ekri nou sou WhatsApp (pa rele) : ', fondate:'Fondatè : ', maintenant:'kounye a',
     erreurReseau:'Pa gen koneksyon. Tcheke entènèt ou epi eseye ankò.',
+    reessayer:'Eseye ankò',
     masqueAide:'Pou sekirite, kòd la kache. Ekri kòd tranzaksyon ki nan SMS peman ou a pou w wè l.', masqueRek:'Pou sekirite, kòd la kache. Li parèt an antye sou telefòn kote w te jwe Quiz la : louvri aplikasyon an sou telefòn sa a, apre sa « Kòd mwen ».',
     copieEchec:'Kenbe dwèt ou sou kòd la pou w kopye l', voirCode:'Wè kòd la', txInconnu:'Kòd tranzaksyon sa a pa mache ak okenn acha pou nimewo sa a.'
   },
@@ -229,6 +230,7 @@ var TXT = {
     motif:'Motif : ', aucune:'Aucune commande pour ce numéro.',
     aide:'Besoin d\'aide ? WhatsApp (texte uniquement) : ', fondate:'Fondateur : ', maintenant:'maintenant',
     erreurReseau:'Connexion impossible. Vérifiez votre internet et réessayez.',
+    reessayer:'Réessayer',
     masqueAide:'Par sécurité, le code est masqué. Entrez le numéro de transaction de votre SMS de paiement pour le voir.', masqueRek:'Par sécurité, le code est masqué. Il s\'affiche en entier sur le téléphone où vous avez joué au Quiz : ouvrez l\'application sur ce téléphone, puis « Mes codes ».',
     copieEchec:'Appuyez longuement sur le code pour le copier', voirCode:'Voir le code', txInconnu:'Ce numéro de transaction ne correspond à aucun achat pour ce numéro de téléphone.'
   }
@@ -390,10 +392,17 @@ function vue(v){
 }
 
 // ---------- Étape 1 : forfaits ----------
-function charger(){
+function charger(essai){
+  essai=essai||0;
+  if(essai===0 && !INFOS) document.getElementById('plans').innerHTML='<div class="hint">⏳</div>';
   appel('getInfosPubliques',{live:true}).then(function(i){
     INFOS=i; afficherForfaits(); afficherPied();
-  }).catch(function(e){ document.getElementById('plans').innerHTML='<div class="msg err">'+esc(erreur(e))+'</div>'; });
+  }).catch(function(e){
+    var m=erreur(e);
+    // Réseau lent ou coupure brève (fréquent sur 4G et Wi-Fi) : 2 nouveaux essais automatiques avant d'afficher l'erreur.
+    if(m===T('erreurReseau') && essai<2){ setTimeout(function(){ charger(essai+1); }, 2000*(essai+1)); return; }
+    document.getElementById('plans').innerHTML='<div class="msg err">'+esc(m)+'</div><button class="btn" style="margin-top:10px" onclick="charger()">'+T('reessayer')+'</button>';
+  });
 }
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
 function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':'live'; }
