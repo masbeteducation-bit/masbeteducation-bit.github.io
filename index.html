@@ -50,8 +50,8 @@
   .btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font-weight:800;font-size:17px;text-align:center;text-decoration:none}
   .btn.sec{background:#eef0f6;font-size:15px;padding:11px}
   .hero{background:linear-gradient(135deg,#173a8c,#14213d);color:#fff}
-  .svc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  @media(min-width:700px){.svc{grid-template-columns:repeat(5,1fr)}}
+  .svc{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+  .svc a{min-width:0;overflow-wrap:anywhere;hyphens:auto}
   .svc a{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;text-decoration:none;color:var(--ink);background:#f6f7fb;border-radius:12px;padding:10px 4px;font-weight:800;font-size:12.5px;line-height:1.2}
   .svc a span{font-size:24px}
   .hero h2{color:#fff}
@@ -540,14 +540,20 @@ function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; }
 function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
 function api(action, params){
+  action_courante=action;
   if(!CONTENU) return Promise.reject(new Error('config'));
   var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); });
   var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
   return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
-    .then(function(r){ return r.json(); })
+    .then(function(r){ return r.text().then(function(x){
+      try{ return JSON.parse(x); }
+      catch(e){ var er=new Error(''); er.detail='Google '+r.status+' : '+x.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,160); throw er; } }); })
     .then(function(j){ if(t) clearTimeout(t); if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; },
-          function(e){ if(t) clearTimeout(t); throw e; });
+          function(e){ if(t) clearTimeout(t); if(e && !e.detail) e.detail=(e.name==='AbortError'?'délai 30 s dépassé':(e.name||'')+' '+(e.message||'')); throw e; });
 }
+// Petit détail technique sous un message d'erreur (aide au diagnostic, sans données personnelles)
+function detailErr(e){ return e&&e.detail?'<div class="hint" style="margin-top:4px;font-size:12px;opacity:.75">'+esc(action_courante+' — '+e.detail)+'</div>':''; }
+var action_courante='';
 
 // ---------- Météo ----------
 function icone(c,jour){
@@ -671,7 +677,7 @@ function commencerQuiz(){
   b.disabled=true;
   api('quizdebut',{appareil:appareil(), pseudo:ps, telephone:tel}).then(function(etat){
     ecrire('masbet_pseudo',ps); ecrire('masbet_qtel',tel); QZ.etat=etat; afficherQuiz();
-  }, function(e){ b.disabled=false; var m=(e&&e.message)||''; document.getElementById('qMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(/fetch|abort|network/i.test(m)||!m?T('reseau'):m)+'</div>'; });
+  }, function(e){ b.disabled=false; var m=(e&&e.message)||''; document.getElementById('qMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(/fetch|abort|network/i.test(m)||!m?T('reseau'):m)+detailErr(e)+'</div>'; });
 }
 function montrerQuestion(){
   var z=document.getElementById('quizZone'), q=QZ.questions[QPOS];
@@ -707,7 +713,7 @@ function repondre(i, essai){
     // Réseau lent ou coupure brève : un nouvel essai automatique (la première réponse enregistrée compte, pas de double compte).
     if(!essai){ setTimeout(function(){ repondre(i, 1); }, 1500); return; }
     QATTENTE=false; document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=false; });
-    document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(errMsg(e))+'</div>';
+    document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(errMsg(e))+detailErr(e)+'</div>';
   });
 }
 function suivante(){ if(QZ.etat.fini) return afficherResultatQuiz(); QPOS++; montrerQuestion(); }

@@ -309,9 +309,11 @@ function appelApi(fn,args){
   var url=API+'?'+Object.keys(q).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(q[k]==null?'':q[k]); }).join('&');
   var ctl=window.AbortController?new AbortController():null, minuterie=ctl?setTimeout(function(){ ctl.abort(); },30000):null;
   return fetch(url,{method:'GET',credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
-    .then(function(r){ return r.json(); })
+    .then(function(r){ return r.text().then(function(x){
+      try{ return JSON.parse(x); }
+      catch(e){ var er=new Error('NetworkError'); er.detail='Google '+r.status+' : '+x.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,160); throw er; } }); })
     .then(function(j){ if(minuterie) clearTimeout(minuterie); if(!j || !j.ok) throw new Error(j&&j.erreur||''); return j.data; },
-          function(e){ if(minuterie) clearTimeout(minuterie); throw new Error('NetworkError'); });
+          function(e){ if(minuterie) clearTimeout(minuterie); var er=new Error('NetworkError'); er.detail=(e&&e.detail)||(e&&e.name==='AbortError'?'délai 30 s dépassé':((e&&e.name)||'')+' '+((e&&e.message)||'')); throw er; });
 }
 function appel(fn){ var args=[].slice.call(arguments,1);
   if(!GSR && API) return appelApi(fn,args);
@@ -401,7 +403,7 @@ function charger(essai){
     var m=erreur(e);
     // Réseau lent ou coupure brève (fréquent sur 4G et Wi-Fi) : 2 nouveaux essais automatiques avant d'afficher l'erreur.
     if(m===T('erreurReseau') && essai<2){ setTimeout(function(){ charger(essai+1); }, 2000*(essai+1)); return; }
-    document.getElementById('plans').innerHTML='<div class="msg err">'+esc(m)+'</div><button class="btn" style="margin-top:10px" onclick="charger()">'+T('reessayer')+'</button>';
+    document.getElementById('plans').innerHTML='<div class="msg err">'+esc(m)+(e&&e.detail?'<div style="font-size:12px;opacity:.75;margin-top:4px">infos — '+esc(e.detail)+'</div>':'')+'</div><button class="btn" style="margin-top:10px" onclick="charger()">'+T('reessayer')+'</button>';
   });
 }
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
