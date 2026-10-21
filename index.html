@@ -54,6 +54,17 @@
   .svc a{min-width:0;overflow-wrap:anywhere;hyphens:auto}
   .svc a{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;text-decoration:none;color:var(--ink);background:#f6f7fb;border-radius:12px;padding:10px 4px;font-weight:800;font-size:12.5px;line-height:1.2}
   .svc a span{font-size:24px}
+  .lienadm{border:0;background:none;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer;padding:4px}
+  .admL{border-top:1px solid #e8ebf3;padding:12px 0}
+  .admL:first-child{border-top:0}
+  .admL b{display:block;font-size:15.5px}
+  .admB{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .admB button{border:0;border-radius:10px;padding:9px 12px;font-weight:800;font-size:14px;cursor:pointer;background:#eef0f6;color:var(--ink)}
+  .admB button.r{background:#d62828;color:#fff}
+  .admB button.f{background:var(--navy);color:#fff}
+  .admB button:disabled{opacity:.45;cursor:default}
+  .admS{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;margin-top:4px;background:#eef0f6}
+  .admS.direk{background:#d62828;color:#fff}.admS.fini{background:#5d6782;color:#fff}
   .hero h2{color:#fff}
   .hero p{margin:0 0 12px;color:#dfe4f2;font-size:15px}
   /* Offres */
@@ -92,6 +103,69 @@
   .score.live small{color:var(--live)}
   .pastille{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--live);margin-right:4px;animation:p 1.2s infinite}
   @keyframes p{50%{opacity:.25}}
+  /* Championnats locaux (format livescore) */
+  .lkh{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .lkdd{position:relative}
+  .lkpill{display:inline-flex;align-items:center;gap:10px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:10px 18px;font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+  .lkpill .chev{transition:transform .15s}
+  .lkpill.ouvert .chev{transform:rotate(180deg)}
+  .lkmenu{position:absolute;z-index:30;top:calc(100% + 6px);left:0;min-width:240px;max-width:86vw;background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(20,33,61,.22);overflow:hidden}
+  .lkmenu button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:#fff;padding:14px 16px;font:inherit;font-size:15.5px;font-weight:700;color:var(--ink);text-align:left;border-top:1px solid var(--line);cursor:pointer}
+  .lkmenu button:first-child{border-top:0}
+  .lkmenu button.on{background:#eef1f8}
+  .lkmenu small{color:var(--muted);font-weight:600;margin-left:auto}
+  .lkh small{color:var(--muted);font-weight:700;font-size:13px}
+  .palm{display:grid;gap:6px;margin-top:12px;background:linear-gradient(135deg,#14213d,#233a6b);color:#fff;border-radius:14px;padding:12px 14px}
+  .palm div{display:flex;gap:8px;align-items:baseline;font-size:14.5px}
+  .palm b{color:var(--gold)}
+  .lktabs{display:flex;gap:6px;margin:12px 0 6px;overflow-x:auto}
+  .lktabs button{flex:0 0 auto;border:0;border-radius:999px;padding:8px 14px;font:inherit;font-weight:800;font-size:14px;background:#eef0f6;color:var(--muted);cursor:pointer}
+  .lktabs button.on{background:var(--gold);color:var(--navy)}
+  .lkdates{display:flex;gap:4px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+  .lkdates::-webkit-scrollbar{display:none}
+  .lkdates button{flex:0 0 auto;min-width:62px;border:0;border-radius:12px;padding:7px 8px;background:none;font:inherit;color:var(--muted);text-align:center;line-height:1.2;cursor:pointer}
+  .lkdates button b{display:block;font-size:12.5px;text-transform:uppercase;letter-spacing:.3px}
+  .lkdates button span{font-size:12px}
+  .lkdates button.on{background:var(--navy);color:#fff}
+  .lkdates button.auj b{color:var(--live)}
+  .lkdates button.on.auj b{color:#ffb4b4}
+  .lkcal{display:flex;align-items:center;gap:6px}
+  .lkcal .lkdates{flex:1;min-width:0}
+  .lkcalb{position:relative;flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:#eef0f6;color:var(--navy);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .lkcalb input{position:absolute;inset:0;opacity:0;width:100%;height:100%;cursor:pointer}
+  .lkcalb input::-webkit-calendar-picker-indicator{position:absolute;inset:0;width:100%;height:100%;cursor:pointer}
+  .lkbloc{margin-top:10px}
+  .lkretour{position:sticky;bottom:calc(84px + env(safe-area-inset-bottom));display:flex;justify-content:center;margin-top:10px;pointer-events:none}
+  .lkretour button{pointer-events:auto;border:0;border-radius:999px;background:var(--navy);color:#fff;font:inherit;font-weight:800;font-size:14px;padding:10px 18px;box-shadow:0 4px 14px rgba(20,33,61,.3);cursor:pointer}
+  .lkcomp{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;padding:6px 2px 10px;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+  .lkcomp .ic{width:40px;height:40px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;box-shadow:0 0 0 3px #fde3b3}
+  .lkcomp b{display:block;font-size:16px}
+  .lkcomp small{display:block;font-size:12.5px;color:var(--muted)}
+  .lkcomp .go{margin-left:auto;font-size:22px;color:var(--muted)}
+  .lkph{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:12px 0 6px}
+  .lkm{display:grid;grid-template-columns:58px 1fr;align-items:center;background:#f6f7fb;border-radius:12px;padding:10px 12px;margin-bottom:6px}
+  .lkm .h{font-weight:800;font-size:14px;text-align:center;border-right:1px solid #d9dde8;padding-right:8px;line-height:1.25}
+  .lkm .h small{display:block;font-size:11px;font-weight:700;color:var(--muted)}
+  .lkm .h.fini{color:var(--muted)}
+  .lkm .eqs{padding-left:12px;display:grid;gap:6px;min-width:0}
+  .lkm .l{display:flex;align-items:center;gap:8px;min-width:0;font-size:15px}
+  .lkm .l .n{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lkm .l .sc{font-weight:800;min-width:20px;text-align:right}
+  .lkm .l.g .n{font-weight:800}
+  .lkm .l.p{color:var(--muted)}
+  .lkm .buts{grid-column:2;padding-left:12px;margin-top:6px;font-size:12.5px;color:var(--muted);display:grid;gap:2px}
+  .lkm .buts .bdg{min-width:28px;height:17px;font-size:9.5px;margin-right:2px;vertical-align:1px}
+  .lkm.dir{background:#fff1f1;box-shadow:inset 3px 0 0 var(--live)}
+  .lkm.dir .h{color:var(--live)}
+  .lkm .lieu{grid-column:2;padding-left:12px;font-size:12px;color:var(--muted);margin-top:4px}
+  .bdg{flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:22px;padding:0 5px;border-radius:6px;color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.3px}
+  .kl{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:8px}
+  .kl th{font-size:11.5px;color:var(--muted);font-weight:800;text-align:center;padding:6px 3px;border-bottom:1px solid var(--line)}
+  .kl td{text-align:center;padding:8px 3px;border-bottom:1px solid var(--line)}
+  .kl td.e{text-align:left;display:flex;align-items:center;gap:6px;font-weight:700;min-width:0}
+  .kl td.e span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .kl td.pts{font-weight:800}
+  .kl tr.q td:first-child{box-shadow:inset 3px 0 0 var(--ok)}
   /* Lives */
   .livebar{display:flex;align-items:center;gap:12px;background:var(--live);color:#fff;border-radius:14px;padding:14px 16px;margin-bottom:12px;text-decoration:none;box-shadow:0 2px 8px rgba(214,40,40,.35)}
   .livebar .dot{width:12px;height:12px;border-radius:50%;background:#fff;animation:p 1.2s infinite;flex-shrink:0}
@@ -298,6 +372,7 @@
       <h2>📜 <span data-t="attVerifTitre"></span></h2>
       <div id="verifZone"></div>
     </div>
+    <div id="lokHome"></div>
     <div id="liveHome"></div>
     <div class="card hero">
       <h2>📶 <span data-t="heroTitre"></span></h2>
@@ -382,6 +457,12 @@
 
   <!-- ===== Match ===== -->
   <section id="vMatch" class="hidden">
+    <div class="card hidden" id="cLok">
+      <div class="lkh"><div class="lkdd"><button class="lkpill" id="lkPill" onclick="lokMenu()" aria-haspopup="listbox"><span id="lkNom"></span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button><div class="lkmenu hidden" id="lkMenu" role="listbox"></div></div><small id="lkSaison"></small></div>
+      <div id="lkPalm"></div>
+      <div class="lktabs" id="lkTabs"></div>
+      <div id="lkZone"></div>
+    </div>
     <div class="card">
       <h2>⚽ <span data-t="matchJodi"></span><small id="matchMaj"></small></h2>
       <div id="matchs"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
@@ -393,6 +474,11 @@
     <div class="card" id="cLives">
       <h2>🔴 <span data-t="lives"></span></h2>
       <div id="lives"></div>
+      <div style="text-align:right;margin-top:8px"><button class="lienadm" onclick="adminOuvrir()">🔧 <span id="admLbl">Admin</span></button></div>
+    </div>
+    <div class="card hidden" id="cAdmin">
+      <h2>🔧 <span id="admTit"></span></h2>
+      <div id="admZone"></div>
     </div>
     <div class="card">
       <h2>▶️ <span data-t="videyo"></span></h2>
@@ -1305,13 +1391,203 @@ function ouvrirTike(k, code, silencieux){
   code=String(code||(inp&&inp.value)||'').trim(); if(!code) return;
   if(err) err.textContent='';
   api('tike',{code:code, appareil:appareil(), live:x.titre}).then(function(d){
-    ecrire('masbet_tike_'+x.titre, code); if(!silencieux){ noterTike(String(code).toUpperCase().replace(/[^A-Z0-9]/g,''), d.restants); setTimeout(majPuces,0); }
+    ecrire('masbet_tike_'+x.titre, code); if(d.admin) ecrire('masbet_admin', code); if(!silencieux){ noterTike(String(code).toUpperCase().replace(/[^A-Z0-9]/g,''), d.restants); setTimeout(majPuces,0); }
     var box=document.getElementById('lk-'+k); if(!box) return;
     box.innerHTML='<div class="vidt" style="margin:6px 0 2px">'+esc(x.titre)+'</div><div class="hint" style="color:var(--ok);font-weight:700;margin-bottom:4px">'+T('tikeOk')+(!silencieux&&d.restants!==null&&d.restants!==undefined?' · '+esc(T('tikeRete')(d.restants)):'')+'</div>'+lecteurLive({plateforme:d.plateforme,id:d.id,lien:d.lien},false);
   }, function(e){
     if(silencieux){ if(lire('masbet_tike_'+x.titre)===code && /pa mache|2 telefòn|lòt live|deja sèvi/.test(e.message||'')){ try{ localStorage.removeItem('masbet_tike_'+x.titre); }catch(_){} } return; }
     var m=(e&&e.message)||''; if(err) err.textContent=(!m||/fetch|abort|network|config/i.test(m))?T('reseau'):m;
   });
+}
+
+// ---------- Pilotage des lives (code administrateur) ----------
+function AL(ht,fr){ return LANG==='fr'?fr:ht; }
+function apiPost(action, corps){
+  if(!CONTENU) return Promise.reject(new Error('config'));
+  action_courante=action;
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
+  return fetch(CONTENU,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({api:action},corps||{})),signal:ctl?ctl.signal:undefined})
+    .then(function(r){ return r.text().then(function(x){ try{ return JSON.parse(x); }catch(e){ var er=new Error(''); er.detail='Google '+r.status; throw er; } }); })
+    .then(function(j){ if(t) clearTimeout(t); if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; }, function(e){ if(t) clearTimeout(t); if(e&&!e.detail) e.detail=(e.name==='AbortError'?'délai 30 s dépassé':(e.name||'')+' '+(e.message||'')); throw e; });
+}
+function adminCode(){ return lire('masbet_admin')||''; }
+function adminOuvrir(){
+  var c=document.getElementById('cAdmin'); c.classList.remove('hidden');
+  document.getElementById('admTit').textContent=AL('Jesyon lives yo','Gestion des lives');
+  if(!adminCode()) return adminDemander();
+  adminCharger(); c.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function adminDemander(m){
+  document.getElementById('admZone').innerHTML='<div class="hint">'+AL('Antre kòd administratè a (meni Masbet nan fèy la).','Entrez le code administrateur (menu Masbet de la feuille).')+'</div>'+
+    '<input class="champ" id="admCode" autocapitalize="characters" autocomplete="off" style="margin-top:8px"><button class="btn" onclick="adminValider()">'+AL('Antre','Entrer')+'</button>'+
+    (m?'<div class="err" style="margin-top:8px">'+esc(m)+'</div>':'');
+}
+function adminValider(){ var v=document.getElementById('admCode').value.trim(); if(!v) return; ecrire('masbet_admin',v); adminCharger(); }
+function adminOublier(){ try{ localStorage.removeItem('masbet_admin'); }catch(e){} document.getElementById('cAdmin').classList.add('hidden'); }
+function adminCharger(){
+  document.getElementById('admZone').innerHTML='<div class="skel"></div>';
+  apiPost('live_admin',{code:adminCode(), appareil:appareil()}).then(adminAfficher, adminErreur);
+}
+function adminErreur(e){
+  var m=(e&&e.message)||'';
+  if(/administratè|aparèy/.test(m)){ try{ localStorage.removeItem('masbet_admin'); }catch(_){} return adminDemander(m); }
+  document.getElementById('admZone').innerHTML='<div class="err">'+esc(errMsg(e))+detailErr(e)+'</div><button class="btn sec" style="margin-top:8px" onclick="adminCharger()">'+AL('Eseye ankò','Réessayer')+'</button>';
+}
+var ADM=[];
+function adminAfficher(d){
+  ADM=d.lives||[];
+  var nomSt={direk:AL('AN DIREK','EN DIRECT'),pwograme:AL('PWOGRAME','PROGRAMMÉ'),fini:AL('FINI (rediffizyon)','TERMINÉ (rediffusion)'),'':AL('san estati','sans statut')};
+  var h=ADM.length?'':'<div class="hint">'+AL('Pa gen live nan fèy la. Ajoute yon liy nan onglet Lives (oswa meni Cloudflare).','Aucun live dans la feuille. Ajoutez une ligne dans l\'onglet Lives (ou menu Cloudflare).')+'</div>';
+  ADM.forEach(function(x,i){
+    h+='<div class="admL"><b>'+esc(x.titre)+'</b><span class="admS '+x.statut+'">'+nomSt[x.statut||'']+'</span> '+
+      '<span class="hint">'+(x.actif?AL('Vizib','Visible'):AL('Kache','Masqué'))+(x.plateforme?' · '+esc(x.plateforme):' · ⚠️ '+AL('pa gen lyen','pas de lien'))+'</span>'+
+      '<div class="admB">'+
+        '<button class="r" '+(x.statut==='direk'||!x.lienOk?'disabled':'')+' onclick="adminStatut('+i+',\'DIREK\')">🔴 '+AL('Pase an direk','Passer en direct')+'</button>'+
+        '<button class="f" '+(x.statut==='fini'?'disabled':'')+' onclick="adminStatut('+i+',\'FINI\')">⏹ '+AL('Fini','Terminer')+'</button>'+
+        '<button '+(x.statut==='pwograme'?'disabled':'')+' onclick="adminStatut('+i+',\'PWOGRAME\')">📅 '+AL('Pwograme','Programmé')+'</button>'+
+        '<button onclick="adminActif('+i+')">'+(x.actif?'🙈 '+AL('Kache','Masquer'):'👁 '+AL('Montre','Afficher'))+'</button>'+
+      '</div></div>';
+  });
+  h+='<div class="hint" style="margin-top:10px">'+AL('Chanjman yo parèt pou tout moun nan mwens pase 1 minit.','Les changements apparaissent pour tout le monde en moins d\'une minute.')+'</div>'+
+    '<div style="display:flex;gap:8px;margin-top:8px"><button class="btn sec" style="margin:0" onclick="adminCharger()">↻ '+AL('Rafrechi','Actualiser')+'</button><button class="btn sec" style="margin:0" onclick="adminOublier()">'+AL('Bliye kòd la sou aparèy sa a','Oublier le code sur cet appareil')+'</button></div>';
+  document.getElementById('admZone').innerHTML=h;
+}
+function adminEnvoyer(i, extra, btn){
+  var x=ADM[i]; if(!x) return;
+  document.querySelectorAll('.admB button').forEach(function(b){ b.disabled=true; });
+  apiPost('live_statut',Object.assign({code:adminCode(), appareil:appareil(), ligne:x.ligne, titre:x.titre},extra)).then(function(d){
+    adminAfficher(d); try{ localStorage.removeItem('masbet_accueil'); }catch(e){} chargerAccueil();
+  }, adminErreur);
+}
+function adminStatut(i, st){
+  var x=ADM[i]; if(!x) return;
+  if(st==='FINI' && !confirm(AL('Fini live « ','Terminer le live « ')+x.titre+' » ?')) return;
+  adminEnvoyer(i,{statut:st});
+}
+function adminActif(i){ var x=ADM[i]; if(x) adminEnvoyer(i,{actif:x.actif?'NON':'OUI'}); }
+
+// ---------- Championnats locaux (format livescore) ----------
+var LOKD=null, LOKI=-1, LOKT='match', LOKJ='', LOKLIBRE=false, TLOK=null;
+try{ LOKD=JSON.parse(lire('masbet_lokal')||'null'); var li=lire('masbet_lokal_i'); LOKI=li===null||li===''?-1:Number(li); if(isNaN(LOKI)) LOKI=-1; }catch(e){}
+function chargerLokal(){
+  if(!CONTENU) return;
+  api('lokal').then(function(d){ LOKD=d; ecrire('masbet_lokal', JSON.stringify(d)); afficherLokal(); lokHome(); }, function(){ afficherLokal(); });
+  clearTimeout(TLOK);
+  var direct=lokEnDirect().length>0;
+  TLOK=setTimeout(function(){ if(!document.hidden && (direct || vueActive()==='match')) chargerLokal(); else { TLOK=null; } }, direct?30000:300000);
+}
+function lokEnDirect(){ var l=[]; ((LOKD&&LOKD.championnats)||[]).forEach(function(c){ c.matchs.forEach(function(m){ if(m.st==='DIREK') l.push({c:c,m:m}); }); }); return l; }
+function lokMin(m){ return m.dir&&m.dir.per==='MT'?AL('MT','MT'):m.dir&&m.dir.min!=null?m.dir.min+"'":AL('Direk','Direct'); }
+function lokHome(){
+  var el=document.getElementById('lokHome'), l=lokEnDirect(); if(!el) return;
+  document.getElementById('nMatch').classList.toggle('live', l.length>0);
+  el.innerHTML=l.slice(0,3).map(function(x){ var m=x.m, c=x.c; return '<a class="livebar" href="#match" onclick="LOKI=-1;LOKJ=\'\';LOKLIBRE=false"><div class="dot"></div><div style="min-width:0"><b>⚽ '+AL('AN DIREK','EN DIRECT')+' · '+esc(c.nom)+'</b>'+
+    '<span>'+esc(m.d)+' '+(m.bd==null?0:m.bd)+' – '+(m.be==null?0:m.be)+' '+esc(m.e)+'</span><div style="font-size:13px">'+esc(lokMin(m))+'</div></div></a>'; }).join('');
+}
+function jourLocal(iso){ var d=new Date(iso); if(isNaN(d)) return ''; return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function lokMenu(force){
+  var m=document.getElementById('lkMenu'), pill=document.getElementById('lkPill'), ouvrir=force===undefined?m.classList.contains('hidden'):force;
+  m.classList.toggle('hidden',!ouvrir); pill.classList.toggle('ouvert',ouvrir);
+}
+document.addEventListener('click',function(e){ var m=document.getElementById('lkMenu'); if(m && !m.classList.contains('hidden') && !e.target.closest('.lkdd')) lokMenu(false); });
+function lokChoix(i){ LOKI=i; LOKT='match'; if(!LOKLIBRE) LOKJ=''; ecrire('masbet_lokal_i',String(i)); lokMenu(false); afficherLokal(); }
+function lokOnglet(t){ LOKT=t; afficherLokal(); }
+function lokJour(j){ LOKJ=j; LOKLIBRE=false; afficherLokal(); }
+function lokJourLibre(j){ if(!/^\d{4}-\d{2}-\d{2}$/.test(j)) return; LOKJ=j; LOKLIBRE=true; LOKT='match'; afficherLokal(); }
+function bdg(c,nom){ var e=c.equipes[nom]||{}; return '<span class="bdg" style="background:'+(/^#[0-9a-f]{6}$/i.test(e.c||'')?e.c:'#14213d')+'">'+esc(e.s||String(nom).slice(0,3).toUpperCase())+'</span>'; }
+function lokLigne(c,m){
+  var fini=m.st==='FINI', d=new Date(m.t), h=isNaN(d)?'–':('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+  var tab=fini&&m.td!=null&&m.te!=null&&m.bd===m.be;
+  var gd=fini&&(m.bd>m.be||(tab&&m.td>m.te)), ge=fini&&(m.be>m.bd||(tab&&m.te>m.td));
+  var dir=m.st==='DIREK';
+  if(dir) fini=true;   // en direct : on affiche le score
+  var etat=dir?lokMin(m):m.st==='FINI'?AL('Fini','Terminé'):m.st==='RANVWAYE'?AL('Ranvwaye','Reporté'):m.st==='ANILE'?AL('Anile','Annulé'):h;
+  if(dir){ gd=ge=false; tab=false; }
+  var l=function(nom,sc,g,p,t){ return '<div class="l'+(g?' g':'')+(p?' p':'')+'">'+bdg(c,nom)+'<span class="n">'+esc(nom)+'</span>'+(fini?'<span class="sc">'+esc(sc)+(tab?' <small>('+esc(t)+')</small>':'')+'</span>':'')+'</div>'; };
+  return '<div class="lkm'+(dir?' dir':'')+'"><div class="h'+(fini&&!dir?' fini':'')+'">'+(dir?'<span class="pastille"></span>':'')+esc(etat)+(dir?'<small>'+AL('Direk','Direct')+'</small>':fini||m.st!=='PWOGRAME'?'<small>'+esc(h)+'</small>':'')+'</div><div class="eqs">'+
+    l(m.d,m.bd,gd,ge,m.td)+l(m.e,m.be,ge,gd,m.te)+'</div>'+lokButs(c,m)+(m.lieu||m.note?'<div class="lieu">'+esc([m.lieu,m.note].filter(Boolean).join(' · '))+'</div>':'')+'</div>';
+}
+function lokButs(c,m){
+  if(m.dir&&m.dir.ev&&m.dir.ev.length){   // match suivi en direct : buts et cartons, minute par minute
+    var ev=m.dir.ev.slice().sort(function(a,b){ return (a.m==null?999:a.m)-(b.m==null?999:b.m); });
+    return '<div class="buts">'+ev.map(function(x){ return '<div>'+bdg(c,x.c==='d'?m.d:m.e)+' '+({but:'⚽',jaune:'🟨',rouge:'🟥'}[x.t])+' '+(x.m!=null?'<b>'+x.m+"'</b> ":'')+esc(x.n||AL('Gòl','But'))+(x.x==='pen'?' ('+AL('penalti','pén.')+')':x.x==='csc'?' ('+AL('kont kan','csc')+')':'')+'</div>'; }).join('')+'</div>';
+  }
+  var b=m.b; if(!b||(!b.d.length&&!b.e.length)) return '';
+  var f=function(l){ var g={}, o=[]; l.forEach(function(x){ var k=x.n+'|'+x.t; if(!g[k]){ g[k]={n:x.n,t:x.t,m:[]}; o.push(k); } if(x.m!=null) g[k].m.push(x.m+"'"); else g[k].m.push(''); });
+    return o.map(function(k){ var x=g[k], mins=x.m.filter(Boolean), nb=x.m.length; return esc(x.n)+(mins.length?' '+esc(mins.join(', ')):'')+(nb>1&&!mins.length?' ×'+nb:'')+(x.t==='pen'?' ('+AL('penalti','pén.')+')':x.t==='csc'?' ('+AL('kont kan','csc')+')':''); }).join(', '); };
+  return '<div class="buts">'+(b.d.length?'<div>'+bdg(c,m.d)+' ⚽ '+f(b.d)+'</div>':'')+(b.e.length?'<div>'+bdg(c,m.e)+' ⚽ '+f(b.e)+'</div>':'')+'</div>';
+}
+function afficherLokal(){
+  var card=document.getElementById('cLok'); if(!card) return;
+  var chs=(LOKD&&LOKD.championnats)||[];   // déjà triés par ordre d'affichage (page Admin)
+  card.classList.toggle('hidden',!chs.length); if(!chs.length) return;
+  if(LOKI>=chs.length) LOKI=-1;
+  var tout=LOKI<0, c=tout?null:chs[LOKI];
+  var ico=function(x){ return x.sport==='Basketball'?'🏀':x.sport==='Volleyball'?'🏐':'⚽'; };
+  document.getElementById('lkNom').textContent=tout?AL('Tout chanpyona yo','Tous les championnats'):c.nom;
+  document.getElementById('lkSaison').textContent=tout?'':[c.sport,c.saison].filter(Boolean).join(' · ');
+  document.getElementById('lkMenu').innerHTML='<button role="option" class="'+(tout?'on':'')+'" onclick="lokChoix(-1)">📅 '+AL('Tout chanpyona yo','Tous les championnats')+'</button>'+
+    chs.map(function(x,i){ return '<button role="option" class="'+(i===LOKI?'on':'')+'" onclick="lokChoix('+i+')">'+ico(x)+' '+esc(x.nom)+'<small>'+esc(x.saison||'')+'</small></button>'; }).join('');
+  var p=c&&c.palmares;
+  document.getElementById('lkPalm').innerHTML=p?'<div class="palm">'+(p.champion?'<div>🏆 '+AL('Chanpyon','Champion')+' : <b>'+esc(p.champion)+'</b></div>':'')+
+    (p.joueur?'<div>⭐ '+AL('Pi bon jwè','Meilleur joueur')+' : <b>'+esc(p.joueur)+'</b></div>':'')+
+    (p.buteur?'<div>⚽ '+AL('Pi bon buteur','Meilleur buteur')+' : <b>'+esc(p.buteur)+'</b>'+(p.buts!=null?' ('+esc(p.buts)+' '+AL('gòl','buts')+')':'')+'</div>':'')+'</div>':'';
+  var tabs=[['match',AL('Match','Matchs')]], ko=[], kl=[];
+  if(c){
+    ko=c.matchs.filter(function(m){ return m.ko; });
+    kl=(c.klasman||[]).filter(function(g){ return g.lignes.length && c.matchs.some(function(m){ return !m.ko; }); });
+    if(kl.length) tabs.push(['klas',AL('Klasman','Classement')]); if(ko.length) tabs.push(['final',AL('Faz final','Phase finale')]); if((c.buteurs||[]).length) tabs.push(['but',AL('Buteurs','Buteurs')]);
+  }
+  if(!tabs.some(function(t){ return t[0]===LOKT; })) LOKT='match';
+  document.getElementById('lkTabs').innerHTML=tabs.length>1?tabs.map(function(t){ return '<button class="'+(t[0]===LOKT?'on':'')+'" onclick="lokOnglet(\''+t[0]+'\')">'+t[1]+'</button>'; }).join(''):'';
+  var z=document.getElementById('lkZone'), h='';
+  var nj=LANG==='fr'?['dim','lun','mar','mer','jeu','ven','sam']:['dim','len','mad','mèk','jed','van','sam'];
+  var mo=LANG==='fr'?['jan','fév','mar','avr','mai','juin','juil','aoû','sep','oct','nov','déc']:['jan','fev','mas','avr','me','jen','jiy','out','sep','okt','nov','des'];
+  var fmt=function(j){ var x=new Date(j+'T12:00:00'); return nj[x.getDay()]+' '+x.getDate()+' '+mo[x.getMonth()]; };
+  if(LOKT==='match'){
+    var vus=tout?chs:[c];
+    var jours=[]; vus.forEach(function(x){ x.matchs.forEach(function(m){ var j=jourLocal(m.t); if(j && jours.indexOf(j)<0) jours.push(j); }); }); jours.sort();
+    if(!jours.length){ z.innerHTML='<div class="hint">'+AL('Kalandriye a ap vini byento.','Le calendrier arrive bientôt.')+'</div>'; return; }
+    var auj=jourLocal(new Date().toISOString());
+    if(!LOKJ || (jours.indexOf(LOKJ)<0 && !LOKLIBRE)){ LOKJ=jours.filter(function(j){ return j>=auj; })[0]||jours[jours.length-1]; }
+    var horsListe=jours.indexOf(LOKJ)<0, jDef=jours.filter(function(j){ return j>=auj; })[0]||jours[jours.length-1];
+    h+='<div class="lkcal"><div class="lkdates" id="lkDates">'+(horsListe?jours.concat([LOKJ]).sort():jours).map(function(j){ var x=new Date(j+'T12:00:00'); return '<button'+(horsListe&&j===LOKJ?' id="lkHors"':'')+' class="'+(j===LOKJ?'on ':'')+(j===auj?'auj':'')+'" onclick="lokJour(\''+j+'\')"><b>'+(j===auj?AL('Jodi a','Auj.'):nj[x.getDay()])+'</b><span>'+x.getDate()+' '+mo[x.getMonth()]+'</span></button>'; }).join('')+'</div>'+
+      '<label class="lkcalb" title="'+AL('Chèche yon dat','Chercher une date')+'"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'+
+      '<input type="date" aria-label="'+AL('Chèche yon dat','Chercher une date')+'" value="'+esc(LOKJ)+'" onchange="if(this.value)lokJourLibre(this.value)"></label></div>';
+    var n=0;
+    // Un bloc par championnat, dans l'ordre d'affichage (comme Livescore), puis les matchs par phase
+    vus.forEach(function(x){
+      var dj=x.matchs.filter(function(m){ return jourLocal(m.t)===LOKJ; }); if(!dj.length) return; n+=dj.length;
+      var ph=[]; dj.forEach(function(m){ if(ph.indexOf(m.phase)<0) ph.push(m.phase); });
+      h+='<div class="lkbloc">'+(tout?'<button class="lkcomp" onclick="lokChoix('+chs.indexOf(x)+')"><span class="ic">'+ico(x)+'</span><span><b>'+esc(x.nom)+'</b><small>'+esc(ph.filter(Boolean).join(' · ')||x.saison||'')+'</small></span><span class="go">›</span></button>':'')+
+        ph.map(function(q){ return (!tout&&q?'<div class="lkph">'+esc(q)+'</div>':'')+dj.filter(function(m){ return m.phase===q; }).map(function(m){ return lokLigne(x,m); }).join(''); }).join('')+'</div>';
+    });
+    if(!n){
+      var av=jours.filter(function(j){ return j<LOKJ; }).pop(), ap=jours.filter(function(j){ return j>LOKJ; })[0];
+      var autres=tout?[]:chs.map(function(x,i){ return {i:i,n:x.matchs.filter(function(m){ return jourLocal(m.t)===LOKJ; }).length,nom:x.nom}; }).filter(function(x){ return x.i!==LOKI && x.n; });
+      h+='<div class="hint" style="margin:8px 0">'+(tout?AL('Pa gen match jou sa a.','Aucun match ce jour-là.'):AL('Pa gen match nan chanpyona sa a jou sa a.','Aucun match de ce championnat ce jour-là.'))+'</div>'+
+        autres.map(function(x){ return '<button class="btn sec" style="margin-top:6px" onclick="LOKI='+x.i+';afficherLokal()">'+esc(x.nom)+' : '+x.n+' match</button>'; }).join('')+
+        '<div style="display:flex;gap:8px;margin-top:8px">'+(av?'<button class="btn sec" style="margin:0" onclick="lokJour(\''+av+'\')">‹ '+fmt(av)+'</button>':'')+(ap?'<button class="btn sec" style="margin:0" onclick="lokJour(\''+ap+'\')">'+fmt(ap)+' ›</button>':'')+'</div>';
+    }
+    if(LOKJ!==jDef) h+='<div class="lkretour"><button onclick="lokJour(\'\')">↺ '+(jDef===auj?AL('Tounen jodi a','Retour à aujourd\'hui'):AL('Pwochen jou match','Prochain jour de match'))+'</button></div>';
+    if(tout) h+='<div class="hint" style="margin-top:8px">'+AL('Touche non yon chanpyona pou wè klasman, faz final ak buteurs.','Touchez un championnat pour voir le classement, la phase finale et les buteurs.')+'</div>';
+  } else if(LOKT==='klas'){
+    kl.forEach(function(g){
+      h+=(kl.length>1||g.groupe?'<div class="lkph">'+AL('Gwoup','Groupe')+' '+esc(g.groupe||'')+'</div>':'')+'<table class="kl"><tr><th>#</th><th style="text-align:left">'+AL('Ekip','Équipe')+'</th><th>J</th><th>G</th><th>N</th><th>P</th><th>+/-</th><th>Pts</th></tr>'+
+        g.lignes.map(function(x,i){ return '<tr class="'+(i<2&&x.j>0?'q':'')+'"><td>'+(i+1)+'</td><td class="e">'+bdg(c,x.eq)+'<span>'+esc(x.eq)+'</span></td><td>'+x.j+'</td><td>'+x.g+'</td><td>'+x.n+'</td><td>'+x.p+'</td><td>'+(x.df>0?'+':'')+x.df+'</td><td class="pts">'+x.pts+'</td></tr>'; }).join('')+'</table>';
+    });
+    h+='<div class="hint">'+AL('J = match jwe · G = genyen · N = nil · P = pèdi · +/- = diferans gòl','J = joués · G = gagnés · N = nuls · P = perdus · +/- = différence de buts')+'</div>';
+  } else if(LOKT==='but'){
+    h+='<table class="kl"><tr><th>#</th><th style="text-align:left">'+AL('Jwè','Joueur')+'</th><th>'+AL('Gòl','Buts')+'</th></tr>'+
+      c.buteurs.map(function(x,i){ var r=i>0&&c.buteurs[i-1].buts===x.buts?'':(i+1); return '<tr><td>'+r+'</td><td class="e">'+bdg(c,x.eq)+'<span>'+esc(x.nom)+' <small style="color:var(--muted);font-weight:600">'+esc(x.eq)+'</small></span></td><td class="pts">'+x.buts+(x.pen?' <small style="color:var(--muted);font-weight:600">('+x.pen+' '+AL('pen.','pén.')+')</small>':'')+'</td></tr>'; }).join('')+'</table>'+
+      '<div class="hint">'+AL('Gòl kont pwòp kan pa konte.','Les buts contre son camp ne comptent pas.')+'</div>';
+  } else {
+    var ordre=function(x){ x=String(x).toLowerCase(); return /16e|1\/16/.test(x)?1:/8e|huiti|1\/8/.test(x)?2:/quart|1\/4/.test(x)?3:/demi|1\/2/.test(x)?4:/3e|troisi/.test(x)?5:/^final/.test(x)?6:0; };
+    var phs=[]; ko.forEach(function(m){ if(phs.indexOf(m.phase)<0) phs.push(m.phase); }); phs.sort(function(a,b){ return ordre(a)-ordre(b); });
+    phs.forEach(function(x){ h+='<div class="lkph">'+(ordre(x)===6?'🏆 ':'')+esc(x)+'</div>'+ko.filter(function(m){ return m.phase===x; }).map(function(m){ return lokLigne(c,m); }).join(''); });
+  }
+  z.innerHTML=h;
+  var on=document.querySelector('#lkDates button.on'); if(on) on.scrollIntoView({block:'nearest',inline:'center'});
 }
 
 // ---------- Vidéos ----------
@@ -1395,7 +1671,7 @@ function chargerAccueil(){
     function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
 }
 function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div>'; }
-function toutAfficher(){
+function toutAfficher(){ afficherLokal();
   afficherDate();
   if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives();
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<b>'+esc(ACC.whatsapp)+'</b>':'')+piedFondateur(); }
@@ -1415,6 +1691,7 @@ function vue(){
   var v=(location.hash||'#akey').slice(1).split('&')[0]; if(['akey','match','videyo','quiz'].indexOf(v)<0) v='akey';
   document.getElementById('vAkey').classList.toggle('hidden',v!=='akey');
   document.getElementById('vMatch').classList.toggle('hidden',v!=='match');
+  if(v==='match'){ afficherLokal(); chargerLokal(); }
   document.getElementById('vVideyo').classList.toggle('hidden',v!=='videyo');
   document.getElementById('vQuiz').classList.toggle('hidden',v!=='quiz');
   if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
@@ -1458,6 +1735,7 @@ vue();
 verifierAttestationUrl();
 chargerAccueil();
 chargerMatchs();
+chargerLokal();
 chargerQuiz();
 setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
 </script>
