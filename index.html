@@ -23,6 +23,9 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Masbet">
 <script src="config.js"></script>
 <style>
   :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
@@ -226,6 +229,8 @@
   .err{background:#fdecea;color:var(--err);padding:10px;border-radius:10px;font-size:14px}
   .hidden{display:none!important}
   .install{display:flex;gap:10px;align-items:center;background:#fff8ea;border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+  .iosAide{background:#fff;border:1.5px solid var(--gold);border-radius:12px;padding:12px 14px;margin:-4px 0 12px;font-size:14.5px;line-height:1.55}
+  .iosAide b{color:var(--navy)}
   .install button{border:0;background:var(--navy);color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;white-space:nowrap}
   nav{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
   nav a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
@@ -285,6 +290,7 @@
 
 <main>
   <div class="install hidden" id="install"><span data-t="installTxt"></span><button id="btnInstall" data-t="installBtn"></button></div>
+  <div class="iosAide hidden" id="iosAide"></div>
 
   <!-- ===== Akèy ===== -->
   <section id="vAkey">
@@ -455,7 +461,7 @@ var TXT = {
     konSmsTit:'Dènye etap : verifye telefòn ou pa SMS.', konSms:function(n){ return 'Voye mesaj sa a bay '+n+' :'; }, konSmsAide:'Voye l ak telefòn ou te bay la. Yon telefòn pou yon sèl jwè.', konSmsVoye:'Mwen voye l : tcheke ankò', konAncien:'✓ Ou kalifye otomatikman : ou te finalis dènye Konkou a.',
     konJweHome:function(n){ return 'Konkou Masbet : manch '+n+' louvri !'; }, konDemiHome:'Konkou Masbet : demi-final la kòmanse !',
     lives:'Live Masbet', peyan:'LIVE PEYAN', tikeKod:'Kòd tikè', ouvri:'Ouvri', achteTike:'Achte tikè', tikePri:function(p){ return 'Tikè : '+p+' HTG'; }, tikeAide:'Tout live yo peyan. Yon tikè louvri yon live, nenpòt ki live. Ou ka achte plizyè davans : chak live sèvi ak yon tikè. Antre kòd la isit la.', tikeMwen:'Tikè ou yo :', pasLive:'Pa gen live kounye a', pwochenAnons:'Pwochen live la ap anonse isit la.', achteDavans:'Achte tikè ou davans', gratisSou:'Lives gratis : swiv Masbet sou', klikeGade:'Klike pou gade', achteYonTike:'Achte yon tikè', mwenGenKod:'Mwen gen yon kòd tikè :', tikeRegle:'1 tikè = 1 live. Chak nouvo live mande yon nouvo tikè. Kòd la mache sou 2 telefòn pou menm live la.', tikeRete:function(n){ return n>0?'Kòd sa a rete '+n+' live.':'Kòd sa a fin itilize ; pwochen live la ap mande yon lòt tikè.'; }, tikeDavans:'Achte tikè ou davans.', tikeOk:'Tikè valab ✓', anDirek:'AN DIREK', gade:'Gade', gadeFb:'Gade sou Facebook', prochainLive:'Pwochen live', aucunLive:'Pa gen live kounye a. Gade pwogram nan anba a.', pwograme:'PWOGRAME', replay:'REPLAY', liveDonnees:'Yon live konsome anpil done.', a:'a',
-    installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', aucuneOffre:'Pa gen ofri pou kounye a.',
+    installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', iosEtap:'<b>Sou iPhone :</b><br>1. Louvri paj sa a nan <b>Safari</b>.<br>2. Peze bouton <b>Pataje</b> a (kare ak flèch ⬆️ anba ekran an).<br>3. Chwazi <b>« Sur l\'écran d\'accueil »</b> (Add to Home Screen), epi <b>Ajouter</b>.', iosApp:'<b>Ou nan WhatsApp oswa Facebook :</b> peze ⋯ oswa ⬆️ epi chwazi <b>« Ouvrir dans Safari »</b>. Apre sa, swiv etap yo.', aucuneOffre:'Pa gen ofri pou kounye a.',
     meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
     pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Nan listwa', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
     aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Rubrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
@@ -510,7 +516,7 @@ var TXT = {
     konSmsTit:'Dernière étape : vérifiez votre téléphone par SMS.', konSms:function(n){ return 'Envoyez ce message au '+n+' :'; }, konSmsAide:'Envoyez-le depuis le téléphone que vous avez donné. Un téléphone pour un seul joueur.', konSmsVoye:'Je l\'ai envoyé : vérifier', konAncien:'✓ Qualifié d\'office : vous étiez finaliste du dernier Concours.',
     konJweHome:function(n){ return 'Concours Masbet : la manche '+n+' est ouverte !'; }, konDemiHome:'Concours Masbet : la demi-finale commence !',
     lives:'Lives Masbet', peyan:'LIVE PAYANT', tikeKod:'Code ticket', ouvri:'Ouvrir', achteTike:'Acheter un ticket', tikePri:function(p){ return 'Ticket : '+p+' HTG'; }, tikeAide:'Tous les lives sont payants. Un ticket ouvre un live, n\'importe lequel. Vous pouvez en acheter plusieurs d\'avance : chaque live utilise un ticket. Entrez le code ici.', tikeMwen:'Vos tickets :', pasLive:'Pas de live en ce moment', pwochenAnons:'Le prochain live sera annoncé ici.', achteDavans:'Acheter mon ticket d\'avance', gratisSou:'Lives gratuits : suivez Masbet sur', klikeGade:'Cliquer pour regarder', achteYonTike:'Acheter un ticket', mwenGenKod:'J\'ai un code ticket :', tikeRegle:'1 ticket = 1 live. Chaque nouveau live demande un nouveau ticket. Le code marche sur 2 téléphones pour ce même live.', tikeRete:function(n){ return n>0?'Ce code ouvre encore '+n+' live'+(n>1?'s':'')+'.':'Ce code est épuisé ; le prochain live demandera un autre ticket.'; }, tikeDavans:'Achetez votre ticket à l\'avance.', tikeOk:'Ticket valide ✓', anDirek:'EN DIRECT', gade:'Regarder', gadeFb:'Regarder sur Facebook', prochainLive:'Prochain live', aucunLive:'Pas de live en ce moment. Voir le programme ci-dessous.', pwograme:'PROGRAMMÉ', replay:'REDIFFUSION', liveDonnees:'Un live consomme beaucoup de données.', a:'à',
-    installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', aucuneOffre:'Aucune offre pour le moment.',
+    installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', iosEtap:'<b>Sur iPhone :</b><br>1. Ouvrez cette page dans <b>Safari</b>.<br>2. Touchez le bouton <b>Partager</b> (carré avec flèche ⬆️ en bas de l\'écran).<br>3. Choisissez <b>« Sur l\'écran d\'accueil »</b>, puis <b>Ajouter</b>.', iosApp:'<b>Vous êtes dans WhatsApp ou Facebook :</b> touchez ⋯ ou ⬆️ et choisissez <b>« Ouvrir dans Safari »</b>. Suivez ensuite les étapes.', aucuneOffre:'Aucune offre pour le moment.',
     meteoIndispo:'Météo indisponible pour le moment.', ressenti:'Ressenti', humidite:'Humidité', vent:'Vent', lever:'Lever du soleil', coucher:'Coucher du soleil',
     pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
     aucunMatch:'Aucun match des compétitions suivies aujourd\'hui.', footOff:'La rubrique matchs n\'est pas encore activée.', direct:'EN DIRECT', mt:'MT', fini:'Terminé',
@@ -681,10 +687,11 @@ function montrerQuestion(){
     if(r<=0){ clearInterval(QTIMER); repondre(-1); }
   },250);
 }
-function repondre(i){
-  if(QATTENTE) return; QATTENTE=true; clearInterval(QTIMER);
+function repondre(i, essai){
+  if(QATTENTE && !essai) return; QATTENTE=true; clearInterval(QTIMER);
   var q=QZ.questions[QPOS];
   document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=true; });
+  if(!essai) document.getElementById('qExpl').innerHTML='<div class="hint" style="margin-top:10px">⏳</div>';
   api('quizrep',{appareil:appareil(), n:QPOS, choix:i<0?'temps':i}).then(function(r){
     if(r.bonne>=0) document.getElementById('qc'+r.bonne).classList.add('bon');
     if(r.choix>=0 && !r.correct) document.getElementById('qc'+r.choix).classList.add('faux');
@@ -696,9 +703,11 @@ function repondre(i){
     QZ.etat.score=r.score; QZ.etat.fini=r.fini; QZ.etat.temps=r.temps;
     QZ.etat.reponses=(QZ.etat.reponses||[]).concat([{n:QPOS,choix:r.choix,bonne:r.bonne}]);
     if(r.fini){ afficherQuizHome(); chargerKlas(); }
-  }, function(){
+  }, function(e){
+    // Réseau lent ou coupure brève : un nouvel essai automatique (la première réponse enregistrée compte, pas de double compte).
+    if(!essai){ setTimeout(function(){ repondre(i, 1); }, 1500); return; }
     QATTENTE=false; document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=false; });
-    document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+T('reseau')+'</div>';
+    document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(errMsg(e))+'</div>';
   });
 }
 function suivante(){ if(QZ.etat.fini) return afficherResultatQuiz(); QPOS++; montrerQuestion(); }
@@ -1425,7 +1434,15 @@ function langue(l){
 // ---------- Installation ----------
 var invite=null;
 window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); invite=e; document.getElementById('install').classList.remove('hidden'); });
-document.getElementById('btnInstall').onclick=function(){ if(!invite) return; invite.prompt(); invite=null; document.getElementById('install').classList.add('hidden'); };
+// iPhone/iPad : pas de bouton système ; on montre le bouton « Enstale » qui ouvre les étapes Safari.
+var IOS=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+var DEJA=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+var DANS_APP=/FBAN|FBAV|Instagram|WhatsApp|Line\/|Snapchat/i.test(navigator.userAgent);
+if(IOS && !DEJA) document.getElementById('install').classList.remove('hidden');
+document.getElementById('btnInstall').onclick=function(){
+  if(invite){ invite.prompt(); invite=null; document.getElementById('install').classList.add('hidden'); return; }
+  if(IOS){ var a=document.getElementById('iosAide'); a.innerHTML=(DANS_APP?T('iosApp')+'<br><br>':'')+T('iosEtap'); a.classList.toggle('hidden'); }
+};
 if('serviceWorker' in navigator && location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
 
 // ---------- Démarrage ----------
