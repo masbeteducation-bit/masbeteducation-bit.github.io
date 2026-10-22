@@ -328,7 +328,7 @@
     main{max-width:1180px;padding:0 24px 40px}
     #vAkey:not(.hidden){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
     #cJwe{grid-row:span 2}
-    #lokHome,#cNotif{grid-column:1 / -1}#lokHome:empty{display:none}
+    #lokHome,#cNotif,#cSert{grid-column:1 / -1}#lokHome:empty{display:none}
     #vAkey .card{margin:0}
     #liveHome,#vAkey .hero{grid-column:1 / -1}
     #liveHome:empty{display:none}
@@ -368,6 +368,31 @@
   .etaps div span.o{width:26px;height:26px;border-radius:50%;background:#eef0f5;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
   .etaps div.f span.o{background:var(--ok);color:#fff}.etaps div.c span.o{background:var(--navy);color:#fff}.etaps div.c b{color:var(--navy)}.etaps small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
   .rang.moi{background:#fff8e6;border-radius:10px;font-weight:800}.rang.moi .t{color:var(--ink)}
+  .sertL{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}.sertL:first-child{border-top:0}.sertL .si{font-size:28px;line-height:1}.sertNom{margin-top:8px}
+  #certVue{position:fixed;inset:0;z-index:80;background:#e9ecf3;overflow:auto;padding:10px 12px 30px}
+  .cvBar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:0 auto 10px;max-width:1123px}.cvBar .btn{width:auto;margin:0;padding:10px 16px}
+  .cvZone{margin:0 auto;overflow:hidden;box-shadow:0 6px 24px rgba(20,33,61,.18)}.cvEch{transform-origin:0 0}.cvAide{text-align:center;margin-top:10px}
+  body.certOuvert{overflow:hidden}
+  .cert{width:1123px;height:794px;box-sizing:border-box;padding:18px;background:#fbf8f0;font-family:Georgia,'Times New Roman',serif;color:#1c2233}
+  .cert .c1{width:100%;height:100%;box-sizing:border-box;border:8px solid #14213d;padding:8px}
+  .cert .c2{width:100%;height:100%;box-sizing:border-box;border:2px solid #b8892b;padding:26px 60px 18px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center}
+  .cert .ch img{height:50px;width:auto;display:block;margin:0 auto 6px}.cert .ck{font-size:12px;letter-spacing:4px;color:#7a5a14;font-weight:700;font-family:system-ui,sans-serif}
+  .cert .ct{font-size:44px;font-weight:700;letter-spacing:6px;color:#14213d;line-height:1.05}
+  .cert .cl{display:flex;align-items:center;gap:12px}.cert .cl i{display:block;width:90px;height:2px;background:#b8892b}.cert .cl b{display:block;width:9px;height:9px;background:#b8892b;transform:rotate(45deg)}
+  .cert .cd{font-size:18px;font-style:italic;color:#3a4258}
+  .cert .cn{font-size:44px;font-weight:700;font-style:italic;color:#14213d;line-height:1.1;padding:0 28px 2px;border-bottom:2px solid #b8892b;max-width:900px}
+  .cert .cti{font-size:28px;font-weight:700;color:#7a5a14;letter-spacing:1px}.cert .cde{font-size:16px;color:#1c2233;font-family:system-ui,sans-serif;letter-spacing:.5px}
+  .cert .ctx{font-size:15px;line-height:1.5;color:#2b3245;max-width:760px}
+  .cert .cb{display:flex;align-items:flex-end;justify-content:space-between;width:100%;gap:20px}
+  .cert .cbl{flex:1 1 0;text-align:left;font-size:17px;padding-bottom:8px}
+  .cert .cbr{flex:1 1 0;display:flex;flex-direction:column;align-items:flex-end;text-align:center}.cert .csl{width:270px;border-top:1.5px solid #1c2233;margin-bottom:6px}
+  .cert .cbr b{width:270px;font-size:18px;color:#14213d}.cert .cbr span{width:270px;font-size:12px;color:#3a4258;font-family:system-ui,sans-serif}
+  .cert .cf{display:flex;align-items:center;gap:14px;width:100%;text-align:left}.cert .cq svg{display:block}
+  .cert .cft{font-size:12px;line-height:1.45;color:#4a5165;font-family:system-ui,sans-serif}.cert .cft b{color:#14213d}
+  @media print{ body.imprCert > *:not(#certVue){display:none!important} body.imprCert #certVue{position:static;padding:0;background:#fff;overflow:visible}
+    body.imprCert .cvBar,body.imprCert .cvAide{display:none!important} body.imprCert .cvZone{box-shadow:none;width:auto!important;height:auto!important;overflow:visible}
+    body.imprCert .cvEch{transform:none!important} body.imprCert .cert{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    @page{size:A4 landscape;margin:0} }
   .nOk{margin-top:10px;background:#e8f6ee;color:var(--ok);padding:10px;border-radius:10px;font-size:14px;font-weight:700}
   .notifC{display:flex;gap:12px;align-items:flex-start}.notifC .ic{font-size:30px;line-height:1}
   .nSuj{display:flex;gap:10px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}.nSuj input{width:20px;height:20px;flex-shrink:0}
@@ -484,6 +509,10 @@
       <div class="onglets"><button id="kJ" class="on" onclick="ongletKlas('jour')" data-t="kJodi"></button><button id="kS" onclick="ongletKlas('semaine')" data-t="kSemen"></button></div>
       <div id="klasman"><div class="skel"></div></div>
     </div>
+    <div class="card hidden" id="cSert">
+      <h2>🎓 <span data-t="sertTitre"></span></h2>
+      <div id="sertZone"><div class="skel"></div></div>
+    </div>
     <div class="card hidden" id="cDefi">
       <h2>🏁 <span data-t="defiTitre"></span></h2>
       <div id="defiZone"><div class="skel"></div></div>
@@ -550,6 +579,7 @@
 <div class="sheet hidden" id="kontSheet" role="dialog" aria-modal="true"></div>
 <div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
 <div class="sheet hidden" id="notifSheet" role="dialog" aria-modal="true"></div>
+<div class="hidden" id="certVue" role="dialog" aria-modal="true" aria-label="Certificat"></div>
 <nav id="nav">
   <a href="#akey" id="nAkey"><span>🏠</span><b data-t="nAkey"></b></a>
   <a href="achte.html"><span>📶</span><b data-t="nAchte"></b></a>
@@ -675,7 +705,7 @@ var TXT = {
 };
 var LANG='ht', ACC=null, MAT=null, TMATCH=null, DEJA=false;
 Object.assign(TXT.ht,{
-    defiTitre:'Defi Masbet', defiRegles:function(n,s){ return n+' kesyon difisil, '+s+' segonn chak. Bon repons = 10 pwen + segonn ki rete yo. 1 tikè = 1 chans ; pi bon nòt ou nan semèn nan konte.'; },
+    sertTitre:'Sètifika mwen', defiTitre:'Defi Masbet', defiRegles:function(n,s){ return n+' kesyon difisil, '+s+' segonn chak. Bon repons = 10 pwen + segonn ki rete yo. 1 tikè = 1 chans ; pi bon nòt ou nan semèn nan konte.'; },
     defiKont:'Fò w gen yon kont Masbet pou w jwe Defi a (gratis, yon non ase).', defiKod:'Kòd tikè Defi a', defiKodVid:'Antre kòd tikè Defi a.',
     defiJwe:'Kòmanse Defi a', defiAchte:'Achte yon tikè Defi', defiKlasman:'Klasman semèn nan', defiJwe2:function(n){ return n+' jwè'; }, defiPokoMoun:'Pèsonn poko jwe semèn sa a. Se ou ki premye ?',
     defiPase:function(n,p){ return 'Genyen semèn pase a : '+n+' ('+p+' pwen)'; }, defiOuGenyen:'🎉 Ou genyen Defi semèn pase a !', defiPriByento:'Pri a ap rive byento : Pass Pro a ap aktive poukont li sou telefòn ou.',
@@ -686,7 +716,7 @@ Object.assign(TXT.ht,{
     konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
 });
 Object.assign(TXT.fr,{
-    defiTitre:'Défi Masbet', defiRegles:function(n,s){ return n+' questions difficiles, '+s+' secondes chacune. Bonne réponse = 10 points + les secondes restantes. 1 ticket = 1 chance ; votre meilleur score de la semaine compte.'; },
+    sertTitre:'Mes certificats', defiTitre:'Défi Masbet', defiRegles:function(n,s){ return n+' questions difficiles, '+s+' secondes chacune. Bonne réponse = 10 points + les secondes restantes. 1 ticket = 1 chance ; votre meilleur score de la semaine compte.'; },
     defiKont:'Il faut un compte Masbet pour jouer au Défi (gratuit, un nom suffit).', defiKod:'Code du ticket Défi', defiKodVid:'Entrez le code du ticket Défi.',
     defiJwe:'Commencer le Défi', defiAchte:'Acheter un ticket Défi', defiKlasman:'Classement de la semaine', defiJwe2:function(n){ return n+' joueur(s)'; }, defiPokoMoun:'Personne n\'a encore joué cette semaine. Serez-vous le premier ?',
     defiPase:function(n,p){ return 'Gagnant de la semaine passée : '+n+' ('+p+' points)'; }, defiOuGenyen:'🎉 Vous avez gagné le Défi de la semaine passée !', defiPriByento:'Votre prix arrive bientôt : le Pass Pro s\'active tout seul sur votre téléphone.',
@@ -707,11 +737,55 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){retu
 function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
+// v4.4 — Vitesse : les lectures demandées au même moment partent ensemble dans UNE requête (?api=lot),
+// les demandes identiques en cours sont partagées. Ancien serveur sans « lot » : retour automatique aux requêtes séparées.
+var LOT_PERMIS={accueil:1,matchs:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,defi:1,certs:1,lokal:1,kont_moi:1,lok_reac:1};
+var LOT_FILE=[], LOT_T=null, LOT_KO=false, EN_VOL={}, NB_REQ=0;
+function apiExtra(params){ var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }); return extra; }
+function apiCleM(action,extra){ return (typeof API_MEMOIRE!=='undefined'&&API_MEMOIRE[action])?'masbet_c_'+action+extra:''; }
+/** Dernière réponse gardée sur le téléphone (affichage immédiat, ou hors ligne). */
+function memoire(action,params){ var k=apiCleM(action,apiExtra(params)); if(!k) return null; try{ return JSON.parse(lire(k)||'null'); }catch(e){ return null; } }
 function api(action, params){
   action_courante=action;
   if(!CONTENU) return Promise.reject(new Error('config'));
-  var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); });
-  var cleM=(typeof API_MEMOIRE!=='undefined'&&API_MEMOIRE[action])?'masbet_c_'+action+extra:'';
+  if(!LOT_PERMIS[action]) return apiSeul(action, params);
+  var cle=action+apiExtra(params);
+  if(EN_VOL[cle]) return EN_VOL[cle];
+  var pr=LOT_KO?apiSeul(action, params):new Promise(function(res,rej){ LOT_FILE.push({a:action,p:params||{},res:res,rej:rej}); if(!LOT_T) LOT_T=setTimeout(lotEnvoyer,15); });
+  EN_VOL[cle]=pr; var fin=function(){ delete EN_VOL[cle]; }; pr.then(fin,fin);
+  return pr;
+}
+function lotEnvoyer(){
+  var f=LOT_FILE; LOT_FILE=[]; LOT_T=null; if(!f.length) return;
+  if(f.length===1||LOT_KO){ f.forEach(function(x){ apiSeul(x.a,x.p).then(x.res,x.rej); }); return; }
+  // paquets de taille raisonnable (adresse < 1800 caractères)
+  var paquets=[], cur=[], lg=0;
+  f.forEach(function(x){ var l=encodeURIComponent(JSON.stringify({a:x.a,p:x.p})).length+3; if(cur.length&&(lg+l>1800||cur.length>=20)){ paquets.push(cur); cur=[]; lg=0; } cur.push(x); lg+=l; });
+  if(cur.length) paquets.push(cur);
+  paquets.forEach(lotPaquet);
+}
+function lotPaquet(f){
+  action_courante='lot'; NB_REQ++;
+  var r=encodeURIComponent(JSON.stringify(f.map(function(x){ return {a:x.a,p:x.p}; })));
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
+  fetch(CONTENU+'?api=lot&r='+r+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
+    .then(function(rep){ return rep.text().then(function(x){ try{ return JSON.parse(x); }catch(e){ var er=new Error(''); er.detail='Google '+rep.status; throw er; } }); })
+    .then(function(j){ if(t) clearTimeout(t);
+      if(!j||!j.ok){ if(/inconnue/i.test(j&&j.erreur||'')){ LOT_KO=true; f.forEach(function(x){ apiSeul(x.a,x.p).then(x.res,x.rej); }); return; }
+        f.forEach(function(x){ x.rej(new Error(j&&j.erreur||'')); }); return; }
+      if(typeof HORS!=='undefined'&&HORS) horsLigne(false);
+      f.forEach(function(x,i){ var y=j.data&&j.data[i];
+        if(y&&y.ok){ var k=apiCleM(x.a,apiExtra(x.p)); if(k){ try{ localStorage.setItem(k, JSON.stringify(y.data)); }catch(e){} } x.res(y.data); }
+        else x.rej(new Error(y&&y.erreur||'')); });
+    }, function(e){ if(t) clearTimeout(t); if(e&&!e.detail) e.detail=(e.name==='AbortError'?'délai 30 s dépassé':(e.name||'')+' '+(e.message||''));
+      // Pas de réseau : la dernière réponse gardée sur le téléphone, s'il y en a une
+      f.forEach(function(x){ var m=memoire(x.a,x.p); if(m){ horsLigne(true); x.res(m); } else x.rej(e); }); });
+}
+function apiSeul(action, params){
+  action_courante=action; NB_REQ++;
+  if(!CONTENU) return Promise.reject(new Error('config'));
+  var extra=apiExtra(params);
+  var cleM=apiCleM(action,extra);
   var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
   return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
     .then(function(r){ return r.text().then(function(x){
@@ -791,6 +865,8 @@ function afficherOffres(){
 var QZ=null, QPOS=0, QTIMER=null, QFIN=0, KLAS=null, KONG='jour', QATTENTE=false;
 function chargerQuiz(){
   if(!CONTENU) return;
+  // Affichage immédiat de la carte d'accueil (même jour seulement) ; on ne joue qu'avec la réponse fraîche du serveur
+  if(!QZ){ var mq=memoire('quiz',{appareil:appareil()}); if(mq&&mq.jour===jourAuj()){ QZ=mq; QZ.memo=true; afficherQuizHome(); } }
   api('quiz',{appareil:appareil()}).then(function(d){ QZ=d; noterCadeaux(); afficherQuizHome(); if(vueActive()==='quiz') afficherQuiz(); }, function(){ if(vueActive()==='quiz') document.getElementById('quizZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; });
   chargerKlas();
   chargerPakou();
@@ -815,7 +891,7 @@ function ouvrirCadeau(id){
   ecrire('masbet_cadeau_vu', id);
   if(c && c.tel){ var d=String(c.tel).replace(/\D/g,''); if(d.length===11&&d.indexOf('509')===0) d=d.slice(3); if(d.length===8){ ecrire('masbet_tel', d); ecrire('masbet_pays','0'); } }
 }
-function chargerKlas(){ api('classement').then(function(d){ KLAS=d; afficherKlas(); }, function(){}); }
+function chargerKlas(){ if(!KLAS){ var mk=memoire('classement'); if(mk){ KLAS=mk; afficherKlas(); } } api('classement').then(function(d){ KLAS=d; afficherKlas(); }, function(){}); }
 function vueActive(){ return (location.hash||'#akey').slice(1).split('&')[0]; }
 function afficherQuizHome(){
   var c=document.getElementById('cQuizHome');
@@ -831,7 +907,7 @@ function afficherQuizHome(){
 function qTxt(q){ return LANG==='fr'?q.fr:q.ht; }
 function afficherQuiz(){
   var z=document.getElementById('quizZone'); clearInterval(QTIMER);
-  if(!QZ){ z.innerHTML='<div class="skel"></div>'; return; }
+  if(!QZ||QZ.memo){ z.innerHTML='<div class="skel"></div>'; return; }
   if(!QZ.questions || !QZ.questions.length){ z.innerHTML='<div class="hint">'+T('quizPoko')+'</div>'; return; }
   var e=QZ.etat||{joue:false};
   if(e.fini) return afficherResultatQuiz();
@@ -920,6 +996,7 @@ var RUBIC={'Sante':'🩺','Swen Enfimye':'💉','Egzèsis Swen':'💊','Enfòmat
 function nomRub(c){ return (RUBIC[c]?RUBIC[c]+' ':'')+(LANG==='fr'&&RUBFR[c]?RUBFR[c]:c); }
 function chargerRubriques(){
   if(!CONTENU) return;
+  if(!RUB){ var mr=memoire('rubriques'); if(mr){ RUB=mr; if(!ANT) afficherRubriques(); } }
   api('rubriques').then(function(d){ RUB=d; if(!ANT) afficherRubriques(); },
     function(){ if(!RUB){ document.getElementById('cAntren').classList.remove('hidden'); document.getElementById('antZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
 }
@@ -980,8 +1057,9 @@ function errMsg(e){ var m=(e&&e.message)||''; return !m||/fetch|abort|network|co
 function nbBadj(){ return PAK?PAK.parcours.reduce(function(s,p){ return s+Math.min(5,p.etape-1); },0):0; }
 function chargerPakou(){
   if(!CONTENU) return;
+  if(!PAK){ var mp=memoire('pakou',{appareil:appareil()}); if(mp){ PAK=mp; PAK.memo=true; afficherPakouHome(); } }   // carte d'accueil seulement
   api('pakou',{appareil:appareil()}).then(function(d){ PAK=d; afficherPakouHome(); if(!PT && !REV && PECRAN!=='intro') afficherPakou(); },
-    function(){ if(!PAK){ document.getElementById('cPakou').classList.remove('hidden'); document.getElementById('pakZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
+    function(){ if(!PAK||PAK.memo){ if(PAK) PAK.memo=false; document.getElementById('cPakou').classList.remove('hidden'); document.getElementById('pakZone').innerHTML='<div class="err">'+T('reseau')+'</div>'; } });
 }
 function afficherPakouHome(){
   var el=document.getElementById('pakHome'); if(!el) return;
@@ -1000,6 +1078,7 @@ function blocKonkou(){
 function afficherPakou(){
   var c=document.getElementById('cPakou'), z=document.getElementById('pakZone');
   if(!PAK) return;
+  if(PAK.memo){ c.classList.remove('hidden'); z.innerHTML='<div class="skel"></div>'; return; }   // attendre la réponse fraîche
   c.classList.remove('hidden'); PT=null; PQ=null; REV=null; PECRAN='tiles'; clearInterval(PTIMER);
   var h=blocKonkou()+'<div class="hint" style="margin:10px 0 2px">'+T('pakTxt')+'</div><div class="paks">'+PAK.parcours.map(function(p,i){
     var fini=p.etape>5, dots='';
@@ -1150,6 +1229,7 @@ function dateLongue(j){ var p=String(j||'').split('-').map(Number); if(p.length<
 function jourAuj(){ var d=new Date(Date.now()-4*3600e3); return d.toISOString().slice(0,10); }   // heure d'Haïti
 function chargerKonkou(resultat){
   if(!CONTENU) return;
+  if(!KON){ var mn=memoire('konkou',{appareil:appareil()}); if(mn){ KON=mn; KON.memo=true; afficherKonkouHome(); } }   // carte d'accueil seulement
   api('konkou',{appareil:appareil()}).then(function(d){ KON=d; afficherKonkouHome(); if(!resultat && !(PRUN===RUN_KON && PT)) afficherKonkou(); }, function(){});
 }
 function afficherKonkouHome(){
@@ -1172,7 +1252,7 @@ function ligneManche(x, moi, k){
 }
 function afficherKonkou(){
   var c=document.getElementById('cKonkou'), z=document.getElementById('konZone'), k=KON;
-  if(!k) return;
+  if(!k||k.memo) return;
   c.classList.remove('hidden'); KECRAN='info';
   var m=k.moi||{}, h=etapsKonkou(k,m);
   if(k.phase==='attente'){
@@ -1375,7 +1455,7 @@ function imprimerAttestation(){
 }
 function verifierAttestationUrl(){
   var m=/[#&]atestasyon=([A-Za-z0-9-]+)/.exec(location.hash||''), c=document.getElementById('cVerif');
-  if(!m){ c.classList.add('hidden'); return; }
+  if(!m){ if(!verifierCertUrl()) c.classList.add('hidden'); return; }
   c.classList.remove('hidden'); var z=document.getElementById('verifZone'); z.innerHTML='<div class="skel"></div>';
   api('attestation',{id:m[1]}).then(function(a){ z.innerHTML='<div class="fete ok">✓ '+esc(T('attValab'))+'</div>'+htmlAttestation(a); },
     function(e){ z.innerHTML='<div class="err">✗ '+esc(errMsg(e))+'</div>'; });
@@ -1811,10 +1891,11 @@ function vue(){
   if(v==='match'){ afficherLokal(); chargerLokal(); }
   document.getElementById('vVideyo').classList.toggle('hidden',v!=='videyo');
   document.getElementById('vQuiz').classList.toggle('hidden',v!=='quiz');
-  if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
+  if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK||PAK.memo) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON||KON.memo) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
   else clearInterval(QTIMER);
   ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
   if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
+  else if(/[#&]sertifika(?!=)/.test(location.hash)){ var cs=document.getElementById('cSert'); cs.classList.remove('hidden'); chargerCerts(true); setTimeout(function(){ cs.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]defi/.test(location.hash)){ var cd=document.getElementById('cDefi'); cd.classList.remove('hidden'); if(!DT) chargerDefi(); setTimeout(function(){ cd.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]konkou/.test(location.hash)){ var ck=document.getElementById('cKonkou'); ck.classList.remove('hidden'); setTimeout(function(){ ck.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]pro\b/.test(location.hash)){ var cr=document.getElementById('cPro'); cr.classList.remove('hidden'); setTimeout(function(){ cr.scrollIntoView({block:'start'}); },60); }
@@ -1868,7 +1949,8 @@ function kontRendre(e, data){
     h=kontTete(AL('Kont Masbet mwen','Mon compte Masbet'))+'<div class="sc"><div style="font-size:22px;font-weight:900;margin:6px 0">'+esc(KONT)+'</div>'+
       '<div class="hint">'+AL('Non sa a parèt nan Quiz la, Kominote a ak kòmantè match yo. Pèsonn lòt pa ka pran l.','Ce nom apparaît dans le Quiz, la Communauté et les commentaires des matchs. Personne d\'autre ne peut le prendre.')+'</div>'+
       '<div class="hint" style="margin-top:10px">'+AL('Nouvo telefòn ? Antre non ou ak kòd sekou ou (egz. MANGO-47). Ou pèdi kòd la ? Mande Masbet sou WhatsApp.','Nouveau téléphone ? Entrez votre nom et votre code de secours (ex. MANGO-47). Code perdu ? Demandez à Masbet sur WhatsApp.')+'</div>'+
-      '<button class="btn sec" style="margin-top:14px" onclick="kontKite()">'+AL('Dekonekte sou telefòn sa a','Se déconnecter sur ce téléphone')+'</button><div id="kMsg"></div></div>';
+      '<a class="btn sec" style="margin-top:14px;display:block;text-align:center;text-decoration:none" href="#quiz&sertifika" onclick="fermerSheets()">🎓 '+AL('Sètifika mwen','Mes certificats')+'</a>'+
+      '<button class="btn sec" style="margin-top:8px" onclick="kontKite()">'+AL('Dekonekte sou telefòn sa a','Se déconnecter sur ce téléphone')+'</button><div id="kMsg"></div></div>';
   } else if(e==='kod'){
     h=kontTete(AL('Kont ou kreye ✓','Compte créé ✓'))+'<div class="sc"><div class="hint">'+AL('Men kòd sekou ou. Ekri l oswa pran yon foto ekran : ou p ap wè l ankò.','Voici votre code de secours. Notez-le ou faites une capture d\'écran : il ne sera plus affiché.')+'</div>'+
       '<div class="kodGwo" id="kKod">'+esc(data.kod)+'</div>'+
@@ -2001,6 +2083,153 @@ function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecri
 function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
 
+// QR code (byte mode, correction M, versions 1 à 10) : renvoie une matrice de booléens (true = noir).
+// Écrit pour les certificats Masbet (lien de vérification), sans bibliothèque externe.
+function qrMatrice(texte){
+  var data=[], i, j;
+  var u=unescape(encodeURIComponent(String(texte)));            // UTF-8
+  for(i=0;i<u.length;i++) data.push(u.charCodeAt(i));
+  // [EC par bloc, blocs groupe 1, données groupe 1, blocs groupe 2, données groupe 2]
+  var EC=[null,[10,1,16,0,0],[16,1,28,0,0],[26,1,44,0,0],[18,2,32,0,0],[24,2,43,0,0],[16,4,27,0,0],[18,4,31,0,0],[22,2,38,2,39],[22,3,36,2,37],[26,4,43,1,44]];
+  var ALIGN=[null,[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50]];
+  var v, cap;
+  for(v=1;v<=10;v++){ var e=EC[v]; cap=e[1]*e[2]+e[3]*e[4]; if(4+(v<10?8:16)+8*data.length<=cap*8) break; }
+  if(v>10) throw new Error('texte trop long');
+  var ec=EC[v], n=v*4+17;
+  // ----- flux de bits
+  var bits=[]; function ajout(val,len){ for(var k=len-1;k>=0;k--) bits.push((val>>>k)&1); }
+  ajout(4,4); ajout(data.length,v<10?8:16); data.forEach(function(b){ ajout(b,8); });
+  ajout(0,Math.min(4,cap*8-bits.length)); while(bits.length%8) bits.push(0);
+  var cw=[]; for(i=0;i<bits.length;i+=8){ var b=0; for(j=0;j<8;j++) b=(b<<1)|bits[i+j]; cw.push(b); }
+  for(var pad=0xEC;cw.length<cap;pad^=0xEC^0x11) cw.push(pad);
+  // ----- Reed-Solomon GF(256)
+  function mul(x,y){ var z=0; for(var k=7;k>=0;k--){ z=(z<<1)^((z>>>7)*0x11D); z^=((y>>>k)&1)*x; } return z&255; }
+  function diviseur(deg){ var r=[]; for(var k=0;k<deg-1;k++) r.push(0); r.push(1); var root=1;
+    for(k=0;k<deg;k++){ for(var m=0;m<r.length;m++){ r[m]=mul(r[m],root); if(m+1<r.length) r[m]^=r[m+1]; } root=mul(root,2); } return r; }
+  function reste(d,div){ var r=div.map(function(){return 0;}); d.forEach(function(b){ var f=b^r.shift(); r.push(0); div.forEach(function(c,k){ r[k]^=mul(c,f); }); }); return r; }
+  var div=diviseur(ec[0]), blocs=[], pos=0;
+  for(i=0;i<ec[1]+ec[3];i++){ var len=i<ec[1]?ec[2]:ec[4], d=cw.slice(pos,pos+len); pos+=len; blocs.push({d:d,e:reste(d,div)}); }
+  var fin=[], maxd=Math.max(ec[2],ec[4]);
+  for(i=0;i<maxd;i++) blocs.forEach(function(bl){ if(i<bl.d.length) fin.push(bl.d[i]); });
+  for(i=0;i<ec[0];i++) blocs.forEach(function(bl){ fin.push(bl.e[i]); });
+  // ----- matrice
+  var M=[], F=[]; for(i=0;i<n;i++){ M.push([]); F.push([]); for(j=0;j<n;j++){ M[i].push(false); F[i].push(false); } }
+  function fx(x,y,on){ M[y][x]=!!on; F[y][x]=true; }
+  for(i=0;i<n;i++){ fx(6,i,i%2===0); fx(i,6,i%2===0); }
+  [[3,3],[n-4,3],[3,n-4]].forEach(function(c){ for(var dy=-4;dy<=4;dy++) for(var dx=-4;dx<=4;dx++){ var x=c[0]+dx, y=c[1]+dy; if(x<0||y<0||x>=n||y>=n) continue; var di=Math.max(Math.abs(dx),Math.abs(dy)); fx(x,y,di!==2&&di!==4); } });
+  var al=ALIGN[v], L=al.length;
+  for(i=0;i<L;i++) for(j=0;j<L;j++){ if((i===0&&j===0)||(i===0&&j===L-1)||(i===L-1&&j===0)) continue;
+    for(var dy2=-2;dy2<=2;dy2++) for(var dx2=-2;dx2<=2;dx2++) fx(al[i]+dx2,al[j]+dy2,Math.max(Math.abs(dx2),Math.abs(dy2))!==1); }
+  function format(mask){ var d=(0<<3)|mask, r=d; for(var k=0;k<10;k++) r=(r<<1)^((r>>>9)*0x537); var b=((d<<10)|r)^0x5412;
+    function g(k){ return ((b>>>k)&1)===1; }
+    for(k=0;k<=5;k++) fx(8,k,g(k)); fx(8,7,g(6)); fx(8,8,g(7)); fx(7,8,g(8)); for(k=9;k<15;k++) fx(14-k,8,g(k));
+    for(k=0;k<8;k++) fx(n-1-k,8,g(k)); for(k=8;k<15;k++) fx(8,n-15+k,g(k)); fx(8,n-8,true); }
+  format(0);
+  if(v>=7){ var r7=v; for(i=0;i<12;i++) r7=(r7<<1)^((r7>>>11)*0x1F25); var vb=(v<<12)|r7;
+    for(i=0;i<18;i++){ var bit=((vb>>>i)&1)===1, a=n-11+i%3, c2=Math.floor(i/3); fx(a,c2,bit); fx(c2,a,bit); } }
+  var k2=0;
+  for(var right=n-1;right>=1;right-=2){ if(right===6) right=5;
+    for(var vert=0;vert<n;vert++) for(j=0;j<2;j++){ var x=right-j, up=((right+1)&2)===0, y=up?n-1-vert:vert;
+      if(!F[y][x]&&k2<fin.length*8){ M[y][x]=((fin[k2>>>3]>>>(7-(k2&7)))&1)===1; k2++; } } }
+  function masque(m,x,y){ switch(m){ case 0:return (x+y)%2===0; case 1:return y%2===0; case 2:return x%3===0; case 3:return (x+y)%3===0;
+    case 4:return (Math.floor(x/3)+Math.floor(y/2))%2===0; case 5:return x*y%2+x*y%3===0; case 6:return (x*y%2+x*y%3)%2===0; default:return ((x+y)%2+x*y%3)%2===0; } }
+  function appliquer(m){ for(var y=0;y<n;y++) for(var x=0;x<n;x++) if(!F[y][x]&&masque(m,x,y)) M[y][x]=!M[y][x]; }
+  function penalite(){ var p=0, x, y, run, noir=0;
+    for(y=0;y<n;y++){ run=1; for(x=1;x<=n;x++){ if(x<n&&M[y][x]===M[y][x-1]) run++; else { if(run>=5) p+=run-2; run=1; } } }
+    for(x=0;x<n;x++){ run=1; for(y=1;y<=n;y++){ if(y<n&&M[y][x]===M[y-1][x]) run++; else { if(run>=5) p+=run-2; run=1; } } }
+    for(y=0;y<n-1;y++) for(x=0;x<n-1;x++){ var c=M[y][x]; if(c===M[y][x+1]&&c===M[y+1][x]&&c===M[y+1][x+1]) p+=3; }
+    var A=[1,0,1,1,1,0,1,0,0,0,0], B=[0,0,0,0,1,0,1,1,1,0,1];
+    function motif(get){ for(var s=0;s+11<=n;s++){ var okA=true, okB=true; for(var t=0;t<11;t++){ var val=get(s+t)?1:0; if(val!==A[t]) okA=false; if(val!==B[t]) okB=false; } if(okA) p+=40; if(okB) p+=40; } }
+    for(y=0;y<n;y++) motif(function(t){ return M[y][t]; });
+    for(x=0;x<n;x++) motif(function(t){ return M[t][x]; });
+    for(y=0;y<n;y++) for(x=0;x<n;x++) if(M[y][x]) noir++;
+    p+=Math.floor(Math.abs(noir*20-n*n*10)/(n*n))*10; return p; }
+  var meilleur=0, minP=1e9;
+  for(var m=0;m<8;m++){ appliquer(m); format(m); var pe=penalite(); if(pe<minP){ minP=pe; meilleur=m; } appliquer(m); }
+  appliquer(meilleur); format(meilleur);
+  return M;
+}
+/** QR en SVG (carrés noirs, marge de 4 modules). */
+function qrSvg(texte, taille){
+  var M=qrMatrice(texte), n=M.length, q=n+8, d='';
+  for(var y=0;y<n;y++) for(var x=0;x<n;x++) if(M[y][x]) d+='M'+(x+4)+' '+(y+4)+'h1v1h-1z';
+  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+taille+'" height="'+taille+'" viewBox="0 0 '+q+' '+q+'" shape-rendering="crispEdges" role="img" aria-label="QR code"><rect width="'+q+'" height="'+q+'" fill="#fff"/><path d="'+d+'" fill="#000"/></svg>';
+}
+
+// ---------- 🎓 Certificats de mérite (Défi, Concours) : format diplôme, en français ----------
+var CERTS=null, CERT_VUE=null;
+var CERT_TEXTE={
+  DEFI:'Défi de culture générale de dix questions difficiles et chronométrées, organisé chaque semaine par Masbet Education. Meilleur résultat de la semaine.',
+  FINALISTE:'Qualifié parmi les meilleurs candidats à l’issue des manches de qualification et de la demi-finale du Concours Masbet.',
+  CHAMPION:'Vainqueur de la finale du Concours Masbet, au terme des manches de qualification, de la demi-finale et de la finale.'
+};
+function lienCert(n){ return SITE+'#sertifika='+encodeURIComponent(n); }
+function chargerCerts(montrer){
+  if(!CONTENU) return;
+  api('certs',{appareil:appareil()}).then(function(d){ CERTS=d.certs||[]; afficherCerts(montrer); }, function(){ if(montrer) afficherCerts(true); });
+}
+function afficherCerts(montrer){
+  var c=document.getElementById('cSert'), z=document.getElementById('sertZone'); if(!c) return;
+  var l=CERTS||[];
+  if(!l.length && !montrer){ c.classList.add('hidden'); return; }
+  c.classList.remove('hidden');
+  if(!l.length){ z.innerHTML='<div class="hint">'+esc(AL('Ou poko gen sètifika. Genyen Defi Masbet la oswa rive nan final Konkou a pou w resevwa youn.','Pas encore de certificat. Gagnez le Défi Masbet ou atteignez la finale du Concours pour en recevoir un.'))+'</div>'; return; }
+  z.innerHTML=l.map(function(x,i){
+    var h='<div class="sertL"><div class="si">'+(x.type==='CHAMPION'?'🏆':x.type==='FINALISTE'?'🥈':'🏁')+'</div><div style="flex:1;min-width:0"><b>'+esc(x.titre)+'</b><div class="hint">'+esc(x.detail)+'</div><div class="hint">N° '+esc(x.n)+'</div>';
+    if(x.aRemplir) h+='<div class="sertNom"><label class="hint" for="sn'+i+'">'+esc(AL('Non konplè ou, jan l ap parèt sou sètifika a (prenon ak non) :','Votre nom complet, tel qu’il apparaîtra sur le certificat (prénom et nom) :'))+'</label>'+
+      '<input class="champ" id="sn'+i+'" maxlength="60" autocomplete="name"><div class="hint" style="color:#8a5a00">'+esc(AL('Tcheke byen : ou p ap ka chanje l apre.','Vérifiez bien : vous ne pourrez plus le changer ensuite.'))+'</div>'+
+      '<button class="btn" id="sb'+i+'" style="margin-top:8px" onclick="certNomer('+i+')">'+esc(AL('Anrejistre non an','Enregistrer le nom'))+'</button><div id="sm'+i+'"></div></div>';
+    else h+='<button class="btn" style="margin-top:8px" onclick="certOuvrir('+i+')">🎓 '+esc(AL('Wè sètifika a','Voir le certificat'))+'</button>';
+    return h+'</div></div>';
+  }).join('');
+}
+function certNomer(i){
+  var x=CERTS[i], inp=document.getElementById('sn'+i), b=document.getElementById('sb'+i), m=document.getElementById('sm'+i), nom=(inp.value||'').trim();
+  if(!nom){ inp.focus(); return; }
+  b.disabled=true;
+  apiPost('cert_nom',{appareil:appareil(), n:x.n, nom:nom}).then(function(d){ CERTS[i]=d; afficherCerts(true); certOuvrir(i); },
+    function(e){ b.disabled=false; m.innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+}
+function htmlCert(x){
+  var sceau='<svg width="118" height="118" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="arcCert" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>'+
+    '<circle cx="60" cy="60" r="57" fill="none" stroke="#b8892b" stroke-width="2.5"/><circle cx="60" cy="60" r="51" fill="none" stroke="#b8892b" stroke-width="1"/><circle cx="60" cy="60" r="31" fill="none" stroke="#b8892b" stroke-width="1"/>'+
+    '<text font-family="Georgia,serif" font-size="9.5" font-weight="700" fill="#14213d" letter-spacing="2"><textPath href="#arcCert">MASBET EDUCATION · ANSE-À-VEAU · </textPath></text>'+
+    '<text x="60" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#14213d">'+esc(String(x.date||'').slice(-4))+'</text><text x="60" y="75" text-anchor="middle" font-size="12" fill="#b8892b">★</text></svg>';
+  return '<div class="cert" role="img" aria-label="'+esc('Certificat de mérite — '+x.nom+' — '+x.titre)+'"><div class="c1"><div class="c2">'+
+    '<div class="ch"><img src="logo.png" alt="Masbet Education"><div class="ck">MASBET EDUCATION · ANSE-À-VEAU, NIPPES, HAÏTI</div></div>'+
+    '<div class="ct">CERTIFICAT DE MÉRITE</div><div class="cl"><i></i><b></b><i></i></div>'+
+    '<div class="cd">décerné à</div><div class="cn">'+esc(x.nom)+'</div>'+
+    '<div class="cd">pour avoir obtenu le titre de</div><div class="cti">'+esc(x.titre)+'</div><div class="cde">'+esc(x.detail)+'</div>'+
+    '<div class="ctx">'+esc(CERT_TEXTE[x.type]||'')+'</div>'+
+    '<div class="cb"><div class="cbl">Délivré à Anse-à-Veau,<br>le '+esc(x.date)+'</div><div>'+sceau+'</div><div class="cbr"><div class="csl"></div><b>Duckhens Lespérance, ing.</b><span>PDG, Fondateur de Masbet Education</span></div></div>'+
+    '<div class="cf"><div class="cq">'+qrSvg(lienCert(x.n),78)+'</div><div class="cft"><b>Certificat N° '+esc(x.n)+'</b> — vérifiable en scannant ce code ou sur '+esc(lienCert(x.n).replace(/^https:\/\//,''))+'<br>Ce certificat atteste un résultat obtenu dans une compétition organisée par Masbet Education.</div></div>'+
+    '</div></div></div>';
+}
+function certOuvrir(i){ var x=CERTS&&CERTS[i]; if(x) certAfficher(x); }
+function certAfficher(x){
+  CERT_VUE=x; var v=document.getElementById('certVue');
+  v.innerHTML='<div class="cvBar"><button class="btn sec" onclick="certFermer()">✕ '+esc(AL('Fèmen','Fermer'))+'</button><button class="btn" onclick="certImprimer()">🖨️ PDF</button><button class="btn sec" onclick="certPataje()">↗ '+esc(AL('Pataje','Partager'))+'</button></div>'+
+    '<div class="cvZone"><div class="cvEch" id="cvEch">'+htmlCert(x)+'</div></div><div class="hint cvAide">'+(innerHeight>innerWidth?esc(AL('📱 Vire telefòn nan sou kote pou w wè l pi gwo.','📱 Tournez le téléphone pour le voir en grand.'))+'<br>':'')+esc(AL('PDF : chwazi « Anrejistre an PDF » nan fenèt enprime a.','PDF : choisissez « Enregistrer au format PDF » dans la fenêtre d’impression.'))+'</div>';
+  v.classList.remove('hidden'); document.body.classList.add('certOuvert'); certEchelle();
+}
+function certEchelle(){ var e=document.getElementById('cvEch'); if(!e) return; var w=Math.min(innerWidth-24,1123), s=w/1123; e.style.transform='scale('+s+')'; e.style.width='1123px'; e.parentNode.style.height=Math.ceil(794*s)+'px'; e.parentNode.style.width=Math.ceil(1123*s)+'px'; }
+window.addEventListener('resize',function(){ if(CERT_VUE) certEchelle(); });
+function certFermer(){ CERT_VUE=null; document.getElementById('certVue').classList.add('hidden'); document.body.classList.remove('certOuvert'); }
+function certImprimer(){ document.body.classList.add('imprCert'); setTimeout(function(){ window.print(); setTimeout(function(){ document.body.classList.remove('imprCert'); },500); },60); }
+function certPataje(){ var x=CERT_VUE; if(x) pataje('🎓 '+x.nom+' — '+x.titre+' ('+x.detail+'). Certificat Masbet N° '+x.n+' : '+lienCert(x.n)); }
+/** Lien de vérification #sertifika=MC-… (scan du QR code) */
+function verifierCertUrl(){
+  var m=/[#&]sertifika=([A-Za-z0-9-]+)/.exec(location.hash||''), c=document.getElementById('cVerif');
+  if(!m) return false;
+  c.classList.remove('hidden'); var z=document.getElementById('verifZone'); z.innerHTML='<div class="skel"></div>';
+  api('cert',{n:m[1]}).then(function(x){ window.CERT_VERIF=x;
+    z.innerHTML='<div class="fete ok">✓ '+esc(AL('Sètifika sa a valab.','Ce certificat est authentique.'))+'</div><div class="sertL" style="margin-top:8px"><div class="si">🎓</div><div style="flex:1;min-width:0"><b>'+esc(x.nom)+'</b><div>'+esc(x.titre)+'</div><div class="hint">'+esc(x.detail)+' · '+esc(x.date)+'</div><div class="hint">N° '+esc(x.n)+'</div>'+
+      '<button class="btn" style="margin-top:8px" onclick="certAfficher(window.CERT_VERIF)">🎓 '+esc(AL('Wè sètifika a','Voir le certificat'))+'</button></div></div>';
+  }, function(e){ z.innerHTML='<div class="err">✗ '+esc(errMsg(e))+'</div>'; });
+  setTimeout(function(){ c.scrollIntoView({block:'start'}); },60);
+  return true;
+}
+
 // ---------- 🏁 Défi Masbet (ticket, 10 questions difficiles, classement de la semaine) ----------
 var DEFI=null, DT=null, DQ=null, DFIN=0, DTIMER=null, DATT=false, DREP=null;
 function defiKodUrl(){ var m=/[#&]defikod=([A-Za-z0-9-]+)/.exec(location.hash||''); return m?m[1]:''; }
@@ -2013,7 +2242,7 @@ function afficherDefi(msg){
   var c=document.getElementById('cDefi'), z=document.getElementById('defiZone'), d=DEFI; if(!d) return;
   c.classList.remove('hidden'); DT=null; clearInterval(DTIMER);
   var h='<div class="konkou"><b>🎁 '+esc(LANG==='fr'?d.priFr:d.pri)+'</b><span>'+esc(T('defiRegles')(d.nb,d.secondes))+'</span></div>';
-  if(d.passe) h+='<div class="fete '+(d.passe.moi?'ok':'inv')+'" style="margin-top:10px">'+esc(d.passe.moi?T('defiOuGenyen'):T('defiPase')(d.passe.nom,d.passe.points))+(d.passe.moi&&d.passe.attente?'<span>'+esc(T('defiPriByento'))+'</span>':'')+'</div>';
+  if(d.passe) h+='<div class="fete '+(d.passe.moi?'ok':'inv')+'" style="margin-top:10px">'+esc(d.passe.moi?T('defiOuGenyen'):T('defiPase')(d.passe.nom,d.passe.points))+(d.passe.moi&&d.passe.attente?'<span>'+esc(T('defiPriByento'))+'</span>':'')+(d.passe.moi&&!d.passe.attente?'<a href="#quiz&sertifika" style="display:block;margin-top:6px;font-weight:800;color:inherit">🎓 '+esc(AL('Wè sètifika ou','Voir votre certificat'))+' →</a>':'')+'</div>';
   if(d.enCours) h+='<button class="btn" style="margin-top:12px" onclick="defiReprendre()">'+T('pakKontinye')+'</button>';
   else if(!d.compte) h+='<div class="hint" style="margin-top:10px">'+esc(T('defiKont'))+'</div><button class="btn" style="margin-top:8px" onclick="kontOuvrir({defi:1})">'+T('proKreyeKont')+'</button>';
   else {
@@ -2177,6 +2406,7 @@ try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c) ACC=c; }catch(e){}
 langue(lire('masbet_lang')||'ht');
 vue();
 verifierAttestationUrl();
+chargerCerts(false);
 chargerAccueil();
 chargerMatchs();
 chargerLokal();
