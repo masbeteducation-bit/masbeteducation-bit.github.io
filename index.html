@@ -2152,7 +2152,7 @@ function notifOuvrir(){
   h+='<div class="hint" style="margin-bottom:6px">'+AL('Chwazi sa w vle resevwa :','Choisissez ce que vous voulez recevoir :')+'</div>'+
     NOTIF_SUJ.map(function(s){ return '<label class="nSuj"><input type="checkbox" value="'+s[0]+'"'+(actifs.indexOf(s[0])>=0?' checked':'')+'><span>'+s[1]+'</span><span style="flex:1">'+esc(AL(s[2],s[3]))+'</span></label>'; }).join('')+
     '<button class="btn" id="nGo" style="margin-top:12px" onclick="notifSauver()">'+(e?AL('Anrejistre','Enregistrer'):AL('🔔 Aktive notifikasyon yo','🔔 Activer les notifications'))+'</button>'+
-    (e?'<button class="btn sec" style="margin-top:8px" onclick="notifArreter()">'+AL('Pa voye m anyen ankò','Ne plus rien recevoir')+'</button>':'')+
+    (e?'<button class="btn sec" style="margin-top:8px" onclick="notifArreter()">'+AL('Pa voye anyen ankò','Ne plus rien recevoir')+'</button>':'')+
     '<div id="nMsg"></div>'+(Notification.permission==='denied'?'<div class="hint" style="margin-top:8px;color:#b42318">'+AL('Notifikasyon yo bloke pou sit sa a. Ale nan paramèt navigatè a → Notifikasyon → Pèmèt.','Les notifications sont bloquées pour ce site. Allez dans les réglages du navigateur → Notifications → Autoriser.')+'</div>':'')+'</div>';
   el.innerHTML=h; sheetMontrer('notifSheet',true);
 }

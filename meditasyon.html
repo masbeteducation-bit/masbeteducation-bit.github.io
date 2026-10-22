@@ -16,7 +16,8 @@
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 Georgia,"Times New Roman",serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
   .hero{color:#fff;padding:26px 18px 34px;background:linear-gradient(160deg,var(--c1),var(--c2));position:relative;overflow:hidden}
-  .hero:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .hero:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+  .hero .r,.hero h1{position:relative;z-index:1}
   .hero .r{display:flex;justify-content:space-between;align-items:center;max-width:720px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   .hero .jou{font-size:13px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:.9}
   .hero h1{max-width:720px;margin:14px auto 0;font-size:32px;line-height:1.2}
