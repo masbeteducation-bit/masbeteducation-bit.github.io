@@ -185,7 +185,7 @@ var TXT = {
     soustitre:'Peye Wi-Fi ou ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la',
     ongletAcheter:'Achte kòd', ongletMes:'Kòd mwen',
     etape1:'Chwazi sa w ap achte', chanje:'Chanje', etape2:'Peye', etape3:'Ekri kòd tranzaksyon an',
-    chargement:'Tann yon ti moman…', aucunForfait:'Pa gen plan disponib kounye a.', jours:'jou', epuise:'Pa disponib',
+    verifPri:'N ap verifye pri yo ak Masbet… Eseye ankò nan kèk segonn.', chargement:'Tann yon ti moman…', aucunForfait:'Pa gen plan disponib kounye a.', jours:'jou', epuise:'Pa disponib',
     tel:'Nimewo telefòn ou', txLabel:'Kòd tranzaksyon an (Txn ID oswa TransCode)',
     txPlaceholder:'Egzanp : 003548854486',
     txAide:'Lè w fin peye, MonCash oswa NatCash ap voye yon SMS ba ou. Nan SMS sa a, gen yon nimewo apre <b>« Txn ID »</b> (MonCash) oswa <b>« TransCode »</b> (NatCash). Se nimewo sa a pou w ekri la a.',
@@ -216,7 +216,7 @@ var TXT = {
     soustitre:'Achetez votre code Wi-Fi avec MonCash ou NatCash',
     ongletAcheter:'Acheter', ongletMes:'Mes codes',
     etape1:'Choisissez ce que vous achetez', chanje:'Changer', etape2:'Payez', etape3:'Entrez le numéro de transaction',
-    chargement:'Chargement…', aucunForfait:'Aucun forfait disponible.', jours:'jours', epuise:'Épuisé',
+    verifPri:'Vérification des prix auprès de Masbet… Réessayez dans quelques secondes.', chargement:'Chargement…', aucunForfait:'Aucun forfait disponible.', jours:'jours', epuise:'Épuisé',
     tel:'Votre numéro de téléphone', txLabel:'Numéro de transaction (Txn ID ou TransCode)',
     txPlaceholder:'Exemple : 003548854486',
     txAide:'Après le paiement, vous recevez un SMS de confirmation. Recopiez le numéro écrit après <b>« Txn ID »</b> (MonCash) ou <b>« TransCode »</b> (NatCash).',
@@ -406,9 +406,13 @@ function vue(v){
 // ---------- Étape 1 : forfaits ----------
 function charger(essai){
   essai=essai||0;
+  // Affichage immédiat : les derniers forfaits gardés sur ce téléphone, remplacés dès que la réponse arrive
+  if(essai===0 && !INFOS){ try{ var mi=JSON.parse(lire('masbet_infos')||'null'); if(mi&&mi.forfaits){ INFOS=mi; INFOS.memo=true; afficherForfaits(); afficherPied(); } }catch(e){} }
   if(essai===0 && !INFOS) document.getElementById('plans').innerHTML='<div class="hint">⏳</div>';
   appel('getInfosPubliques',{live:true}).then(function(i){
-    INFOS=i; afficherForfaits(); afficherPied();
+    ecrire('masbet_infos', JSON.stringify(i));
+    if(FORFAIT){ FORFAIT=i.forfaits.filter(function(f){ return f.nom===FORFAIT.nom && f.disponible; })[0]||null; }   // prix et disponibilité à jour
+    INFOS=i; afficherForfaits(); afficherPied(); if(typeof majPaiement==='function') majPaiement();
   }).catch(function(e){
     var m=erreur(e);
     // Réseau lent ou coupure brève (fréquent sur 4G et Wi-Fi) : 2 nouveaux essais automatiques avant d'afficher l'erreur.
@@ -498,6 +502,7 @@ function majPaiement(){
 // ---------- Étape 3 : commande ----------
 function envoyer(){
   msg('msg',''); DERNIER=null;
+  if(INFOS&&INFOS.memo){ charger(); return msg('msg',T('verifPri'),'err'); }   // jamais de commande sur des prix pas encore confirmés
   if(!FORFAIT) return msg('msg',T('choisirForfait'),'err');
   if(!METHODE) return msg('msg',T('choisirMethode'),'err');
   var tel=telComplet('tel'), tx=document.getElementById('tx').value;
