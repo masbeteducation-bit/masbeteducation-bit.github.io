@@ -12,6 +12,12 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
+<script>
+/* Version Google Play (application Android) : ouverte avec ?play=1, ou depuis l'application (android-app://).
+   Gardé pour la session seulement : le même téléphone dans Chrome reste la version web complète. */
+var PLAY=(function(){ try{ if(/[?&]play=1\b/.test(location.search)||/^android-app:\/\//.test(document.referrer||'')) sessionStorage.setItem('masbet_play','1'); return sessionStorage.getItem('masbet_play')==='1'; }catch(e){ return /[?&]play=1\b/.test(location.search); } })();
+if(PLAY) document.documentElement.classList.add('play');
+</script>
 <title>MasbetAirNet — Achte kòd Wi-Fi</title>
 <style>
   :root{--navy:#14213d;--blue:#173a8c;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--wait:#b76e00}
@@ -107,6 +113,8 @@
   .demo{background:#fff3df;color:var(--wait);text-align:center;font-size:13px;padding:6px}
 .recap{margin:14px 0 2px;padding:10px 12px;border-radius:12px;background:#f1f5ff;border:1.5px solid #c9d6f5;font-size:15px;line-height:1.35}.recap b{font-size:16px}
 .tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#fff4dc;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}.tip-defi{background:#fff4dc;color:#8a5a00}
+  /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
+  .play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
 </style>
 </head>
 <body>
@@ -332,6 +340,7 @@ function appel(fn){ var args=[].slice.call(arguments,1);
     var r=google.script.run.withSuccessHandler(ok).withFailureHandler(ko); r[fn].apply(r,args); }); }
 
 // ---------- Stockage local (facultatif) ----------
+if(PLAY){ TXT.ht.soustitre='Peye Wi-Fi ou ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la'; TXT.fr.soustitre='Achetez votre code Wi-Fi avec MonCash ou NatCash'; }
 function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
@@ -407,12 +416,12 @@ function vue(v){
 function charger(essai){
   essai=essai||0;
   // Affichage immédiat : les derniers forfaits gardés sur ce téléphone, remplacés dès que la réponse arrive
-  if(essai===0 && !INFOS){ try{ var mi=JSON.parse(lire('masbet_infos')||'null'); if(mi&&mi.forfaits){ INFOS=mi; INFOS.memo=true; afficherForfaits(); afficherPied(); } }catch(e){} }
+  if(essai===0 && !INFOS){ try{ var mi=JSON.parse(lire('masbet_infos')||'null'); if(mi&&mi.forfaits){ INFOS=infosPlay(mi); INFOS.memo=true; afficherForfaits(); afficherPied(); } }catch(e){} }
   if(essai===0 && !INFOS) document.getElementById('plans').innerHTML='<div class="hint">⏳</div>';
   appel('getInfosPubliques',{live:true}).then(function(i){
-    ecrire('masbet_infos', JSON.stringify(i));
+    ecrire('masbet_infos', JSON.stringify(i)); i=infosPlay(i);
     if(FORFAIT){ FORFAIT=i.forfaits.filter(function(f){ return f.nom===FORFAIT.nom && f.disponible; })[0]||null; }   // prix et disponibilité à jour
-    INFOS=i; afficherForfaits(); afficherPied(); if(typeof majPaiement==='function') majPaiement();
+    INFOS=infosPlay(i); afficherForfaits(); afficherPied(); if(typeof majPaiement==='function') majPaiement();
   }).catch(function(e){
     var m=erreur(e);
     // Réseau lent ou coupure brève (fréquent sur 4G et Wi-Fi) : 2 nouveaux essais automatiques avant d'afficher l'erreur.
@@ -421,8 +430,10 @@ function charger(essai){
   });
 }
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
+/** Version Google Play : seulement le Wi-Fi (service physique) ; tickets, Pass Pro, Défi et Suite restent sur le site web. */
+function infosPlay(i){ if(PLAY&&i&&i.forfaits) i.forfaits=i.forfaits.filter(function(f){ return f.type!=='LIVE'; }); return i; }
 function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
-var PRODUIT=(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
+var PRODUIT=PLAY?'wifi':(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
 function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement();
   if(p) setTimeout(function(){ document.getElementById('cPlan').scrollIntoView({behavior:'smooth',block:'start'}); },60); }
 var ICONES={wifi:'📶',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰'};

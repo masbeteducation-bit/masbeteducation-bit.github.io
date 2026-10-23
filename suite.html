@@ -12,6 +12,12 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
+<script>
+/* Version Google Play (application Android) : ouverte avec ?play=1, ou depuis l'application (android-app://).
+   Gardé pour la session seulement : le même téléphone dans Chrome reste la version web complète. */
+var PLAY=(function(){ try{ if(/[?&]play=1\b/.test(location.search)||/^android-app:\/\//.test(document.referrer||'')) sessionStorage.setItem('masbet_play','1'); return sessionStorage.getItem('masbet_play')==='1'; }catch(e){ return /[?&]play=1\b/.test(location.search); } })();
+if(PLAY) document.documentElement.classList.add('play');
+</script>
 <title>Masbet Suite — Devis</title>
 <style>
   :root{--navy:#14213d;--navy2:#1d2f57;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--acc:#173a8c}
@@ -165,6 +171,8 @@
   }
   @media(max-width:640px){#doc{padding:18px 14px;font-size:11.5px}#doc .blocs{grid-template-columns:1fr}#doc .totaux{width:100%}#doc .en{flex-direction:column}#doc .titredoc,#doc .meta{text-align:left}}
   @media screen and (max-width:640px){#doc{padding:18px 12px;font-size:11px}#doc td,#doc th{padding:4px 3px}#doc .blocs{grid-template-columns:1fr}#doc .totaux{width:100%}#doc .sdbloc{padding:6px}#doc th.n{white-space:normal}#doc .sdbloc td.n{white-space:normal}#doc .sign{gap:14px}}
+  /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
+  .play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
 </style>
 </head>
 <body>

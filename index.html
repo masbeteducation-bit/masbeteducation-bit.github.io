@@ -27,6 +27,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Masbet">
 <script src="config.js"></script>
+<script>
+/* Version Google Play (application Android) : ouverte avec ?play=1, ou depuis l'application (android-app://).
+   Gardé pour la session seulement : le même téléphone dans Chrome reste la version web complète. */
+var PLAY=(function(){ try{ if(/[?&]play=1\b/.test(location.search)||/^android-app:\/\//.test(document.referrer||'')) sessionStorage.setItem('masbet_play','1'); return sessionStorage.getItem('masbet_play')==='1'; }catch(e){ return /[?&]play=1\b/.test(location.search); } })();
+if(PLAY) document.documentElement.classList.add('play');
+</script>
 <style>
   :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
   *{box-sizing:border-box}
@@ -230,6 +236,13 @@
   .qchoix button.faux{border-color:var(--err);background:#fdecea}
   .qchoix button.faux b{background:var(--err);color:#fff}
   .qchoix button:disabled{opacity:1}
+  /* réponse touchée : marquée tout de suite, en attendant la correction du serveur */
+  .qchoix button.choisi{border-color:#173a8c;background:#eaf0ff;box-shadow:0 0 0 3px rgba(23,58,140,.15)}
+  .qchoix button.choisi b{background:#173a8c;color:#fff}
+  .qchoix button .att{margin-left:auto;width:18px;height:18px;border:2.5px solid #173a8c;border-right-color:transparent;border-radius:50%;flex-shrink:0;animation:tourne .8s linear infinite}
+  @keyframes tourne{to{transform:rotate(360deg)}}
+  .attv{margin-top:10px;font-weight:700;color:#173a8c}
+  @media (prefers-reduced-motion:reduce){ .qchoix button .att{animation:none;border-right-color:#173a8c} }
   .qexpl{margin-top:12px;padding:12px;border-radius:10px;font-size:14.5px}
   .qexpl.ok{background:#e8f6ee;color:var(--ok)}.qexpl.ko{background:#fdecea;color:var(--err)}
   .qexpl span{display:block;color:var(--ink);font-weight:500;margin-top:4px;white-space:pre-line}
@@ -414,6 +427,8 @@
   .horsLigne{position:sticky;top:0;z-index:55;background:#5d6782;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:7px 10px}
   .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#fff7e6;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
   .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#25d366;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
+  /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
+  .play a[href="#quiz&defi"],.play #cDefi,.play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
 </style>
 </head>
 <body>
@@ -954,12 +969,21 @@ function montrerQuestion(){
     if(r<=0){ clearInterval(QTIMER); repondre(-1); }
   },250);
 }
+/** Réponse touchée : marquée tout de suite (couleur + petit rond qui tourne) et message « réponse reçue »,
+ *  pour que le joueur ne touche pas plusieurs fois en attendant la correction. */
+function marquerChoix(pref, j, explId){
+  var b=j>=0&&document.getElementById(pref+j), x=document.getElementById(explId);
+  if(b){ b.classList.add('choisi'); b.setAttribute('aria-busy','true'); b.insertAdjacentHTML('beforeend','<span class="att" aria-hidden="true"></span>'); }
+  if(x) x.innerHTML='<div class="attv" role="status">'+esc(j>=0?AL('Repons ou resevwa… n ap verifye l.','Réponse reçue… vérification en cours.'):AL('Tan an fini… n ap verifye.','Temps écoulé… vérification en cours.'))+'</div>';
+}
+function enleverChoix(){ document.querySelectorAll('.qchoix button.choisi').forEach(function(b){ b.classList.remove('choisi'); b.removeAttribute('aria-busy'); }); document.querySelectorAll('.qchoix .att').forEach(function(s){ s.remove(); }); }
 function repondre(i, essai){
   if(QATTENTE && !essai) return; QATTENTE=true; clearInterval(QTIMER);
   var q=QZ.questions[QPOS];
   document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=true; });
-  if(!essai) document.getElementById('qExpl').innerHTML='<div class="hint" style="margin-top:10px">⏳</div>';
+  if(!essai) marquerChoix('qc', i, 'qExpl');
   api('quizrep',{appareil:appareil(), n:QPOS, choix:i<0?'temps':i}).then(function(r){
+    enleverChoix();
     if(r.bonne>=0) document.getElementById('qc'+r.bonne).classList.add('bon');
     if(r.choix>=0 && !r.correct) document.getElementById('qc'+r.choix).classList.add('faux');
     if(!r.correct && r.bonne>=0) noterErreur(q, r.bonne, r.explHt, r.explFr);
@@ -973,7 +997,7 @@ function repondre(i, essai){
   }, function(e){
     // Réseau lent ou coupure brève : un nouvel essai automatique (la première réponse enregistrée compte, pas de double compte).
     if(!essai){ setTimeout(function(){ repondre(i, 1); }, 1500); return; }
-    QATTENTE=false; document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=false; });
+    QATTENTE=false; enleverChoix(); document.querySelectorAll('.qchoix button').forEach(function(b){ b.disabled=false; });
     document.getElementById('qExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(errMsg(e))+detailErr(e)+'</div>';
   });
 }
@@ -1160,7 +1184,9 @@ function pakRep(j){
   if(PATT||!PQ) return; PATT=true; clearInterval(PTIMER);
   var q=PQ;
   document.querySelectorAll('#'+PRUN.zone+' .qchoix button').forEach(function(b){ b.disabled=true; });
+  marquerChoix('pc', j, 'pExpl');
   api(PRUN.r,{appareil:appareil(), id:PT.id, n:q.n, choix:j<0?'temps':j}).then(function(r){
+    enleverChoix();
     PECRAN='corr'; PT.score=r.score; PT.points=r.points; PT.pos=q.n+1;
     if(r.bonne>=0 && document.getElementById('pc'+r.bonne)) document.getElementById('pc'+r.bonne).classList.add('bon');
     if(r.choix>=0 && !r.correct && document.getElementById('pc'+r.choix)) document.getElementById('pc'+r.choix).classList.add('faux');
@@ -1171,6 +1197,7 @@ function pakRep(j){
     if(r.fini){ PREP=r; if(PRUN.mode==='konkou') chargerKonkou(true); else if(PRUN.mode==='pro') chargerPro(true); else chargerPakou(); }
   }, function(e){
     var m=errMsg(e);
+    enleverChoix();
     if(m===T('reseau')){ PATT=false; document.querySelectorAll('#'+PRUN.zone+' .qchoix button').forEach(function(b){ b.disabled=false; });
       document.getElementById('pExpl').innerHTML='<div class="err" style="margin-top:10px">'+T('reseau')+'</div>'; }
     else pakQuestion();   // réponse déjà enregistrée (réseau coupé au retour) : on se resynchronise
@@ -1342,7 +1369,7 @@ function blocPass(){
   if(!es.compte) tete='<b>🎁 '+esc(T('proEssaiKont')(es.total))+'</b><button class="btn" style="margin:8px 0" onclick="kontOuvrir({pro:1})">'+T('proKreyeKont')+'</button>';
   else if(es.reste>0) tete='<b>🎁 '+esc(T('proEssaiReste')(es.reste,es.total))+'</b><div class="kbar"><div style="width:'+Math.round(100*es.reste/Math.max(1,es.total))+'%"></div></div>';
   else tete='<b>🔒 '+esc(T('proEssaiFini')(es.total))+'</b>';
-  return '<div class="konkou" id="blocPass">'+tete+'<span>'+esc(PRO.passTexte||'')+'</span>'+
+  return '<div class="konkou" id="blocPass">'+tete+'<span class="pxn">'+esc(PRO.passTexte||'')+'</span>'+
     '<div class="row"><input id="passCode" placeholder="'+T('passKod')+'" autocapitalize="characters" value="'+esc(passUrl())+'"><button onclick="activerPass()">'+T('passAktive')+'</button></div>'+
     '<div id="passMsg"></div><a class="hint" href="achte.html#pro" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:6px">'+T('passAchte')+' →</a>'+(p.expire?'<div class="hint">'+T('passEkspire')+'</div>':'')+'</div>';
 }
@@ -1516,7 +1543,7 @@ function afficherLives(){
   var h='';
   direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':'')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'<div>'+btnPataje('patajeLive(LIVES_PAR_CLE[\'d'+i+'\']?LIVES_PAR_CLE[\'d'+i+'\'].titre:\'\')')+'</div></div>'; });
   if(!direk.length) h+=afficheRepo(avenir[0]);
-  (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p">🔒 '+esc(T('tikePri')(x.prix))+'</span>':'')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
+  (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>':'')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
   fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':'')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
   h+=blocReseaux();
   if(l.length) h+='<div class="hint" style="margin-top:6px">'+T('liveDonnees')+'</div>';
@@ -1536,9 +1563,10 @@ function afficheRepo(x){
   return '<div class="affiche" style="margin-bottom:14px"><div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
     '<div class="afmil"><div style="font-size:42px;line-height:1">📡</div><div class="aflbl">'+T('pasLive')+'</div></div>'+
     '<div>'+(x?'<div style="font-size:12.5px;color:var(--gold);font-weight:800;text-transform:uppercase;letter-spacing:.5px">'+T('prochainLive')+'</div><div class="aft">'+esc(x.titre)+'</div>'+
-      (x.quand?'<span class="afpr" style="margin-right:6px">📅 '+esc(quandLive(x.quand))+'</span>':'')+'<span class="afpr">🔒 '+esc(T('tikePri')(x.prix))+'</span>'
+      (x.quand?'<span class="afpr" style="margin-right:6px">📅 '+esc(quandLive(x.quand))+'</span>':'')+'<span class="afpr pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>'
       :'<div style="font-size:15px;color:#dfe4f2;text-shadow:0 1px 4px rgba(0,0,0,.4)">'+T('pwochenAnons')+'</div>')+'</div></div>'+
-    '<div class="afchoix"><a class="btn" href="achte.html#tikes">💳 '+T('achteDavans')+'</a><div style="font-size:12.5px;color:#c9d1e6">'+T('tikeRegle')+'</div></div></div>';
+    // ticket à l'avance seulement quand un live est annoncé (sinon on ne sait pas pour quel live on paie)
+    (x?'<div class="afchoix"><a class="btn" href="achte.html#tikes">💳 '+T('achteDavans')+'</a><div style="font-size:12.5px;color:#c9d1e6">'+T('tikeRegle')+'</div></div>':'')+'</div>';
 }
 // Lives gratuits : pages publiques de Masbet (Config RESEAUX_MASBET)
 function blocReseaux(){
@@ -1553,7 +1581,7 @@ function blocLecteur(x,k){
   return '<div id="lk-'+k+'"><div class="affiche'+(ouvert?' ouvert':'')+'">'+
     '<div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
       '<div class="afmil"><button class="afplay" aria-label="'+esc(T('klikeGade'))+'" onclick="choixTike(\''+k+'\')">▶</button><div class="aflbl">'+T('klikeGade')+'</div></div>'+
-      '<div><div class="aft">'+esc(x.titre)+'</div><span class="afpr">🔒 '+esc(T('tikePri')(x.prix))+'</span></div></div>'+
+      '<div><div class="aft">'+esc(x.titre)+'</div><span class="afpr pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span></div></div>'+
     '<div class="afchoix'+(ouvert?'':' hidden')+'" id="ch-'+k+'">'+
       '<a class="btn" href="achte.html#tikes">💳 '+T('achteYonTike')+' · '+esc(String(x.prix))+' HTG</a>'+
       '<div style="font-size:14px;font-weight:700">'+T('mwenGenKod')+'</div>'+
@@ -1876,7 +1904,7 @@ function chargerAccueil(){
     },
     function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
 }
-function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div>'; }
+function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div><div class="pfond"><a href="confidentialite.html?lang='+LANG+'" style="color:inherit">'+esc(AL('Konfidansyalite','Confidentialité'))+'</a></div>'; }
 function toutAfficher(){ afficherLokal();
   afficherDate();
   if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives();
@@ -2302,7 +2330,9 @@ function defiRendre(){
 function defiRep(j){
   if(DATT||!DQ) return; DATT=true; clearInterval(DTIMER);
   var q=DQ; document.querySelectorAll('#defiZone .qchoix button').forEach(function(b){ b.disabled=true; });
+  marquerChoix('dc', j, 'dExpl');
   apiPost('defi_rep',{appareil:appareil(), id:DT.id, n:q.n, choix:j<0?'temps':j}).then(function(r){
+    enleverChoix();
     DT.points=r.points; DT.pos=q.n+1;
     if(r.bonne>=0&&document.getElementById('dc'+r.bonne)) document.getElementById('dc'+r.bonne).classList.add('bon');
     if(r.choix>=0&&!r.correct&&document.getElementById('dc'+r.choix)) document.getElementById('dc'+r.choix).classList.add('faux');
@@ -2311,7 +2341,7 @@ function defiRep(j){
     document.getElementById('dExpl').innerHTML='<div class="qexpl '+(r.correct?'ok':'ko')+'"><b>'+titre+'</b>'+(!r.correct&&r.bonne>=0&&q.choix?'<span>'+T('repons')+' <b>'+esc(q.choix[r.bonne])+'</b></span>':'')+(expl?'<span>'+esc(expl)+'</span>':'')+'</div>'+
       '<button class="btn" style="margin-top:12px" onclick="'+(r.fini?'defiResultat()':'defiQuestion()')+'">'+(r.fini?T('wèRezilta'):T('swivan'))+'</button>';
     if(r.fini) DREP=r;
-  }, function(e){ DATT=false; document.querySelectorAll('#defiZone .qchoix button').forEach(function(b){ b.disabled=false; });
+  }, function(e){ DATT=false; enleverChoix(); document.querySelectorAll('#defiZone .qchoix button').forEach(function(b){ b.disabled=false; });
     document.getElementById('dExpl').innerHTML='<div class="err" style="margin-top:10px">'+esc(defiErr(e))+'</div>'; });
 }
 function defiResultat(){
