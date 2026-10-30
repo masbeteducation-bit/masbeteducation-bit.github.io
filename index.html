@@ -213,7 +213,8 @@ if(PLAY) document.documentElement.classList.add('play');
   .reseaux{margin-top:16px;background:#eef2ff;border-radius:12px;padding:12px}
   .reseaux b{display:block;color:#173a8c;margin-bottom:8px;font-size:14.5px}
   .reseaux div{display:flex;flex-wrap:wrap;gap:8px}
-  .reseaux a{background:#fff;border:1px solid #d6def5;border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;color:#14213d;text-decoration:none}
+  .reseaux a{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid #d6def5;border-radius:999px;padding:7px 13px;font-weight:700;font-size:14px;color:#14213d;text-decoration:none}
+svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4px}
   .verrou .row{display:flex;gap:8px;margin-top:10px}
   .verrou input{flex:1;min-width:0;padding:11px;border-radius:10px;border:0;font-size:16px;text-transform:uppercase;letter-spacing:1px}
   .verrou button{border:0;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:800;padding:0 14px;font-size:15px}
@@ -617,7 +618,7 @@ var TXT = {
     bon:'Bravo, se sa !', pabon:'Non, se pa sa.', tanFini:'Tan an fini !', repons:'Bon repons lan :', rezilta:'Rezilta ou jodi a', segonn:'s',
     klasman:'Klasman', kJodi:'Jodi a', kSemen:'Semèn nan', pakoJwe:'Pèsonn poko jwe. Se ou ki premye ?', geniesTxt:'Plis quiz ak defi sou platfòm Les Génies d\'Haïti.', geniesBtn:'Ale sou Les Génies d\'Haïti ↗', quizPoko:'Quiz la poko pare. Tounen pita.', jou:'jou',
     kdTitre:function(s){ return '🎁 Bravo ! Ou genyen Quiz semèn '+s+' la.'; }, kdTxt:'Kòd Wi-Fi ou ap tann ou nan « Kòd mwen » →',
-    antTitre:'Antrene w pa rubrik', antLien:'Oswa antrene w pa rubrik →', antTxt:'Gratis, san tan, otan fwa ou vle. 10 kesyon chak fwa, ak koreksyon an. Pou egzèsis yo, pran yon fèy ak yon plim !', antTout:'Tout rubrik yo', antKes:function(n){ return n+' kesyon'; }, antMeyo:function(s){ return 'Pi bon nòt ou : '+s; }, antFin:'Fini !', antRejwe:'Rejwe', antLot:'Lòt rubrik', antPoko:'Pa gen kesyon pou antrennman an kounye a.', antKom:function(s,n){ return s===n?'Bravo, ou konn tout !':s>=n*0.7?'Trè byen !':s>=n*0.4?'Pa mal, kontinye antrene w.':'Kontinye, w ap pwogrese !'; },
+    antTitre:'Antrene w pa ribrik', antLien:'Oswa antrene w pa ribrik →', antTxt:'Gratis, san tan, otan fwa ou vle. 10 kesyon chak fwa, ak koreksyon an. Pou egzèsis yo, pran yon fèy ak yon plim !', antTout:'Tout ribrik yo', antKes:function(n){ return n+' kesyon'; }, antMeyo:function(s){ return 'Pi bon nòt ou : '+s; }, antFin:'Fini !', antRejwe:'Rejwe', antLot:'Lòt ribrik', antPoko:'Pa gen kesyon pou antrennman an kounye a.', antKom:function(s,n){ return s===n?'Bravo, ou konn tout !':s>=n*0.7?'Trè byen !':s>=n*0.4?'Pa mal, kontinye antrene w.':'Kontinye, w ap pwogrese !'; },
     pakTitre:'Pakou mwen', pakTxt:'Monte etap pa etap nan chak pakou. Pou w pase nan etap swivan an, reyisi yon tès 10 kesyon. Ou pa janm desann.',
     etapes:['Debitan','Aprantisaj','Konfime','Ekspè','Jeni'], etap:'Etap', pakSeuil:function(s,n){ return s+'/'+n+' pou pase'; }, pakRest:function(r){ return r+' tès rete jodi a'; },
     pakPase:function(e){ return 'Pase tès etap '+e+' →'; }, pakKontinye:'Kontinye tès la →', pakPoko:'Poko gen ase kesyon', pakDemen:'Tounen demen', pakFini:'Pakou fini !',
@@ -630,11 +631,11 @@ var TXT = {
     invTitre:'Ou envite nan Konkou Masbet !', invMsg:'N ap kontakte w pou dat manch kalifikasyon yo.', invTel:'Kite nimewo telefòn ou pou nou ka kontakte w :', invTelOk:'Nimewo w anrejistre ✓', voye:'Voye', invVoir:'Wè detay yo →',
     pakHome:function(b,v,n){ return '🎯 Pakou mwen : '+b+' badj · Konkou '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Revize erè m yo ('+n+')'; }, revTitre:'Revizyon', revTxt:'Kesyon ou te rate yo. Lè w jwenn yon kesyon, li soti nan lis la.', revFin:function(s,n,r){ return 'Ou jwenn '+s+' sou '+n+'. Rete '+r+' kesyon pou revize.'; },
-    proTitre:'Espas pwofesyonèl', proTxt:'Pou pwofesyonèl ak etidyan : 12 rubrik metye ak syans, 5 etap chak. Rubrik sa yo pa antre nan Quiz jou a ni nan Konkou a.',
-    etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proEssaiKont:function(n){ return n+' kesyon gratis pou w eseye : kreye yon kont Masbet (yon non ase).'; }, proEssaiReste:function(r,n){ return 'Rete '+r+' kesyon gratis sou '+n+'.'; }, proEssaiFini:function(n){ return 'Ou fin itilize '+n+' kesyon gratis yo. Pran Pass Pro a pou w kontinye.'; }, proKreyeKont:'👤 Kreye kont mwen', proDenyeTes:function(r){ return 'Atansyon : rete '+r+' kesyon gratis. Tès sa a ap dènye tès gratis ou.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
-    passAktif:function(d){ return 'Pass Pro aktif jiska '+d+'.'; }, passTout:'Tout etap ak tout rubrik yo louvri.', proByento:'Byento', proPokoKesyon:'Kesyon yo ap vini byento.', proFini:'Rubrik fini : atestasyon disponib',
+    proTitre:'Espas pwofesyonèl', proTxt:'Pou pwofesyonèl ak etidyan : 12 ribrik metye ak syans, 5 etap chak. Ribrik sa yo pa antre nan Quiz jou a ni nan Konkou a.',
+    etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proGratis:function(g){ return g?'Etap 1'+(g>1?' rive '+g:'')+' gratis nan chak ribrik, san limit. Etap '+(g+1)+' rive 5 ak atestasyon an : Pass Pro.':'Espas pwofesyonèl la mande Pass Pro a.'; }, proEssaiKont:function(n){ return n+' kesyon gratis pou w eseye : kreye yon kont Masbet (yon non ase).'; }, proEssaiReste:function(r,n){ return 'Rete '+r+' kesyon gratis sou '+n+'.'; }, proEssaiFini:function(n){ return 'Ou fin itilize '+n+' kesyon gratis yo. Pran Pass Pro a pou w kontinye.'; }, proKreyeKont:'👤 Kreye kont mwen', proDenyeTes:function(r){ return 'Atansyon : rete '+r+' kesyon gratis. Tès sa a ap dènye tès gratis ou.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
+    passAktif:function(d){ return 'Pass Pro aktif jiska '+d+'.'; }, passTout:'Tout etap ak tout ribrik yo louvri.', proByento:'Byento', proPokoKesyon:'Kesyon yo ap vini byento.', proFini:'Ribrik fini : atestasyon disponib',
     proBezwenPass:'Pass Pro pou w kontinye', proAntrene:'Antrene w (san tan)', proRetounen:'Retounen nan Espas pwofesyonèl', proRegles:function(n,s){ return n+' kesyon, 40 segonn chak (90 segonn pou kalkil yo). Fò w jwenn '+s+' bon repons pou w pase.'; },
-    proReyisi:function(e,nom){ return '🎉 Bravo ! Ou pase etap '+e+' : '+nom+' !'; }, proTout:'🏆 Ou fini rubrik la : ou se yon Ekspè. Atestasyon w pare.',
+    proReyisi:function(e,nom){ return '🎉 Bravo ! Ou pase etap '+e+' : '+nom+' !'; }, proTout:'🏆 Ou fini ribrik la : ou se yon Ekspè. Atestasyon w pare.',
     attTitre:'Atestasyon nivo', attCertifie:'Masbet Education sètifye ke', attNivo:function(n){ return 'rive nan nivo « '+n+' » nan'; }, attVerifye:'Verifye atestasyon sa a :', attEnprime:'Enprime / anrejistre an PDF', attFondate:'Fondatè, Masbet Education', fondate:'Fondatè : ',
     attNouvo:'Atestasyon w lan pare ! Gade l nan Espas pwofesyonèl la.', attVerifTitre:'Verifikasyon atestasyon', attValab:'Atestasyon valab',
     pwen:'pwen', konManch:'Manch', konDemi:'Demi-final', konVo:function(n){ return n+' pwen'; },
@@ -656,7 +657,7 @@ var TXT = {
     installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', iosEtap:'<b>Sou iPhone :</b><br>1. Louvri paj sa a nan <b>Safari</b>.<br>2. Peze bouton <b>Pataje</b> a (kare ak flèch ⬆️ anba ekran an).<br>3. Chwazi <b>« Sur l\'écran d\'accueil »</b> (Add to Home Screen), epi <b>Ajouter</b>.', iosApp:'<b>Ou nan WhatsApp oswa Facebook :</b> peze ⋯ oswa ⬆️ epi chwazi <b>« Ouvrir dans Safari »</b>. Apre sa, swiv etap yo.', aucuneOffre:'Pa gen ofri pou kounye a.',
     meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
     pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Nan listwa', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
-    aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Rubrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
+    aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Ribrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
     reporte:'Ranvwaye', annule:'Anile', quota:'Nou rive nan limit mizajou pou jodi a. Rezilta yo ka an reta.', erreurMatch:'Pa ka chaje match yo kounye a.',
     majA:'Mete ajou', aucuneVideo:'Poko gen videyo.', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', aide:'Ou bezwen èd ? WhatsApp : ',
     meteoSrc:'Meteyo : Open-Meteo', liveN:function(n){ return n+' match an dirèk'; },
@@ -686,7 +687,7 @@ var TXT = {
     pakHome:function(b,v,n){ return '🎯 Mes parcours : '+b+' badge(s) · Concours '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Réviser mes erreurs ('+n+')'; }, revTitre:'Révision', revTxt:'Les questions que vous avez manquées. Une question réussie sort de la liste.', revFin:function(s,n,r){ return 'Vous avez trouvé '+s+' sur '+n+'. Il reste '+r+' question(s) à réviser.'; },
     proTitre:'Espace professionnel', proTxt:'Pour les professionnels et les étudiants : 12 rubriques métiers et sciences, 5 étapes chacune. Ces rubriques n\'entrent ni dans le Quiz du jour ni dans le Concours.',
-    etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proEssaiKont:function(n){ return n+' questions gratuites pour essayer : créez un compte Masbet (un nom suffit).'; }, proEssaiReste:function(r,n){ return 'Il reste '+r+' questions gratuites sur '+n+'.'; }, proEssaiFini:function(n){ return 'Vous avez utilisé les '+n+' questions gratuites. Prenez le Pass Pro pour continuer.'; }, proKreyeKont:'👤 Créer mon compte', proDenyeTes:function(r){ return 'Attention : il reste '+r+' questions gratuites. Ce test sera votre dernier test gratuit.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
+    etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proGratis:function(g){ return g?(g>1?'Étapes 1 à '+g+' gratuites':'Étape 1 gratuite')+' dans chaque rubrique, sans limite. Étapes '+(g+1)+' à 5 et attestation : Pass Pro.':'L\'Espace professionnel demande le Pass Pro.'; }, proEssaiKont:function(n){ return n+' questions gratuites pour essayer : créez un compte Masbet (un nom suffit).'; }, proEssaiReste:function(r,n){ return 'Il reste '+r+' questions gratuites sur '+n+'.'; }, proEssaiFini:function(n){ return 'Vous avez utilisé les '+n+' questions gratuites. Prenez le Pass Pro pour continuer.'; }, proKreyeKont:'👤 Créer mon compte', proDenyeTes:function(r){ return 'Attention : il reste '+r+' questions gratuites. Ce test sera votre dernier test gratuit.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
     passAktif:function(d){ return 'Pass Pro actif jusqu\'au '+d+'.'; }, passTout:'Toutes les étapes et toutes les rubriques sont ouvertes.', proByento:'Bientôt', proPokoKesyon:'Les questions arrivent bientôt.', proFini:'Rubrique terminée : attestation disponible',
     proBezwenPass:'Pass Pro pour continuer', proAntrene:'S\'entraîner (sans chrono)', proRetounen:'Retour à l\'Espace professionnel', proRegles:function(n,s){ return n+' questions, 40 secondes chacune (90 secondes pour les calculs). Il faut '+s+' bonnes réponses pour réussir.'; },
     proReyisi:function(e,nom){ return '🎉 Bravo ! Étape '+e+' réussie : '+nom+' !'; }, proTout:'🏆 Rubrique terminée : vous êtes Expert. Votre attestation est prête.',
@@ -728,7 +729,7 @@ Object.assign(TXT.ht,{
     defiBon:function(b,t){ return b+' bon repons sou '+t; }, defiRang:function(r,n){ return r===1?'🥇 Ou premye nan semèn nan ('+n+' jwè) !':'Ou '+r+'e nan semèn nan ('+n+' jwè).'; }, defiMeyo:function(m){ return 'Pi bon nòt ou semèn sa a : '+m+' pwen.'; },
     defiRetou:'Retounen nan Defi a', defiPataje:function(p,r){ return '🏁 Mwen fè '+p+' pwen nan Defi Masbet la ('+r+'e nan semèn nan). Vin eseye !'; },
     jweTitre:'Jwe · Fòme · Genyen', jweSou:'Aprann pandan w ap jwe, epi genyen pri.',
-    jwe:[['🧠','Quiz jou a','5 kesyon chak jou · pi bon nan semèn nan genyen','#quiz','Gratis'],['🏁','Defi Masbet','10 kesyon difisil · ganyan semèn nan : Pass Pro gratis 24 è','#quiz&defi','Tikè'],['🏆','Konkou Masbet','Manch, demi-final, final : gwo konkou nasyonal la','#quiz&konkou','Gratis'],['🎯','Pakou ak badj','Monte etap pa etap nan chak rubrik, ranmase badj','#quiz&pakou','Gratis'],['💼','Espas pwofesyonèl','12 metye ak syans · atestasyon Masbet','#quiz&pro','25 gratis'],['📚','Antrene w pa rubrik','San tan, otan fwa ou vle, ak koreksyon','#quiz&antren','Gratis']],
+    jwe:[['🧠','Quiz jou a','5 kesyon chak jou · pi bon nan semèn nan genyen','#quiz','Gratis'],['🏁','Defi Masbet','10 kesyon difisil · ganyan semèn nan : Pass Pro gratis 24 è','#quiz&defi','Tikè'],['🏆','Konkou Masbet','Manch, demi-final, final : gwo konkou nasyonal la','#quiz&konkou','Gratis'],['🎯','Pakou ak badj','Monte etap pa etap nan chak ribrik, ranmase badj','#quiz&pakou','Gratis'],['💼','Espas pwofesyonèl','12 metye ak syans · atestasyon Masbet','#quiz&pro','Etap 1-2 gratis'],['📚','Antrene w pa ribrik','San tan, otan fwa ou vle, ak koreksyon','#quiz&antren','Gratis']],
     konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
 });
 Object.assign(TXT.fr,{
@@ -739,7 +740,7 @@ Object.assign(TXT.fr,{
     defiBon:function(b,t){ return b+' bonnes réponses sur '+t; }, defiRang:function(r,n){ return r===1?'🥇 Vous êtes 1er de la semaine ('+n+' joueurs) !':'Vous êtes '+r+'e de la semaine ('+n+' joueurs).'; }, defiMeyo:function(m){ return 'Votre meilleur score cette semaine : '+m+' points.'; },
     defiRetou:'Retour au Défi', defiPataje:function(p,r){ return '🏁 J\'ai fait '+p+' points au Défi Masbet ('+r+'e de la semaine). Venez essayer !'; },
     jweTitre:'Jouer · Se former · Gagner', jweSou:'Apprenez en jouant, et gagnez des prix.',
-    jwe:[['🧠','Quiz du jour','5 questions par jour · le meilleur de la semaine gagne','#quiz','Gratuit'],['🏁','Défi Masbet','10 questions difficiles · le gagnant de la semaine : Pass Pro gratuit 24 h','#quiz&defi','Ticket'],['🏆','Concours Masbet','Manches, demi-finale, finale : le grand concours national','#quiz&konkou','Gratuit'],['🎯','Parcours et badges','Montez étape par étape dans chaque rubrique, gagnez des badges','#quiz&pakou','Gratuit'],['💼','Espace professionnel','12 métiers et sciences · attestation Masbet','#quiz&pro','25 gratuites'],['📚','S\'entraîner par rubrique','Sans chrono, autant de fois que vous voulez, avec correction','#quiz&antren','Gratuit']],
+    jwe:[['🧠','Quiz du jour','5 questions par jour · le meilleur de la semaine gagne','#quiz','Gratuit'],['🏁','Défi Masbet','10 questions difficiles · le gagnant de la semaine : Pass Pro gratuit 24 h','#quiz&defi','Ticket'],['🏆','Concours Masbet','Manches, demi-finale, finale : le grand concours national','#quiz&konkou','Gratuit'],['🎯','Parcours et badges','Montez étape par étape dans chaque rubrique, gagnez des badges','#quiz&pakou','Gratuit'],['💼','Espace professionnel','12 métiers et sciences · attestation Masbet','#quiz&pro','Étapes 1-2 gratuites'],['📚','S\'entraîner par rubrique','Sans chrono, autant de fois que vous voulez, avec correction','#quiz&antren','Gratuit']],
     konEtaps:function(e,n,man,demi){ return [['Parcours','Validez l\'étape '+e+' dans '+n+' parcours : vous recevez une invitation.'],['Invitation','Le Concours démarre quand il y a assez d\'invités.'],['Manches',man+' manches en ligne. Chaque bonne réponse donne des points (étape 5 = 5 points).'],['Demi-finale','Les '+demi+' meilleurs se qualifient. Vérification par SMS.'],['Finale','La grande finale : le vainqueur du Concours Masbet.']]; }, konKijanTit:'Comment marche le Concours',
 });
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
@@ -1109,6 +1110,19 @@ function blocKonkou(){
   var pct=Math.round(100*Math.min(k.valides||0,k.requis||4)/(k.requis||4));
   return '<div class="konkou"><b>🎓 '+T('konkouTitre')+'</b><span>'+esc(T('konkouTxt')(k.etape||3,k.requis||4))+'</span><div class="kbar"><div style="width:'+pct+'%"></div></div><span class="hint">'+esc(T('konkouPwo')(k.valides||0,k.requis||4))+'</span></div>';
 }
+// v41.4 : attestation Masbet d'un parcours terminé (au moins 90 % de bonnes réponses sur les 5 tests)
+function attParcours(sc,i,restants){
+  if(!sc||!sc.total) return '';
+  if(sc.merite) return '<button class="btn" style="margin-top:6px" onclick="voirCerts()">📜 '+esc(AL('Atestasyon','Attestation'))+' · '+sc.pct+' %</button>';
+  var h='<div class="hint" style="margin-top:6px">'+esc(AL(sc.bonnes+'/'+sc.total+' ('+sc.pct+' %). Atestasyon an mande 90 %.',sc.bonnes+'/'+sc.total+' ('+sc.pct+' %). L\'attestation demande 90 %.'))+'</div>';
+  // v41.5 : rattrapage — repasser une étape validée ; la plus faible d'abord ; le meilleur score est gardé
+  var et=(sc.etapes||[]).filter(function(x){ return x.total&&x.bonnes<x.total; }).sort(function(a,b){ return a.bonnes/a.total-b.bonnes/b.total||a.etape-b.etape; });
+  if(!et.length) return h;
+  h+='<div class="hint" style="margin-top:4px">'+esc(AL('Amelyore yon etap : pi bon nòt la rete.','Améliorez une étape : le meilleur score est gardé.'))+'</div>';
+  if(!restants) return h+'<button class="btn sec" style="margin-top:6px" disabled>'+T('pakDemen')+'</button>';
+  return h+et.map(function(x,k){ return '<button class="btn'+(k?' sec':'')+'" style="margin-top:6px" onclick="pakIntro('+i+','+x.etape+')">'+esc(AL('Amelyore etap '+x.etape+' ('+x.bonnes+'/'+x.total+')','Améliorer l\'étape '+x.etape+' ('+x.bonnes+'/'+x.total+')'))+'</button>'; }).join('');
+}
+function voirCerts(){ var cs=document.getElementById('cSert'); if(!cs) return; cs.classList.remove('hidden'); chargerCerts(true); setTimeout(function(){ cs.scrollIntoView({behavior:'smooth',block:'start'}); },150); }
 function afficherPakou(){
   var c=document.getElementById('cPakou'), z=document.getElementById('pakZone');
   if(!PAK) return;
@@ -1118,7 +1132,7 @@ function afficherPakou(){
     var fini=p.etape>5, dots='';
     for(var e=1;e<=5;e++) dots+='<i class="'+(e<p.etape?'v':e===p.etape?'c':'')+'" title="'+esc(nomEtape(e))+'">'+(e<p.etape?BADJ[e-1]:e)+'</i>';
     var enc=PAK.enCours&&PAK.enCours.parcours===p.nom, bt;
-    if(fini) bt='<div class="pfini">👑 '+T('pakFini')+'</div>';
+    if(fini) bt='<div class="pfini">👑 '+T('pakFini')+'</div>'+attParcours(p.score,i,p.restants);
     else if(enc) bt='<button class="btn" onclick="pakIntro('+i+')">'+T('pakKontinye')+'</button>';
     else if(p.questions<5) bt='<button class="btn sec" disabled>'+T('pakPoko')+'</button>';
     else if(!p.restants) bt='<button class="btn sec" disabled>'+T('pakDemen')+'</button>';
@@ -1136,13 +1150,17 @@ function envoyerTelInvite(){
   api('concourstel',{appareil:appareil(), telephone:t}).then(function(){ ecrire('masbet_qtel',t); PAK.concours.telDonne=true; afficherPakou(); },
     function(e){ m.innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
-function pakIntro(i){
+var PRATT=0;   // v41.5 : étape repassée (rattrapage), 0 = test normal
+function pakIntro(i,re){
   var p=PAK&&PAK.parcours[i]; if(!p) return;
-  PI=i; PECRAN='intro';
+  PI=i; PECRAN='intro'; PRATT=re||0;
+  var ee=PRATT||p.etape, sx=PRATT?(p.score&&p.score.etapes||[])[PRATT-1]:null;
   var z=document.getElementById('pakZone'), enc=PAK.enCours, seuil=Math.ceil(p.seuil*PAK.nbQuestions/10-1e-9);
   if(enc && enc.parcours===p.nom) return pakReprendre(enc);
-  z.innerHTML='<h2 style="margin-top:0">'+esc(nomPak(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+nomEtape(p.etape))+'</div>'+
-    '<div class="regles">'+esc(T('pakRegles')(PAK.nbQuestions,seuil,PAK.secondes||20))+'</div>'+
+  z.innerHTML='<h2 style="margin-top:0">'+esc(nomPak(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+ee+' · '+nomEtape(ee))+'</div>'+
+    (PRATT?'<div class="regles">'+esc(AL('Tès ratrapaj : '+PAK.nbQuestions+' kesyon nan etap '+PRATT+', kwonometre. Nòt ou kounye a : '+(sx?sx.bonnes+'/'+sx.total:'')+'. Si w fè pi byen, nouvo nòt la ranplase l ; si se pa sa, ou pa pèdi anyen. Li konte nan '+(PAK.parJour||3)+' tès pa jou yo.',
+      'Test de rattrapage : '+PAK.nbQuestions+' questions de l\'étape '+PRATT+', chronométrées. Votre score actuel : '+(sx?sx.bonnes+'/'+sx.total:'')+'. S\'il est meilleur, le nouveau score le remplace ; sinon, vous ne perdez rien. Il compte dans les '+(PAK.parJour||3)+' tests par jour.'))+'</div>'
+    :'<div class="regles">'+esc(T('pakRegles')(PAK.nbQuestions,seuil,PAK.secondes||20))+'</div>')+
     (enc?'<div class="avert">'+esc(T('pakAnile')(nomPak(enc.parcours)))+'</div>':'')+
     (lire('masbet_pseudo')?'':'<label class="hint" for="pPseudo">'+T('pseudo')+'</label><input class="champ" id="pPseudo" maxlength="20">')+
     '<button class="btn" id="pGo" onclick="pakCommencer('+i+')">'+T('komanse')+'</button>'+
@@ -1151,7 +1169,8 @@ function pakIntro(i){
 function pakCommencer(i){
   var p=PAK.parcours[i], inp=document.getElementById('pPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('pGo');
   b.disabled=true;
-  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){
+  var q={appareil:appareil(), pseudo:ps, parcours:p.nom}; if(PRATT) q.etape=PRATT;
+  api('etapedebut',q).then(function(etat){
     if(inp) ecrire('masbet_pseudo',ps);
     pakReprendre(etat);
   }, function(e){ b.disabled=false; document.getElementById('pMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
@@ -1209,10 +1228,18 @@ function pakResultat(){
   PECRAN='res'; PT={fini:true};
   var parc=PI>=0&&PAK?PAK.parcours[PI]:null, nom=parc?nomPak(parc.nom):'', e=r.reussi?r.etape-1:r.etape;
   var h='<div class="qscore"><div class="hint">'+esc(nom)+'</div><div class="gros">'+esc(r.score)+'<small>/'+esc(r.total)+'</small></div></div>';
+  if(r.rattrapage){ var sp=r.parcours||{};
+    h+='<div class="fete '+(sp.merite?'inv':'ok')+'">'+esc(AL('Tès ratrapaj fini. Pakou a kounye a : ','Test de rattrapage terminé. Parcours maintenant : ')+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %)')+'<span>'+esc(sp.merite?AL('📜 Ou genyen atestasyon Masbet la ! Antre non konplè ou nan « Sètifika mwen ».','📜 Vous obtenez l\'attestation Masbet ! Inscrivez votre nom complet dans « Mes certificats ».'):AL('Atestasyon an mande 90 %. Ou ka eseye yon lòt etap.','L\'attestation demande 90 %. Vous pouvez essayer une autre étape.'))+'</span></div>'+
+      (sp.merite?'<button class="btn" style="margin-bottom:8px" onclick="voirCerts()">📜 '+esc(AL('Wè atestasyon an','Voir l\'attestation'))+'</button>':'');
+    h+='<button class="btn '+(sp.merite?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
+    document.getElementById('pakZone').innerHTML=h; return; }
   if(r.reussi) h+='<div class="fete ok">'+esc(T('pakReyisi')(e,nomEtape(e)))+'<span>'+esc(T('pakBadj')(BADJ[e-1],nomEtape(e)))+'</span>'+
     '<span>'+esc(r.etape>5?T('pakTout'):T('pakSwiv')(r.etape,nomEtape(r.etape)))+'</span></div>';
   else h+='<div class="fete ko">'+esc(T('pakRate')(r.score,r.seuil))+'</div>';
   if(r.nouvelleInvitation) h+='<div class="fete inv">🎓 '+esc(T('invTitre'))+'<span>'+esc(T('invMsg'))+'</span></div>';
+  if(r.parcours){ var sp=r.parcours;
+    if(sp.merite) h+='<div class="fete inv">📜 '+esc(AL('Atestasyon Masbet ! ','Attestation Masbet ! ')+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %)')+'<span>'+esc(AL('Antre non konplè ou nan « Sètifika mwen » pou l parèt sou atestasyon an.','Inscrivez votre nom complet dans « Mes certificats » pour qu\'il apparaisse sur l\'attestation.'))+'</span></div><button class="btn" style="margin-bottom:8px" onclick="voirCerts()">📜 '+esc(AL('Wè atestasyon an','Voir l\'attestation'))+'</button>';
+    else h+='<div class="fete ko">'+esc(AL('Pakou fini ak '+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %). Atestasyon Masbet la mande 90 %.','Parcours terminé avec '+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %). L\'attestation Masbet demande 90 %.'))+'</div>'; }
   var ne=erreurs().length;
   if(ne && !r.reussi) h+='<button class="btn" onclick="revCommencer()">🔁 '+esc(T('revBtn')(ne))+'</button>';
   h+='<button class="btn '+(ne&&!r.reussi?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
@@ -1366,14 +1393,12 @@ function essayerPassUrl(){ var c=passUrl(); if(c && PRO && !(PRO.pass&&PRO.pass.
 function blocPass(){
   var p=PRO.pass||{};
   if(p.valide) return '<div class="konkou"><b>✓ '+esc(T('passAktif')(dateLongue(p.jusqua)))+'</b><span class="hint">'+esc(T('passTout'))+'</span></div>';
-  var es=PRO.essai||{compte:false,total:25,reste:0,utilise:0}, tete;
-  if(!es.compte) tete='<b>🎁 '+esc(T('proEssaiKont')(es.total))+'</b><button class="btn" style="margin:8px 0" onclick="kontOuvrir({pro:1})">'+T('proKreyeKont')+'</button>';
-  else if(es.reste>0) tete='<b>🎁 '+esc(T('proEssaiReste')(es.reste,es.total))+'</b><div class="kbar"><div style="width:'+Math.round(100*es.reste/Math.max(1,es.total))+'%"></div></div>';
-  else tete='<b>🔒 '+esc(T('proEssaiFini')(es.total))+'</b>';
+  var tete='<b>🎁 '+esc(T('proGratis')(proGratuites()))+'</b>';
   return '<div class="konkou" id="blocPass">'+tete+'<span class="pxn">'+esc(PRO.passTexte||'')+'</span>'+
     '<div class="row"><input id="passCode" placeholder="'+T('passKod')+'" autocapitalize="characters" value="'+esc(passUrl())+'"><button onclick="activerPass()">'+T('passAktive')+'</button></div>'+
     '<div id="passMsg"></div><a class="hint" href="achte.html#pro" style="font-weight:700;color:#173a8c;display:inline-block;margin-top:6px">'+T('passAchte')+' →</a>'+(p.expire?'<div class="hint">'+T('passEkspire')+'</div>':'')+'</div>';
 }
+function proGratuites(){ var g=PRO&&PRO.gratuites; return typeof g==='number'?g:2; }
 function afficherPro(){
   var c=document.getElementById('cPro'), z=document.getElementById('proZone');
   if(!PRO) return;
@@ -1384,7 +1409,7 @@ function afficherPro(){
     if(!p.total) return '';
     var fini=p.etape>5, dots='';
     for(var e=1;e<=5;e++) dots+='<i class="'+(e<p.etape?'v':e===p.etape?'c':'')+'" title="'+esc(etapePro(e))+'">'+(e<p.etape?'✓':e)+'</i>';
-    var es=PRO.essai, sansKont=!pass&&(!es||!es.compte), bloque=!fini && !pass && !sansKont && es.reste<=0, enc=PRO.enCours&&PRO.enCours.parcours===p.nom, bt;
+    var sansKont=false, bloque=!fini && !pass && p.etape>proGratuites(), enc=PRO.enCours&&PRO.enCours.parcours===p.nom, bt;
     if(!p.total) bt='<button class="btn sec" disabled>'+T('proByento')+'</button>';
     else if(fini) bt='<div class="pfini">🏆 '+T('proFini')+'</div>';
     else if(enc) bt='<button class="btn" onclick="proIntro('+i+')">'+T('pakKontinye')+'</button>';
@@ -1394,7 +1419,7 @@ function afficherPro(){
     else if(!p.restants) bt='<button class="btn sec" disabled>'+T('pakDemen')+'</button>';
     else bt='<button class="btn" onclick="proIntro('+i+')">'+esc(T('pakPase')(p.etape))+'</button>';
     return '<div class="pak"><div class="pt">'+esc(nomPro(p.nom))+'</div>'+(p.total?'<div class="dots">'+dots+'</div><div class="pe">'+esc(fini?etapePro(5)+' 🏆':T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>':'<div class="hint">'+T('proPokoKesyon')+'</div>')+bt+
-      (p.total&&!sansKont&&!bloque?'<button class="btn sec" style="margin-top:6px" onclick="proAntrene('+i+')">'+T('proAntrene')+'</button>':'')+
+      (p.total&&(pass||proGratuites()>0)?'<button class="btn sec" style="margin-top:6px" onclick="proAntrene('+i+')">'+T('proAntrene')+'</button>':'')+
       (p.attestation?'<button class="btn sec" style="margin-top:6px" onclick="proAttestation('+i+')">📜 '+T('attTitre')+'</button>':'')+'</div>';
   }).join('')+'</div>'+(avenir.length?'<div class="konkou" style="margin-top:10px"><b>🕒 '+T('proByento')+'</b><span>'+esc(avenir.join(' · '))+'</span></div>':'');
 }
@@ -1406,14 +1431,14 @@ function activerPass(code){
 }
 /** Essai gratuit fini ou sans compte (erreur « PRO_ESSAI: » du serveur) : on recharge l'espace pro, qui montre l'offre dans la bonne langue. */
 function proEssaiErr(e){ if(!/^PRO_ESSAI:/.test((e&&e.message)||'')) return false; api('pro',{appareil:appareil()}).then(function(d){ PRO=d; afficherPro(); proVersPass(); },function(){ afficherPro(); }); return true; }
-function proVersPass(){ var b=document.getElementById('blocPass'); if(b){ b.scrollIntoView({behavior:'smooth',block:'center'}); b.classList.add('flash'); setTimeout(function(){ b.classList.remove('flash'); },1600); var c=document.getElementById('passCode'); if(c&&PRO.essai&&PRO.essai.compte) setTimeout(function(){ c.focus(); },500); } }
+function proVersPass(){ var b=document.getElementById('blocPass'); if(b){ b.scrollIntoView({behavior:'smooth',block:'center'}); b.classList.add('flash'); setTimeout(function(){ b.classList.remove('flash'); },1600); var c=document.getElementById('passCode'); if(c) setTimeout(function(){ c.focus(); },500); } }
 function proIntro(i){
   var p=PRO&&PRO.rubriques[i]; if(!p) return;
   PROI=i; PROECRAN='intro';
   var z=document.getElementById('proZone'), seuil=Math.ceil(p.seuil*PRO.nbQuestions/10-1e-9);
   if(PRO.enCours && PRO.enCours.parcours===p.nom){ PRUN=RUN_PRO; PT=PRO.enCours; PREP=null; return pakQuestion(); }
   z.innerHTML='<h2 style="margin-top:0">'+esc(nomPro(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>'+
-    '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+(PRO.essai&&PRO.essai.compte&&PRO.essai.reste<PRO.nbQuestions&&!(PRO.pass&&PRO.pass.valide)?'<div class="fete ko" style="margin-bottom:10px">'+esc(T('proDenyeTes')(PRO.essai.reste))+'</div>':'')+
+    '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+
     (lire('masbet_pseudo')?'':'<label class="hint" for="prPseudo">'+T('pseudo')+'</label><input class="champ" id="prPseudo" maxlength="20">')+
     '<button class="btn" id="prGo" onclick="proCommencer('+i+')">'+T('komanse')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button><div id="prMsg"></div>';
 }
@@ -1421,7 +1446,6 @@ function proCommencer(i){
   var p=PRO.rubriques[i], inp=document.getElementById('prPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('prGo');
   b.disabled=true;
   api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps);
-      if(PRO.essai&&PRO.essai.compte&&!(PRO.pass&&PRO.pass.valide)) PRO.essai.reste=Math.max(0,PRO.essai.reste-PRO.nbQuestions);
       PRUN=RUN_PRO; PT=etat; PREP=null; pakQuestion(); },
     function(e){ b.disabled=false; if(proEssaiErr(e)) return; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
@@ -1440,7 +1464,7 @@ function proResultat(){
 function proAntrene(i){
   var p=PRO.rubriques[i], z=document.getElementById('proZone'); PROI=i; PROECRAN='ant';
   z.innerHTML='<div class="skel"></div>';
-  api('entrainement',{cat:p.nom, appareil:appareil()}).then(function(d){ if(d.essai) PRO.essai=d.essai; PA={questions:d.questions,pos:0,score:0,att:false,nom:p.nom}; proAntQ(); },
+  api('entrainement',{cat:p.nom, appareil:appareil()}).then(function(d){ PA={questions:d.questions,pos:0,score:0,att:false,nom:p.nom}; proAntQ(); },
     function(e){ if(proEssaiErr(e)) return; z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button>'; });
 }
 function proAntQ(){
@@ -1572,7 +1596,7 @@ function afficheRepo(x){
 // Lives gratuits : pages publiques de Masbet (Config RESEAUX_MASBET)
 function blocReseaux(){
   var r=(ACC&&ACC.reseaux||[]).filter(function(x){ return /^https:\/\/[^\s"'<>]+$/.test(String(x.lien||'')); }); if(!r.length) return '';
-  return '<div class="reseaux"><b>🆓 '+T('gratisSou')+'</b><div>'+r.map(function(x){ return '<a href="'+esc(x.lien)+'" target="_blank" rel="noopener">'+esc(x.nom)+' ↗</a>'; }).join('')+'</div></div>';
+  return '<div class="reseaux"><b>🆓 '+T('gratisSou')+'</b><div>'+r.map(function(x){ var ic=icoReseau(String(x.nom||''),String(x.lien||'')); return '<a href="'+esc(x.lien)+'" target="_blank" rel="noopener">'+ic+esc(x.nom)+(ic?'':' ↗')+'</a>'; }).join('')+'</div></div>';
 }
 function blocLecteur(x,k){
   LIVES_PAR_CLE[k]=x;
@@ -1909,7 +1933,7 @@ function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T
 function toutAfficher(){ afficherLokal();
   afficherDate();
   if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives();
-    document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<b>'+esc(ACC.whatsapp)+'</b>':'')+piedFondateur(); }
+    document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
   if(MAT) afficherMatchs();
   if(QZ){ afficherQuizHome(); if(vueActive()==='quiz' && !(QZ.etat&&QZ.etat.joue&&!QZ.etat.fini)) afficherQuiz(); }
   afficherKlas();
@@ -2101,7 +2125,12 @@ function patajeMatch(id){
 }
 function patajeQuiz(){ var e=QZ&&QZ.etat||{}, n=QZ&&QZ.questions?QZ.questions.length:5; pataje('🧠 '+AL('Mwen fè ','J\'ai fait ')+(e.score||0)+'/'+n+AL(' nan Quiz Masbet jodi a ! Eseye tou :',' au Quiz Masbet aujourd\'hui ! Essayez aussi :')); }
 function patajeLive(titre){ pataje('🔴 '+AL('An direk sou Masbet : ','En direct sur Masbet : ')+titre); }
-function btnPataje(onclick){ return '<button class="patBtn" onclick="'+onclick+'">↗ '+AL('Pataje sou WhatsApp','Partager sur WhatsApp')+'</button>'; }
+// ---------- Logos (WhatsApp, Facebook, YouTube) ----------
+function icoWa(bulle,tel){ return '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="'+bulle+'" d="M12 1.8a10.2 10.2 0 0 0-8.8 15.4L1.8 22.2l5.1-1.3A10.2 10.2 0 1 0 12 1.8z"/><path fill="'+tel+'" d="M8.7 6.8c-.3 0-.7.1-1 .5-.3.4-1.2 1.1-1.2 2.7s1.2 3.1 1.3 3.3c.2.2 2.3 3.5 5.5 4.8 2.7 1 3.2.8 3.8.8.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4l-2.1-1c-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.5-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6l-1-2.3c-.2-.6-.5-.5-.7-.5z"/></svg>'; }
+var ICO_FB='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path fill="#fff" d="M13.3 22.9v-7.6h2.6l.4-3.1h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.7v3.1h2.6v7.5c1 .3 2 .3 3 .2z"/></svg>';
+var ICO_YT='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="5" width="22" height="14" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M9.8 8.8v6.4l5.6-3.2z"/></svg>';
+function icoReseau(nom,lien){ var t=(nom+' '+lien).toLowerCase(); return /facebook|fb\.watch/.test(t)?ICO_FB:/youtu/.test(t)?ICO_YT:/whatsapp|wa\.me/.test(t)?icoWa('#25D366','#fff'):''; }
+function btnPataje(onclick){ return '<button class="patBtn" onclick="'+onclick+'">'+icoWa('#fff','#25D366')+AL('Pataje sou WhatsApp','Partager sur WhatsApp')+'</button>'; }
 
 // ---------- Hors connexion ----------
 var HORS=false;
@@ -2199,24 +2228,29 @@ function qrSvg(texte, taille){
 
 // ---------- 🎓 Certificats de mérite (Défi, Concours) : format diplôme, en français ----------
 var CERTS=null, CERT_VUE=null;
+var MIL=null;
 var CERT_TEXTE={
   DEFI:'Défi de culture générale de dix questions difficiles et chronométrées, organisé chaque semaine par Masbet Education. Meilleur résultat de la semaine.',
   FINALISTE:'Qualifié parmi les meilleurs candidats à l’issue des manches de qualification et de la demi-finale du Concours Masbet.',
-  CHAMPION:'Vainqueur de la finale du Concours Masbet, au terme des manches de qualification, de la demi-finale et de la finale.'
+  CHAMPION:'Vainqueur de la finale du Concours Masbet, au terme des manches de qualification, de la demi-finale et de la finale.',
+  PARCOURS:'Les cinq étapes de ce parcours ont été validées par des tests chronométrés corrigés par Masbet Education, avec au moins 90 % de bonnes réponses.',
+  MIL:'Mille bonnes réponses dans les jeux chronométrés de Masbet Education : Quiz du jour, parcours, Espace professionnel, Défi et Concours.'
 };
+function estAttest(x){ return x&&(x.type==='PARCOURS'||x.type==='MIL'); }
 function lienCert(n){ return SITE+'#sertifika='+encodeURIComponent(n); }
 function chargerCerts(montrer){
   if(!CONTENU) return;
-  api('certs',{appareil:appareil()}).then(function(d){ CERTS=d.certs||[]; afficherCerts(montrer); }, function(){ if(montrer) afficherCerts(true); });
+  api('certs',{appareil:appareil()}).then(function(d){ CERTS=d.certs||[]; MIL=d.mil||null; afficherCerts(montrer); }, function(){ if(montrer) afficherCerts(true); });
 }
 function afficherCerts(montrer){
   var c=document.getElementById('cSert'), z=document.getElementById('sertZone'); if(!c) return;
-  var l=CERTS||[];
-  if(!l.length && !montrer){ c.classList.add('hidden'); return; }
+  var l=CERTS||[], mil=MIL&&!MIL.n&&MIL.bonnes>0?MIL:null;
+  if(!l.length && !mil && !montrer){ c.classList.add('hidden'); return; }
   c.classList.remove('hidden');
-  if(!l.length){ z.innerHTML='<div class="hint">'+esc(AL('Ou poko gen sètifika. Genyen Defi Masbet la oswa rive nan final Konkou a pou w resevwa youn.','Pas encore de certificat. Gagnez le Défi Masbet ou atteignez la finale du Concours pour en recevoir un.'))+'</div>'; return; }
-  z.innerHTML=l.map(function(x,i){
-    var h='<div class="sertL"><div class="si">'+(x.type==='CHAMPION'?'🏆':x.type==='FINALISTE'?'🥈':'🏁')+'</div><div style="flex:1;min-width:0"><b>'+esc(x.titre)+'</b><div class="hint">'+esc(x.detail)+'</div><div class="hint">N° '+esc(x.n)+'</div>';
+  var barre=mil?'<div class="sertL"><div class="si">💯</div><div style="flex:1;min-width:0"><b>'+esc(AL('Atestasyon 1000 bon repons','Attestation 1000 bonnes réponses'))+'</b><div class="hint">'+esc(AL(Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bon repons nan jwèt kwonometre yo (Quiz jou a, pakou, Espas pro, Defi, Konkou).',Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bonnes réponses dans les jeux chronométrés (Quiz du jour, parcours, Espace pro, Défi, Concours).'))+'</div><div class="kbar" style="margin-top:6px"><div style="width:'+Math.min(100,Math.round(100*mil.bonnes/mil.objectif))+'%"></div></div></div></div>':'';
+  if(!l.length){ z.innerHTML=barre+'<div class="hint">'+esc(AL('Ou poko gen sètifika. Fini yon pakou ak 90 %, rive nan 1000 bon repons, genyen Defi Masbet la oswa rive nan final Konkou a.','Pas encore de certificat. Terminez un parcours avec 90 %, atteignez 1000 bonnes réponses, gagnez le Défi Masbet ou atteignez la finale du Concours.'))+'</div>'; return; }
+  z.innerHTML=barre+l.map(function(x,i){
+    var h='<div class="sertL"><div class="si">'+(x.type==='CHAMPION'?'🏆':x.type==='FINALISTE'?'🥈':x.type==='PARCOURS'?'📜':x.type==='MIL'?'💯':'🏁')+'</div><div style="flex:1;min-width:0"><b>'+esc(x.titre)+'</b><div class="hint">'+esc(x.detail)+'</div><div class="hint">N° '+esc(x.n)+'</div>';
     if(x.aRemplir) h+='<div class="sertNom"><label class="hint" for="sn'+i+'">'+esc(AL('Non konplè ou, jan l ap parèt sou sètifika a (prenon ak non) :','Votre nom complet, tel qu’il apparaîtra sur le certificat (prénom et nom) :'))+'</label>'+
       '<input class="champ" id="sn'+i+'" maxlength="60" autocomplete="name"><div class="hint" style="color:#8a5a00">'+esc(AL('Tcheke byen : ou p ap ka chanje l apre.','Vérifiez bien : vous ne pourrez plus le changer ensuite.'))+'</div>'+
       '<button class="btn" id="sb'+i+'" style="margin-top:8px" onclick="certNomer('+i+')">'+esc(AL('Anrejistre non an','Enregistrer le nom'))+'</button><div id="sm'+i+'"></div></div>';
@@ -2236,14 +2270,15 @@ function htmlCert(x){
     '<circle cx="60" cy="60" r="57" fill="none" stroke="#b8892b" stroke-width="2.5"/><circle cx="60" cy="60" r="51" fill="none" stroke="#b8892b" stroke-width="1"/><circle cx="60" cy="60" r="31" fill="none" stroke="#b8892b" stroke-width="1"/>'+
     '<text font-family="Georgia,serif" font-size="9.5" font-weight="700" fill="#14213d" letter-spacing="2"><textPath href="#arcCert">MASBET EDUCATION · ANSE-À-VEAU · </textPath></text>'+
     '<text x="60" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#14213d">'+esc(String(x.date||'').slice(-4))+'</text><text x="60" y="75" text-anchor="middle" font-size="12" fill="#b8892b">★</text></svg>';
-  return '<div class="cert" role="img" aria-label="'+esc('Certificat de mérite — '+x.nom+' — '+x.titre)+'"><div class="c1"><div class="c2">'+
+  var at=estAttest(x);
+  return '<div class="cert" role="img" aria-label="'+esc((at?'Attestation Masbet — ':'Certificat de mérite — ')+x.nom+' — '+x.titre)+'"><div class="c1"><div class="c2">'+
     '<div class="ch"><img src="logo.png" alt="Masbet Education"><div class="ck">MASBET EDUCATION · ANSE-À-VEAU, NIPPES, HAÏTI</div></div>'+
-    '<div class="ct">CERTIFICAT DE MÉRITE</div><div class="cl"><i></i><b></b><i></i></div>'+
-    '<div class="cd">décerné à</div><div class="cn">'+esc(x.nom)+'</div>'+
-    '<div class="cd">pour avoir obtenu le titre de</div><div class="cti">'+esc(x.titre)+'</div><div class="cde">'+esc(x.detail)+'</div>'+
+    '<div class="ct">'+(at?'ATTESTATION DE RÉUSSITE':'CERTIFICAT DE MÉRITE')+'</div><div class="cl"><i></i><b></b><i></i></div>'+
+    '<div class="cd">'+(at?'délivrée à':'décerné à')+'</div><div class="cn">'+esc(x.nom)+'</div>'+
+    '<div class="cd">'+(x.type==='PARCOURS'?'pour avoir réussi le':x.type==='MIL'?'pour avoir atteint':'pour avoir obtenu le titre de')+'</div><div class="cti">'+esc(x.titre)+'</div><div class="cde">'+esc(x.detail)+'</div>'+
     '<div class="ctx">'+esc(CERT_TEXTE[x.type]||'')+'</div>'+
-    '<div class="cb"><div class="cbl">Délivré à Anse-à-Veau,<br>le '+esc(x.date)+'</div><div>'+sceau+'</div><div class="cbr"><img class="csig" src="signature.png" alt="Signature de Duckhens Lespérance"><div class="csl"></div><b>Duckhens Lespérance, ing.</b><span>PDG, Fondateur de Masbet Education</span></div></div>'+
-    '<div class="cf"><div class="cq">'+qrSvg(lienCert(x.n),78)+'</div><div class="cft"><b>Certificat N° '+esc(x.n)+'</b> — vérifiable en scannant ce code ou sur '+esc(lienCert(x.n).replace(/^https:\/\//,''))+'<br>Ce certificat atteste un résultat obtenu dans une compétition organisée par Masbet Education.</div></div>'+
+    '<div class="cb"><div class="cbl">'+(at?'Délivrée':'Délivré')+' à Anse-à-Veau,<br>le '+esc(x.date)+'</div><div>'+sceau+'</div><div class="cbr"><img class="csig" src="signature.png" alt="Signature de Duckhens Lespérance"><div class="csl"></div><b>Duckhens Lespérance, ing.</b><span>PDG, Fondateur de Masbet Education</span></div></div>'+
+    '<div class="cf"><div class="cq">'+qrSvg(lienCert(x.n),78)+'</div><div class="cft"><b>'+(at?'Attestation':'Certificat')+' N° '+esc(x.n)+'</b> — vérifiable en scannant ce code ou sur '+esc(lienCert(x.n).replace(/^https:\/\//,''))+'<br>'+(at?'Cette attestation confirme un résultat obtenu sur la plateforme éducative Masbet Education.':'Ce certificat atteste un résultat obtenu dans une compétition organisée par Masbet Education.')+'</div></div>'+
     '</div></div></div>';
 }
 function certOuvrir(i){ var x=CERTS&&CERTS[i]; if(x) certAfficher(x); }
@@ -2257,7 +2292,7 @@ function certEchelle(){ var e=document.getElementById('cvEch'); if(!e) return; v
 window.addEventListener('resize',function(){ if(CERT_VUE) certEchelle(); });
 function certFermer(){ CERT_VUE=null; document.getElementById('certVue').classList.add('hidden'); document.body.classList.remove('certOuvert'); }
 function certImprimer(){ document.body.classList.add('imprCert'); setTimeout(function(){ window.print(); setTimeout(function(){ document.body.classList.remove('imprCert'); },500); },60); }
-function certPataje(){ var x=CERT_VUE; if(x) pataje('🎓 '+x.nom+' — '+x.titre+' ('+x.detail+'). Certificat Masbet N° '+x.n+' : '+lienCert(x.n)); }
+function certPataje(){ var x=CERT_VUE; if(x) pataje((estAttest(x)?'📜 ':'🎓 ')+x.nom+' — '+x.titre+' ('+x.detail+'). '+(estAttest(x)?'Attestation':'Certificat')+' Masbet N° '+x.n+' : '+lienCert(x.n)); }
 /** Lien de vérification #sertifika=MC-… (scan du QR code) */
 function verifierCertUrl(){
   var m=/[#&]sertifika=([A-Za-z0-9-]+)/.exec(location.hash||''), c=document.getElementById('cVerif');

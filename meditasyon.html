@@ -28,7 +28,8 @@
   main{max-width:720px;margin:-18px auto 0;padding:0 14px;position:relative}
   .card{background:#fff;border-radius:18px;padding:20px 20px;margin-bottom:14px;box-shadow:0 2px 10px rgba(30,30,60,.06)}
   .card h2{font:800 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:1.2px;text-transform:uppercase;color:var(--c1);margin:0 0 10px}
-  .card p{margin:0 0 12px}
+  .card p{margin:0 0 12px;text-align:justify}
+  .vese .t,.kr,.pratik p{text-align:justify}
   .vese{border-left:4px solid var(--c1);padding:4px 0 4px 14px;margin:0 0 14px}
   .vese .t{font-style:italic}
   .vese .ref{font:700 13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--muted);margin-top:4px}
@@ -156,7 +157,7 @@ var TEM = [
  { // Samedi
   c:['#1f4e79','#4a8bc2'], ico:'🕊️',
   ht:{ t:'Saba ak padon', r:[
-   'Saba se jou repo. Bondye li menm bay egzanp lan : apre travay, poze. Nan yon vi kote nou toujou ap kouri dèyè lavi, repo pa yon liksi : se yon kòmandman ak yon kado. Kò a bezwen l, lespri a bezwen l, fanmi an bezwen l.',
+   'Saba se jou repo. Bondye li menm bay egzanp lan : apre travay, poze. Nan yon vi kote nou toujou ap kouri dèyè lavi, repo pa yon liks : se yon kòmandman ak yon kado. Kò a bezwen l, lespri a bezwen l, fanmi an bezwen l.',
    'Repo vrèman pa sèlman sispann travay ; se tou depoze chay ki nan kè nou. Pa gen chay ki pi lou pase rankin. Jezi envite tout moun ki fatige ak chaje pou vin jwenn repo.',
    'Padone pa vle di bliye ni di sa ki te fèt la pa grav. Padone se refize kite mal la kontinye kòmande lavi nou. Li ka pran tan ; li ka mande èd. Men chak fwa nou padone, se nou menm ki premye moun ki libere.'],
    p:'Jodi a, pran yon moman repo san telefòn. Epi nan kè w, lage yon rankin : ekri non moun nan sou yon papye, priye pou li, epi chire papye a.' },
@@ -165,7 +166,7 @@ var TEM = [
    'Le vrai repos n\'est pas seulement l\'arrêt du travail ; c\'est aussi déposer les fardeaux du cœur. Aucun n\'est plus lourd que la rancune. Jésus invite tous ceux qui sont fatigués et chargés à venir trouver le repos.',
    'Pardonner ne veut pas dire oublier, ni dire que ce qui s\'est passé n\'était pas grave. Pardonner, c\'est refuser que le mal continue de commander notre vie. Cela peut prendre du temps et demander de l\'aide. Mais chaque fois que l\'on pardonne, c\'est soi-même que l\'on libère d\'abord.'],
    p:'Aujourd\'hui, prenez un moment de repos sans téléphone. Puis, dans votre cœur, déposez une rancune : écrivez le nom de la personne sur un papier, priez pour elle, et déchirez le papier.' },
-  v:[['Souviens-toi du jour du repos, pour le sanctifier. Tu travailleras six jours, et tu feras tout ton ouvrage.','Chonje jou repo a pou w mete l apa pou Bondye. W ap travay pandan sis jou, w ap fè tout travay ou.','Exode 20:8-9'],
+  v:[['Souviens-toi du jour du repos, pour le sanctifier. Tu travailleras six jours, et tu feras tout ton ouvrage.','Sonje jou repo a pou w mete l apa pou Bondye. W ap travay pandan sis jou, w ap fè tout travay ou.','Exode 20:8-9'],
      ['Venez à moi, vous tous qui êtes fatigués et chargés, et je vous donnerai du repos.','Vini jwenn mwen, nou tout ki bouke ak chaje, m ap ban nou repo.','Matthieu 11:28'],
      ['Supportez-vous les uns les autres, et, si l\'un a sujet de se plaindre de l\'autre, pardonnez-vous réciproquement. De même que Christ vous a pardonné, pardonnez-vous aussi.','Sipòte youn lòt ; si yonn gen rezon pou l plenyen kont lòt, padone youn lòt. Menm jan Kris la padone nou, se pou nou padone tou.','Colossiens 3:13']],
   s:{o:'Dèyè mòn, gen mòn.',ht:'',fr:'Derrière les montagnes, il y a encore des montagnes.',ref:'Pwovèb ayisyen / Proverbe haïtien'} }
@@ -198,15 +199,15 @@ function afficher(){
   document.getElementById('jou').textContent=JOU[LANG][j]+' · '+d.toLocaleDateString(LANG==='fr'?'fr-FR':'fr-HT',{day:'numeric',month:'long'});
   document.getElementById('titre').innerHTML='<span class="ico">'+t.ico+'</span>'+esc(x.t);
   document.title=(LANG==='fr'?'Méditation — ':'Meditasyon — ')+x.t;
-  var L=LANG==='fr'?{r:'Réflexion',v:'Paroles pour aujourd\'hui',s:'Sagesse',p:'À vivre aujourd\'hui',pied:'Un thème par jour, et 4 réflexions différentes pour chaque thème : elles changent chaque semaine.',src:'Versets : Louis Segond 1910 · créole : traduction libre Masbet Education'}
-                   :{r:'Refleksyon',v:'Pawòl pou jodi a',s:'Sajès',p:'Pou viv jodi a',pied:'Yon tèm chak jou, ak 4 refleksyon diferan pou chak tèm : yo chanje chak semèn.',src:'Vèsè yo : Louis Segond 1910 · kreyòl : tradiksyon lib Masbet Education'};
+  var L=LANG==='fr'?{r:'Réflexion',v:'Paroles pour aujourd\'hui',s:'Sagesse',p:'À vivre aujourd\'hui',src:'Versets : Louis Segond 1910 · créole : traduction libre Masbet Education'}
+                   :{r:'Refleksyon',v:'Pawòl pou jodi a',s:'Sajès',p:'Pou viv jodi a',src:'Vèsè yo : Louis Segond 1910 · kreyòl : tradiksyon lib Masbet Education'};
   var vs=t.v.map(function(v){ return '<div class="vese"><div class="t">« '+esc(LANG==='fr'?v[0]:v[1])+' »</div>'+'<div class="ref">'+esc(v[2])+'</div></div>'; }).join('');
   document.getElementById('contenu').innerHTML=
     '<div class="card"><h2>'+L.r+' <span class="nref">'+(k+1)+' / 4</span></h2>'+x.r.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'</div>'+
     '<div class="card"><h2>'+L.v+'</h2>'+vs+'</div>'+
     '<div class="card sit"><h2>'+L.s+'</h2>'+sagesse(t.s)+'</div>'+
     '<div class="card pratik"><h2>'+L.p+'</h2><p style="margin:0">'+esc(x.p)+'</p></div>'+
-    '<div class="pied">'+L.pied+'<br><span style="font-size:11.5px">'+L.src+'</span></div>';
+    '<div class="pied"><span style="font-size:11.5px">'+L.src+'</span></div>';
   var n=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Communauté']:['Akèy','Achte','Match','Live','Kominote'];
   document.getElementById('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="kominote.html"><span>💬</span>'+n[4]+'</a>';
 }
