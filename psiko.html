@@ -73,6 +73,83 @@
   .bilan{display:flex;justify-content:center;gap:10px;margin:8px 0 14px;flex-wrap:wrap}
   .bilan div{background:#f6f7fb;border-radius:10px;padding:8px 12px;font-size:14px;font-weight:700}
   .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .secTit{display:flex;align-items:center;justify-content:space-between;margin:18px 4px 8px;font-size:13px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .son{border:0;background:#eef0f6;border-radius:999px;width:34px;height:34px;font-size:16px;cursor:pointer;flex-shrink:0;margin-left:8px;padding:0}
+  .tete .son{width:30px;height:30px;font-size:14px;vertical-align:middle}
+  .mats button svg{max-height:120px}
+  .calc{font-size:32px;font-weight:900;text-align:center;margin:12px 0 18px;letter-spacing:.5px}
+  .calc.long{font-size:17px;font-weight:700;text-align:left;letter-spacing:0;line-height:1.5}
+  .memBox{height:120px;display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:900;color:var(--bleu);background:#f6f7fb;border-radius:14px;margin:6px 0 10px}
+  .memSaisie{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:6px 0 14px}
+  .memSaisie span{width:34px;height:44px;border-bottom:3px solid var(--bleu);font-size:26px;font-weight:900;text-align:center;line-height:44px}
+  .pave{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .pave button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:12px 0;font:inherit;font-size:22px;font-weight:800;color:var(--ink);cursor:pointer;touch-action:manipulation}
+  .pave button:disabled{opacity:.5}
+  .tailles{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .tailles .btn{flex:1;min-width:90px}
+  .puzInfo{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin-bottom:12px}
+  .puzInfo b{color:var(--ink)}
+  .taq{display:grid;gap:6px;max-width:360px;margin:0 auto}
+  .taq button,.taq .vide{aspect-ratio:1;border-radius:10px}
+  .taq button{border:0;background:var(--navy);color:#fff;font:inherit;font-size:26px;font-weight:900;cursor:pointer;touch-action:manipulation}
+  .taq button.place{background:var(--bleu)}
+  .taq .vide{background:#eef0f6}
+  .han{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+  .pic{position:relative;height:150px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;padding:0}
+  .pic.sel{border-color:var(--gold);background:#fff8ea}
+  .pic .tige{position:absolute;left:50%;bottom:8px;width:6px;height:118px;margin-left:-3px;border-radius:3px;background:#c9cfdc}
+  .pic .socle{position:absolute;left:8%;right:8%;bottom:4px;height:6px;border-radius:3px;background:#9aa3b8}
+  .pic .dq{position:absolute;left:50%;transform:translateX(-50%);height:16px;border-radius:8px;transition:bottom .15s}
+  .pic .dq.lev{box-shadow:0 0 0 3px var(--gold)}
+  .sud{display:grid;border:2px solid #14213d;border-radius:6px;overflow:hidden;max-width:420px;margin:0 auto 12px}
+  .sud button{aspect-ratio:1;border:0;border-right:1px solid #d5dae6;border-bottom:1px solid #d5dae6;background:#fff;font:inherit;font-weight:700;color:var(--bleu);padding:0;cursor:pointer;touch-action:manipulation}
+  .sud.s4 button{font-size:26px} .sud.s6 button{font-size:22px} .sud.s9 button{font-size:18px}
+  .sud button.fixe{color:var(--ink);font-weight:900;background:#f6f7fb;cursor:default}
+  .sud button.sel{background:#fff4dc}
+  .sud button.conflit{color:var(--err);background:#fdecea}
+  .sud-pave{max-width:420px;margin:0 auto 6px}
+  .prog .pl{display:flex;gap:14px;align-items:center}
+  .niv{width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--gold) 0 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;box-shadow:inset 0 0 0 4px #fff3}
+  .niv b{font-size:24px;line-height:1} .niv small{font-size:10.5px;font-weight:800;text-transform:uppercase}
+  .pt{display:flex;justify-content:space-between;align-items:baseline;gap:8px} .pt b{font-size:17px} .pt span{font-size:13px;font-weight:800;color:var(--muted)}
+  .barre{height:10px;border-radius:10px;background:#eef0f6;overflow:hidden;margin:6px 0 4px} .barre div{height:100%;border-radius:10px;background:linear-gradient(90deg,#fca311,#f97316)}
+  .barre.fine{height:6px;margin:4px 0 0}
+  .ps{font-size:12.5px;color:var(--muted)}
+  .stats{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:14px}
+  .lienb{border:0;background:#fff8ea;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+  .defi{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fff8ea,#fff);border:1.5px solid #f6dfae}
+  .defi.fait{background:#effaf3;border-color:#bfe7cc}
+  .defi .dt{font-size:12.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#8a5a00} .defi.fait .dt{color:var(--ok)}
+  .defi .dd{font-weight:700;font-size:14.5px;margin-top:2px}
+  .btn.mini{padding:8px 14px;font-size:14px}
+  .gg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media (min-width:560px){ .gg{grid-template-columns:repeat(3,1fr)} }
+  .gc{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:0;border-top:4px solid var(--c);background:#fff;border-radius:16px;padding:14px 12px 12px;font:inherit;color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(20,33,61,.08);transition:transform .12s}
+  .gc:active{transform:scale(.97)}
+  .gc .logo{margin-bottom:6px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.15))}
+  .gc b{font-size:15px;line-height:1.2} .gc small{font-size:12.5px;color:var(--muted);line-height:1.3}
+  .gc .med{margin-top:6px;font-size:11.5px;font-weight:800;color:var(--ok)}
+  .gc .nouvo{position:absolute;top:10px;right:10px;font-size:10px;font-weight:900;letter-spacing:.05em;background:var(--c);color:#fff;border-radius:999px;padding:2px 7px}
+  .intro .ih{display:flex;gap:12px;align-items:center;margin-bottom:10px} .intro .ih b{display:block;font-size:19px} .intro .ih>div{flex:1;min-width:0}
+  .gain{margin:10px 0 4px;padding:12px;border-radius:12px;background:#fff8ea;border:1.5px solid #f6dfae}
+  .gain .xp{font-size:22px;font-weight:900;color:#c2410c} .gain .g1{font-weight:800;margin-top:4px} .gain .g2{font-size:13.5px;color:var(--muted);margin-top:4px}
+  .badges{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .bdg{border:1.5px solid #f6dfae;background:#fff8ea;border-radius:12px;padding:10px;text-align:center} .bdg span{font-size:30px;display:block}
+  .bdg b{display:block;font-size:14px;margin-top:2px} .bdg small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+  .bdg.non{background:#f6f7fb;border-color:var(--line);opacity:.55} .bdg.non span{filter:grayscale(1)}
+  .tab{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+  .tab>div{background:#f6f7fb;border-radius:10px;padding:8px} .tab small{display:block;font-size:11.5px;color:var(--muted);font-weight:700} .tab b{font-size:15px}
+  .tab b.ko{color:var(--err)}
+  .rap{background:#eef4ff;border-radius:12px;padding:10px 12px;font-size:14px} .rap .rt{font-weight:900;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--bleu);margin-bottom:4px}
+  .rap .ev{margin-top:6px;font-weight:700} .rap b.ok{color:var(--ok)} .rap b.ko{color:var(--err)}
+  .prix{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .prix button{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:8px 4px;font:inherit;font-weight:900;font-size:15px;cursor:pointer;color:var(--ink)}
+  .prix button small{display:block;font-size:11px;font-weight:700;color:var(--muted)} .prix button.on{border-color:var(--bleu);background:#eef4ff}
+  .acts{display:flex;flex-direction:column;gap:8px}
+  .act{display:flex;align-items:center;gap:10px;text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:10px;font:inherit;color:var(--ink);cursor:pointer}
+  .act:disabled{opacity:.45;cursor:default} .act .ai{font-size:24px} .act .at{flex:1;min-width:0} .act .at b{display:block;font-size:14.5px} .act .at small{display:block;font-size:12.5px;color:var(--muted)}
+  .act .ac{font-weight:900;font-size:13.5px;white-space:nowrap}
+  .tete b .logo{vertical-align:middle;margin-right:4px}
   .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
   .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
   .navapp a span{display:block;font-size:20px;line-height:1.2}
@@ -102,12 +179,29 @@ function melanger(t){ t=t.slice(); for(var i=t.length-1;i>0;i--){ var j=Math.flo
 function duree(s){ s=Math.round(s); var m=Math.floor(s/60); return (m?m+' min ':'')+(s%60)+' s'; }
 
 var JEUX=[
-  {id:'siy', ic:'🔢', nb:10, sec:40, nom:function(){ return A('Siy lojik','Suites logiques'); },
+  {id:'siy', gr:'psi', ic:'🔢', nb:10, sec:40, nom:function(){ return A('Siy lojik','Suites logiques'); },
    txt:function(){ return A('Jwenn sa ki vini apre a : chif oswa lèt. 10 kesyon, 40 segonn chak.','Trouvez l\'élément suivant : nombres ou lettres. 10 questions, 40 secondes chacune.'); }},
-  {id:'baraj', ic:'🔍', nb:1, sec:60, nom:function(){ return A('Tès baraj','Test de barrage'); },
+  {id:'mat', gr:'psi', ic:'🔳', nb:8, sec:60, nom:function(){ return A('Matris','Matrices'); },
+   txt:function(){ return A('Jwenn desen ki manke nan kare 3 × 3 la. 8 kesyon, 60 segonn chak.','Trouvez le dessin qui manque dans la grille 3 × 3. 8 questions, 60 secondes chacune.'); }},
+  {id:'kal', gr:'psi', ic:'➗', nb:12, sec:20, nom:function(){ return A('Kalkil mantal','Calcul mental'); },
+   txt:function(){ return A('Operasyon, pousantaj, fraksyon, monnen : 12 kesyon, 20 segonn chak (30 pou pwoblèm yo).','Opérations, pourcentages, fractions, monnaie : 12 questions, 20 secondes chacune (30 pour les problèmes).'); }},
+  {id:'mem', gr:'psi', ic:'🧠', nb:1, sec:0, nom:function(){ return A('Memwa chif','Mémoire des chiffres'); },
+   txt:function(){ return A('Chif yo parèt epi yo disparèt : tape yo nan menm lòd la. Chak fwa w reyisi, gen yon chif anplis.','Les chiffres s\'affichent puis disparaissent : retapez-les dans le même ordre. À chaque réussite, un chiffre de plus.'); }},
+  {id:'baraj', gr:'psi', ic:'🔍', nb:1, sec:60, nom:function(){ return A('Tès baraj','Test de barrage'); },
    txt:function(){ return A('Touche tout lèt ki menm ak modèl la, san w pa pran lèt ki sanble yo. 60 segonn.','Touchez toutes les lettres identiques au modèle, sans vous faire piéger par celles qui se ressemblent. 60 secondes.'); }},
-  {id:'kib', ic:'🧊', nb:8, sec:60, nom:function(){ return A('Pliye kib la','Pliage de cubes'); },
-   txt:function(){ return A('Ki kib ou jwenn lè w pliye modèl la ? 8 kesyon, 60 segonn chak.','Quel cube obtient-on en pliant le patron ? 8 questions, 60 secondes chacune.'); }}
+  {id:'kib', gr:'psi', ic:'🧊', nb:8, sec:60, nom:function(){ return A('Pliye kib la','Pliage de cubes'); },
+   txt:function(){ return A('Ki kib ou jwenn lè w pliye modèl la ? 8 kesyon, 60 segonn chak.','Quel cube obtient-on en pliant le patron ? 8 questions, 60 secondes chacune.'); }},
+  {id:'taq', gr:'pez', ic:'🔢', tailles:[3,4], nom:function(){ return A('Takin','Taquin'); },
+   txt:function(){ return A('Fè pyès yo glise pou mete nimewo yo nan lòd, 1 apre 2, apre 3…','Faites glisser les pièces pour remettre les numéros dans l\'ordre, 1, 2, 3…'); },
+   taille:function(n){ return n+' × '+n; }},
+  {id:'han', gr:'pez', ic:'🗼', tailles:[3,4,5], nom:function(){ return A('Tou Anoi','Tour de Hanoï'); },
+   txt:function(){ return A('Mennen tout plato yo sou dènye poto a. Youn alafwa, epi pa janm mete yon gwo sou yon piti.','Déplacez tous les disques sur le dernier piquet. Un à la fois, et jamais un grand sur un petit.'); },
+   taille:function(n){ return n+' '+A('plato','disques'); }},
+  {id:'sud', gr:'pez', ic:'🔲', tailles:[4,6,9], nom:function(){ return A('Sidokou','Sudoku'); },
+   txt:function(){ return A('Ranpli kare a : chak chif yon sèl fwa nan chak ranje, chak kolòn ak chak bwat.','Remplissez la grille : chaque chiffre une seule fois par ligne, par colonne et par bloc.'); },
+   taille:function(n){ return n+' × '+n; }},
+  {id:'rez', gr:'ges', ic:'📡', nom:function(){ return A('Rezo Wi-Fi mwen','Mon réseau Wi-Fi'); },
+   txt:function(){ return A('12 mwa pou fè yon rezo Wi-Fi grandi : envesti, fè piblisite, jere enèji a, siklòn ak konkirans.','12 mois pour faire grandir un réseau Wi-Fi : investir, faire de la publicité, gérer l\'énergie, les cyclones et la concurrence.'); }}
 ];
 function jeuParId(id){ return JEUX.filter(function(j){ return j.id===id; })[0]; }
 
@@ -121,7 +215,7 @@ function noterRecord(id,pts,total,temps){
 }
 function txtRecord(id){
   var r=record(id); if(!r) return '<span class="rec vide">'+A('Poko jwe','Pas encore joué')+'</span>';
-  return '<span class="rec">'+A('Pi bon nòt ou : ','Votre meilleur score : ')+r.pts+(r.total?' / '+r.total:'')+(r.temps?' · '+duree(r.temps):'')+'</span>';
+  return '<span class="rec">'+A('Pi bon nòt ou : ','Votre meilleur score : ')+r.pts+(id==='mem'?' '+A('chif','chiffres'):'')+(r.total?' / '+r.total:'')+(r.temps?' · '+duree(r.temps):'')+'</span>';
 }
 
 // ---------- Compteur anonyme (feuille Stats, colonne « Jeux psychotechniques ») ----------
@@ -255,26 +349,163 @@ function svgCube(q,t){
 }
 
 // =====================================================================
+// 4. MATRICES — grille 3 × 3 ; 4 propriétés (forme, couleur, nombre, remplissage) qui suivent une règle
+// =====================================================================
+var MAT_NOM={ht:['Fòm nan','Koulè a','Kantite desen an','Ranplisaj la'], fr:['La forme','La couleur','Le nombre de dessins','Le remplissage']};
+var MAT_PL={ht:['fòm','koulè','kantite','ranplisaj'], fr:['formes différentes','couleurs différentes','nombres différents','remplissages différents']};
+var MAT_COUL=['#1f5fbf','#c0392b','#1d8a4e'];
+function matIdx(p,r,c){ return p==='row'?r:p==='col'?c:p==='lat1'?(r+c)%3:p==='lat2'?(r+2*c)%3:0; }
+function questionMatrice(niv){
+  var plans={1:[choisir(['row','col'])],2:melanger(['row','col']),3:['lat1',choisir(['row','col'])],4:['lat1','lat2',choisir(['row','col'])],5:['lat1','lat2','row','col']}[niv];
+  var attrs=melanger([0,1,2,3]), pat=['const','const','const','const'], val=[melanger([0,1,2]),melanger([0,1,2]),melanger([0,1,2]),melanger([0,1,2])];
+  plans.forEach(function(p,k){ pat[attrs[k]]=p; });
+  var g=[]; for(var r=0;r<3;r++) for(var c=0;c<3;c++) g.push([0,1,2,3].map(function(a){ return val[a][matIdx(pat[a],r,c)]; }));
+  var bon=g[8], vari=[], autres=[];
+  [0,1,2,3].forEach(function(a){ [0,1,2].forEach(function(v){ if(v!==bon[a]){ var x=bon.slice(); x[a]=v; (pat[a]!=='const'?vari:autres).push(x); } }); });
+  var opts=[bon], vu={}; vu[bon.join()]=1;
+  melanger(vari).concat(melanger(autres)).forEach(function(x){ if(opts.length<4&&!vu[x.join()]){ vu[x.join()]=1; opts.push(x); } });
+  opts=melanger(opts);
+  var e=[[],[]]; [0,1,2,3].forEach(function(a){ var p=pat[a]; if(p==='const') return;
+    if(p==='row'||p==='col'){ e[0].push(MAT_NOM.ht[a]+' pa chanje sou chak '+(p==='row'?'ranje':'kolòn')+'.'); e[1].push(MAT_NOM.fr[a]+' ne change pas sur une même '+(p==='row'?'ligne':'colonne')+'.'); }
+    else { e[0].push('Chak ranje ak chak kolòn gen 3 '+MAT_PL.ht[a]+' diferan.'); e[1].push('Chaque ligne et chaque colonne a 3 '+MAT_PL.fr[a]+'.'); } });
+  return {g:g, opts:opts, bonI:opts.indexOf(bon), e:[e[0].join(' '),e[1].join(' ')], pat:pat};
+}
+function svgFig(x){
+  var co=MAT_COUL[x[1]], n=x[2]+1, st=x[3], s='', pos={1:[[30,30]],2:[[17,30],[43,30]],3:[[30,16],[16,43],[44,43]]}[n], r=n===1?15:n===2?11:9.5;
+  var att=st===0?'fill="'+co+'" stroke="'+co+'" stroke-width="1"':st===1?'fill="#fff" stroke="'+co+'" stroke-width="2.6"':'fill="'+co+'" fill-opacity=".28" stroke="'+co+'" stroke-width="1.4"';
+  pos.forEach(function(p){ var a=p[0], b=p[1];
+    if(x[0]===0) s+='<circle cx="'+a+'" cy="'+b+'" r="'+r+'" '+att+'/>';
+    else if(x[0]===1) s+='<rect x="'+(a-r*.86).toFixed(1)+'" y="'+(b-r*.86).toFixed(1)+'" width="'+(r*1.72).toFixed(1)+'" height="'+(r*1.72).toFixed(1)+'" '+att+'/>';
+    else s+='<polygon points="'+a+','+(b-r).toFixed(1)+' '+(a+r*.98).toFixed(1)+','+(b+r*.78).toFixed(1)+' '+(a-r*.98).toFixed(1)+','+(b+r*.78).toFixed(1)+'" stroke-linejoin="round" '+att+'/>'; });
+  return s;
+}
+function svgMatrice(q){
+  var h='<svg viewBox="0 0 186 186" width="216" height="216" role="img" aria-label="matrice">';
+  for(var i=0;i<9;i++){ var X=3+(i%3)*60, Y=3+Math.floor(i/3)*60;
+    h+='<rect x="'+X+'" y="'+Y+'" width="60" height="60" fill="'+(i===8?'#fff4dc':'#fff')+'" stroke="#14213d" stroke-width="1.2"/>';
+    h+=i===8?'<text x="'+(X+30)+'" y="'+(Y+41)+'" text-anchor="middle" font-size="28" font-weight="800" fill="#8a5a00">?</text>':'<g transform="translate('+X+' '+Y+')">'+svgFig(q.g[i])+'</g>'; }
+  return h+'</svg>';
+}
+function svgCase(x){ return '<svg viewBox="0 0 60 60" role="img" aria-label="choix">'+svgFig(x)+'</svg>'; }
+
+// =====================================================================
+// 5. CALCUL MENTAL — niveau 1 : + − ; 2 : × ; 3 : ÷ et priorités ; 4 : % et fractions ; 5 : monnaie, règle de trois
+// =====================================================================
+var ART={ht:['pen','zoranj','ze','kaye'], f1:['pain','orange','œuf','cahier'], fn:['pains','oranges','œufs','cahiers']};
+function questionCalcul(niv){
+  var t,rep,e,d=10,extra=[],lg=0,k=Math.random()<0.5,a,b,c;
+  if(niv===1){ if(k){ a=alea(12,89); b=alea(11,69); rep=a+b; t=[a+' + '+b]; } else { a=alea(30,99); b=alea(11,a-5); rep=a-b; t=[a+' − '+b]; } e=[t[0]+' = '+rep]; }
+  else if(niv===2){ if(k){ a=alea(3,12); b=alea(3,12); } else { a=alea(2,9); b=alea(11,19); } rep=a*b; t=[a+' × '+b]; e=[t[0]+' = '+rep]; d=a; extra=[a+b, rep+b]; }
+  else if(niv===3){ if(k){ b=alea(3,12); var q=alea(3,12); a=b*q; rep=q; t=[a+' ÷ '+b]; e=[b+' × '+q+' = '+a+', '+A('donk','donc')+' '+a+' ÷ '+b+' = '+q]; d=1; }
+    else { a=alea(2,9); b=alea(2,9); c=alea(2,20); rep=a*b+c; t=[a+' × '+b+' + '+c]; e=[A('Miltiplikasyon an an premye : ','La multiplication d\'abord : ')+a+' × '+b+' = '+(a*b)+' ; '+(a*b)+' + '+c+' = '+rep]; extra=[a*(b+c)]; d=c; } }
+  else if(niv===4){ if(k){ var p=choisir([10,20,25,50,75]), N=p===50?2*alea(10,150):(p===25||p===75)?4*alea(5,50):10*alea(2,40); rep=N*p/100;
+      t=[p+' % '+A('nan','de')+' '+N];
+      var reg={10:N+' ÷ 10 = '+rep, 20:N+' ÷ 10 × 2 = '+rep, 25:'25 % = ¼ : '+N+' ÷ 4 = '+rep, 50:'50 % = ½ : '+N+' ÷ 2 = '+rep, 75:'75 % = ¾ : '+N+' ÷ 4 × 3 = '+rep}[p];
+      e=[reg]; d=Math.max(1,rep/5|0); extra=[N-rep]; }
+    else { var f=choisir([[1,2],[1,3],[1,4],[3,4],[2,3]]), N2=f[1]*alea(3,30); rep=N2/f[1]*f[0]; t=[f[0]+'/'+f[1]+' '+A('nan','de')+' '+N2]; e=[N2+' ÷ '+f[1]+(f[0]>1?' × '+f[0]:'')+' = '+rep]; d=Math.max(1,N2/f[1]); extra=[N2-rep]; } }
+  else { lg=1; if(k){ var pr=5*alea(3,19), n=alea(1,3), it=alea(0,3), tot=pr*n, B=tot<100?100:tot<250?250:500; rep=B-tot;
+      t=[A('Ou achte '+n+' '+ART.ht[it]+' a '+pr+' goud chak. Ou bay '+B+' goud. Konbyen kòb yo dwe remèt ou ?','Vous achetez '+n+' '+(n>1?ART.fn[it]:ART.f1[it])+' à '+pr+' gourdes l\'unité. Vous donnez '+B+' gourdes. Combien doit-on vous rendre ?')];
+      e=[(n>1?n+' × '+pr+' = '+tot+' ; ':'')+B+' − '+tot+' = '+rep+' '+A('goud','gourdes')]; d=5; extra=[B-pr, tot]; }
+    else { var u=5*alea(10,30), x=alea(2,5), y=alea(2,9); if(y===x) y=x+1; var px=u*x; rep=u*y;
+      t=[A(x+' liv diri koute '+px+' goud. Konbyen '+y+' liv koute ?',x+' livres de riz coûtent '+px+' gourdes. Combien coûtent '+y+' livres ?')];
+      e=[A('1 liv = ','1 livre = ')+px+' ÷ '+x+' = '+u+' ; '+y+' × '+u+' = '+rep+' '+A('goud','gourdes')]; d=u; extra=[px+y]; } }
+  var ch=[rep], cand=extra.concat(melanger([rep+d,rep-d,rep+1,rep-1,rep+10,rep-10,rep+2,rep-2]));
+  cand.forEach(function(v){ v=Math.round(v); if(v>=0&&ch.indexOf(v)<0&&ch.length<4) ch.push(v); });
+  return {t:t[0], rep:rep, choix:melanger(ch), e:e[0], sec:lg?30:20, long:lg};
+}
+
+// =====================================================================
+// 6. SUDOKU — 4 × 4, 6 × 6, 9 × 9 ; une seule solution, vérifiée
+// =====================================================================
+function sudBoite(n){ return n===4?[2,2]:n===6?[2,3]:[3,3]; }
+function sudCand(g,n,i){
+  var b=sudBoite(n), r=Math.floor(i/n), c=i%n, pris={}, r0=Math.floor(r/b[0])*b[0], c0=Math.floor(c/b[1])*b[1], k, l, res=[];
+  for(k=0;k<n;k++){ pris[g[r*n+k]]=1; pris[g[k*n+c]]=1; }
+  for(k=0;k<b[0];k++) for(l=0;l<b[1];l++) pris[g[(r0+k)*n+c0+l]]=1;
+  for(k=1;k<=n;k++) if(!pris[k]) res.push(k);
+  return res;
+}
+function sudVide(g,n){ var best=-1, bc=null; for(var i=0;i<n*n;i++) if(!g[i]){ var c=sudCand(g,n,i); if(!bc||c.length<bc.length){ bc=c; best=i; if(c.length<2) break; } } return [best,bc]; }
+function sudCompter(g,n,lim){
+  var v=sudVide(g,n), i=v[0], c=v[1]; if(i<0) return 1; if(!c.length) return 0;
+  var tot=0; for(var k=0;k<c.length&&tot<lim;k++){ g[i]=c[k]; tot+=sudCompter(g,n,lim-tot); } g[i]=0; return tot;
+}
+function sudRemplir(g,n){
+  var v=sudVide(g,n), i=v[0]; if(i<0) return true; var c=melanger(v[1]);
+  for(var k=0;k<c.length;k++){ g[i]=c[k]; if(sudRemplir(g,n)) return true; } g[i]=0; return false;
+}
+function sudGen(n){
+  var g=[]; for(var i=0;i<n*n;i++) g.push(0); sudRemplir(g,n); var sol=g.slice(), garder={4:6,6:14,9:30}[n], nb=n*n;
+  melanger(Object.keys(g).map(Number)).forEach(function(i){ if(nb<=garder) return; var v=g[i]; g[i]=0; if(sudCompter(g.slice(),n,2)===1) nb--; else g[i]=v; });
+  return {g:g, sol:sol};
+}
+function sudConflits(g,n){
+  var b=sudBoite(n), mal={};
+  for(var i=0;i<n*n;i++){ if(!g[i]) continue; var r=Math.floor(i/n), c=i%n;
+    for(var j=0;j<n*n;j++){ if(j===i||g[j]!==g[i]) continue; var r2=Math.floor(j/n), c2=j%n;
+      if(r===r2||c===c2||(Math.floor(r/b[0])===Math.floor(r2/b[0])&&Math.floor(c/b[1])===Math.floor(c2/b[1]))) mal[i]=1; } }
+  return mal;
+}
+
+// =====================================================================
+// Sons (bips fabriqués par le téléphone, aucun fichier) — bouton 🔊 / 🔇, gardé sur le téléphone
+// =====================================================================
+var SON=lire('masbet_psiko_son')!=='0', AC=null;
+function bip(freq,dur,type,vol,delai){
+  if(!SON) return; try{
+    if(!AC){ var C=window.AudioContext||window.webkitAudioContext; if(!C) return; AC=new C(); }
+    if(AC.state==='suspended') AC.resume();
+    var t=AC.currentTime+(delai||0), o=AC.createOscillator(), g=AC.createGain();
+    o.type=type||'sine'; o.frequency.setValueAtTime(freq,t); g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(vol||0.18,t+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t+dur+0.02);
+  }catch(e){}
+}
+var SONS={
+  bon:function(){ bip(880,0.12); bip(1320,0.16,'sine',0.18,0.11); },
+  mal:function(){ bip(220,0.28,'square',0.08); },
+  tic:function(){ bip(1000,0.05,'sine',0.08); },
+  clic:function(){ bip(600,0.04,'triangle',0.08); },
+  chiffre:function(){ bip(740,0.09,'sine',0.12); },
+  refus:function(){ bip(160,0.18,'sawtooth',0.06); },
+  fin:function(){ [523,659,784,1047].forEach(function(f,i){ bip(f,0.18,'sine',0.16,i*0.13); }); }
+};
+function boutonSon(){ return '<button type="button" class="son" id="son" aria-label="son">'+(SON?'🔊':'🔇')+'</button>'; }
+
+// =====================================================================
 // Déroulement d'une partie
 // =====================================================================
 var P=null, TIC=null;
 function arreterChrono(){ clearInterval(TIC); TIC=null; }
 function chrono(sec,fin){
   arreterChrono(); var t0=Date.now(), bar=document.getElementById('bar');
-  TIC=setInterval(function(){ var r=Math.max(0,sec-(Date.now()-t0)/1000); if(bar){ bar.style.width=(100*r/sec)+'%'; bar.classList.toggle('bas',r<sec/4); } var n=document.getElementById('reste'); if(n) n.textContent=Math.ceil(r)+' s';
+  var dernier=-1;
+  TIC=setInterval(function(){ var r=Math.max(0,sec-(Date.now()-t0)/1000), s=Math.ceil(r); if(s<=5&&s>0&&s!==dernier){ dernier=s; SONS.tic(); } if(bar){ bar.style.width=(100*r/sec)+'%'; bar.classList.toggle('bas',r<sec/4); } var n=document.getElementById('reste'); if(n) n.textContent=Math.ceil(r)+' s';
     if(r<=0){ arreterChrono(); fin(); } },200);
   return t0;
 }
-function tete(){ return '<div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+(JEU.nb>1?A('Kesyon ','Question ')+(P.i+1)+' / '+JEU.nb+' · ':'')+'<span id="reste">'+JEU.sec+' s</span></span></div><div class="chrono"><div id="bar" style="width:100%"></div></div>'; }
+function tete(){ return '<div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+(JEU.nb>1?A('Kesyon ','Question ')+(P.i+1)+' / '+JEU.nb+' · ':'')+'<span id="reste">'+(P.sec||JEU.sec)+' s</span>'+boutonSon()+'</span></div><div class="chrono"><div id="bar" style="width:100%"></div></div>'; }
 function lancer(id){
-  JEU=jeuParId(id); if(!JEU) return; P={i:0, bons:0, temps:0, ok:0, faux:0, oubli:0}; ECRAN='jeu'; statPartie();
-  if(id==='baraj') barrageIntro(); else questionSuivante();
+  clearInterval(TICK); JEU=jeuParId(id); if(!JEU) return; P={i:0, bons:0, temps:0, ok:0, faux:0, oubli:0}; ECRAN='jeu'; statPartie();
+  if(id==='baraj') barrageIntro(); else if(id==='mem') memIntro(); else if(JEU.gr==='pez') puzIntro(); else if(id==='rez') rezInit(); else qIntro();
   window.scrollTo(0,0);
+}
+function qIntro(){
+  document.getElementById('zone').innerHTML='<div class="card intro"><div class="ih">'+logo(JEU.id,64)+'<div><b>'+esc(JEU.nom())+'</b>'+txtRecord(JEU.id)+'</div>'+boutonSon()+'</div><p>'+esc(JEU.txt())+'</p>'+
+    '<button type="button" class="btn plein" id="qgo">'+A('Kòmanse','Commencer')+'</button><button type="button" class="btn sec plein" data-menu="1" style="margin-top:10px">'+A('Lòt jwèt','Autres jeux')+'</button></div>';
 }
 function questionSuivante(){
   if(P.i>=JEU.nb) return resultat();
   var niv=Math.min(5,1+Math.floor(P.i*5/JEU.nb)), z=document.getElementById('zone');
-  if(JEU.id==='siy'){
+  P.sec=JEU.sec;
+  if(JEU.id==='mat'){
+    var m=P.q=questionMatrice(niv);
+    z.innerHTML='<div class="card">'+tete()+'<div class="patron">'+svgMatrice(m)+'</div><div class="lbl">'+A('Ki desen ki manke a ?','Quel dessin manque ?')+'</div>'+
+      '<div class="cubes mats">'+m.opts.map(function(x,i){ return '<button type="button" data-i="'+i+'" aria-label="'+(i+1)+'">'+svgCase(x)+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
+  } else if(JEU.id==='kal'){
+    var k=P.q=questionCalcul(niv); P.sec=k.sec;
+    z.innerHTML='<div class="card">'+tete()+'<div class="calc'+(k.long?' long':'')+'">'+esc(k.t)+(k.long?'':' = ?')+'</div>'+
+      '<div class="chx">'+k.choix.map(function(x,i){ return '<button type="button" data-i="'+i+'">'+x+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
+  } else if(JEU.id==='siy'){
     var q=P.q=questionSuite(niv);
     z.innerHTML='<div class="card">'+tete()+'<div class="lbl">'+A('Ki sa ki vini apre a ?','Quel est l\'élément suivant ?')+'</div><div class="seq">'+q.vis.map(function(x){ return '<span>'+esc(x)+'</span>'; }).join('')+'<span class="q">?</span></div>'+
       '<div class="chx">'+q.choix.map(function(x,i){ return '<button type="button" data-i="'+i+'">'+esc(x)+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
@@ -283,17 +514,20 @@ function questionSuivante(){
     z.innerHTML='<div class="card">'+tete()+'<div class="patron">'+svgPatron(c)+'</div><div class="lbl">'+A('Pliye modèl la, desen yo rete deyò. Ki kib ki ka soti ladan l ?','Pliez le patron, dessins à l\'extérieur. Quel cube peut-on obtenir ?')+'</div>'+
       '<div class="cubes">'+c.opts.map(function(t,i){ return '<button type="button" data-i="'+i+'" aria-label="'+A('Kib ','Cube ')+(i+1)+'">'+svgCube(c,t)+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
   }
-  P.t0=chrono(JEU.sec,function(){ repondre(-1); });
+  P.t0=chrono(P.sec,function(){ repondre(-1); });
 }
 function repondre(i){
-  if(P.fini) return; arreterChrono(); var dt=Math.min(JEU.sec,(Date.now()-P.t0)/1000); P.temps+=dt;
+  if(P.fini||P.repondu===P.i) return; P.repondu=P.i; arreterChrono(); var dt=Math.min(P.sec,(Date.now()-P.t0)/1000); P.temps+=dt;
   var q=P.q, bonI, juste;
-  if(JEU.id==='siy'){ bonI=q.choix.indexOf(q.rep); }
+  if(JEU.id==='siy'||JEU.id==='kal'){ bonI=q.choix.indexOf(q.rep); }
+  else if(JEU.id==='mat'){ bonI=q.bonI; }
   else { bonI=q.opts.indexOf(q.bon); }
-  juste=i===bonI; if(juste) P.bons++;
+  juste=i===bonI; if(juste){ P.bons++; SONS.bon(); } else SONS.mal();
   document.querySelectorAll('#zone .chx button, #zone .cubes button').forEach(function(b,k){ b.disabled=true; if(k===bonI) b.classList.add('bon'); else if(k===i) b.classList.add('mal'); });
   var tete2=i<0?'<b class="ko">'+A('Tan an fini.','Temps écoulé.')+'</b> ':juste?'<b class="ok">'+A('Bon !','Juste !')+'</b> ':'<b class="ko">'+A('Non.','Faux.')+'</b> ';
   var expl=JEU.id==='siy'?A('Repons lan se ','La réponse est ')+'<b>'+esc(q.rep)+'</b>. '+esc(LANG==='fr'?q.e[1]:q.e[0])
+    :JEU.id==='kal'?A('Repons lan se ','La réponse est ')+'<b>'+esc(q.rep)+'</b>. '+esc(q.e)
+    :JEU.id==='mat'?esc(LANG==='fr'?q.e[1]:q.e[0])
     :A('Konsèy : de fas ki opoze sou kib la pa janm parèt ansanm, epi yon kib « nan glas » (fas yo nan lòd ki ranvèse) pa bon.','Astuce : deux faces opposées n\'apparaissent jamais ensemble, et un cube « en miroir » (faces dans l\'ordre inversé) est faux.');
   P.i++;
   document.getElementById('ex').innerHTML='<div class="expl">'+tete2+expl+'</div><div style="margin-top:12px"><button type="button" class="btn plein" id="suite">'+(P.i>=JEU.nb?A('Wè rezilta a','Voir le résultat'):A('Kontinye','Continuer'))+'</button></div>';
@@ -312,7 +546,7 @@ function barrageJouer(){
   P.t0=chrono(60,barrageFin);
 }
 function barrageFin(){
-  if(P.fini) return; arreterChrono(); P.fini=true; P.temps=Math.min(60,(Date.now()-P.t0)/1000);
+  if(P.fini) return; arreterChrono(); P.fini=true; SONS.fin(); P.temps=Math.min(60,(Date.now()-P.t0)/1000);
   var g=P.g; P.ok=0; P.faux=0; P.oubli=0;
   document.querySelectorAll('#grille button').forEach(function(b){ var k=+b.dataset.k, cible=g.g[k]===g.cible, m=!!P.m[k]; b.disabled=true; b.classList.remove('m');
     if(m&&cible){ P.ok++; b.classList.add('f-ok'); } else if(m){ P.faux++; b.classList.add('f-faux'); } else if(cible){ P.oubli++; b.classList.add('f-oubli'); } });
@@ -321,46 +555,397 @@ function barrageFin(){
   carte.querySelector('.chrono').remove(); var f=document.getElementById('fini'); if(f) f.parentNode.remove();
   carte.insertAdjacentHTML('afterbegin','<div class="res"><div class="sous">'+A('Nòt ou (bon − erè)','Votre score (justes − erreurs)')+'</div><div class="gros">'+pts+' <span style="font-size:20px;color:var(--muted)">/ '+total+'</span></div>'+
     '<div class="bilan"><div style="color:var(--ok)">✓ '+P.ok+' '+A('bon','justes')+'</div><div style="color:var(--err)">✗ '+P.faux+' '+A('erè','erreurs')+'</div><div style="color:#8a5a00">○ '+P.oubli+' '+A('bliye','oubliées')+'</div><div>⏱ '+duree(P.temps)+'</div></div>'+
-    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord('baraj')+'<div style="height:10px"></div>')+
+    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord('baraj')+'<div style="height:10px"></div>')+progres('baraj',{pts:pts})+
     '<div class="actions" style="margin-bottom:14px"><button type="button" class="btn" data-rejouer="baraj">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>');
   window.scrollTo(0,0);
 }
 function resultat(){
-  P.fini=true; arreterChrono(); var nouveau=noterRecord(JEU.id,P.bons,JEU.nb,P.temps), pct=P.bons/JEU.nb;
+  P.fini=true; arreterChrono(); SONS.fin(); var nouveau=noterRecord(JEU.id,P.bons,JEU.nb,P.temps), pct=P.bons/JEU.nb;
   var msg=pct>=0.9?A('Ekselan ! Ou pare pou tès sa a.','Excellent ! Vous êtes prêt pour ce test.'):pct>=0.6?A('Byen. Rejwe pou w vin pi vit.','Bien. Rejouez pour gagner en vitesse.'):A('Kontinye antrene w : fòma a ap vin fasil.','Continuez à vous entraîner : le format deviendra facile.');
-  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(JEU.nom())+'</div><div class="gros">'+P.bons+' / '+JEU.nb+'</div><div class="sous">⏱ '+duree(P.temps)+' · '+msg+'</div>'+
+  var bloc=progres(JEU.id,{bons:P.bons,nb:JEU.nb});
+  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(JEU.nom())+'</div><div class="gros">'+P.bons+' / '+JEU.nb+'</div><div class="sous">⏱ '+duree(P.temps)+' · '+msg+'</div>'+bloc+
     (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord(JEU.id)+'<div style="height:12px"></div>')+
     '<div class="actions"><button type="button" class="btn" data-rejouer="'+JEU.id+'">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>';
   window.scrollTo(0,0);
 }
+// =====================================================================
+// Mémoire des chiffres
+// =====================================================================
+function memIntro(){
+  P.len=3; P.echecs=0; P.max=0;
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>'+esc(JEU.nom())+'</b>'+boutonSon()+'</div>'+
+    '<p style="margin:0 0 12px">'+A('Chif yo ap parèt youn apre lòt. Lè yo fini, tape yo nan menm lòd la. Ou kòmanse ak 3 chif ; chak fwa w reyisi, gen yon chif anplis. 2 erè youn dèyè lòt, jwèt la fini.','Les chiffres s\'affichent un par un. Ensuite, retapez-les dans le même ordre. On commence avec 3 chiffres ; à chaque réussite, un chiffre de plus. 2 erreurs de suite, et la partie s\'arrête.')+'</p>'+
+    '<button type="button" class="btn plein" id="memgo">'+A('Kòmanse','Commencer')+'</button></div>';
+}
+function memMontrer(){
+  var s=[], x, jeton=P; while(s.length<P.len){ x=alea(0,9); if(s[s.length-1]!==x) s.push(x); } P.seq=s; P.saisie=[]; P.saisir=false;
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+P.len+' '+A('chif','chiffres')+'</span></div>'+
+    '<div class="memBox" id="memBox"></div><div class="lbl">'+A('Gade byen…','Regardez bien…')+'</div></div>';
+  var k=0, box=document.getElementById('memBox');
+  var etape=function(){ if(P!==jeton) return; box.textContent=s[k]; SONS.chiffre();
+    setTimeout(function(){ if(P!==jeton) return; box.textContent=''; k++; if(k<s.length) setTimeout(etape,250); else memSaisie(); },900); };
+  setTimeout(etape,600);
+}
+function memSaisie(){
+  P.saisir=true; P.t0=Date.now();
+  var touches=[1,2,3,4,5,6,7,8,9,'x',0,''].map(function(t){ return t===''?'<span></span>':'<button type="button" data-m="'+t+'">'+(t==='x'?'⌫':t)+'</button>'; }).join('');
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+P.len+' '+A('chif','chiffres')+'</span></div>'+
+    '<div class="lbl">'+A('Tape chif yo nan lòd la :','Retapez les chiffres dans l\'ordre :')+'</div><div class="memSaisie" id="memS"></div><div class="pave">'+touches+'</div><div id="ex"></div></div>';
+  memAfficher();
+}
+function memAfficher(){ var h=''; for(var i=0;i<P.len;i++) h+='<span>'+(i<P.saisie.length?P.saisie[i]:'')+'</span>'; document.getElementById('memS').innerHTML=h; }
+function memTouche(t){
+  if(!P.saisir) return;
+  if(t==='x'){ P.saisie.pop(); SONS.clic(); return memAfficher(); }
+  P.saisie.push(+t); SONS.clic(); memAfficher();
+  if(P.saisie.length<P.len) return;
+  P.saisir=false; P.temps+=(Date.now()-P.t0)/1000;
+  var juste=P.saisie.join('')===P.seq.join(''), ex=document.getElementById('ex'), txt, bout;
+  document.querySelectorAll('.pave button').forEach(function(b){ b.disabled=true; });
+  if(juste){ SONS.bon(); P.max=P.len; P.echecs=0; P.len++;
+    if(P.len>14) return memFin();
+    txt='<b class="ok">'+A('Bon !','Juste !')+'</b> '+A('Ou sonje '+P.max+' chif.','Vous avez retenu '+P.max+' chiffres.'); bout=A('Kontinye ('+P.len+' chif)','Continuer ('+P.len+' chiffres)');
+  } else { SONS.mal(); P.echecs++;
+    txt='<b class="ko">'+A('Non.','Faux.')+'</b> '+A('Se te : ','C\'était : ')+'<b>'+P.seq.join(' ')+'</b>';
+    if(P.echecs>=2) bout=A('Wè rezilta a','Voir le résultat'); else bout=A('Eseye ankò ('+P.len+' chif)','Réessayer ('+P.len+' chiffres)');
+  }
+  ex.innerHTML='<div class="expl">'+txt+'</div><div style="margin-top:12px"><button type="button" class="btn plein" id="memsuite">'+bout+'</button></div>';
+}
+function memSuite(){ if(P.echecs>=2) memFin(); else memMontrer(); }
+function memFin(){
+  P.fini=true; SONS.fin(); var nouveau=noterRecord('mem',P.max,0,0);
+  var msg=A('Pifò granmoun sonje ant 5 ak 9 chif. Antrennman ede w rete konsantre.','La plupart des adultes retiennent de 5 à 9 chiffres. L\'entraînement aide à rester concentré.');
+  var bloc=progres('mem',{max:P.max});
+  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(JEU.nom())+'</div><div class="gros">'+P.max+' <span style="font-size:20px;color:var(--muted)">'+A('chif','chiffres')+'</span></div><div class="sous">'+msg+'</div>'+bloc+
+    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord('mem')+'<div style="height:12px"></div>')+
+    '<div class="actions"><button type="button" class="btn" data-rejouer="mem">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>';
+  window.scrollTo(0,0);
+}
+
+// =====================================================================
+// Casse-tête : choix de la taille, chrono qui monte, victoire
+// =====================================================================
+var TICK=null;
+function puzRecord(id,n){ return record(id+n); }
+/** Taquin et sudoku : le meilleur temps ; Hanoï : le moins de coups, puis le temps. */
+function puzNoter(id,n,temps,coups){
+  var r=puzRecord(id,n), mieux=!r||(id==='han'?(coups<r.coups||(coups===r.coups&&temps<r.temps)):temps<r.temps);
+  if(mieux) ecrire('masbet_psiko_'+id+n,JSON.stringify({temps:Math.round(temps),coups:coups}));
+  return mieux;
+}
+function puzTxtRecord(j){
+  var l=j.tailles.map(function(n){ var r=puzRecord(j.id,n); return r?j.taille(n)+' : '+duree(r.temps)+(j.id!=='sud'?' · '+r.coups+' '+A('kou','coups'):''):''; }).filter(Boolean);
+  return l.length?'<span class="rec">'+A('Pi bon : ','Meilleur : ')+l.join(' — ')+'</span>':'<span class="rec vide">'+A('Poko jwe','Pas encore joué')+'</span>';
+}
+function puzIntro(){
+  var j=JEU;
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>'+esc(j.nom())+'</b>'+boutonSon()+'</div><p style="margin:0 0 10px">'+esc(j.txt())+'</p>'+puzTxtRecord(j)+
+    '<div class="tailles">'+j.tailles.map(function(n,i){ return '<button type="button" class="btn'+(i?' sec':'')+'" data-taille="'+n+'">'+esc(j.taille(n))+'</button>'; }).join('')+'</div>'+
+    '<button type="button" class="btn sec plein" data-menu="1" style="margin-top:10px">'+A('Lòt jwèt','Autres jeux')+'</button></div>';
+}
+function puzDemarrer(n){
+  P={n:n, coups:0, t0:null, temps:0, fini:false}; clearInterval(TICK);
+  if(JEU.id==='taq') taqInit(); else if(JEU.id==='han') hanInit(); else sudInit();
+  TICK=setInterval(puzHorloge,1000); window.scrollTo(0,0);
+}
+function puzDebut(){ if(!P.t0) P.t0=Date.now(); }
+function puzHorloge(){ var e=document.getElementById('puzT'); if(e&&P&&!P.fini) e.textContent=P.t0?duree((Date.now()-P.t0)/1000):'0 s'; }
+function puzTete(){ return '<div class="tete"><b>'+esc(JEU.nom())+' · '+esc(JEU.taille(P.n))+'</b>'+boutonSon()+'</div><div class="puzInfo">'+(JEU.id!=='sud'?'<span>'+A('Kou','Coups')+' : <b id="puzC">'+P.coups+'</b></span>':'')+'<span>⏱ <b id="puzT">0 s</b></span>'+(JEU.id==='han'?'<span>'+A('Minimòm','Minimum')+' : <b>'+(Math.pow(2,P.n)-1)+'</b></span>':'')+'</div>'; }
+function puzCoups(){ var e=document.getElementById('puzC'); if(e) e.textContent=P.coups; }
+function puzGagne(){
+  P.fini=true; clearInterval(TICK); P.temps=P.t0?(Date.now()-P.t0)/1000:0; SONS.fin();
+  var nouveau=puzNoter(JEU.id,P.n,P.temps,P.coups), min=Math.pow(2,P.n)-1;
+  var bloc=progres(JEU.id,{n:P.n,temps:P.temps,coups:P.coups});
+  var extra=JEU.id==='han'?(P.coups===min?A('Pafè : ou fè l nan minimòm kou yo !','Parfait : le minimum de coups !'):A('Minimòm nan se '+min+' kou. Eseye fè mwens.','Le minimum est de '+min+' coups. Essayez d\'en faire moins.')):'';
+  setTimeout(function(){
+    document.getElementById('zone').insertAdjacentHTML('afterbegin','<div class="card res"><div class="sous">'+esc(JEU.nom())+' · '+esc(JEU.taille(P.n))+'</div><div class="gros">🎉 '+A('Bravo !','Bravo !')+'</div>'+
+      '<div class="bilan"><div>⏱ '+duree(P.temps)+'</div>'+(JEU.id!=='sud'?'<div>'+P.coups+' '+A('kou','coups')+'</div>':'')+'</div>'+(extra?'<div class="sous">'+extra+'</div>':'')+
+      (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':'')+bloc+'<div class="actions" style="margin-top:12px"><button type="button" class="btn" data-taille="'+P.n+'">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>');
+    window.scrollTo(0,0); },400);
+}
+function puzQuitter(){ return '<button type="button" class="btn sec plein" data-menu="1" style="margin-top:12px">'+A('Kite jwèt la','Quitter')+'</button>'; }
+
+// ---------- Taquin ----------
+function taqInit(){
+  var n=P.n, t=[], i; for(i=1;i<n*n;i++) t.push(i); t.push(0);
+  do { var e=n*n-1, prev=-1; for(i=0;i<(n===3?150:320);i++){ var v=[e-n,e+n,(e%n)?e-1:-1,(e%n<n-1)?e+1:-1].filter(function(x){ return x>=0&&x<n*n&&x!==prev; }), x=choisir(v); t[e]=t[x]; t[x]=0; prev=e; e=x; } }
+  while(taqFini(t));
+  P.t=t; taqRendu();
+}
+function taqFini(t){ for(var i=0;i<t.length-1;i++) if(t[i]!==i+1) return false; return true; }
+function taqRendu(){
+  var n=P.n;
+  document.getElementById('zone').innerHTML='<div class="card">'+puzTete()+'<div class="taq" style="grid-template-columns:repeat('+n+',1fr)">'+P.t.map(function(v,i){ return v?'<button type="button" data-t="'+i+'"'+(v===i+1?' class="place"':'')+'>'+v+'</button>':'<span class="vide"></span>'; }).join('')+'</div>'+puzQuitter()+'</div>';
+}
+function taqJouer(i){
+  if(P.fini) return; var n=P.n, e=P.t.indexOf(0), ri=Math.floor(i/n), re=Math.floor(e/n), pas;
+  if(ri===re) pas=i>e?1:-1; else if(i%n===e%n) pas=i>e?n:-n; else { SONS.refus(); return; }
+  puzDebut(); while(e!==i){ var x=e+pas; P.t[e]=P.t[x]; P.t[x]=0; e=x; P.coups++; }
+  SONS.clic(); taqRendu(); if(taqFini(P.t)) puzGagne();
+}
+
+// ---------- Tour de Hanoï ----------
+function hanInit(){ var a=[]; for(var k=P.n;k>=1;k--) a.push(k); P.pic=[a,[],[]]; P.sel=-1; hanRendu(''); }
+function hanRendu(msg){
+  var n=P.n, coul=['#1f5fbf','#c0392b','#1d8a4e','#d97706','#7c3aed'];
+  document.getElementById('zone').innerHTML='<div class="card">'+puzTete()+'<div class="han">'+P.pic.map(function(p,k){
+    return '<button type="button" class="pic'+(P.sel===k?' sel':'')+'" data-p="'+k+'" aria-label="'+A('Poto ','Piquet ')+(k+1)+'"><span class="tige"></span>'+
+      p.map(function(d,h){ return '<span class="dq'+(P.sel===k&&h===p.length-1?' lev':'')+'" style="width:'+(28+66*d/n)+'%;bottom:'+(10+h*20)+'px;background:'+coul[(d-1)%5]+'"></span>'; }).join('')+'<span class="socle"></span></button>';
+  }).join('')+'</div><div class="lbl" id="hanMsg">'+(msg||A('Touche yon poto pou pran plato ki anlè a, epi touche poto kote w vle mete l.','Touchez un piquet pour prendre le disque du dessus, puis le piquet où le poser.'))+'</div>'+puzQuitter()+'</div>';
+}
+function hanJouer(k){
+  if(P.fini) return; var p=P.pic;
+  if(P.sel<0){ if(p[k].length){ P.sel=k; SONS.clic(); } return hanRendu(); }
+  if(P.sel===k){ P.sel=-1; return hanRendu(); }
+  var a=p[P.sel][p[P.sel].length-1], b=p[k][p[k].length-1];
+  if(b&&b<a){ P.sel=-1; SONS.refus(); return hanRendu('<b class="ko">'+A('Ou pa ka mete yon gwo plato sou yon piti.','Impossible de poser un grand disque sur un petit.')+'</b>'); }
+  puzDebut(); p[k].push(p[P.sel].pop()); P.sel=-1; P.coups++; SONS.clic(); hanRendu();
+  if(p[2].length===P.n) puzGagne();
+}
+
+// ---------- Sudoku ----------
+function sudInit(){ var s=sudGen(P.n); P.sol=s.sol; P.fixe=s.g.map(function(v){ return v>0; }); P.g=s.g.slice(); P.sel=P.g.indexOf(0); puzDebut(); sudRendu(); }
+function sudRendu(){
+  var n=P.n, b=sudBoite(n), mal=sudConflits(P.g,n);
+  document.getElementById('zone').innerHTML='<div class="card">'+puzTete()+'<div class="sud s'+n+'" style="grid-template-columns:repeat('+n+',1fr)">'+P.g.map(function(v,i){
+    var r=Math.floor(i/n), c=i%n, st=(c%b[1]===b[1]-1&&c<n-1?'border-right:2px solid #14213d;':'')+(r%b[0]===b[0]-1&&r<n-1?'border-bottom:2px solid #14213d;':'');
+    return '<button type="button" data-c="'+i+'" class="'+(P.fixe[i]?'fixe':'')+(i===P.sel?' sel':'')+(mal[i]?' conflit':'')+'" style="'+st+'">'+(v||'')+'</button>'; }).join('')+'</div>'+
+    '<div class="pave sud-pave" style="grid-template-columns:repeat('+Math.min(n+1,5)+',1fr)">'+Array.from({length:n},function(_,k){ return '<button type="button" data-n="'+(k+1)+'">'+(k+1)+'</button>'; }).join('')+'<button type="button" data-n="0">⌫</button></div>'+
+    '<div class="lbl">'+A('Chwazi yon kaz, epi touche yon chif. Chif ki an wouj yo repete.','Choisissez une case, puis touchez un chiffre. Les chiffres en rouge se répètent.')+'</div>'+puzQuitter()+'</div>';
+}
+function sudCase(i){ if(P.fini||P.fixe[i]) return; P.sel=i; SONS.clic(); sudRendu(); }
+function sudChiffre(v){
+  if(P.fini||P.sel<0||P.fixe[P.sel]) return; P.g[P.sel]=v; SONS.clic(); sudRendu();
+  if(P.g.indexOf(0)<0&&!Object.keys(sudConflits(P.g,P.n)).length) puzGagne();
+}
+// =====================================================================
+// v41.9 — Logos des jeux (dessins Masbet), progression : XP, niveaux, série de jours, défi du jour, badges
+// =====================================================================
+var FAM={siy:'#2563eb', mat:'#2563eb', kal:'#7c3aed', mem:'#7c3aed', baraj:'#ea580c', kib:'#ea580c', taq:'#16a34a', han:'#16a34a', sud:'#16a34a', rez:'#0e7490'};
+var ICO={
+  siy:'<circle cx="11" cy="31" r="4" fill="#fff"/><circle cx="21" cy="27" r="5.5" fill="#fff"/><circle cx="33" cy="22" r="7.5" fill="#fff" fill-opacity=".45" stroke="#fff" stroke-width="2.5" stroke-dasharray="3 3"/><path d="M8 16h16m-4-4 4 4-4 4" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  mat:'<g fill="#fff"><rect x="9" y="9" width="8" height="8" rx="2"/><rect x="20" y="9" width="8" height="8" rx="2"/><rect x="31" y="9" width="8" height="8" rx="2"/><rect x="9" y="20" width="8" height="8" rx="2"/><circle cx="24" cy="24" r="4.2"/><rect x="31" y="20" width="8" height="8" rx="2"/><rect x="9" y="31" width="8" height="8" rx="2"/><rect x="20" y="31" width="8" height="8" rx="2"/></g><rect x="31" y="31" width="8" height="8" rx="2" fill="#fcd34d"/><text x="35" y="38" text-anchor="middle" font-size="8" font-weight="900" fill="#7c2d12">?</text>',
+  kal:'<g stroke="#fff" stroke-width="3" stroke-linecap="round"><path d="M14 9v10M9 14h10M29 14h10M10 30l8 8M18 30l-8 8M29 34h10"/></g><circle cx="34" cy="30" r="1.8" fill="#fff"/><circle cx="34" cy="38" r="1.8" fill="#fff"/>',
+  mem:'<rect x="7" y="14" width="34" height="20" rx="5" fill="#fff"/><text x="24" y="29" text-anchor="middle" font-size="12" font-weight="900" fill="#7c3aed" letter-spacing="1">739</text><path d="M12 10l2 3M24 8v4M36 10l-2 3" stroke="#fcd34d" stroke-width="2.4" stroke-linecap="round"/>',
+  baraj:'<text x="9" y="22" font-size="12" font-weight="800" fill="#fff" fill-opacity=".7">bd</text><text x="9" y="36" font-size="12" font-weight="800" fill="#fff" fill-opacity=".7">qp</text><circle cx="29" cy="24" r="8" fill="#fff" fill-opacity=".25" stroke="#fff" stroke-width="3"/><path d="M35 30l6 6" stroke="#fff" stroke-width="4" stroke-linecap="round"/>',
+  kib:'<path d="M24 8l14 8v16l-14 8-14-8V16z" fill="#fff" fill-opacity=".25" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M10 16l14 8 14-8M24 24v16" stroke="#fff" stroke-width="2.4" fill="none" stroke-linejoin="round"/><circle cx="17" cy="28" r="2.6" fill="#fcd34d"/><path d="M28 30l5-3" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>',
+  taq:'<g font-size="10" font-weight="900" text-anchor="middle"><rect x="9" y="9" width="14" height="14" rx="3" fill="#fff"/><text x="16" y="20" fill="#16a34a">1</text><rect x="25" y="9" width="14" height="14" rx="3" fill="#fff"/><text x="32" y="20" fill="#16a34a">2</text><rect x="9" y="25" width="14" height="14" rx="3" fill="#fff"/><text x="16" y="36" fill="#16a34a">3</text></g><rect x="25.5" y="25.5" width="13" height="13" rx="3" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="3 2"/>',
+  han:'<g fill="#fff"><rect x="6" y="37" width="36" height="3" rx="1.5"/><rect x="11" y="14" width="2.4" height="23"/><rect x="23" y="14" width="2.4" height="23"/><rect x="35" y="14" width="2.4" height="23"/></g><rect x="5" y="31" width="16" height="5" rx="2.5" fill="#fcd34d"/><rect x="7" y="25" width="12" height="5" rx="2.5" fill="#fff"/><rect x="29" y="31" width="14" height="5" rx="2.5" fill="#fff" fill-opacity=".8"/>',
+  sud:'<rect x="8" y="8" width="32" height="32" rx="3" fill="#fff"/><path d="M8 18.7h32M8 29.3h32M18.7 8v32M29.3 8v32" stroke="#16a34a" stroke-width="1.6"/><g font-size="8" font-weight="900" text-anchor="middle" fill="#14532d"><text x="13.4" y="16.5">5</text><text x="24" y="27">9</text><text x="34.6" y="37.5">2</text></g>',
+  rez:'<circle cx="24" cy="33" r="3.5" fill="#fff"/><path d="M15 26a13 13 0 0 1 18 0M10 20a20 20 0 0 1 28 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M24 36v6" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M34 34l4-4 4 4" stroke="#fcd34d" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+};
+function logo(id,t){ t=t||52; return '<svg class="logo" viewBox="0 0 48 48" width="'+t+'" height="'+t+'" aria-hidden="true"><rect width="48" height="48" rx="13" fill="'+(FAM[id]||'#14213d')+'"/>'+(ICO[id]||'')+'</svg>'; }
+var COURT={siy:['Jwenn sa ki vini apre','Trouvez la suite'], mat:['Desen ki manke a','Le dessin manquant'], kal:['Kalkil rapid','Calcul rapide'], mem:['Sonje chif yo','Retenez les chiffres'],
+  baraj:['Atansyon ak vitès','Attention et vitesse'], kib:['Wè nan espas','Vision dans l\'espace'], taq:['Mete yo nan lòd','Remettez dans l\'ordre'], han:['Deplase plato yo','Déplacez les disques'], sud:['Chif san repete','Chiffres sans répétition'], rez:['Fè rezo w grandi','Faites grandir votre réseau']};
+
+// ---------- Progression (sur ce téléphone) ----------
+function jourCle(d){ d=d||new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function prog(){ var p=null; try{ p=JSON.parse(lire('masbet_jeu_prog')||'null'); }catch(e){} p=p||{}; p.xp=p.xp||0; p.serie=p.serie||{der:'',n:0,max:0}; p.joues=p.joues||{}; p.badges=p.badges||{}; p.defi=p.defi||''; return p; }
+function progEcrire(p){ ecrire('masbet_jeu_prog',JSON.stringify(p)); }
+function seuil(n){ return 50*n*(n-1); }   // niveau 2 : 100 XP, 3 : 300, 4 : 600, 5 : 1 000…
+function niveau(xp){ var n=1; while(xp>=seuil(n+1)) n++; return n; }
+var TITRES={ht:['Kòmansan','Elèv','Apranti','Chèchè','Estratèj','Konesè','Ekspè','Mèt','Gran mèt','Jeni'], fr:['Débutant','Élève','Apprenti','Chercheur','Stratège','Connaisseur','Expert','Maître','Grand maître','Génie']};
+function titre(n){ var t=TITRES[LANG==='fr'?'fr':'ht']; return t[Math.min(n,t.length)-1]; }
+var BADGES=[
+  {id:'premye', ic:'🌱', n:['Premye pa','Premier pas'], d:['Fini yon premye jwèt','Finir un premier jeu']},
+  {id:'tout', ic:'🧭', n:['Eksploratè','Explorateur'], d:['Jwe tout jwèt yo','Jouer à tous les jeux']},
+  {id:'pafe', ic:'💯', n:['San fot','Sans faute'], d:['Tout bon nan yon tès','Un test sans aucune erreur']},
+  {id:'seri3', ic:'🔥', n:['3 jou swit','3 jours de suite'], d:['Jwe 3 jou youn dèyè lòt','Jouer 3 jours d\'affilée']},
+  {id:'seri7', ic:'🔥', n:['7 jou swit','7 jours de suite'], d:['Jwe 7 jou youn dèyè lòt','Jouer 7 jours d\'affilée']},
+  {id:'memwa', ic:'🐘', n:['Memwa elefan','Mémoire d\'éléphant'], d:['Sonje 8 chif','Retenir 8 chiffres']},
+  {id:'anoi', ic:'🗼', n:['Mèt Anoi','Maître de Hanoï'], d:['4 plato oswa plis, nan minimòm kou','4 disques ou plus, au minimum de coups']},
+  {id:'sud9', ic:'🔲', n:['Sidokou 9 × 9','Sudoku 9 × 9'], d:['Fini yon gwo sidokou','Finir un grand sudoku']},
+  {id:'defi', ic:'🎯', n:['Defi jou a','Défi du jour'], d:['Reyisi yon defi jou a','Réussir un défi du jour']},
+  {id:'nivo5', ic:'⭐', n:['Nivo 5','Niveau 5'], d:['Rive nivo 5','Atteindre le niveau 5']}
+];
+var DEFIS=[
+  {j:'siy', ht:'Fè omwen 8 / 10 nan Siy lojik', fr:'Faites au moins 8 / 10 aux Suites logiques', ok:function(r){ return r.bons>=8; }},
+  {j:'mat', ht:'Fè omwen 6 / 8 nan Matris', fr:'Faites au moins 6 / 8 aux Matrices', ok:function(r){ return r.bons>=6; }},
+  {j:'kal', ht:'Fè omwen 10 / 12 nan Kalkil mantal', fr:'Faites au moins 10 / 12 en Calcul mental', ok:function(r){ return r.bons>=10; }},
+  {j:'mem', ht:'Sonje omwen 6 chif', fr:'Retenez au moins 6 chiffres', ok:function(r){ return r.max>=6; }},
+  {j:'baraj', ht:'Fè omwen 20 pwen nan tès baraj la', fr:'Faites au moins 20 points au test de barrage', ok:function(r){ return r.pts>=20; }},
+  {j:'kib', ht:'Fè omwen 6 / 8 nan Pliye kib la', fr:'Faites au moins 6 / 8 au Pliage de cubes', ok:function(r){ return r.bons>=6; }},
+  {j:'taq', ht:'Fini Takin 3 × 3 anba 3 minit', fr:'Finissez le Taquin 3 × 3 en moins de 3 minutes', ok:function(r){ return r.n>=3&&r.temps<180; }},
+  {j:'han', ht:'Fini Tou Anoi ak 4 plato', fr:'Finissez la Tour de Hanoï à 4 disques', ok:function(r){ return r.n>=4; }},
+  {j:'sud', ht:'Fini yon Sidokou 6 × 6', fr:'Finissez un Sudoku 6 × 6', ok:function(r){ return r.n>=6; }}
+];
+function defiDuJour(){ var d=new Date(), k=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5); return DEFIS[((k*7)%DEFIS.length+DEFIS.length)%DEFIS.length]; }
+/** XP gagnés pour une partie finie (r = résultat du jeu). */
+function xpPour(id,r){
+  if(id==='siy'||id==='mat'||id==='kal'||id==='kib') return r.bons*10+(r.bons===r.nb?20:0);
+  if(id==='baraj') return Math.max(0,r.pts)*2;
+  if(id==='mem') return r.max*10;
+  if(id==='taq') return r.n===3?40:80;
+  if(id==='han') return r.n*15+(r.coups===Math.pow(2,r.n)-1?20:0);
+  if(id==='sud') return {4:30,6:60,9:120}[r.n]||30;
+  if(id==='rez') return r.xp||0;
+  return 0;
+}
+/** À la fin d'une partie : XP, série de jours, défi, badges. Renvoie le bloc à afficher dans le résultat. */
+function progres(id,r){
+  var p=prog(), avant=niveau(p.xp), gain=xpPour(id,r), auj=jourCle(), hier=jourCle(new Date(Date.now()-864e5)), nv=[], df=defiDuJour(), defiFait=false;
+  if(p.serie.der!==auj){ p.serie.n=p.serie.der===hier?p.serie.n+1:1; p.serie.der=auj; p.serie.max=Math.max(p.serie.max,p.serie.n); }
+  p.joues[id]=(p.joues[id]||0)+1;
+  if(df.j===id&&p.defi!==auj&&df.ok(r)){ p.defi=auj; gain+=50; defiFait=true; }
+  p.xp+=gain;
+  var gagner=function(b){ if(!p.badges[b]){ p.badges[b]=auj; nv.push(b); } };
+  gagner('premye');
+  if(JEUX.every(function(j){ return p.joues[j.id]; })) gagner('tout');
+  if((id==='siy'||id==='mat'||id==='kal'||id==='kib')&&r.bons===r.nb) gagner('pafe');
+  if(p.serie.n>=3) gagner('seri3'); if(p.serie.n>=7) gagner('seri7');
+  if(id==='mem'&&r.max>=8) gagner('memwa');
+  if(id==='han'&&r.n>=4&&r.coups===Math.pow(2,r.n)-1) gagner('anoi');
+  if(id==='sud'&&r.n===9) gagner('sud9');
+  if(defiFait) gagner('defi');
+  var apres=niveau(p.xp); if(apres>=5) gagner('nivo5');
+  progEcrire(p);
+  if(nv.length||apres>avant||defiFait) setTimeout(function(){ SONS.fin(); },700);
+  return '<div class="gain"><div class="xp">+'+gain+' XP</div>'+
+    (defiFait?'<div class="g1">🎯 '+A('Defi jou a reyisi ! +50 XP','Défi du jour réussi ! +50 XP')+'</div>':'')+
+    (apres>avant?'<div class="g1">⬆️ '+A('Nouvo nivo : ','Nouveau niveau : ')+apres+' · '+esc(titre(apres))+'</div>':'')+
+    nv.map(function(b){ var x=BADGES.filter(function(y){ return y.id===b; })[0]; return '<div class="g1">'+x.ic+' '+A('Nouvo badj : ','Nouveau badge : ')+esc(LANG==='fr'?x.n[1]:x.n[0])+'</div>'; }).join('')+
+    (p.serie.n>1?'<div class="g2">🔥 '+p.serie.n+' '+A('jou swit','jours de suite')+'</div>':'')+'</div>';
+}
+function blocProgression(){
+  var p=prog(), n=niveau(p.xp), a=seuil(n), b=seuil(n+1), pct=Math.round(100*(p.xp-a)/(b-a)), auj=jourCle(), serie=(p.serie.der===auj||p.serie.der===jourCle(new Date(Date.now()-864e5)))?p.serie.n:0;
+  var nb=Object.keys(p.badges).length, df=defiDuJour(), fait=p.defi===auj;
+  return '<div class="card prog"><div class="pl"><div class="niv"><b>'+n+'</b><small>'+A('nivo','niveau')+'</small></div><div style="flex:1;min-width:0"><div class="pt"><b>'+esc(titre(n))+'</b><span>'+p.xp+' XP</span></div>'+
+      '<div class="barre"><div style="width:'+pct+'%"></div></div><div class="ps">'+A('Ankò ','Encore ')+(b-p.xp)+' XP '+A('pou nivo ','pour le niveau ')+(n+1)+'</div></div></div>'+
+      '<div class="stats"><span>🔥 <b>'+serie+'</b> '+A('jou swit','jours de suite')+'</span><button type="button" class="lienb" id="voirBadges">🏅 <b>'+nb+'</b> / '+BADGES.length+' '+A('badj','badges')+'</button></div></div>'+
+    '<div class="card defi'+(fait?' fait':'')+'">'+logo(df.j,44)+'<div style="flex:1;min-width:0"><div class="dt">🎯 '+A('Defi jou a','Défi du jour')+(fait?' · ✅ '+A('reyisi','réussi'):' · +50 XP')+'</div><div class="dd">'+esc(LANG==='fr'?df.fr:df.ht)+'</div></div>'+(fait?'':'<button type="button" class="btn mini" data-jouer="'+df.j+'">'+A('Jwe','Jouer')+'</button>')+'</div>';
+}
+function ecranBadges(){
+  ECRAN='badges'; var p=prog();
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>🏅 '+A('Badj ou yo','Vos badges')+'</b></div><div class="badges">'+BADGES.map(function(b){ var g=p.badges[b.id];
+      return '<div class="bdg'+(g?'':' non')+'"><span>'+b.ic+'</span><b>'+esc(LANG==='fr'?b.n[1]:b.n[0])+'</b><small>'+esc(LANG==='fr'?b.d[1]:b.d[0])+'</small></div>'; }).join('')+'</div>'+
+    '<button type="button" class="btn sec plein" data-menu="1" style="margin-top:12px">'+A('Retounen','Retour')+'</button></div>';
+  window.scrollTo(0,0);
+}
+// =====================================================================
+// 10. JEU DE GESTION « Rezo mwen » — faire grandir un réseau Wi-Fi pendant 12 mois
+// =====================================================================
+var ETOILE2=150000, ETOILE3=320000, PRIX_REZ=[200,300,450], STARLINK=7800, POT_MAX=260, ENTRETIEN=800;
+var ACT_REZ=[
+  {id:'ap', c:15000, ic:'📡', n:['Mete yon nouvo pwen Wi-Fi','Installer un nouveau point Wi-Fi'], d:['+40 plas, plis moun ka konekte','+40 places, plus de monde peut se connecter']},
+  {id:'pub', c:5000, ic:'📣', n:['Fè piblisite','Faire de la publicité'], d:['Nouvo kliyan touswit, epi plis moun konnen w','Des clients tout de suite, et plus de notoriété']},
+  {id:'ene', c:10000, ic:'☀️', n:['Amelyore enèji (panno, batri)','Améliorer l\'énergie (panneaux, batteries)'], d:['Mwens koupi lè pa gen solèy','Moins de coupures sans soleil']},
+  {id:'tek', c:8000, ic:'🧰', n:['Fòme yon teknisyen','Former un technicien'], d:['Reparasyon pi vit, mwens pèt (yon sèl fwa)','Réparations plus rapides, moins de pertes (une seule fois)']},
+  {id:'rien', c:0, ic:'💰', n:['Pa fè anyen, ekonomize','Ne rien faire, économiser'], d:['Kenbe kòb ou pou pita','Garder l\'argent pour plus tard']}
+];
+function rezInit(){
+  P={mois:1, kob:15000, ap:1, cl:38, pot:80, sat:70, ene:1, tek:false, prix:1, fini:false, rap:null, hist:[]};
+  rezRendu();
+}
+function rezCap(){ return 40*P.ap; }
+function rezRendu(){
+  var cap=rezCap(), m=P.mois, rap=P.rap;
+  var jauge=function(v,max,c){ return '<div class="barre fine"><div style="width:'+Math.max(0,Math.min(100,100*v/max))+'%;background:'+c+'"></div></div>'; };
+  document.getElementById('zone').innerHTML='<div class="card">'+
+    '<div class="tete"><b>'+logo('rez',28)+' '+esc(JEU.nom())+'</b><span>'+A('Mwa ','Mois ')+m+' / 12'+boutonSon()+'</span></div>'+
+    '<div class="tab">'+
+      '<div><small>💰 '+A('Kès','Caisse')+'</small><b class="'+(P.kob<0?'ko':'')+'">'+P.kob.toLocaleString('fr-FR')+' G</b></div>'+
+      '<div><small>👥 '+A('Kliyan','Clients')+'</small><b>'+P.cl+' / '+cap+'</b>'+jauge(P.cl,cap,P.cl>=cap?'#c0392b':'#2563eb')+'</div>'+
+      '<div><small>😊 '+A('Satisfaksyon','Satisfaction')+'</small><b>'+P.sat+' %</b>'+jauge(P.sat,100,P.sat<40?'#c0392b':P.sat<65?'#d97706':'#16a34a')+'</div>'+
+      '<div><small>📡 '+A('Pwen Wi-Fi','Points Wi-Fi')+'</small><b>'+P.ap+'</b></div>'+
+      '<div><small>☀️ '+A('Enèji','Énergie')+'</small><b>'+['○○○','●○○','●●○','●●●'][P.ene]+'</b></div>'+
+      '<div><small>🧰 '+A('Teknisyen','Technicien')+'</small><b>'+(P.tek?A('Wi','Oui'):A('Non','Non'))+'</b></div>'+
+    '</div>'+
+    (rap?'<div class="rap"><div class="rt">'+A('Rapò mwa ','Bilan du mois ')+(m-1)+'</div><div>'+A('Lajan ki antre','Recettes')+' : <b class="ok">+'+rap.rev.toLocaleString('fr-FR')+' G</b> · '+A('Depans','Dépenses')+' : <b class="ko">−'+rap.dep.toLocaleString('fr-FR')+' G</b></div>'+(rap.ev?'<div class="ev">'+rap.ev+'</div>':'')+'</div>':
+      '<div class="rap"><div class="rt">'+A('Misyon ou','Votre mission')+'</div><div>'+A('Ou jere yon rezo Wi-Fi nan yon ti vil. Chak mwa, chwazi YON aksyon. Starlink koute '+STARLINK.toLocaleString('fr-FR')+' G pa mwa, chak pwen Wi-Fi '+ENTRETIEN+' G. Siveye kès la : si l tonbe anba zewo, se fayit !','Vous gérez un réseau Wi-Fi dans une petite ville. Chaque mois, choisissez UNE action. Starlink coûte '+STARLINK.toLocaleString('fr-FR')+' G par mois, chaque point Wi-Fi '+ENTRETIEN+' G. Surveillez la caisse : sous zéro, c\'est la faillite !')+'</div></div>')+
+    '<div class="lbl" style="text-align:left;margin:12px 0 6px"><b>'+A('Pri abònman pa mwa','Prix de l\'abonnement par mois')+'</b></div><div class="prix">'+PRIX_REZ.map(function(p,i){ return '<button type="button" data-prix="'+i+'" class="'+(P.prix===i?'on':'')+'">'+p+' G<small>'+[A('ba','bas'),A('mwayen','moyen'),A('wo','haut')][i]+'</small></button>'; }).join('')+'</div>'+
+    '<div class="lbl" style="text-align:left;margin:12px 0 6px"><b>'+A('Aksyon mwa sa a','Action de ce mois')+'</b></div><div class="acts">'+ACT_REZ.map(function(a){
+      var non=a.c>P.kob||(a.id==='ap'&&P.ap>=6)||(a.id==='ene'&&P.ene>=3)||(a.id==='tek'&&P.tek);
+      return '<button type="button" class="act" data-act="'+a.id+'"'+(non?' disabled':'')+'><span class="ai">'+a.ic+'</span><span class="at"><b>'+esc(LANG==='fr'?a.n[1]:a.n[0])+'</b><small>'+esc(LANG==='fr'?a.d[1]:a.d[0])+'</small></span><span class="ac">'+(a.c?a.c.toLocaleString('fr-FR')+' G':A('Gratis','Gratuit'))+'</span></button>'; }).join('')+'</div>'+
+    puzQuitter()+'</div>';
+}
+function rezAction(id){
+  if(P.fini) return; var a=ACT_REZ.filter(function(x){ return x.id===id; })[0]; if(!a||a.c>P.kob) return;
+  P.kob-=a.c; SONS.clic();
+  if(id==='ap'){ P.ap++; P.pot+=50; }
+  else if(id==='pub'){ var n=Math.min(10,rezCap()-P.cl); P.cl+=Math.max(0,n); P.pot+=10; }
+  else if(id==='ene') P.ene++;
+  else if(id==='tek') P.tek=true;
+  // --- le mois passe ---
+  var ev='', cap=rezCap(), fPrix=[1.25,1,0.72][P.prix], cout=0;
+  var r=Math.random();
+  if(Math.random()<0.30+0.04*(P.ap-1)-0.11*P.ene){ var perte=P.tek?0.05:0.12; P.cl=Math.round(P.cl*(1-perte)); P.sat-=P.tek?7:15; ev='🔋 '+A('Pa gen solèy plizyè jou, batri yo vid : rezo a koupe. Kliyan fache.','Plusieurs jours sans soleil, batteries vides : le réseau coupe. Les clients sont mécontents.'); }
+  else if(P.mois>=6&&P.mois<=10&&r<0.28){ cout=P.tek?5000:10000; P.sat-=8; ev='🌀 '+A('Yon siklòn pase, yon antèn domaje : reparasyon ','Un cyclone passe, une antenne est abîmée : réparation ')+cout.toLocaleString('fr-FR')+' G.'; }
+  else if(r<0.12){ P.pot+=25; ev='🏫 '+A('Lekòl yo rouvri : elèv yo bezwen entènèt.','Les écoles rouvrent : les élèves ont besoin d\'Internet.'); }
+  else if(r<0.22){ cout=P.tek?2000:4000; ev='✂️ '+A('Yo vòlè yon kab : ','Un câble est volé : ')+cout.toLocaleString('fr-FR')+' G.'; }
+  else if(r<0.32){ P.pot=Math.round(P.pot*0.85); ev='🏪 '+A('Yon lòt rezo louvri nan zòn nan : kèk moun ale kote l.','Un autre réseau ouvre dans la zone : certains clients partent.'); }
+  else if(r<0.42){ P.pot+=20; P.sat+=5; ev='🎉 '+A('Fèt patwonal : anpil moun vin nan vil la e yo vle Wi-Fi !','Fête patronale : beaucoup de monde en ville, tous veulent du Wi-Fi !'); }
+  P.pot=Math.min(POT_MAX,P.pot);
+  var dem=Math.round(P.pot*fPrix*(0.5+P.sat/200)), cible=Math.min(cap,dem);
+  P.cl=Math.max(0,Math.min(cap,P.cl+Math.round((cible-P.cl)*0.5)));
+  P.sat+=P.prix===0?3:P.prix===2?-5:0; if(dem>cap*1.15) P.sat-=6; P.sat+=Math.round((70-P.sat)*0.15); P.sat=Math.max(0,Math.min(100,P.sat));
+  var rev=P.cl*PRIX_REZ[P.prix], dep=STARLINK+ENTRETIEN*P.ap+cout;
+  P.kob+=rev-dep; P.rap={rev:rev, dep:dep, ev:ev}; P.hist.push(P.kob); P.mois++;
+  if(P.kob<0||P.mois>12) return rezFin(); rezRendu(); window.scrollTo(0,0);
+}
+function rezFin(){
+  P.fini=true; var faillite=P.kob<0, score=faillite?0:P.kob+P.cl*300+P.ap*8000, et=faillite?0:score>=ETOILE3?3:score>=ETOILE2?2:1;
+  var nouveau=!faillite&&noterRecord('rez',score,0,0); P.xp=et*40+(faillite?10:0); SONS[faillite?'mal':'fin']();
+  var bloc=progres('rez',{xp:P.xp});
+  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(JEU.nom())+'</div>'+
+    (faillite?'<div class="gros">💥 '+A('Fayit','Faillite')+'</div><div class="sous">'+A('Kès la tonbe anba zewo nan mwa ','La caisse est passée sous zéro au mois ')+(P.mois-1)+'. '+A('Pwochen fwa, kenbe yon rezèv pou move mwa yo.','La prochaine fois, gardez une réserve pour les mauvais mois.')+'</div>'
+      :'<div class="gros">'+'⭐'.repeat(et)+'<span style="opacity:.25">'+'⭐'.repeat(3-et)+'</span></div><div class="sous">'+A('Valè rezo w apre 12 mwa','Valeur de votre réseau après 12 mois')+' : <b>'+score.toLocaleString('fr-FR')+' G</b><br>'+A('Kès ','Caisse ')+P.kob.toLocaleString('fr-FR')+' G · '+P.cl+' '+A('kliyan','clients')+' · '+P.ap+' '+A('pwen Wi-Fi','points Wi-Fi')+'</div>')+
+    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':'')+bloc+
+    '<div class="actions" style="margin-top:12px"><button type="button" class="btn" data-rejouer="rez">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>';
+  window.scrollTo(0,0);
+}
+
+function recCourt(j){
+  if(j.gr==='pez'){ for(var k=0;k<j.tailles.length;k++){ var r=puzRecord(j.id,j.tailles[k]); if(r) return j.taille(j.tailles[k])+' · '+duree(r.temps); } return ''; }
+  var x=record(j.id); if(!x) return '';
+  if(j.id==='mem') return x.pts+' '+A('chif','chiffres'); if(j.id==='rez') return Math.round(x.pts/1000)+' 000 G'; if(j.id==='baraj') return x.pts+' pts';
+  return x.pts+' / '+x.total;
+}
 function menu(){
-  arreterChrono(); ECRAN='menu'; JEU=null; P=null;
-  document.getElementById('zone').innerHTML=JEUX.map(function(j){
-    return '<div class="card jeu"><div class="ic">'+j.ic+'</div><div style="flex:1;min-width:0"><h2>'+esc(j.nom())+'</h2><p>'+esc(j.txt())+'</p>'+txtRecord(j.id)+'<div style="margin-top:10px"><button type="button" class="btn" data-jouer="'+j.id+'">'+A('Jwe','Jouer')+'</button></div></div></div>';
-  }).join('')+'<p class="note">'+A('Jwèt sa yo fè w abitye ak fòma tès sikoteknik konkou yo, epi yo antrene vitès ou. Yo pa mezire entèlijans ou. Nòt ou rete sou telefòn ou.','Ces jeux vous habituent au format des tests psychotechniques des concours et entraînent votre rapidité. Ils ne mesurent pas votre intelligence. Vos scores restent sur votre téléphone.')+'</p>';
+  arreterChrono(); clearInterval(TICK); ECRAN='menu'; JEU=null; P=null;
+  var carte=function(j){ var r=recCourt(j);
+    return '<button type="button" class="gc" data-jouer="'+j.id+'" style="--c:'+FAM[j.id]+'">'+logo(j.id)+'<b>'+esc(j.nom())+'</b><small>'+esc(COURT[j.id][LANG==='fr'?1:0])+'</small>'+
+      (r?'<span class="med">🏅 '+esc(r)+'</span>':'<span class="nouvo">'+A('NOUVO','NOUVEAU')+'</span>')+'</button>'; };
+  var gr=function(g){ return '<div class="gg">'+JEUX.filter(function(j){ return j.gr===g; }).map(carte).join('')+'</div>'; };
+  document.getElementById('zone').innerHTML=blocProgression()+
+    '<div class="secTit"><span>'+A('Tès sikoteknik','Tests psychotechniques')+'</span>'+boutonSon()+'</div>'+gr('psi')+
+    '<div class="secTit"><span>'+A('Pezèl','Casse-tête')+'</span></div>'+gr('pez')+
+    '<div class="secTit"><span>'+A('Jesyon','Gestion')+'</span></div>'+gr('ges')+
+    '<p class="note">'+A('Tès sikoteknik yo fè w abitye ak fòma tès konkou yo, epi yo antrene vitès ou ; yo pa mezire entèlijans ou. Pwen, nivo, badj ak nòt ou rete sou telefòn ou.','Les tests psychotechniques vous habituent au format des concours et entraînent votre rapidité ; ils ne mesurent pas votre intelligence. Points, niveaux, badges et scores restent sur votre téléphone.')+'</p>';
 }
 document.addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('button'); if(!b) return;
   if(b.dataset.jouer||b.dataset.rejouer) return lancer(b.dataset.jouer||b.dataset.rejouer);
   if(b.dataset.menu) { menu(); window.scrollTo(0,0); return; }
+  if(b.id==='son'){ SON=!SON; ecrire('masbet_psiko_son',SON?'1':'0'); document.querySelectorAll('#son').forEach(function(x){ x.textContent=SON?'🔊':'🔇'; }); if(SON) SONS.clic(); return; }
+  if(b.dataset.taille&&JEU) return puzDemarrer(+b.dataset.taille);
+  if(b.dataset.t!=null&&P&&JEU&&JEU.id==='taq') return taqJouer(+b.dataset.t);
+  if(b.dataset.p!=null&&P&&JEU&&JEU.id==='han') return hanJouer(+b.dataset.p);
+  if(b.dataset.c!=null&&P&&JEU&&JEU.id==='sud') return sudCase(+b.dataset.c);
+  if(b.dataset.n!=null&&P&&JEU&&JEU.id==='sud') return sudChiffre(+b.dataset.n);
+  if(b.dataset.m!=null&&P&&JEU&&JEU.id==='mem') return memTouche(b.dataset.m);
+  if(b.id==='memgo'||b.id==='memsuite') return b.id==='memgo'?memMontrer():memSuite();
+  if(b.id==='qgo') return questionSuivante();
+  if(b.id==='voirBadges') return ecranBadges();
+  if(b.dataset.prix!=null&&P&&JEU&&JEU.id==='rez'&&!P.fini){ P.prix=+b.dataset.prix; SONS.clic(); return rezRendu(); }
+  if(b.dataset.act&&P&&JEU&&JEU.id==='rez') return rezAction(b.dataset.act);
   if(b.id==='go') return barrageJouer();
   if(b.id==='fini') return barrageFin();
   if(b.id==='suite') return questionSuivante();
-  if(b.dataset.k!=null&&P&&!P.fini){ var k=+b.dataset.k; P.m[k]=!P.m[k]; b.classList.toggle('m',P.m[k]); return; }
+  if(b.dataset.k!=null&&P&&!P.fini){ var k=+b.dataset.k; P.m[k]=!P.m[k]; b.classList.toggle('m',P.m[k]); SONS.clic(); return; }
   if(b.dataset.i!=null&&P&&!b.disabled&&ECRAN==='jeu') repondre(+b.dataset.i);
 });
 function textes(){
-  document.getElementById('titre').textContent='🧩 '+A('Tès sikoteknik','Tests psychotechniques');
-  document.getElementById('sous').textContent=A('Antrene w gratis pou tès lojik, atansyon ak espas konkou ak anbochaj yo mande.','Entraînez-vous gratuitement aux tests de logique, d\'attention et d\'espace des concours et recrutements.');
+  document.getElementById('titre').textContent='🧩 '+A('Jwèt lespri','Jeux d\'esprit');
+  document.getElementById('sous').textContent=A('Jwe, antrene w pou konkou yo, monte nivo epi ranmase badj. Gratis.','Jouez, préparez les concours, montez de niveau et collectionnez les badges. Gratuit.');
   document.getElementById('retour').textContent='← '+A('Akèy','Accueil');
-  document.title=A('Tès sikoteknik','Tests psychotechniques')+' — Masbet';
+  document.title=A('Jwèt lespri','Jeux d\'esprit')+' — Masbet';
   var n=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Communauté']:['Akèy','Achte','Match','Live','Kominote'];
   document.getElementById('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="kominote.html"><span>💬</span>'+n[4]+'</a>';
 }
 function langue(l){
   LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
   document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
-  textes(); if(ECRAN==='menu') menu();   // pendant une partie, la langue change à l'écran suivant
+  textes(); if(ECRAN==='menu') menu(); else if(ECRAN==='badges') ecranBadges();   // pendant une partie, la langue change à l'écran suivant
 }
 langue(lire('masbet_lang')||'ht'); menu();
 </script>
