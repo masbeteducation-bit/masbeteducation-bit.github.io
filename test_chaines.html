@@ -24,13 +24,13 @@ button.sec{background:var(--carte);color:var(--txt);border:1px solid var(--bord)
 <main>
 <p class="note">Le test télécharge un petit morceau de chaque chaîne, en qualité la plus basse (en tout, environ 10 à 30 Mo). Restez sur cette page jusqu'à la fin.</p>
 <div class="barre"><button id="go">▶ Lancer le test</button><button class="sec" id="copie" disabled>📋 Copier le résultat</button><a id="wa" style="display:none"><button class="sec">💬 Envoyer par WhatsApp</button></a></div>
-<div id="bilan"></div>
+<p class="note" id="serie"></p><div id="bilan"></div>
 <div id="liste"></div>
 <p class="note">✅ joue · ⏸️ en ligne mais rien à l'antenne en ce moment · 🚫 la chaîne refuse la lecture depuis un autre site · ❌ ne répond pas · 🔒 adresse non sécurisée (http), bloquée dans une application web</p>
 </main>
 <div id="lecteur"><video id="vid" controls playsinline muted></video><p id="lmsg"></p><button id="fermer">Fermer</button></div>
 <script>
-const CHAINES=[
+const S1=[
  ['Haïti','TNH','https://bozztv.com/dvrfl03/hdirect/hdirect-telecaraibes/index.m3u8'],
  ['Haïti','RTH-TV1','https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4203440/playlist.m3u8'],
  ['Haïti','Tele Haiti','http://66.175.238.147:1935/live/myStream/playlist.m3u8'],
@@ -60,6 +60,37 @@ const CHAINES=[
  ['International','Africa 24','https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8'],
  ['International','Africa 24 Sport','https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8']
 ];
+const S2=[
+ ['Haïti (2e essai)','RTH-TV1','https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4203440/playlist.m3u8'],
+ ['Haïti (2e essai)','TeleMIX','https://haititivi.com/haiti/telemix1/index.m3u8'],
+ ['Haïti (2e essai)','Haiti News Channel (2)','https://haititivi.com/website/haitinews/index.m3u8'],
+ ['Haïti (2e essai)','NETALKOLE TV','https://watch.haitilive.net/naktvhd/index.m3u8'],
+ ['Haïti (2e essai)','Radio Télévision Shilo','https://watch.haitilive.net/freehb/rtvs/index.m3u8'],
+ ['Antilles','Fusion TV (Martinique)','https://edge20.vedge.infomaniak.com/livecast/ik:fusiontv/manifest.m3u8'],
+ ['Antilles','Identité Télé Caraïbes','https://vdo2.pro-fhi.net:3769/stream/play.m3u8'],
+ ['Antilles','Tele Zoukla','https://vdo.pro-fhi.net:3228/stream/play.m3u8'],
+ ['Antilles','TV Famille (Martinique)','https://streamer1.streamhost.org/salive/GMItvfh/playlist.m3u8'],
+ ['Antilles','Zitata TV','https://live.zitata.tv/direct-hls/playlist.m3u8'],
+ ['Antilles','ETV (Guadeloupe)','https://edge12.vedge.infomaniak.com/livecast/ik:etvgp/manifest.m3u8'],
+ ['Antilles','Madras FM TV (Guadeloupe)','https://edge12.vedge.infomaniak.com/livecast/ik:madrasfmtv/manifest.m3u8'],
+ ['Antilles','Radio TV Basse-Terre','https://vdo.ssl-stream.com:3412/stream/play.m3u8'],
+ ['Antilles','RHT Guadeloupe','https://edge12.vedge.infomaniak.com/livecast/ik:livehautetension/manifest.m3u8'],
+ ['Antilles','Télé Péyi (Guyane)','https://edge20.vedge.infomaniak.com/livecast/ik:33dm06/manifest.m3u8'],
+ ['Info','Africanews (français)','https://cdn-euronews.akamaized.net/live/eds/africanews-fr/25050/index.m3u8'],
+ ['Info','ICI RDI (Radio-Canada)','https://rcavlive.akamaized.net/hls/live/704025/xcanrdi/master.m3u8'],
+ ['Info','RTS Info (Suisse)','https://rtsinfo-d.akamaized.net/out/v1/2b7ae2e1ba3f43c6aba15bced153baf5/index.m3u8'],
+ ['Info','BFM TV','https://live-cdn-stream-euw1.bfmtv.bct.nextradiotv.com/master.m3u8'],
+ ['Info','BFM Business','https://live-cdn-stream-euw1.bfmb.bct.nextradiotv.com/master.m3u8'],
+ ['Info','RTI 1 (Côte d\'Ivoire)','https://video1.getstreamhosting.com:1936/8336/8336/playlist.m3u8'],
+ ['Info','CRTV (Cameroun)','https://10gb1.acangroup.org:1929/crtv/crtv_all/playlist.m3u8'],
+ ['Jeunesse, sport, musique','TVOKids','https://bcovlive-a.akamaihd.net/rf86f817779524249abf842af6d16f55f/us-east-1/15364602001/playlist.m3u8'],
+ ['Jeunesse, sport, musique','Trace Sport Stars','https://channels.trace.plus/Traceprod/TRACE_SPORT_STARS_sd/index.m3u8'],
+ ['Jeunesse, sport, musique','Q-Music','https://live-video.dpgmedia.net/e087512ad0c32643/out/v1/82d59bbe343b4d0896f829c59da82dc0/index.m3u8'],
+ ['Jeunesse, sport, musique','Couleur 3 (musique)','https://visualradio-rts-couleur3-d.akamaized.net/out/v1/6a1472634ad745f59a9e63ee8adbbc00/index.m3u8'],
+ ['Jeunesse, sport, musique','A2i Music','https://stream.sen-gt.com/A2iMusic/myStream/playlist.m3u8'],
+ ['Jeunesse, sport, musique','Novela Channel','https://video1.getstreamhosting.com:1936/8284/8284/playlist.m3u8']
+];
+const SERIE=/serie=1/.test(location.search)?1:2; const CHAINES=SERIE===1?S1:S2;
 const $=s=>document.querySelector(s); const RES=[];
 function delai(p,ms){ const c=new AbortController(); const t=setTimeout(()=>c.abort(),ms); return [c.signal,()=>clearTimeout(t)]; }
 async function lire(url,ms,binaire){ const [sig,fin]=delai(null,ms); try{ const r=await fetch(url,{cache:'no-store',signal:sig}); if(!r.ok) return {http:r.status};
@@ -90,7 +121,7 @@ async function tester(url){
 function dessiner(){ let h='',g=''; CHAINES.forEach((c,i)=>{ if(c[0]!==g){ g=c[0]; h+='<div class="groupe">'+g+'</div>'; } const r=RES[i];
   h+='<div class="ch '+(r?r.st:'')+'"><div class="ic">'+(r?r.ic:'⏳')+'</div><div class="nm"><b>'+c[1]+'</b><small>'+(r?r.msg:'en attente…')+'</small></div>'+(r&&r.ok?'<button data-i="'+i+'">Regarder</button>':'')+'</div>'; });
   $('#liste').innerHTML=h; const n=RES.filter(Boolean).length, ok=RES.filter(r=>r&&r.ok).length; $('#bilan').textContent=n?(ok+' chaîne(s) sur '+CHAINES.length+' jouent'+(n<CHAINES.length?' · test en cours ('+n+'/'+CHAINES.length+')…':'')):''; }
-function texte(){ return 'Test chaînes Masbet · '+new Date().toLocaleString('fr-FR')+'\n'+CHAINES.map((c,i)=>(RES[i]?RES[i].ic:'?')+' '+c[1]+' : '+(RES[i]?RES[i].msg:'-')).join('\n'); }
+function texte(){ return 'Test chaînes Masbet (série '+SERIE+') · '+new Date().toLocaleString('fr-FR')+'\n'+CHAINES.map((c,i)=>(RES[i]?RES[i].ic:'?')+' '+c[1]+' : '+(RES[i]?RES[i].msg:'-')).join('\n'); }
 $('#go').onclick=async()=>{ $('#go').disabled=true; RES.length=0; dessiner(); let k=0;
   const ouvrier=async()=>{ while(k<CHAINES.length){ const i=k++; RES[i]=await tester(CHAINES[i][2]); dessiner(); } };
   await Promise.all([ouvrier(),ouvrier(),ouvrier()]);
@@ -104,5 +135,6 @@ $('#liste').onclick=async e=>{ const b=e.target.closest('button[data-i]'); if(!b
     v.muted=false; await v.play().catch(()=>{ v.muted=true; return v.play(); }); $('#lmsg').textContent=c[1]; }catch(err){ $('#lmsg').textContent=c[1]+' · impossible de lire'; } };
 v.addEventListener('playing',()=>{ const t=$('#lmsg').textContent; if(/chargement/.test(t)) $('#lmsg').textContent=t.replace(' · chargement…',''); });
 $('#fermer').onclick=()=>{ v.pause(); if(hls){ hls.destroy(); hls=null; } v.removeAttribute('src'); v.load(); $('#lecteur').style.display='none'; };
+$('#serie').innerHTML=SERIE===2?'<b>Série 2</b> : 23 nouvelles chaînes et 2e essai pour 5 chaînes haïtiennes · <a href="?serie=1">revoir la série 1</a>':'<b>Série 1</b> · <a href="?serie=2">passer à la série 2</a>';
 dessiner();
 </script></body></html>
