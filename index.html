@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
 <meta name="description" content="MasbetAirNet : Wi-Fi Ansavo. Achte kòd ak MonCash oswa NatCash, ofri, match an dirèk, meteyo.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>MasbetAirNet — Wi-Fi, match, lives Ansavo</title>
 <link rel="canonical" href="https://masbeteducation-bit.github.io/">
@@ -429,6 +429,31 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .horsLigne{position:sticky;top:0;z-index:55;background:#5d6782;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:7px 10px}
   .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#fff7e6;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
   .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#25d366;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
+  /* v41.6 — TV gratuite */
+  .tvcats{display:flex;gap:6px;overflow-x:auto;margin:10px -4px 10px;padding:0 4px 4px;scrollbar-width:none}
+  .tvcats::-webkit-scrollbar{display:none}
+  .tvcats button{flex:0 0 auto;border:0;border-radius:999px;padding:7px 12px;background:#eef0f6;color:var(--muted);font:inherit;font-size:13.5px;font-weight:800;white-space:nowrap}
+  .tvcats button.on{background:var(--navy);color:#fff}
+  .tvcat{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 6px}
+  .tvg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+  .tvc{display:flex;align-items:center;gap:9px;min-width:0;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px;text-align:left;font:inherit;color:var(--ink);cursor:pointer}
+  .tvc:active{background:#f6f7fb}
+  .tvc .tvl{flex:0 0 40px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;overflow:hidden}
+  .tvc .tvl img{width:100%;height:100%;object-fit:contain;background:#fff}
+  .tvc .tvn{min-width:0;flex:1}
+  .tvc .tvn b{display:block;font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}
+  .tvc .tvn small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .tvc .tvn small.gros{color:#8a5a00;font-weight:700}
+  .tvc.off{opacity:.55}
+  .tvLect{position:fixed;inset:0;z-index:80;background:#000;display:flex;flex-direction:column}
+  .tvBar{display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));color:#fff;background:#0b1224}
+  .tvBar b{flex:1;min-width:0;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .tvBar .tag{margin:0}
+  .tvBar button{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;width:38px;height:38px;font-size:18px;font-weight:800;flex:0 0 auto}
+  .tvEcran{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 160px);background:#000;margin:auto 0}
+  .tvEcran video,.tvEcran iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+  .tvMsg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px;font-weight:700;font-size:15px;pointer-events:none}
+  .tvInfo{color:#c9d0e3;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:#0b1224}
   /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
   .play a[href="#quiz&defi"],.play #cDefi,.play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
 </style>
@@ -477,6 +502,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
         <a href="kominote.html"><span>💬</span><b data-t="svcKom"></b></a>
         <a href="biblio.html"><span>📚</span><b data-t="svcBib"></b></a>
         <a href="meditasyon.html"><span>🕊️</span><b data-t="svcMed"></b></a>
+        <a href="#videyo&tv"><span>📺</span><b data-t="svcTv"></b></a>
       </div>
     </div>
 
@@ -582,6 +608,12 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
       <h2>🔧 <span id="admTit"></span></h2>
       <div id="admZone"></div>
     </div>
+    <div class="card hidden" id="cTv">
+      <h2>📺 <span data-t="tvTitre"></span><span class="tag g" style="margin:0" data-t="gratis"></span><small id="tvNb"></small></h2>
+      <div class="hint" data-t="tvAide"></div>
+      <div class="tvcats" id="tvCats" role="tablist"></div>
+      <div id="tvZone"></div>
+    </div>
     <div class="card">
       <h2>▶️ <span data-t="videyo"></span></h2>
       <div class="hint" data-t="videyoAide" style="margin-bottom:10px"></div>
@@ -596,6 +628,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 <div class="sheet hidden" id="kontSheet" role="dialog" aria-modal="true"></div>
 <div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
 <div class="sheet hidden" id="notifSheet" role="dialog" aria-modal="true"></div>
+<div class="tvLect hidden" id="tvLect" role="dialog" aria-modal="true">
+  <div class="tvBar"><b id="tvNom"></b><span class="tag g" data-t="gratis"></span><button type="button" onclick="tvFermer()" aria-label="Fermer">✕</button></div>
+  <div class="tvEcran" id="tvEcran"><video id="tvVid" playsinline controls preload="none"></video><div class="tvMsg" id="tvMsg"></div></div>
+  <div class="tvInfo" id="tvInfo"></div>
+</div>
 <div class="hidden" id="certVue" role="dialog" aria-modal="true" aria-label="Certificat"></div>
 <nav id="nav">
   <a href="#akey" id="nAkey"><span>🏠</span><b data-t="nAkey"></b></a>
@@ -745,6 +782,15 @@ Object.assign(TXT.fr,{
 });
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
+// v41.6 — TV gratuite
+Object.assign(TXT.ht,{svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done Wi-Fi ou.', tvTout:'Tout',
+  tvHors:'Pa sou antèn kounye a', tvCharge:'Chajman…', tvErr:'Chèn sa a pa disponib kounye a. Eseye pita, oswa chwazi yon lòt chèn.', tvGros:'📶 Gwo forfè',
+  tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/èdtan'; }, tvNb:function(n){ return n+' chèn'; }, tvYt:'Si chèn nan pa an dirèk kounye a, YouTube ap di l.',
+  tvDonnees:function(g){ return 'Chèn sa a konsome apeprè '+String(g).replace('.',',')+' Go pa èdtan sou vouchè ou.'; }});
+Object.assign(TXT.fr,{svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme les données de votre Wi-Fi.', tvTout:'Toutes',
+  tvHors:'Hors antenne pour le moment', tvCharge:'Chargement…', tvErr:'Cette chaîne n\'est pas disponible pour le moment. Réessayez plus tard ou choisissez une autre chaîne.', tvGros:'📶 Gros forfait',
+  tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/heure'; }, tvNb:function(n){ return n+' chaînes'; }, tvYt:'Si la chaîne n\'est pas en direct en ce moment, YouTube l\'indiquera.',
+  tvDonnees:function(g){ return 'Cette chaîne consomme environ '+String(g).replace('.',',')+' Go par heure sur votre voucher.'; }});
 function T(k){ return TXT[LANG][k]!==undefined ? TXT[LANG][k] : TXT.fr[k]; }
 function jsid(s){ return String(s==null?'':s).replace(/[^A-Za-z0-9_\-]/g,''); }  // valeur sûre dans onclick="…('…')"
 function lienSur(u){ u=String(u||'').trim(); return /^(https:\/\/|#|[\w\-]+\.html(#[\w&=\-]*)?$)/i.test(u)?u:'#'; }  // pas de javascript:
@@ -1864,6 +1910,86 @@ function jouer(id){
   b.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
 }
 
+// ---------- v41.6 — TV gratuite (onglet « Chaînes TV » de la feuille Contenu) ----------
+var TVCAT='', TVI=-1, TVH=null, TVNAT=false, TVSEC=false, TVREC=false, HLS_JS='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js';
+var TV_CAT_HT={'Haïti':'Ayiti','Antilles':'Antiy','Info':'Nouvèl','Sport, musique, cuisine':'Espò, mizik, kizin','International':'Entènasyonal','Jeunesse':'Timoun','Musique':'Mizik','Sport':'Espò'};
+var TV_CAT_ICO={'Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽'};
+function tvListe(){ return (ACC&&Array.isArray(ACC.tv)?ACC.tv:[]).filter(function(c){ return c&&c.nom&&(c.type==='hls'?/^https:\/\//.test(c.lien||''):/^(yt|ytc)$/.test(c.type)); }); }
+function tvCatNom(c){ return LANG==='ht'&&TV_CAT_HT[c]?TV_CAT_HT[c]:c; }
+function tvCouleur(s){ var h=0; s=String(s); for(var i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))%360; return 'hsl('+h+',55%,38%)'; }
+function tvInitiales(n){ var m=String(n).replace(/\(.*?\)/g,'').trim().split(/\s+/).filter(function(w){ return /^[A-Za-zÀ-ÿ0-9]/.test(w); }); return (m.length>1?m[0].charAt(0)+m[1].charAt(0):String(m[0]||'TV').slice(0,2)).toUpperCase(); }
+// Pendant un live Masbet PAYANT en direct, la TV se met en pause (carte et bouton cachés) : l'attention va au live.
+// Quelqu'un qui regarde déjà une chaîne n'est pas coupé. La TV revient dès que le live n'est plus en direct.
+function tvPause(){ return (ACC&&ACC.lives||[]).some(function(x){ return x&&x.statut==='direk'&&x.payant; }); }
+function afficherTv(){
+  var l=tvListe(), carte=document.getElementById('cTv'), pause=tvPause(), lien=document.querySelector('#cSvc a[href="#videyo&tv"]');
+  if(lien) lien.classList.toggle('hidden',pause||!l.length);
+  carte.classList.toggle('hidden',pause||!l.length); if(pause||!l.length) return;
+  var cats=[]; l.forEach(function(c){ if(cats.indexOf(c.cat)<0) cats.push(c.cat); });
+  if(TVCAT&&cats.indexOf(TVCAT)<0) TVCAT='';
+  document.getElementById('tvNb').textContent=T('tvNb')(l.length);
+  document.getElementById('tvCats').innerHTML=['' ].concat(cats).map(function(c){ return '<button type="button" role="tab" class="'+(c===TVCAT?'on':'')+'" data-cat="'+esc(c)+'">'+(c?(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c)):esc(T('tvTout')))+'</button>'; }).join('');
+  var tuile=function(c){ var i=l.indexOf(c);
+    var logo=c.logo&&/^https:\/\//.test(c.logo)?'<img loading="lazy" src="'+esc(c.logo)+'" alt="" onerror="this.remove()">':esc(tvInitiales(c.nom));
+    var sous=c.hors?esc(T('tvHors')):c.type!=='hls'?'YouTube':c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
+    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(c.gros&&!c.hors?' class="gros"':'')+'>'+sous+'</small>':'')+'</span></button>'; };
+  var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
+  document.getElementById('tvZone').innerHTML=TVCAT?bloc(TVCAT):cats.map(function(c){ return '<div class="tvcat">'+(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c))+'</div>'+bloc(c); }).join('');
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#tvCats button'); if(b){ TVCAT=b.getAttribute('data-cat')||''; afficherTv(); return; }
+  var t=e.target.closest&&e.target.closest('#tvZone .tvc'); if(t) tvJouer(Number(t.getAttribute('data-i')));
+});
+function tvMsg(s){ document.getElementById('tvMsg').textContent=s||''; }
+function tvJouer(i){
+  var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=false;
+  document.getElementById('tvNom').textContent=c.nom;
+  document.getElementById('tvInfo').textContent=c.type!=='hls'?T('tvYt'):c.go?T('tvDonnees')(c.go):T('liveDonnees');
+  document.getElementById('tvLect').classList.remove('hidden'); document.body.style.overflow='hidden';
+  statEnvoyer('vue','tv');
+  if(c.type!=='hls'){
+    var src=c.type==='ytc'?'https://www.youtube-nocookie.com/embed/live_stream?channel='+encodeURIComponent(c.id)+'&autoplay=1&playsinline=1':'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(c.id)+'?autoplay=1&playsinline=1&rel=0';
+    tvMsg(''); document.getElementById('tvVid').style.display='none';
+    var f=document.createElement('iframe'); f.id='tvIfr'; f.src=src; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true; document.getElementById('tvEcran').appendChild(f);
+    return;
+  }
+  document.getElementById('tvVid').style.display='';
+  tvMsg(T('tvCharge')); tvLancer(c.lien);
+}
+function tvLancer(url){
+  var v=document.getElementById('tvVid'), moi=TVI;
+  var lecture=function(){ var p=v.play(); if(p&&p.catch) p.catch(function(){ v.muted=true; v.play().catch(function(){}); }); };
+  var natif=v.canPlayType('application/vnd.apple.mpegurl');
+  var hlsPret=window.Hls?Promise.resolve():chargerScript(HLS_JS);
+  hlsPret.catch(function(){}).then(function(){
+    if(moi!==TVI) return;
+    if(window.Hls&&Hls.isSupported()){
+      TVH=new Hls({startLevel:0, capLevelToPlayerSize:true, maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
+      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ lecture(); });
+      TVH.on(Hls.Events.ERROR,function(ev,d){ if(!d||!d.fatal||moi!==TVI) return;
+        if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&!TVREC){ TVREC=true; TVH.recoverMediaError(); return; }
+        tvEchec(); });
+      TVH.loadSource(url); TVH.attachMedia(v);
+    } else if(natif){ TVNAT=true; v.src=url; lecture(); }
+    else tvEchec();
+  });
+}
+function tvEchec(){
+  var c=tvListe()[TVI]; if(!c) return;
+  if(c.secours&&!TVSEC){ TVSEC=true; tvDetruire(); tvMsg(T('tvCharge')); tvLancer(c.secours); return; }
+  tvDetruire(); tvMsg(T('tvErr'));
+}
+function tvDetruire(){ TVNAT=false; if(TVH){ try{ TVH.destroy(); }catch(e){} TVH=null; } var v=document.getElementById('tvVid'); try{ v.pause(); }catch(e){} v.removeAttribute('src'); try{ v.load(); }catch(e){} }
+function tvArreter(){ tvDetruire(); var f=document.getElementById('tvIfr'); if(f) f.remove(); tvMsg(''); }
+function tvFermer(){ tvArreter(); TVI=-1; document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; }
+(function(){ var v=document.getElementById('tvVid');
+  v.addEventListener('playing',function(){ tvMsg(''); });
+  v.addEventListener('waiting',function(){ if(TVI>=0) tvMsg(T('tvCharge')); });
+  v.addEventListener('error',function(){ if(TVI>=0&&TVNAT) tvEchec(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&TVI>=0) tvFermer(); });
+  window.addEventListener('hashchange',function(){ if(TVI>=0) tvFermer(); });
+})();
+
 // ---------- Matchs ----------
 var DIRECT=['1H','HT','2H','ET','BT','P','LIVE','INT','SUSP'];
 function etatMatch(m){
@@ -1926,13 +2052,14 @@ function chargerAccueil(){
       if(ch('ephemeride')) afficherEphem();
       if(ch('videos')) afficherVideos();
       if(ch('lives')) afficherLives();
+      if(ch('tv')||ch('lives')) afficherTv();
     },
     function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
 }
 function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div><div class="pfond"><a href="confidentialite.html?lang='+LANG+'" style="color:inherit">'+esc(AL('Konfidansyalite','Confidentialité'))+'</a></div>'; }
 function toutAfficher(){ afficherLokal();
   afficherDate();
-  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives();
+  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv();
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
   if(MAT) afficherMatchs();
   if(QZ){ afficherQuizHome(); if(vueActive()==='quiz' && !(QZ.etat&&QZ.etat.joue&&!QZ.etat.fini)) afficherQuiz(); }
@@ -1957,6 +2084,7 @@ function vue(){
   if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK||PAK.memo) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON||KON.memo) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
   else clearInterval(QTIMER);
   ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
+  if(v==='videyo'&&/[#&]tv\b/.test(location.hash)){ var ct=document.getElementById('cTv'); setTimeout(function(){ ct.scrollIntoView({block:'start'}); },60); }
   if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]sertifika(?!=)/.test(location.hash)){ var cs=document.getElementById('cSert'); cs.classList.remove('hidden'); chargerCerts(true); setTimeout(function(){ cs.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]defi/.test(location.hash)){ var cd=document.getElementById('cDefi'); cd.classList.remove('hidden'); if(!DT) chargerDefi(); setTimeout(function(){ cd.scrollIntoView({block:'start'}); },60); }
