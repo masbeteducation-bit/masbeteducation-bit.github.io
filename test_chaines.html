@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Test des chaînes TV</title>
+<style>
+:root{--bg:#f4f6fb;--carte:#fff;--txt:#152033;--doux:#5b6678;--bleu:#0b4fa3;--ok:#13804a;--ko:#b3261e;--av:#a15c00;--gris:#6b7280;--bord:#dde3ee}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1520;--carte:#182131;--txt:#e8edf6;--doux:#9aa6ba;--bleu:#6ea8ff;--ok:#4cc38a;--ko:#ff8a80;--av:#ffb74d;--gris:#9aa1ad;--bord:#2a3548}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--bleu);color:#fff;padding:14px 16px}header h1{margin:0;font-size:19px}header p{margin:4px 0 0;font-size:13px;opacity:.9}
+main{padding:12px 16px 40px;max-width:760px;margin:auto}
+.barre{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 12px}
+button{font:inherit;border:0;border-radius:10px;padding:10px 14px;background:var(--bleu);color:#fff;font-weight:600}
+button.sec{background:var(--carte);color:var(--txt);border:1px solid var(--bord)}button:disabled{opacity:.5}
+#bilan{font-weight:600;margin:8px 0}
+.groupe{margin:16px 0 6px;font-size:13px;font-weight:700;color:var(--doux);text-transform:uppercase;letter-spacing:.04em}
+.ch{display:flex;align-items:center;gap:10px;background:var(--carte);border:1px solid var(--bord);border-radius:12px;padding:10px 12px;margin:6px 0}
+.ch .ic{font-size:20px;width:26px;text-align:center}.ch .nm{flex:1;min-width:0}.ch .nm b{display:block}.ch .nm small{color:var(--doux)}
+.ch.ok{border-left:5px solid var(--ok)}.ch.ko{border-left:5px solid var(--ko)}.ch.av{border-left:5px solid var(--av)}.ch.gr{border-left:5px solid var(--gris)}
+.ch button{padding:7px 10px;font-size:13px}
+#lecteur{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;flex-direction:column;align-items:center;justify-content:center;padding:16px;z-index:9}
+#lecteur video{width:100%;max-width:720px;background:#000;border-radius:8px}#lecteur p{color:#fff;margin:10px 0}
+.note{font-size:13px;color:var(--doux)}
+</style></head><body>
+<header><h1>📺 Test des chaînes gratuites</h1><p>Masbet · vérifie quelles chaînes jouent depuis votre réseau</p></header>
+<main>
+<p class="note">Le test télécharge un petit morceau de chaque chaîne, en qualité la plus basse (en tout, environ 10 à 30 Mo). Restez sur cette page jusqu'à la fin.</p>
+<div class="barre"><button id="go">▶ Lancer le test</button><button class="sec" id="copie" disabled>📋 Copier le résultat</button><a id="wa" style="display:none"><button class="sec">💬 Envoyer par WhatsApp</button></a></div>
+<div id="bilan"></div>
+<div id="liste"></div>
+<p class="note">✅ joue · ⏸️ en ligne mais rien à l'antenne en ce moment · 🚫 la chaîne refuse la lecture depuis un autre site · ❌ ne répond pas · 🔒 adresse non sécurisée (http), bloquée dans une application web</p>
+</main>
+<div id="lecteur"><video id="vid" controls playsinline muted></video><p id="lmsg"></p><button id="fermer">Fermer</button></div>
+<script>
+const CHAINES=[
+ ['Haïti','TNH','https://bozztv.com/dvrfl03/hdirect/hdirect-telecaraibes/index.m3u8'],
+ ['Haïti','RTH-TV1','https://2-fss-2.streamhoster.com/pl_120/amlst:206708-4203440/playlist.m3u8'],
+ ['Haïti','Tele Haiti','http://66.175.238.147:1935/live/myStream/playlist.m3u8'],
+ ['Haïti','Tele Pam','https://watch.haitilive.net/app/2020/telepam/index.fmp4.m3u8'],
+ ['Haïti','TeleMIX','https://haititivi.com/haiti/telemix1/index.m3u8'],
+ ['Haïti','Haiti News Channel','https://cdn.haititivi.com/website/haitinews/index.m3u8'],
+ ['Haïti','Haiti News Channel (2)','https://haititivi.com/website/haitinews/index.m3u8'],
+ ['Haïti','NETALKOLE TV','https://watch.haitilive.net/naktvhd/index.m3u8'],
+ ['Haïti','TV Panou','http://tvpanoucom.srfms.com:1935/tvpanoucom/livestream/playlist.m3u8'],
+ ['Haïti','Dega TV','https://59d39900ebfb8.streamlock.net/saintlouisltv/saintlouisltv/playlist.m3u8'],
+ ['Haïti','Radio Télé Ginen','http://teleginen.srfms.com:1935/teleginen/livestream/playlist.m3u8'],
+ ['Haïti','Radio Télé Hit','https://59d39900ebfb8.streamlock.net/RadioTelehit/RadioTelehit/playlist.m3u8'],
+ ['Haïti','Radio Télé Kajou','https://59d39900ebfb8.streamlock.net/RadioTelekAJOU/RadioTelekAJOU/playlist.m3u8'],
+ ['Haïti','Radio Télé Planet Compas','https://5dcab9aed5331.streamlock.net/mrcompas1/livestream/playlist.m3u8'],
+ ['Gospel','Radio Télé 4VEH','https://uni01rtmp.tulix.tv/4vehtv/4vehtv-firetv/playlist.m3u8'],
+ ['Gospel','Radio Télé Amen FM','http://184.173.179.163:1935/daniel/daniel/playlist.m3u8'],
+ ['Gospel','Radio Tele Full Gospel','https://f-tx-edge-87.christianworldmedia.com/EJCFG/mp4:EJCFG/playlist.m3u8'],
+ ['Gospel','Radio Télé Wisdom','https://59d39900ebfb8.streamlock.net/daniel/daniel/playlist.m3u8'],
+ ['Gospel','Radio Télévision Shilo','https://watch.haitilive.net/freehb/rtvs/index.m3u8'],
+ ['Gospel','Tele Louange','https://5790d294af2dc.streamlock.net/8124/8124/playlist.m3u8'],
+ ['International','France 24 (français)','https://live.france24.com/hls/live/2037179/F24_FR_HI_HLS/master_500.m3u8'],
+ ['International','France 24 (français, secours)','https://live.france24.com/hls/live/2037179-b/F24_FR_HI_HLS/master_500.m3u8'],
+ ['International','TV5Monde Info','https://ott.tv5monde.com/Content/HLS/Live/channel(info)/variant.m3u8'],
+ ['International','TV5Monde Europe','https://ert-ucdn.broadpeak-aas.com/bpk-tv/TV5/default/index.m3u8'],
+ ['International','TV5Monde Chefs','https://tvf-tv5ch.otteravision.com/tvf/tv5ch/tv5ch.m3u8'],
+ ['International','Euronews (français)','https://cdn-euronews.akamaized.net/live/eds/euronews-fr/25026/index.m3u8'],
+ ['International','Africa 24','https://africa24.vedge.infomaniak.com/livecast/ik:africa24/manifest.m3u8'],
+ ['International','Africa 24 Sport','https://africa24.vedge.infomaniak.com/livecast/ik:africa24sport/manifest.m3u8']
+];
+const $=s=>document.querySelector(s); const RES=[];
+function delai(p,ms){ const c=new AbortController(); const t=setTimeout(()=>c.abort(),ms); return [c.signal,()=>clearTimeout(t)]; }
+async function lire(url,ms,binaire){ const [sig,fin]=delai(null,ms); try{ const r=await fetch(url,{cache:'no-store',signal:sig}); if(!r.ok) return {http:r.status};
+  if(binaire){ const b=await r.arrayBuffer(); return {ok:1,octets:b.byteLength}; } return {ok:1,texte:await r.text(),url:r.url||url}; }
+ catch(e){ return {err:e.name==='AbortError'?'delai':'reseau'}; } finally{ fin(); } }
+async function vivant(url){ const [sig,fin]=delai(null,8000); try{ await fetch(url,{mode:'no-cors',cache:'no-store',signal:sig}); return true; }catch(e){ return false; } finally{ fin(); } }
+function lignes(t){ return t.split(/\r?\n/).map(x=>x.trim()).filter(Boolean); }
+async function tester(url){
+  if(/^http:/i.test(url)) return {st:'gr',ic:'🔒',msg:'Adresse http : bloquée dans une application web'};
+  const t0=performance.now(); let base=url, pl=await lire(url,12000);
+  if(pl.err==='reseau') return (await vivant(url))?{st:'ko',ic:'🚫',msg:'En ligne, mais refuse la lecture depuis un autre site'}:{st:'ko',ic:'❌',msg:'Ne répond pas'};
+  if(pl.err) return {st:'ko',ic:'❌',msg:'Trop lent (pas de réponse en 12 s)'};
+  if(pl.http) return {st:'ko',ic:'❌',msg:'Hors ligne (erreur '+pl.http+')'};
+  if(!/#EXTM3U/.test(pl.texte)) return {st:'ko',ic:'❌',msg:'Réponse invalide'};
+  base=pl.url; let L=lignes(pl.texte);
+  if(L.some(x=>x.startsWith('#EXT-X-STREAM-INF'))){            // liste maître : on prend la qualité la plus basse
+    let best=null; L.forEach((x,i)=>{ if(x.startsWith('#EXT-X-STREAM-INF')){ const bw=+((x.match(/BANDWIDTH=(\d+)/)||[])[1]||9e9); const u=L[i+1]; if(u&&!u.startsWith('#')&&(!best||bw<best.bw)) best={bw,u}; } });
+    if(!best) return {st:'ko',ic:'❌',msg:'Liste vide'};
+    base=new URL(best.u,base).href; const m=await lire(base,12000);
+    if(!m.ok) return {st:'av',ic:'⏸️',msg:'En ligne, mais la vidéo ne répond pas'}; base=m.url; L=lignes(m.texte); }
+  const segs=L.filter(x=>!x.startsWith('#')); if(!segs.length) return {st:'av',ic:'⏸️',msg:'En ligne, rien à l\'antenne en ce moment'};
+  const durees=L.filter(x=>x.startsWith('#EXTINF:')).map(x=>parseFloat(x.slice(8))||0); const dur=durees[durees.length-1]||0;
+  const s=await lire(new URL(segs[segs.length-1],base).href,15000,true);
+  if(!s.ok) return {st:'av',ic:'⏸️',msg:'En ligne, mais la vidéo ne se charge pas'};
+  const sec=((performance.now()-t0)/1000); const kbps=dur?Math.round(s.octets*8/dur/1000):0;
+  return {st:'ok',ic:'✅',msg:'Joue · démarre en '+sec.toFixed(1).replace('.',',')+' s'+(kbps?' · ≈ '+(kbps*0.45/1000).toFixed(2).replace('.',',')+' Go/heure':''),ok:1};
+}
+function dessiner(){ let h='',g=''; CHAINES.forEach((c,i)=>{ if(c[0]!==g){ g=c[0]; h+='<div class="groupe">'+g+'</div>'; } const r=RES[i];
+  h+='<div class="ch '+(r?r.st:'')+'"><div class="ic">'+(r?r.ic:'⏳')+'</div><div class="nm"><b>'+c[1]+'</b><small>'+(r?r.msg:'en attente…')+'</small></div>'+(r&&r.ok?'<button data-i="'+i+'">Regarder</button>':'')+'</div>'; });
+  $('#liste').innerHTML=h; const n=RES.filter(Boolean).length, ok=RES.filter(r=>r&&r.ok).length; $('#bilan').textContent=n?(ok+' chaîne(s) sur '+CHAINES.length+' jouent'+(n<CHAINES.length?' · test en cours ('+n+'/'+CHAINES.length+')…':'')):''; }
+function texte(){ return 'Test chaînes Masbet · '+new Date().toLocaleString('fr-FR')+'\n'+CHAINES.map((c,i)=>(RES[i]?RES[i].ic:'?')+' '+c[1]+' : '+(RES[i]?RES[i].msg:'-')).join('\n'); }
+$('#go').onclick=async()=>{ $('#go').disabled=true; RES.length=0; dessiner(); let k=0;
+  const ouvrier=async()=>{ while(k<CHAINES.length){ const i=k++; RES[i]=await tester(CHAINES[i][2]); dessiner(); } };
+  await Promise.all([ouvrier(),ouvrier(),ouvrier()]);
+  $('#go').disabled=false; $('#go').textContent='↻ Refaire le test'; $('#copie').disabled=false; const w=$('#wa'); w.href='https://wa.me/?text='+encodeURIComponent(texte()); w.style.display=''; };
+$('#copie').onclick=async()=>{ try{ await navigator.clipboard.writeText(texte()); $('#copie').textContent='✔ Copié'; }catch(e){ prompt('Copiez ce texte :',texte()); } };
+let hls=null; const v=$('#vid');
+function chargerHls(){ return window.Hls?Promise.resolve():new Promise((ok,ko)=>{ const s=document.createElement('script'); s.src='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js'; s.onload=ok; s.onerror=ko; document.head.appendChild(s); }); }
+$('#liste').onclick=async e=>{ const b=e.target.closest('button[data-i]'); if(!b) return; const c=CHAINES[+b.dataset.i]; $('#lecteur').style.display='flex'; $('#lmsg').textContent=c[1]+' · chargement…';
+  try{ if(v.canPlayType('application/vnd.apple.mpegurl')){ v.src=c[2]; } else { await chargerHls(); if(hls) hls.destroy(); hls=new Hls({capLevelToPlayerSize:true,startLevel:0}); hls.loadSource(c[2]); hls.attachMedia(v);
+      hls.on(Hls.Events.ERROR,(_,d)=>{ if(d.fatal) $('#lmsg').textContent=c[1]+' · erreur de lecture'; }); }
+    v.muted=false; await v.play().catch(()=>{ v.muted=true; return v.play(); }); $('#lmsg').textContent=c[1]; }catch(err){ $('#lmsg').textContent=c[1]+' · impossible de lire'; } };
+v.addEventListener('playing',()=>{ const t=$('#lmsg').textContent; if(/chargement/.test(t)) $('#lmsg').textContent=t.replace(' · chargement…',''); });
+$('#fermer').onclick=()=>{ v.pause(); if(hls){ hls.destroy(); hls=null; } v.removeAttribute('src'); v.load(); $('#lecteur').style.display='none'; };
+dessiner();
+</script></body></html>
