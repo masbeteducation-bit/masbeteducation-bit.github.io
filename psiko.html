@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="description" content="Tès sikoteknik Masbet : siy lojik, tès baraj, pliye kib. Antrene w pou konkou yo, gratis.">
+<meta name="theme-color" content="#14213d">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<title>Tès sikoteknik — Masbet</title>
+<style>
+  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--bleu:#173a8c}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+  .hero{color:#fff;padding:18px 16px 34px;background:linear-gradient(135deg,#173a8c,#14213d)}
+  .hero .r{display:flex;justify-content:space-between;align-items:center;max-width:620px;margin:0 auto;gap:10px}
+  .hero a{color:#fff;text-decoration:none;font-weight:800;font-size:14px}
+  .hero h1{max-width:620px;margin:12px auto 0;font-size:24px;line-height:1.2}
+  .hero p{max-width:620px;margin:6px auto 0;color:#c9d0e3;font-size:14.5px}
+  .lang{display:flex;border:1.5px solid rgba(255,255,255,.4);border-radius:20px;overflow:hidden;flex-shrink:0}
+  .lang button{border:0;background:transparent;color:#eef;font-weight:800;font-size:12.5px;padding:5px 9px;font-family:inherit}
+  .lang button.on{background:#fff;color:var(--navy)}
+  main{max-width:620px;margin:-18px auto 0;padding:0 14px}
+  .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
+  .jeu{display:flex;gap:14px;align-items:flex-start}
+  .jeu .ic{font-size:34px;line-height:1;flex-shrink:0;width:44px;text-align:center}
+  .jeu h2{margin:0;font-size:17px}
+  .jeu p{margin:4px 0 8px;color:var(--muted);font-size:14px}
+  .rec{font-size:13px;font-weight:700;color:var(--ok)}
+  .rec.vide{color:var(--muted);font-weight:600}
+  .btn{display:inline-block;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font:inherit;font-weight:800;font-size:16px;padding:11px 18px;cursor:pointer;text-decoration:none;text-align:center}
+  .btn.plein{display:block;width:100%}
+  .btn.sec{background:#eef0f6}
+  .note{font-size:13px;color:var(--muted);text-align:center;margin:14px 6px}
+  .tete{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px;font-weight:800;font-size:14px;color:var(--muted)}
+  .tete b{color:var(--ink);font-size:15px}
+  .chrono{height:6px;border-radius:6px;background:#eef0f6;overflow:hidden;margin-bottom:14px}
+  .chrono div{height:100%;background:var(--bleu);transition:width .25s linear}
+  .chrono div.bas{background:var(--err)}
+  .seq{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:10px 0 16px}
+  .seq span{min-width:46px;padding:10px 8px;border-radius:10px;background:#f6f7fb;border:1px solid var(--line);font-size:22px;font-weight:800;text-align:center}
+  .seq span.q{background:#fff4dc;border-color:#f3cf86;color:#8a5a00}
+  .chx{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .chx button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px 8px;font:inherit;font-size:20px;font-weight:800;color:var(--ink);cursor:pointer}
+  .chx button.bon{border-color:var(--ok);background:#e3f6ea}
+  .chx button.mal{border-color:var(--err);background:#fdecea}
+  .chx button:disabled{cursor:default}
+  .expl{margin-top:14px;padding:12px;border-radius:12px;background:#f6f7fb;font-size:15px}
+  .expl b.ok{color:var(--ok)} .expl b.ko{color:var(--err)}
+  .cible{display:flex;align-items:center;justify-content:center;gap:12px;font-weight:800;margin:4px 0 12px}
+  .cible span{font:800 34px/1 "Courier New",monospace;border:2px solid var(--bleu);border-radius:10px;padding:4px 14px;color:var(--bleu)}
+  .grille{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;user-select:none;-webkit-user-select:none}
+  .grille button{aspect-ratio:1;border:0;border-radius:6px;background:#f6f7fb;font:700 21px/1 "Courier New",monospace;color:var(--ink);padding:0;cursor:pointer;touch-action:manipulation}
+  .grille button.m{background:#dbe6ff;color:var(--bleu);text-decoration:line-through}
+  .grille button.f-ok{background:#e3f6ea;color:var(--ok)}
+  .grille button.f-faux{background:#fdecea;color:var(--err)}
+  .grille button.f-oubli{background:#fff4dc;color:#8a5a00;outline:2px solid #f3cf86}
+  .patron{display:flex;justify-content:center;margin:4px 0 6px}
+  .patron svg{max-width:100%;height:auto}
+  .lbl{text-align:center;font-size:13px;color:var(--muted);margin-bottom:10px}
+  .cubes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .cubes button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:6px;cursor:pointer}
+  .cubes button svg{width:100%;height:auto;display:block}
+  .cubes button.bon{border-color:var(--ok);background:#e3f6ea}
+  .cubes button.mal{border-color:var(--err);background:#fdecea}
+  .res{text-align:center}
+  .res .gros{font-size:44px;font-weight:900;margin:6px 0 0}
+  .res .sous{color:var(--muted);font-size:14.5px;margin-bottom:12px}
+  .res .rec{font-size:15px;margin-bottom:14px}
+  .bilan{display:flex;justify-content:center;gap:10px;margin:8px 0 14px;flex-wrap:wrap}
+  .bilan div{background:#f6f7fb;border-radius:10px;padding:8px 12px;font-size:14px;font-weight:700}
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom)}
+  .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
+  .navapp a span{display:block;font-size:20px;line-height:1.2}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="r"><a href="index.html#akey" id="retour"></a><div class="lang" role="group" aria-label="Lang / Langue"><button id="lHt" onclick="langue('ht')">KR</button><button id="lFr" onclick="langue('fr')">FR</button></div></div>
+  <h1 id="titre"></h1>
+  <p id="sous"></p>
+</div>
+<main id="zone"></main>
+<nav class="navapp" id="nav"></nav>
+<script>
+"use strict";
+/* v41.7 — Tests psychotechniques (pilote gratuit) : suites logiques, test de barrage, pliage de cubes.
+   Les exercices sont FABRIQUÉS sur le téléphone (aucune banque à écrire, aucune donnée à télécharger).
+   Les scores restent sur le téléphone ; seul un compteur anonyme « partie jouée » part vers la feuille Stats. */
+var LANG='ht', ECRAN='menu', JEU=null;
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function A(ht,fr){ return LANG==='fr'?fr:ht; }
+function alea(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
+function choisir(t){ return t[Math.floor(Math.random()*t.length)]; }
+function melanger(t){ t=t.slice(); for(var i=t.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)), x=t[i]; t[i]=t[j]; t[j]=x; } return t; }
+function duree(s){ s=Math.round(s); var m=Math.floor(s/60); return (m?m+' min ':'')+(s%60)+' s'; }
+
+var JEUX=[
+  {id:'siy', ic:'🔢', nb:10, sec:40, nom:function(){ return A('Siy lojik','Suites logiques'); },
+   txt:function(){ return A('Jwenn sa ki vini apre a : chif oswa lèt. 10 kesyon, 40 segonn chak.','Trouvez l\'élément suivant : nombres ou lettres. 10 questions, 40 secondes chacune.'); }},
+  {id:'baraj', ic:'🔍', nb:1, sec:60, nom:function(){ return A('Tès baraj','Test de barrage'); },
+   txt:function(){ return A('Touche tout lèt ki menm ak modèl la, san w pa pran lèt ki sanble yo. 60 segonn.','Touchez toutes les lettres identiques au modèle, sans vous faire piéger par celles qui se ressemblent. 60 secondes.'); }},
+  {id:'kib', ic:'🧊', nb:8, sec:60, nom:function(){ return A('Pliye kib la','Pliage de cubes'); },
+   txt:function(){ return A('Ki kib ou jwenn lè w pliye modèl la ? 8 kesyon, 60 segonn chak.','Quel cube obtient-on en pliant le patron ? 8 questions, 60 secondes chacune.'); }}
+];
+function jeuParId(id){ return JEUX.filter(function(j){ return j.id===id; })[0]; }
+
+// ---------- Records (sur ce téléphone) ----------
+function record(id){ try{ return JSON.parse(lire('masbet_psiko_'+id)||'null'); }catch(e){ return null; } }
+/** Meilleur : plus de points ; à égalité, moins de temps. Renvoie true si c'est un nouveau record. */
+function noterRecord(id,pts,total,temps){
+  var r=record(id), mieux=!r||pts>r.pts||(pts===r.pts&&temps<r.temps);
+  if(mieux) ecrire('masbet_psiko_'+id,JSON.stringify({pts:pts,total:total,temps:Math.round(temps)}));
+  return mieux&&pts>0;
+}
+function txtRecord(id){
+  var r=record(id); if(!r) return '<span class="rec vide">'+A('Poko jwe','Pas encore joué')+'</span>';
+  return '<span class="rec">'+A('Pi bon nòt ou : ','Votre meilleur score : ')+r.pts+(r.total?' / '+r.total:'')+(r.temps?' · '+duree(r.temps):'')+'</span>';
+}
+
+// ---------- Compteur anonyme (feuille Stats, colonne « Jeux psychotechniques ») ----------
+function statPartie(){
+  var u=window.MASBET_CONTENU||'', app=lire('masbet_appareil')||''; if(!u||app.length<8) return;
+  try{ fetch(u,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({api:'stat',appareil:app,ev:'psiko'})}).catch(function(){}); }catch(e){}
+}
+
+// =====================================================================
+// 1. SUITES LOGIQUES — 15 règles, 5 niveaux (question 1-2 : niveau 1 … question 9-10 : niveau 5)
+// =====================================================================
+var LETTRES='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+function premiers(n){ var p=[],x=2; while(p.length<n){ var ok=true; for(var i=2;i*i<=x;i++) if(x%i===0){ ok=false; break; } if(ok) p.push(x); x++; } return p; }
+var REGLES={
+  1:[function(){ var s=alea(1,20), d=alea(2,9), t=[]; for(var i=0;i<6;i++) t.push(s+d*i); return {t:t, e:['Chak fwa, ajoute '+d+'.','On ajoute '+d+' à chaque fois.'], d:d}; },
+     function(){ var d=alea(3,9), s=alea(6*d+5,99), t=[]; for(var i=0;i<6;i++) t.push(s-d*i); return {t:t, e:['Chak fwa, retire '+d+'.','On retire '+d+' à chaque fois.'], d:d}; },
+     function(){ var d=alea(2,3), s=alea(0,25-5*d), t=[]; for(var i=0;i<6;i++) t.push(LETTRES.charAt(s+d*i)); return {t:t, l:1, e:['Chak fwa, avanse '+d+' lèt nan alfabè a.','On avance de '+d+' lettres dans l\'alphabet.'], d:d}; }],
+  2:[function(){ var k=alea(2,3), s=alea(1,k===2?6:3), t=[]; for(var i=0;i<6;i++) t.push(s*Math.pow(k,i)); return {t:t, e:['Chak fwa, miltipliye pa '+k+'.','On multiplie par '+k+' à chaque fois.'], d:s}; },
+     function(){ var a=alea(4,9), b=alea(1,a-1), s=alea(1,15), t=[s]; for(var i=1;i<6;i++) t.push(t[i-1]+(i%2?a:-b)); return {t:t, e:['Ajoute '+a+', retire '+b+', epi rekòmanse.','On ajoute '+a+', on retire '+b+', et on recommence.'], d:a}; },
+     function(){ var d=alea(2,4), s=alea(0,25-5*d), t=[]; for(var i=0;i<6;i++) t.push(LETTRES.charAt(25-(s+d*i))); return {t:t, l:1, e:['Lèt yo ap desann : chak fwa, rekile '+d+' lèt.','Les lettres reculent de '+d+' à chaque fois.'], d:d}; }],
+  3:[function(){ var d=alea(1,3), s=alea(1,10), t=[s]; for(var i=1;i<6;i++) t.push(t[i-1]+d+i-1); return {t:t, e:['Ekar yo grandi : +'+d+', +'+(d+1)+', +'+(d+2)+'…','Les écarts augmentent : +'+d+', +'+(d+1)+', +'+(d+2)+'…'], d:d+1}; },
+     function(){ var n=alea(1,5), p=alea(0,1), t=[]; for(var i=0;i<6;i++) t.push((n+i)*(n+i)+p); return {t:t, e:[p?'Kare yo plis 1 : '+n+'×'+n+'+1, '+(n+1)+'×'+(n+1)+'+1…':'Se kare yo : '+n+'×'+n+', '+(n+1)+'×'+(n+1)+'…', p?'Les carrés plus 1 : '+n+'×'+n+'+1, '+(n+1)+'×'+(n+1)+'+1…':'Ce sont les carrés : '+n+'×'+n+', '+(n+1)+'×'+(n+1)+'…'], d:2*n+1}; },
+     function(){ var a=alea(1,4), b=alea(a,6), t=[a,b]; for(var i=2;i<6;i++) t.push(t[i-1]+t[i-2]); return {t:t, e:['Chak nonb se de nonb anvan l yo adisyone.','Chaque nombre est la somme des deux précédents.'], d:a}; }],
+  4:[function(){ var a=alea(2,5), b=alea(6,10), s1=alea(1,9), s2=alea(20,40), t=[]; for(var i=0;i<7;i++) t.push(i%2?s2-b*((i-1)/2):s1+a*(i/2)); return {t:t, e:['De siy melanje : youn ajoute '+a+', lòt la retire '+b+'.','Deux suites mêlées : l\'une ajoute '+a+', l\'autre retire '+b+'.'], d:a}; },
+     function(){ var s=alea(1,5), c=choisir([1,-1]); if(c<0&&s<2) s=2; var t=[s]; for(var i=1;i<6;i++) t.push(t[i-1]*2+c); return {t:t, e:[c>0?'Chak fwa : ×2 epi +1.':'Chak fwa : ×2 epi −1.', c>0?'À chaque fois : ×2 puis +1.':'À chaque fois : ×2 puis −1.'], d:2}; },
+     function(){ var P=premiers(16), i0=alea(0,9), t=P.slice(i0,i0+6); return {t:t, e:['Se nonb premye yo : yo divize sèlman pa 1 ak pa tèt yo.','Ce sont les nombres premiers : divisibles seulement par 1 et par eux-mêmes.'], d:2}; }],
+  5:[function(){ var d=alea(1,3), s=alea(1,10), t=[s]; for(var i=1;i<6;i++) t.push(t[i-1]+d*Math.pow(2,i-1)); return {t:t, e:['Ekar yo double : +'+d+', +'+(2*d)+', +'+(4*d)+'…','Les écarts doublent : +'+d+', +'+(2*d)+', +'+(4*d)+'…'], d:d}; },
+     function(){ var c=alea(1,5), s=alea(1,4), t=[s]; for(var i=1;i<7;i++) t.push(i%2?t[i-1]*2:t[i-1]+c); return {t:t, e:['×2 epi +'+c+', youn apre lòt.','On alterne ×2 et +'+c+'.'], d:c}; },
+     function(){ var s=alea(0,4), t=[], x=s; for(var i=0;i<6;i++){ t.push(LETTRES.charAt(x)); x+=i+1; } return {t:t, l:1, e:['Ekar yo grandi : +1, +2, +3… lèt.','Les écarts augmentent : +1, +2, +3… lettres.'], d:1}; },
+     function(){ var n=alea(1,3), t=[]; for(var i=0;i<6;i++) t.push(Math.pow(n+i,3)); return {t:t, e:['Se kib yo : '+n+'×'+n+'×'+n+', '+(n+1)+'×'+(n+1)+'×'+(n+1)+'…','Ce sont les cubes : '+n+'×'+n+'×'+n+', '+(n+1)+'×'+(n+1)+'×'+(n+1)+'…'], d:3}; }]
+};
+/** Une question de suite : la dernière valeur est cachée ; 4 choix dont 1 juste. */
+function questionSuite(niveau){
+  var g=choisir(REGLES[niveau])(), rep=g.t[g.t.length-1], vis=g.t.slice(0,-1), ch=[rep];
+  if(g.l){
+    var k=LETTRES.indexOf(rep);
+    [k+1,k-1,k+2,k-2,k+3,k-3,k+g.d,k-g.d].forEach(function(x){ var c=LETTRES.charAt(x); if(x>=0&&x<26&&ch.indexOf(c)<0&&ch.length<4) ch.push(c); });
+  } else {
+    var d=Math.max(1,Math.abs(g.d||1));
+    [rep+d,rep-d,rep+1,rep-1,rep+2*d,rep+2,rep-2,rep+10,rep-10].forEach(function(x){ if(x>=0&&ch.indexOf(x)<0&&ch.length<4) ch.push(x); });
+  }
+  return {vis:vis, rep:rep, choix:melanger(ch), e:g.e};
+}
+
+// =====================================================================
+// 2. TEST DE BARRAGE — 10 × 12 lettres b, d, p, q ; environ 1 sur 4 est la cible
+// =====================================================================
+function grilleBarrage(){
+  var L=['b','d','p','q'], c=choisir(L), g=[];
+  for(var i=0;i<120;i++) g.push(Math.random()<0.25?c:choisir(L.filter(function(x){ return x!==c; })));
+  return {cible:c, g:g};
+}
+
+// =====================================================================
+// 3. PLIAGE DE CUBES — patron 2D → cube 3D (le dessin reste à l'extérieur)
+// =====================================================================
+// 6 symboles qui ne changent pas quand on les tourne d'un quart de tour : seul l'ORDRE des faces compte.
+var SYM=[
+  {c:'#1f5fbf', d:'<circle cx=".5" cy=".5" r=".26"/>'},
+  {c:'#1d8a4e', d:'<path fill-rule="evenodd" d="M.5 .2a.3 .3 0 1 0 .0001 0zM.5 .34a.16 .16 0 1 1 -.0001 0z"/>'},
+  {c:'#c0392b', d:'<path d="M.42 .18h.16v.24h.24v.16h-.24v.24h-.16v-.24h-.24v-.16h.24z"/>'},
+  {c:'#d97706', d:'<path d="M.27 .19l.23 .2 .23-.2 .08 .08-.2 .23 .2 .23-.08 .08-.23-.2-.23 .2-.08-.08 .2-.23-.2-.23z"/>'},
+  {c:'#7c3aed', d:'<rect x=".25" y=".25" width=".5" height=".5"/>'},
+  {c:'#0f766e', d:'<circle cx=".3" cy=".3" r=".11"/><circle cx=".7" cy=".3" r=".11"/><circle cx=".3" cy=".7" r=".11"/><circle cx=".7" cy=".7" r=".11"/>'}
+];
+function prodVec(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+function egal(a,b){ return a[0]===b[0]&&a[1]===b[1]&&a[2]===b[2]; }
+function neg(a){ return [-a[0]||0,-a[1]||0,-a[2]||0]; }
+/** Plie le patron : chaque case reçoit sa normale extérieure. Renvoie null si ce n'est pas un vrai patron de cube. */
+function plier(cases){
+  var cle=function(x,y){ return x+','+y; }, pos={}, res={}, file=[0];
+  cases.forEach(function(c,i){ pos[cle(c[0],c[1])]=i; });
+  res[0]={n:[0,0,1], ex:[1,0,0], ey:[0,-1,0]};
+  while(file.length){
+    var i=file.shift(), c=cases[i], o=res[i];
+    [[1,0],[-1,0],[0,1],[0,-1]].forEach(function(dd){
+      var j=pos[cle(c[0]+dd[0],c[1]+dd[1])]; if(j==null||res[j]) return;
+      var n,ex=o.ex,ey=o.ey;
+      if(dd[0]===1){ n=o.ex; ex=neg(o.n); } else if(dd[0]===-1){ n=neg(o.ex); ex=o.n; }
+      else if(dd[1]===1){ n=o.ey; ey=neg(o.n); } else { n=neg(o.ey); ey=o.n; }
+      res[j]={n:n,ex:ex,ey:ey}; file.push(j);
+    });
+  }
+  var normales=cases.map(function(c,i){ return res[i]?res[i].n:null; });
+  if(normales.some(function(n){ return !n; })) return null;
+  for(var a=0;a<6;a++) for(var b=a+1;b<6;b++) if(egal(normales[a],normales[b])) return null;
+  return normales;
+}
+var CROIX=[[1,0],[0,1],[1,1],[2,1],[1,2],[1,3]];
+/** Patron au hasard : 6 cases collées qui se plient en cube (les 11 patrons possibles peuvent sortir). */
+function patronHasard(){
+  for(var essai=0;essai<500;essai++){
+    var c=[[0,0]], vu={'0,0':1};
+    while(c.length<6){ var b=choisir(c), d=choisir([[1,0],[-1,0],[0,1],[0,-1]]), x=b[0]+d[0], y=b[1]+d[1]; if(!vu[x+','+y]){ vu[x+','+y]=1; c.push([x,y]); } }
+    var mx=Math.min.apply(null,c.map(function(p){ return p[0]; })), my=Math.min.apply(null,c.map(function(p){ return p[1]; }));
+    c=c.map(function(p){ return [p[0]-mx,p[1]-my]; });
+    if(plier(c)) return c;
+  }
+  return CROIX;
+}
+function questionCube(niveau){
+  var cases=niveau<3?CROIX:patronHasard(), N=plier(cases), sym=melanger([0,1,2,3,4,5]);   // sym[i] = symbole de la case i
+  var face=function(n){ for(var i=0;i<6;i++) if(egal(N[i],n)) return i; return -1; };
+  /** (gauche, droite, haut) est visible sur un vrai cube si les 3 faces se touchent dans le bon sens. */
+  var valide=function(t){ var a=N[t[0]],b=N[t[1]],c=N[t[2]], p=prodVec(b,c); return a[0]*p[0]+a[1]*p[1]+a[2]*p[2]===1; };
+  var axes=[[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]], U=choisir(axes);
+  var R=choisir(axes.filter(function(v){ return v[0]*U[0]+v[1]*U[1]+v[2]*U[2]===0; })), L=prodVec(R,U);
+  var bon=[face(L),face(R),face(U)], opts=[bon], vu={}; vu[bon.join()]=1;
+  var ajouter=function(t){ if(opts.length<4&&t[0]!==t[1]&&t[1]!==t[2]&&t[0]!==t[2]&&!vu[t.join()]&&!valide(t)){ vu[t.join()]=1; opts.push(t); } };
+  ajouter([bon[1],bon[0],bon[2]]);                                     // le cube « en miroir »
+  ajouter([face(neg(U)),bon[1],bon[2]]);                               // deux faces opposées ensemble
+  for(var k=0;k<200&&opts.length<4;k++) ajouter(melanger([0,1,2,3,4,5]).slice(0,3));
+  return {cases:cases, sym:sym, opts:melanger(opts), bon:bon, valide:valide};
+}
+function dessinSym(i,a,b,c,d,e,f){ var s=SYM[i]; return '<g transform="matrix('+[a,b,c,d,e,f].map(function(x){ return +x.toFixed(2); }).join(' ')+')" fill="'+s.c+'">'+s.d+'</g>'; }
+function svgPatron(q){
+  var T=44, W=0, H=0; q.cases.forEach(function(c){ W=Math.max(W,c[0]+1); H=Math.max(H,c[1]+1); });
+  var h='<svg viewBox="-2 -2 '+(W*T+4)+' '+(H*T+4)+'" width="'+(W*T+4)+'" height="'+(H*T+4)+'" role="img" aria-label="patron">';
+  q.cases.forEach(function(c,i){ var x=c[0]*T, y=c[1]*T; h+='<rect x="'+x+'" y="'+y+'" width="'+T+'" height="'+T+'" fill="#fff" stroke="#14213d" stroke-width="1.5"/>'+dessinSym(q.sym[i],T,0,0,T,x,y); });
+  return h+'</svg>';
+}
+function svgCube(q,t){
+  var s=46, cx=60, cy=58, k=0.866*s;
+  var P=function(x,y){ return x.toFixed(1)+','+y.toFixed(1); };
+  var top=[[cx,cy-s],[cx+k,cy-s/2],[cx,cy],[cx-k,cy-s/2]], gauche=[[cx-k,cy-s/2],[cx,cy],[cx,cy+s],[cx-k,cy+s/2]], droite=[[cx,cy],[cx+k,cy-s/2],[cx+k,cy+s/2],[cx,cy+s]];
+  var poly=function(p,f){ return '<polygon points="'+p.map(function(v){ return P(v[0],v[1]); }).join(' ')+'" fill="'+f+'" stroke="#14213d" stroke-width="1.5" stroke-linejoin="round"/>'; };
+  return '<svg viewBox="0 0 120 120" role="img" aria-label="cube">'+
+    poly(gauche,'#eef1f8')+dessinSym(q.sym[t[0]],k,s/2,0,s,cx-k,cy-s/2)+
+    poly(droite,'#e2e7f2')+dessinSym(q.sym[t[1]],k,-s/2,0,s,cx,cy)+
+    poly(top,'#ffffff')+dessinSym(q.sym[t[2]],k,s/2,k,-s/2,cx-k,cy-s/2)+'</svg>';
+}
+
+// =====================================================================
+// Déroulement d'une partie
+// =====================================================================
+var P=null, TIC=null;
+function arreterChrono(){ clearInterval(TIC); TIC=null; }
+function chrono(sec,fin){
+  arreterChrono(); var t0=Date.now(), bar=document.getElementById('bar');
+  TIC=setInterval(function(){ var r=Math.max(0,sec-(Date.now()-t0)/1000); if(bar){ bar.style.width=(100*r/sec)+'%'; bar.classList.toggle('bas',r<sec/4); } var n=document.getElementById('reste'); if(n) n.textContent=Math.ceil(r)+' s';
+    if(r<=0){ arreterChrono(); fin(); } },200);
+  return t0;
+}
+function tete(){ return '<div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+(JEU.nb>1?A('Kesyon ','Question ')+(P.i+1)+' / '+JEU.nb+' · ':'')+'<span id="reste">'+JEU.sec+' s</span></span></div><div class="chrono"><div id="bar" style="width:100%"></div></div>'; }
+function lancer(id){
+  JEU=jeuParId(id); if(!JEU) return; P={i:0, bons:0, temps:0, ok:0, faux:0, oubli:0}; ECRAN='jeu'; statPartie();
+  if(id==='baraj') barrageIntro(); else questionSuivante();
+  window.scrollTo(0,0);
+}
+function questionSuivante(){
+  if(P.i>=JEU.nb) return resultat();
+  var niv=Math.min(5,1+Math.floor(P.i*5/JEU.nb)), z=document.getElementById('zone');
+  if(JEU.id==='siy'){
+    var q=P.q=questionSuite(niv);
+    z.innerHTML='<div class="card">'+tete()+'<div class="lbl">'+A('Ki sa ki vini apre a ?','Quel est l\'élément suivant ?')+'</div><div class="seq">'+q.vis.map(function(x){ return '<span>'+esc(x)+'</span>'; }).join('')+'<span class="q">?</span></div>'+
+      '<div class="chx">'+q.choix.map(function(x,i){ return '<button type="button" data-i="'+i+'">'+esc(x)+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
+  } else {
+    var c=P.q=questionCube(niv);
+    z.innerHTML='<div class="card">'+tete()+'<div class="patron">'+svgPatron(c)+'</div><div class="lbl">'+A('Pliye modèl la, desen yo rete deyò. Ki kib ki ka soti ladan l ?','Pliez le patron, dessins à l\'extérieur. Quel cube peut-on obtenir ?')+'</div>'+
+      '<div class="cubes">'+c.opts.map(function(t,i){ return '<button type="button" data-i="'+i+'" aria-label="'+A('Kib ','Cube ')+(i+1)+'">'+svgCube(c,t)+'</button>'; }).join('')+'</div><div id="ex"></div></div>';
+  }
+  P.t0=chrono(JEU.sec,function(){ repondre(-1); });
+}
+function repondre(i){
+  if(P.fini) return; arreterChrono(); var dt=Math.min(JEU.sec,(Date.now()-P.t0)/1000); P.temps+=dt;
+  var q=P.q, bonI, juste;
+  if(JEU.id==='siy'){ bonI=q.choix.indexOf(q.rep); }
+  else { bonI=q.opts.indexOf(q.bon); }
+  juste=i===bonI; if(juste) P.bons++;
+  document.querySelectorAll('#zone .chx button, #zone .cubes button').forEach(function(b,k){ b.disabled=true; if(k===bonI) b.classList.add('bon'); else if(k===i) b.classList.add('mal'); });
+  var tete2=i<0?'<b class="ko">'+A('Tan an fini.','Temps écoulé.')+'</b> ':juste?'<b class="ok">'+A('Bon !','Juste !')+'</b> ':'<b class="ko">'+A('Non.','Faux.')+'</b> ';
+  var expl=JEU.id==='siy'?A('Repons lan se ','La réponse est ')+'<b>'+esc(q.rep)+'</b>. '+esc(LANG==='fr'?q.e[1]:q.e[0])
+    :A('Konsèy : de fas ki opoze sou kib la pa janm parèt ansanm, epi yon kib « nan glas » (fas yo nan lòd ki ranvèse) pa bon.','Astuce : deux faces opposées n\'apparaissent jamais ensemble, et un cube « en miroir » (faces dans l\'ordre inversé) est faux.');
+  P.i++;
+  document.getElementById('ex').innerHTML='<div class="expl">'+tete2+expl+'</div><div style="margin-top:12px"><button type="button" class="btn plein" id="suite">'+(P.i>=JEU.nb?A('Wè rezilta a','Voir le résultat'):A('Kontinye','Continuer'))+'</button></div>';
+  document.getElementById('suite').focus({preventScroll:true});
+}
+function barrageIntro(){
+  var g=P.g=grilleBarrage();
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>'+esc(JEU.nom())+'</b></div><div class="cible">'+A('Modèl la :','Le modèle :')+'<span>'+g.cible+'</span></div>'+
+    '<p style="margin:0 0 12px">'+A('Touche tout lèt «&nbsp;'+g.cible+'&nbsp;» yo, pi vit ke posib. Atansyon : b, d, p ak q sanble anpil. Si w twonpe w, touche ankò pou retire make a.','Touchez toutes les lettres «&nbsp;'+g.cible+'&nbsp;», le plus vite possible. Attention : b, d, p et q se ressemblent. En cas d\'erreur, touchez encore pour enlever la marque.')+'</p>'+
+    '<button type="button" class="btn plein" id="go">'+A('Kòmanse (60 s)','Commencer (60 s)')+'</button></div>';
+}
+function barrageJouer(){
+  var g=P.g; P.m={};
+  document.getElementById('zone').innerHTML='<div class="card">'+tete()+'<div class="cible">'+A('Make :','Barrez :')+'<span>'+g.cible+'</span></div><div class="grille" id="grille">'+
+    g.g.map(function(x,i){ return '<button type="button" data-k="'+i+'">'+x+'</button>'; }).join('')+'</div><div style="margin-top:12px"><button type="button" class="btn sec plein" id="fini">'+A('Mwen fini','J\'ai fini')+'</button></div></div>';
+  P.t0=chrono(60,barrageFin);
+}
+function barrageFin(){
+  if(P.fini) return; arreterChrono(); P.fini=true; P.temps=Math.min(60,(Date.now()-P.t0)/1000);
+  var g=P.g; P.ok=0; P.faux=0; P.oubli=0;
+  document.querySelectorAll('#grille button').forEach(function(b){ var k=+b.dataset.k, cible=g.g[k]===g.cible, m=!!P.m[k]; b.disabled=true; b.classList.remove('m');
+    if(m&&cible){ P.ok++; b.classList.add('f-ok'); } else if(m){ P.faux++; b.classList.add('f-faux'); } else if(cible){ P.oubli++; b.classList.add('f-oubli'); } });
+  var pts=Math.max(0,P.ok-P.faux), total=g.g.filter(function(x){ return x===g.cible; }).length, nouveau=noterRecord('baraj',pts,total,P.temps);
+  var z=document.getElementById('zone'), carte=z.querySelector('.card');
+  carte.querySelector('.chrono').remove(); var f=document.getElementById('fini'); if(f) f.parentNode.remove();
+  carte.insertAdjacentHTML('afterbegin','<div class="res"><div class="sous">'+A('Nòt ou (bon − erè)','Votre score (justes − erreurs)')+'</div><div class="gros">'+pts+' <span style="font-size:20px;color:var(--muted)">/ '+total+'</span></div>'+
+    '<div class="bilan"><div style="color:var(--ok)">✓ '+P.ok+' '+A('bon','justes')+'</div><div style="color:var(--err)">✗ '+P.faux+' '+A('erè','erreurs')+'</div><div style="color:#8a5a00">○ '+P.oubli+' '+A('bliye','oubliées')+'</div><div>⏱ '+duree(P.temps)+'</div></div>'+
+    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord('baraj')+'<div style="height:10px"></div>')+
+    '<div class="actions" style="margin-bottom:14px"><button type="button" class="btn" data-rejouer="baraj">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>');
+  window.scrollTo(0,0);
+}
+function resultat(){
+  P.fini=true; arreterChrono(); var nouveau=noterRecord(JEU.id,P.bons,JEU.nb,P.temps), pct=P.bons/JEU.nb;
+  var msg=pct>=0.9?A('Ekselan ! Ou pare pou tès sa a.','Excellent ! Vous êtes prêt pour ce test.'):pct>=0.6?A('Byen. Rejwe pou w vin pi vit.','Bien. Rejouez pour gagner en vitesse.'):A('Kontinye antrene w : fòma a ap vin fasil.','Continuez à vous entraîner : le format deviendra facile.');
+  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(JEU.nom())+'</div><div class="gros">'+P.bons+' / '+JEU.nb+'</div><div class="sous">⏱ '+duree(P.temps)+' · '+msg+'</div>'+
+    (nouveau?'<div class="rec">🏅 '+A('Nouvo rekò !','Nouveau record !')+'</div>':txtRecord(JEU.id)+'<div style="height:12px"></div>')+
+    '<div class="actions"><button type="button" class="btn" data-rejouer="'+JEU.id+'">'+A('Rejwe','Rejouer')+'</button><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button></div></div>';
+  window.scrollTo(0,0);
+}
+function menu(){
+  arreterChrono(); ECRAN='menu'; JEU=null; P=null;
+  document.getElementById('zone').innerHTML=JEUX.map(function(j){
+    return '<div class="card jeu"><div class="ic">'+j.ic+'</div><div style="flex:1;min-width:0"><h2>'+esc(j.nom())+'</h2><p>'+esc(j.txt())+'</p>'+txtRecord(j.id)+'<div style="margin-top:10px"><button type="button" class="btn" data-jouer="'+j.id+'">'+A('Jwe','Jouer')+'</button></div></div></div>';
+  }).join('')+'<p class="note">'+A('Jwèt sa yo fè w abitye ak fòma tès sikoteknik konkou yo, epi yo antrene vitès ou. Yo pa mezire entèlijans ou. Nòt ou rete sou telefòn ou.','Ces jeux vous habituent au format des tests psychotechniques des concours et entraînent votre rapidité. Ils ne mesurent pas votre intelligence. Vos scores restent sur votre téléphone.')+'</p>';
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('button'); if(!b) return;
+  if(b.dataset.jouer||b.dataset.rejouer) return lancer(b.dataset.jouer||b.dataset.rejouer);
+  if(b.dataset.menu) { menu(); window.scrollTo(0,0); return; }
+  if(b.id==='go') return barrageJouer();
+  if(b.id==='fini') return barrageFin();
+  if(b.id==='suite') return questionSuivante();
+  if(b.dataset.k!=null&&P&&!P.fini){ var k=+b.dataset.k; P.m[k]=!P.m[k]; b.classList.toggle('m',P.m[k]); return; }
+  if(b.dataset.i!=null&&P&&!b.disabled&&ECRAN==='jeu') repondre(+b.dataset.i);
+});
+function textes(){
+  document.getElementById('titre').textContent='🧩 '+A('Tès sikoteknik','Tests psychotechniques');
+  document.getElementById('sous').textContent=A('Antrene w gratis pou tès lojik, atansyon ak espas konkou ak anbochaj yo mande.','Entraînez-vous gratuitement aux tests de logique, d\'attention et d\'espace des concours et recrutements.');
+  document.getElementById('retour').textContent='← '+A('Akèy','Accueil');
+  document.title=A('Tès sikoteknik','Tests psychotechniques')+' — Masbet';
+  var n=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Communauté']:['Akèy','Achte','Match','Live','Kominote'];
+  document.getElementById('nav').innerHTML='<a href="index.html#akey"><span>🏠</span>'+n[0]+'</a><a href="achte.html"><span>📶</span>'+n[1]+'</a><a href="index.html#match"><span>⚽</span>'+n[2]+'</a><a href="index.html#videyo"><span>🔴</span>'+n[3]+'</a><a href="kominote.html"><span>💬</span>'+n[4]+'</a>';
+}
+function langue(l){
+  LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
+  document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
+  textes(); if(ECRAN==='menu') menu();   // pendant une partie, la langue change à l'écran suivant
+}
+langue(lire('masbet_lang')||'ht'); menu();
+</script>
+</body>
+</html>

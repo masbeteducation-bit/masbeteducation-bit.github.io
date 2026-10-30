@@ -1,8 +1,8 @@
 // Service worker MasbetAirNet : l'application s'ouvre même sans réseau (pages en mémoire).
 // Les données (offres, matchs, commandes) viennent toujours en direct du système Google.
-var VERSION = 'masbet-v50';
+var VERSION = 'masbet-v51';
 var FICHIERS = ['./', './index.html', './achte.html', './config.js', './logo.png', './jwe-logo.png', './signature.png', './confidentialite.html', './manifest.webmanifest',
-  './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './apropo.html', './suite.html', './kominote.html', './meditasyon.html', './biblio.html',
+  './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', './apropo.html', './suite.html', './kominote.html', './meditasyon.html', './psiko.html', './biblio.html',
   './biblio/livre-sante.js', './biblio/livre-agronomie.js', './biblio/livre-gestion-projet.js', './biblio/livre-ethique.js', './biblio/livre-finance.js', './biblio/livre-fiscalite.js', './biblio/livre-metre-devis.js', './photos/parapli-teren.jpg', './photos/parapli-teren-p.jpg'];
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(FICHIERS); }).then(function () { return self.skipWaiting(); }));
