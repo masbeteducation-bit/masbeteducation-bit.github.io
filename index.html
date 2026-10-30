@@ -439,7 +439,8 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvc{display:flex;align-items:center;gap:9px;min-width:0;border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px;text-align:left;font:inherit;color:var(--ink);cursor:pointer}
   .tvc:active{background:#f6f7fb}
   .tvc .tvl{flex:0 0 40px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:14px;overflow:hidden}
-  .tvc .tvl img{width:100%;height:100%;object-fit:contain;background:#fff}
+  .tvc .tvl.logo{flex-basis:58px;width:58px;background:#fff!important;border:1px solid var(--line);padding:3px}
+  .tvc .tvl img{width:100%;height:100%;object-fit:contain;display:block}
   .tvc .tvn{min-width:0;flex:1}
   .tvc .tvn b{display:block;font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}
   .tvc .tvn small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
@@ -1911,7 +1912,7 @@ function jouer(id){
 }
 
 // ---------- v41.6 — TV gratuite (onglet « Chaînes TV » de la feuille Contenu) ----------
-var TVCAT='', TVI=-1, TVH=null, TVNAT=false, TVSEC=false, TVREC=false, HLS_JS='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js';
+var TVCAT='', TVI=-1, TVH=null, TVNAT=false, TVSEC=false, TVREC=0, HLS_JS='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js';
 var TV_CAT_HT={'Haïti':'Ayiti','Antilles':'Antiy','Info':'Nouvèl','Sport, musique, cuisine':'Espò, mizik, kizin','International':'Entènasyonal','Jeunesse':'Timoun','Musique':'Mizik','Sport':'Espò'};
 var TV_CAT_ICO={'Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽'};
 function tvListe(){ return (ACC&&Array.isArray(ACC.tv)?ACC.tv:[]).filter(function(c){ return c&&c.nom&&(c.type==='hls'?/^https:\/\//.test(c.lien||''):/^(yt|ytc)$/.test(c.type)); }); }
@@ -1930,9 +1931,10 @@ function afficherTv(){
   document.getElementById('tvNb').textContent=T('tvNb')(l.length);
   document.getElementById('tvCats').innerHTML=['' ].concat(cats).map(function(c){ return '<button type="button" role="tab" class="'+(c===TVCAT?'on':'')+'" data-cat="'+esc(c)+'">'+(c?(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c)):esc(T('tvTout')))+'</button>'; }).join('');
   var tuile=function(c){ var i=l.indexOf(c);
-    var logo=c.logo&&/^https:\/\//.test(c.logo)?'<img loading="lazy" src="'+esc(c.logo)+'" alt="" onerror="this.remove()">':esc(tvInitiales(c.nom));
+    var aLogo=!!(c.logo&&/^https:\/\//.test(c.logo)), ini=esc(tvInitiales(c.nom));
+    var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
     var sous=c.hors?esc(T('tvHors')):c.type!=='hls'?'YouTube':c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
-    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(c.gros&&!c.hors?' class="gros"':'')+'>'+sous+'</small>':'')+'</span></button>'; };
+    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(c.gros&&!c.hors?' class="gros"':'')+'>'+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
   document.getElementById('tvZone').innerHTML=TVCAT?bloc(TVCAT):cats.map(function(c){ return '<div class="tvcat">'+(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c))+'</div>'+bloc(c); }).join('');
 }
@@ -1942,7 +1944,7 @@ document.addEventListener('click',function(e){
 });
 function tvMsg(s){ document.getElementById('tvMsg').textContent=s||''; }
 function tvJouer(i){
-  var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=false;
+  var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=0;
   document.getElementById('tvNom').textContent=c.nom;
   document.getElementById('tvInfo').textContent=c.type!=='hls'?T('tvYt'):c.go?T('tvDonnees')(c.go):T('liveDonnees');
   document.getElementById('tvLect').classList.remove('hidden'); document.body.style.overflow='hidden';
@@ -1964,10 +1966,12 @@ function tvLancer(url){
   hlsPret.catch(function(){}).then(function(){
     if(moi!==TVI) return;
     if(window.Hls&&Hls.isSupported()){
-      TVH=new Hls({startLevel:0, capLevelToPlayerSize:true, maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
-      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ lecture(); });
+      // v41.6c — son « robotique » : il venait des changements de qualité en cours de route (le son change de format).
+      // La qualité est maintenant FIXÉE à la plus basse (celle mesurée dans le test) : plus de changement, et moins de données.
+      TVH=new Hls({startLevel:0, capLevelToPlayerSize:false, defaultAudioCodec:'mp4a.40.2', maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
+      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ try{ TVH.autoLevelCapping=0; TVH.loadLevel=0; }catch(e){} lecture(); });
       TVH.on(Hls.Events.ERROR,function(ev,d){ if(!d||!d.fatal||moi!==TVI) return;
-        if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&!TVREC){ TVREC=true; TVH.recoverMediaError(); return; }
+        if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&TVREC<2){ TVREC++; if(TVREC===2&&TVH.swapAudioCodec) TVH.swapAudioCodec(); TVH.recoverMediaError(); return; }   // 1re fois : réparer ; 2e fois : autre format audio
         tvEchec(); });
       TVH.loadSource(url); TVH.attachMedia(v);
     } else if(natif){ TVNAT=true; v.src=url; lecture(); }
