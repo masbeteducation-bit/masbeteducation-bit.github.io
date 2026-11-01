@@ -369,6 +369,8 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .topd{display:flex;align-items:center;gap:6px;flex-shrink:0}
   .kontBtn{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 10px;font-weight:800;font-size:13px;color:var(--navy);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .kontBtn.on{background:#eef2ff;border-color:#c7d0f0}
+  .kloch{position:relative;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--navy);flex-shrink:0}
+  .kloch .bd{position:absolute;top:-5px;right:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e11d48;color:#fff;font-size:11.5px;font-weight:900;line-height:19px;text-align:center;border:2px solid #fff}
   .top img{min-width:0;flex:1 1 auto}
   @media (max-width:420px){.top{padding:10px 12px 6px;gap:8px}.kontBtn{padding:6px 9px;max-width:118px}.kontBtn:not(.on) .kl{display:none}.lang button{padding:6px 8px}}
   .sheetFond{position:fixed;inset:0;background:rgba(10,15,30,.38);z-index:60}
@@ -467,6 +469,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 <div class="top">
   <img src="logo.png" alt="Masbet Education" width="560" height="166">
   <div class="topd">
+  <a class="kloch hidden" id="bKloch" href="kominote.html#notif" aria-label="Notifications"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M12 3.2a5.6 5.6 0 0 0-5.6 5.6v3.4c0 .9-.3 1.7-.9 2.4L4.3 16c-.4.5 0 1.2.6 1.2h14.2c.6 0 1-.7.6-1.2l-1.2-1.4c-.6-.7-.9-1.5-.9-2.4V8.8A5.6 5.6 0 0 0 12 3.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9.6 19.4a2.5 2.5 0 0 0 4.8 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span class="bd hidden" id="klochN"></span></a>
   <button class="kontBtn" id="bKont" onclick="kontOuvrir()">👤</button>
   <div class="lang" role="group" aria-label="Langue / Lang">
     <button id="lHt" onclick="langue('ht')">KR</button>
@@ -1919,8 +1922,8 @@ function jouer(id){
 
 // ---------- v41.6 — TV gratuite (onglet « Chaînes TV » de la feuille Contenu) ----------
 var TVCAT='', TVI=-1, TVH=null, TVNAT=false, TVSEC=false, TVREC=0, HLS_JS='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js';
-var TV_CAT_HT={'Haïti':'Ayiti','Antilles':'Antiy','Info':'Nouvèl','Sport, musique, cuisine':'Espò, mizik, kizin','International':'Entènasyonal','Jeunesse':'Timoun','Musique':'Mizik','Sport':'Espò'};
-var TV_CAT_ICO={'Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽'};
+var TV_CAT_HT={'Haïti':'Ayiti','Antilles':'Antiy','Info':'Nouvèl','Sport, musique, cuisine':'Espò, mizik, kizin','International':'Entènasyonal','Jeunesse':'Timoun','Musique':'Mizik','Sport':'Espò','Foot international':'Foutbòl entènasyonal','Éducation':'Edikasyon','Documentaires':'Dokimantè','Sciences et grands projets':'Syans ak gwo pwojè'};
+var TV_CAT_ICO={'Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽','Foot international':'🏆','Éducation':'🎓','Documentaires':'🎬','Sciences et grands projets':'🚀'};
 function tvListe(){ return (ACC&&Array.isArray(ACC.tv)?ACC.tv:[]).filter(function(c){ return c&&c.nom&&(c.type==='hls'?/^https:\/\//.test(c.lien||''):/^(yt|ytc)$/.test(c.type)); }); }
 function tvCatNom(c){ return LANG==='ht'&&TV_CAT_HT[c]?TV_CAT_HT[c]:c; }
 function tvCouleur(s){ var h=0; s=String(s); for(var i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))%360; return 'hsl('+h+',55%,38%)'; }
@@ -1950,7 +1953,7 @@ document.addEventListener('click',function(e){
 });
 function tvMsg(s){ document.getElementById('tvMsg').textContent=s||''; }
 function tvJouer(i){
-  var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=0;
+  var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=0; statEnvoyer('tv');
   document.getElementById('tvNom').textContent=c.nom;
   document.getElementById('tvInfo').textContent=c.type!=='hls'?T('tvYt'):c.go?T('tvDonnees')(c.go):T('liveDonnees');
   document.getElementById('tvLect').classList.remove('hidden'); document.body.style.overflow='hidden';
@@ -2629,6 +2632,14 @@ chargerLokal();
 chargerQuiz();
 kontBouton(); kontSync(); afficherJwe(); notifCarte(); notifBell(); notifRafraichir(); statDemarrage(); statVue(vueActive()); if(navigator.onLine===false) horsLigne(true);
 setInterval(function(){ if(!document.hidden) chargerAccueil(); }, 120000);   // lives : vérifier toutes les 2 min
+// v42.3 : cloche de la Communauté (seulement si ce téléphone a déjà publié ou commenté)
+function klochAkey(){
+  var b=document.getElementById('bKloch'); if(!b||!lire('masbet_kom_moi')||!CONTENU||document.hidden) return;
+  b.classList.remove('hidden');
+  apiSeul('kom_notif',{appareil:appareil()}).then(function(d){ var vu=Number(lire('masbet_kom_vu')||0), n=(d.ev||[]).filter(function(x){ return x.d>vu; }).length, s=document.getElementById('klochN');
+    s.textContent=n>99?'99+':String(n); s.classList.toggle('hidden',!n); }).catch(function(){});
+}
+setTimeout(klochAkey,2500); setInterval(klochAkey,120000); document.addEventListener('visibilitychange',function(){ if(!document.hidden) klochAkey(); });
 </script>
 </body>
 </html>

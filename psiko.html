@@ -232,6 +232,10 @@ function txtRecord(id){
 }
 
 // ---------- Compteur anonyme (feuille Stats, colonne « Jeux psychotechniques ») ----------
+function statEv(ev){
+  var u=window.MASBET_CONTENU||'', app=lire('masbet_appareil')||''; if(!u||app.length<8) return;
+  try{ fetch(u,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({api:'stat',appareil:app,ev:ev})}).catch(function(){}); }catch(e){}
+}
 function statPartie(){
   var u=window.MASBET_CONTENU||'', app=lire('masbet_appareil')||''; if(!u||app.length<8) return;
   try{ fetch(u,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({api:'stat',appareil:app,ev:'psiko'})}).catch(function(){}); }catch(e){}
@@ -954,7 +958,7 @@ function devFin(){
   var e=devEtat(), L=devListe(), b=e.r.filter(function(x){ return x&&x.ok; }).length, ind=e.ind.some(function(x){ return x; }), bloc='';
   if(!e.fini){
     var xp=e.r.reduce(function(s,x,i){ return s+(x&&x.ok?(e.ind[i]?10:20):0); },0)+(b===3?10:0);
-    e.fini=true; devEcrire(e); bloc=progres('dev',{bons:b,nb:3,xp:xp,ind:ind}); SONS.fin();
+    e.fini=true; devEcrire(e); bloc=progres('dev',{bons:b,nb:3,xp:xp,ind:ind}); SONS.fin(); statEv('dev');
     var tot=null; try{ tot=JSON.parse(lire('masbet_psiko_dev_tot')||'null'); }catch(x){} tot=tot||{bons:0,jou:0}; tot.bons+=b; tot.jou++; ecrire('masbet_psiko_dev_tot',JSON.stringify(tot));
   }
   var tot2=null; try{ tot2=JSON.parse(lire('masbet_psiko_dev_tot')||'null'); }catch(x){}
@@ -968,6 +972,7 @@ function devFin(){
   window.scrollTo(0,0);
 }
 function devPartager(txt){
+  statEv('partage');
   if(navigator.share){ navigator.share({text:txt,url:SITE_JEU+'#dev'}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+SITE_JEU+'#dev'),'_blank','noopener');
 }

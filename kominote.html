@@ -51,6 +51,10 @@
   .act.pat{color:#128c4a;border-color:#bfe8cf;background:#f0fbf4}
   .act{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer}
   .act .coeur{vertical-align:-3px}
+  .kloch{position:relative;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+  .kloch .bd{position:absolute;top:-4px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e11d48;color:#fff;font-size:11.5px;font-weight:900;line-height:19px;text-align:center;border:2px solid var(--navy)}
+  .nt{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:#fff;padding:11px 6px;cursor:pointer;font-size:14px}
+  .nt.nv{background:#fff7ed} .nt .ic{font-size:19px;line-height:1.2;flex-shrink:0} .nt small{display:block;color:var(--muted);margin-top:2px}
   .act.pop .coeur{animation:pop .35s ease}
   @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.45)}100%{transform:scale(1)}}
   .act.on{border-color:var(--rose);color:var(--rose);background:#fff0f4}
@@ -92,7 +96,8 @@
 </head>
 <body>
 <header>
-  <div class="r"><h1>Masbet <span data-t="kom"></span></h1>
+  <div class="r"><h1>Masbet <span data-t="kom"></span></h1><span style="flex:1"></span>
+    <button class="kloch" id="bKloch" onclick="klochOuvri()" aria-label="Notifications"><svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M12 3.2a5.6 5.6 0 0 0-5.6 5.6v3.4c0 .9-.3 1.7-.9 2.4L4.3 16c-.4.5 0 1.2.6 1.2h14.2c.6 0 1-.7.6-1.2l-1.2-1.4c-.6-.7-.9-1.5-.9-2.4V8.8A5.6 5.6 0 0 0 12 3.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M9.6 19.4a2.5 2.5 0 0 0 4.8 0" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg><span class="bd hidden" id="klochN"></span></button>
     <div class="lang" role="group" aria-label="Lang / Langue"><button id="lHt" onclick="langue('ht')">KR</button><button id="lFr" onclick="langue('fr')">FR</button></div></div>
   <p data-t="slogan"></p>
 </header>
@@ -119,6 +124,11 @@
       <div class="acts"><button class="btn" id="bPibliye" onclick="pibliye()" data-t="pibliye"></button><button class="btn sec" onclick="vue('lis')" data-t="anile"></button></div>
     </div>
   </section>
+  <!-- Notifications (cloche) -->
+  <section id="vNotif" class="hidden">
+    <button class="act disc" onclick="vue('lis')" data-t="retou"></button>
+    <div class="card"><h2 style="margin:0 0 6px" data-t="klochTit"></h2><div id="klochL"></div></div>
+  </section>
   <!-- Sujet -->
   <section id="vSije" class="hidden">
     <button class="act disc" onclick="vue('lis')" data-t="retou"></button>
@@ -143,14 +153,14 @@ var TXT = {
   ht: { kom:'Kominote', slogan:'Temwayaj, kesyon, lide : pale ak tout moun nan kominote Masbet la.', aktif:'🔥 Aktif', nouvo:'🆕 Nouvo', popile:'❤️ Popilè', plis:'Wè plis',
     fab:'+ Nouvo sijè', nouvoTit:'Nouvo sijè', tit:'Tit', teks:'Sa w vle di', pibliye:'Pibliye', anile:'Anile', retou:'← Tout sijè yo', voye:'Voye',
     pseudo:'Non ou (pseudo) — 2 a 20 lèt', regles:'Tèks ak emoji sèlman. Pa gen lyen ni nimewo telefòn. Respekte tout moun : yon mesaj ki siyale 5 fwa ap kache.',
-    jaime:'❤️', repon:'Reponn', apPibliye:'⏳ Ap pibliye…', apVoye:'⏳ Ap voye…', chajKom:'Ap chaje kòmantè yo…', foto:'📷 Ajoute yon foto (opsyonèl)', fotoRetire:'✕ Retire', fotoInfo:'Foto a ap parèt apre ekip Masbet fin verifye l (souvan menm jou a).', fotoLi:'Foto sa a pa ka li. Eseye yon lòt.', fotoAtann:'📷 Foto w la ap tann verifikasyon Masbet : se ou sèl ki konnen l la pou kounye a.', fotoRefize:'📷 Masbet pa t kenbe foto a ; sijè w la rete pibliye.', modo:'🛡 Foto pou valide', modoOk:'✅ Valide', modoNo:'❌ Refize', modoVid:'Pa gen foto k ap tann.', pataje:'Pataje', patajeTxt:'Vin bay opinyon w sou Kominote Masbet :', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
+    jaime:'❤️', repon:'Reponn', klochTit:'🔔 Notifikasyon', klochVid:'Poko gen anyen. Lè yon moun renmen oswa kòmante sa w pibliye, w ap wè l isit la.', kLike:function(q,n,ti){ return kiMoun(q,n,'ht')+' renmen sijè w « '+ti+' »'; }, kLikeK:function(q,n,ti){ return kiMoun(q,n,'ht')+' renmen kòmantè w nan « '+ti+' »'; }, kKom:function(q,ti){ return q+' kòmante sijè w « '+ti+' »'; }, kRep:function(q,ti){ return q+' reponn kòmantè w nan « '+ti+' »'; }, yonMoun:'Yon moun', apPibliye:'⏳ Ap pibliye…', apVoye:'⏳ Ap voye…', chajKom:'Ap chaje kòmantè yo…', foto:'📷 Ajoute yon foto (opsyonèl)', fotoRetire:'✕ Retire', fotoInfo:'Foto a ap parèt apre ekip Masbet fin verifye l (souvan menm jou a).', fotoLi:'Foto sa a pa ka li. Eseye yon lòt.', fotoAtann:'📷 Foto w la ap tann verifikasyon Masbet : se ou sèl ki konnen l la pou kounye a.', fotoRefize:'📷 Masbet pa t kenbe foto a ; sijè w la rete pibliye.', modo:'🛡 Foto pou valide', modoOk:'✅ Valide', modoNo:'❌ Refize', modoVid:'Pa gen foto k ap tann.', pataje:'Pataje', patajeTxt:'Vin bay opinyon w sou Kominote Masbet :', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
     kom1:'kòmantè', komN:'kòmantè', okenn:'Poko gen sijè. Kòmanse premye a !', okennKom:'Poko gen kòmantè. Bay pa w !', repaA:function(p){ return 'Repons pou '+p+' · '; }, anileRep:'Anile',
     ekri:'Ekri kòmantè w…', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', kounyeA:'kounye a', minit:'min', e:'è', jou:'j', ou:'(ou)',
     nav:['Akèy','Achte','Match','Live','Kominote'] },
   fr: { kom:'Communauté', slogan:'Témoignages, questions, idées : échangez avec toute la communauté Masbet.', aktif:'🔥 Actifs', nouvo:'🆕 Récents', popile:'❤️ Populaires', plis:'Voir plus',
     fab:'+ Nouveau sujet', nouvoTit:'Nouveau sujet', tit:'Titre', teks:'Votre message', pibliye:'Publier', anile:'Annuler', retou:'← Tous les sujets', voye:'Envoyer',
     pseudo:'Votre nom (pseudo) — 2 à 20 caractères', regles:'Texte et émojis seulement. Pas de lien ni de numéro de téléphone. Respect pour tous : un message signalé 5 fois est masqué.',
-    jaime:'❤️', repon:'Répondre', apPibliye:'⏳ Publication…', apVoye:'⏳ Envoi…', chajKom:'Chargement des commentaires…', foto:'📷 Ajouter une photo (facultatif)', fotoRetire:'✕ Retirer', fotoInfo:'La photo s\'affichera après vérification par l\'équipe Masbet (souvent le jour même).', fotoLi:'Impossible de lire cette photo. Essayez-en une autre.', fotoAtann:'📷 Votre photo attend la vérification Masbet : vous seul la voyez pour l\'instant.', fotoRefize:'📷 Masbet n\'a pas retenu la photo ; votre sujet reste publié.', modo:'🛡 Photos à valider', modoOk:'✅ Valider', modoNo:'❌ Refuser', modoVid:'Aucune photo en attente.', pataje:'Partager', patajeTxt:'Venez donner votre avis sur la Communauté Masbet :', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
+    jaime:'❤️', repon:'Répondre', klochTit:'🔔 Notifications', klochVid:'Rien pour l\'instant. Quand quelqu\'un aime ou commente ce que vous publiez, vous le verrez ici.', kLike:function(q,n,ti){ return kiMoun(q,n,'fr')+' aimé votre sujet « '+ti+' »'; }, kLikeK:function(q,n,ti){ return kiMoun(q,n,'fr')+' aimé votre commentaire dans « '+ti+' »'; }, kKom:function(q,ti){ return q+' a commenté votre sujet « '+ti+' »'; }, kRep:function(q,ti){ return q+' a répondu à votre commentaire dans « '+ti+' »'; }, yonMoun:'Quelqu\'un', apPibliye:'⏳ Publication…', apVoye:'⏳ Envoi…', chajKom:'Chargement des commentaires…', foto:'📷 Ajouter une photo (facultatif)', fotoRetire:'✕ Retirer', fotoInfo:'La photo s\'affichera après vérification par l\'équipe Masbet (souvent le jour même).', fotoLi:'Impossible de lire cette photo. Essayez-en une autre.', fotoAtann:'📷 Votre photo attend la vérification Masbet : vous seul la voyez pour l\'instant.', fotoRefize:'📷 Masbet n\'a pas retenu la photo ; votre sujet reste publié.', modo:'🛡 Photos à valider', modoOk:'✅ Valider', modoNo:'❌ Refuser', modoVid:'Aucune photo en attente.', pataje:'Partager', patajeTxt:'Venez donner votre avis sur la Communauté Masbet :', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
     kom1:'commentaire', komN:'commentaires', okenn:'Aucun sujet pour l\'instant. Lancez le premier !', okennKom:'Aucun commentaire. Donnez votre avis !', repaA:function(p){ return 'Réponse à '+p+' · '; }, anileRep:'Annuler',
     ekri:'Écrivez votre commentaire…', reseau:'Pas de connexion. Vérifiez internet.', kounyeA:'à l\'instant', minit:'min', e:'h', jou:'j', ou:'(vous)',
     nav:['Accueil','Acheter','Matchs','Live','Communauté'] }
@@ -183,6 +193,10 @@ function demo(a,p){ return new Promise(function(ok,ko){ setTimeout(function(){ t
   if(a==='kom_sije'){ var s=D.s.filter(function(x){return x.id===p.id;})[0]; if(!s) throw new Error('Sijè sa a pa disponib.'); return ok({sujet:pub(s),commentaires:D.k.filter(function(x){return x.sije===p.id;}).map(pub)}); }
   if(/lyen|http|www\./i.test((p.titre||'')+(p.texte||''))) throw new Error('Pa gen lyen nan Kominote a : tèks ak emoji sèlman.');
   if(a==='kom_nouvo'){ var id='KS'+Math.random().toString(36).slice(2,10).toUpperCase(); var ns={id:id,date:Date.now(),pseudo:p.pseudo,titre:p.titre,texte:p.texte,likes:0,nb:0,act:Date.now(),app:app,_f:p.foto||'',_st:p.foto?'ATANN':''}; D.s.push(ns); return ok({id:id,fotoAtann:!!p.foto,sujet:pub(ns)}); }
+  if(a==='kom_notif'){ var mes={}; D.s.concat(D.k).forEach(function(x){ if(x.app===app) mes[x.id]=x; }); var ev=[];
+    D.k.forEach(function(k){ if(k.app===app) return; var s=D.s.filter(function(x){ return x.id===k.sije; })[0]; if(k.parent&&mes[k.parent]) ev.push({t:'rep',sije:k.sije,titre:s.titre,qui:k.pseudo,texte:k.texte,d:k.date}); else if(mes[k.sije]) ev.push({t:'kom',sije:k.sije,titre:s.titre,qui:k.pseudo,texte:k.texte,d:k.date}); });
+    Object.keys(D.l).forEach(function(kk){ var id=kk.slice(0,10), qui=kk.slice(10); if(qui===app) return; if(mes[id]&&/^KS/.test(id)) ev.push({t:'like',cible:id,sije:id,titre:mes[id].titre,qui:'',d:D.ld&&D.ld[kk]||Date.now()}); });
+    return ok({now:Date.now(),ev:ev.sort(function(a,b){ return b.d-a.d; })}); }
   if(a==='kom_foto_admin'){ var att=D.s.filter(function(x){ return x._st==='ATANN'; }); return ok({total:att.length,photos:att.map(function(x){ return {id:x.id,titre:x.titre,pseudo:x.pseudo,date:x.date,data:x._f}; })}); }
   if(a==='kom_foto_desizyon'){ D.s.forEach(function(x){ if(x.id===p.id){ x._st=p.ok?'OK':'REFIZE'; } }); return ok({id:p.id,statut:p.ok?'OK':'REFIZE'}); }
   if(a==='kom_komante'){ var cid='KK'+Math.random().toString(36).slice(2,10).toUpperCase(); var nk={id:cid,sije:p.sije,parent:p.parent||'',date:Date.now(),pseudo:p.pseudo,texte:p.texte,likes:0,app:app}; D.k.push(nk); D.s.forEach(function(x){ if(x.id===p.sije){x.nb++;x.act=Date.now();} }); return ok({id:cid,commentaire:pub(nk)}); }
@@ -197,7 +211,7 @@ function langue(l){
   document.querySelectorAll('[data-t]').forEach(function(x){ x.textContent=T(x.getAttribute('data-t')); });
   el('kTeks').placeholder=T('ekri'); zonesPseudo(); barre(); afficherLis(); if(SIJE) afficherSije(); if(el('fotoZ')&&window.fotoZone){ fotoZone(); modoBarre(); }
 }
-function vue(v){ ['lis','nouvo','sije'].forEach(function(x){ el('v'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('hidden',x!==v); });
+function vue(v){ ['lis','nouvo','sije','notif'].forEach(function(x){ el('v'+x.charAt(0).toUpperCase()+x.slice(1)).classList.toggle('hidden',x!==v); });
   el('fab').classList.toggle('hidden', v!=='lis'); clearInterval(POLL);
   if(v==='lis'){ SIJE=null; if(location.hash) history.replaceState(null,'',location.pathname); chaje(); }
   window.scrollTo(0,0); }
@@ -237,7 +251,7 @@ function pibliye(){
   var ps=pseudoDe('ps1'), b=el('bPibliye'); b.disabled=true; b.textContent=T('apPibliye');
   var corps={appareil:appareil(),pseudo:ps,titre:el('nTit').value,texte:el('nTeks').value}; if(FOTO) corps.foto=FOTO;
   post('kom_nouvo',corps).then(function(d){
-    ecrire('masbet_pseudo',ps); el('nTit').value=''; el('nTeks').value=''; FOTO=''; fotoZone();
+    ecrire('masbet_pseudo',ps); ecrire('masbet_kom_moi','1'); el('nTit').value=''; el('nTeks').value=''; FOTO=''; fotoZone();
     if(d.sujet){ history.replaceState(null,'','#sije='+d.id); PARENT=''; zonesPseudo(); LIS=[d.sujet].concat(LIS.filter(function(x){ return x.id!==d.id; }));
       ['aktif','nouvo'].forEach(function(tr){ try{ var c=JSON.parse(lire('masbet_c_kom_'+tr)||'null')||{sujets:[]}; c.sujets=[d.sujet].concat(c.sujets.filter(function(x){ return x.id!==d.id; })); ecrire('masbet_c_kom_'+tr,JSON.stringify(c)); }catch(e){} });
       SIJE={sujet:d.sujet,commentaires:[]}; vue('sije'); afficherSije(); clearInterval(POLL); POLL=setInterval(rechaje,30000); }
@@ -287,12 +301,52 @@ function modoDesizyon(id,ok){
   post('kom_foto_desizyon',{code:adminKod(),appareil:appareil(),id:id,ok:ok}).then(function(){ if(z) z.remove(); chaje(); if(!document.querySelector('#modoL .ph')) modoCharger(); })
     .catch(function(e){ if(z){ z.querySelectorAll('button').forEach(function(b){ b.disabled=false; }); z.insertAdjacentHTML('beforeend','<div class="msg err">'+esc(e.message)+'</div>'); } });
 }
+// ---------- Cloche (v42.3) : j'aime, commentaires et réponses reçus ----------
+var KL=null, KLT=null;
+/** « Mari », « Mari ak 2 lòt moun », « 3 moun » / « Mari a », « Mari et 2 autres ont », « 3 personnes ont » (q = '' si pas de compte). */
+function kiMoun(q,n,lg){
+  if(lg==='fr') return q?(n>1?q+' et '+(n-1)+' autre'+(n>2?'s':'')+' ont':q+' a'):(n>1?n+' personnes ont':'Quelqu\'un a');
+  return q?(n>1?q+' ak '+(n-1)+' lòt moun':q):(n>1?n+' moun':'Yon moun');
+}
+function klochVu(){ return Number(lire('masbet_kom_vu')||0); }
+function klochChaje(){
+  if(document.hidden) return;
+  get('kom_notif',{appareil:appareil()}).then(function(d){ KL=d; if(d.ev.length) ecrire('masbet_kom_moi','1'); klochBadj(); if(!el('vNotif').classList.contains('hidden')) klochLis(); }).catch(function(){});
+}
+function klochBadj(){ var vu=klochVu(), n=KL?KL.ev.filter(function(x){ return x.d>vu; }).length:0, b=el('klochN');
+  b.textContent=n>99?'99+':String(n); b.classList.toggle('hidden',!n); }
+function klochGwoupe(ev,vu){   // les j'aime d'un même sujet / commentaire sont regroupés
+  var g={}, out=[];
+  ev.forEach(function(x){
+    if(x.t==='like'||x.t==='likek'){ var k=x.t+x.cible; if(!g[k]){ g[k]={t:x.t,sije:x.sije,titre:x.titre,d:x.d,qui:[],n:0,nv:false}; out.push(g[k]); }
+      g[k].n++; if(x.qui&&g[k].qui.indexOf(x.qui)<0) g[k].qui.push(x.qui); if(x.d>vu) g[k].nv=true; if(x.d>g[k].d) g[k].d=x.d; }
+    else out.push({t:x.t,sije:x.sije,titre:x.titre,d:x.d,qui:[x.qui],texte:x.texte,n:1,nv:x.d>vu});
+  });
+  return out.sort(function(a,b){ return b.d-a.d; });
+}
+function klochLis(){
+  var vu=Number(el('klochL').getAttribute('data-vu')||klochVu()), l=KL?klochGwoupe(KL.ev,vu):null;
+  if(!l){ el('klochL').innerHTML='<div class="chaj"><i></i></div>'; return; }
+  el('klochL').innerHTML=l.length?l.map(function(x){
+    var q=x.qui[0]||'', ti=x.titre||'…', qk=q||T('yonMoun'), ic=x.t==='like'||x.t==='likek'?'❤️':x.t==='rep'?'↩️':'💬';
+    var tx=x.t==='like'?T('kLike')(q,x.n,ti):x.t==='likek'?T('kLikeK')(q,x.n,ti):x.t==='rep'?T('kRep')(qk,ti):T('kKom')(qk,ti);
+    return '<button class="nt'+(x.nv?' nv':'')+'" onclick="ouvri(\''+esc(x.sije)+'\')"><span class="ic">'+ic+'</span><span style="flex:1;min-width:0"><b>'+esc(tx)+'</b>'+(x.texte?'<small>« '+esc(x.texte)+' »</small>':'')+'<small>'+esc(depi(x.d))+'</small></span></button>'; }).join('')
+    :'<p class="hint">'+esc(T('klochVid'))+'</p>';
+}
+function klochOuvri(){
+  el('klochL').setAttribute('data-vu',String(klochVu()));   // garder en couleur ce qui était nouveau à l'ouverture
+  vue('notif'); history.replaceState(null,'','#notif'); klochLis();
+  var marquer=function(){ if(KL){ ecrire('masbet_kom_vu',String(KL.now||Date.now())); klochBadj(); } };
+  if(KL) marquer(); else get('kom_notif',{appareil:appareil()}).then(function(d){ KL=d; klochLis(); marquer(); }).catch(function(){});
+  klochChaje();
+}
 // ---------- Partager un sujet (WhatsApp ou menu de partage du téléphone) ----------
 var ICO_WA='<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-3px"><path fill="#25D366" d="M12 1.8a10.2 10.2 0 0 0-8.8 15.4L1.8 22.2l5.1-1.3A10.2 10.2 0 1 0 12 1.8z"/><path fill="#fff" d="M8.7 6.8c-.3 0-.7.1-1 .5-.3.4-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.2 5 4.4 2.5 1 3 .8 3.5.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4l-.5-.3-1.8-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.5-.5.3-.5v-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5z"/></svg>';
 function patajeSije(){
   if(!SIJE) return; var s=SIJE.sujet, url=location.origin+location.pathname+'#sije='+encodeURIComponent(s.id);
   var ext=String(s.texte||'').replace(/\s+/g,' ').trim(); if(ext.length>160) ext=ext.slice(0,157).replace(/\s+\S*$/,'')+'…';
   var txt='💬 '+s.titre+'\n'+ext+'\n\n'+T('patajeTxt');
+  if(!DEMO) post('stat',{appareil:appareil(),ev:'partage'}).catch(function(){});
   if(navigator.share){ navigator.share({title:s.titre,text:txt,url:url}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
 }
@@ -323,7 +377,7 @@ function repon(id,p){ PARENT=id; el('repa').innerHTML=esc(T('repaA')(p))+'<a hre
 function komante(){
   var ps=pseudoDe('ps2'), b=el('bKom'); b.disabled=true; b.textContent=T('apVoye');
   post('kom_komante',{appareil:appareil(),pseudo:ps,sije:SIJE.sujet.id,parent:PARENT,texte:el('kTeks').value}).then(function(d){
-    ecrire('masbet_pseudo',ps); el('kTeks').value=''; PARENT=''; el('repa').innerHTML=''; zonesPseudo(); msg('mKom','');
+    ecrire('masbet_pseudo',ps); ecrire('masbet_kom_moi','1'); el('kTeks').value=''; PARENT=''; el('repa').innerHTML=''; zonesPseudo(); msg('mKom','');
     if(d&&d.commentaire&&SIJE&&!SIJE._partiel){ SIJE.commentaires.push(d.commentaire); SIJE.sujet.nb=(SIJE.sujet.nb||0)+1; afficherSije(); } else return rechaje();
   }).catch(function(e){ msg('mKom',esc(e.message)); }).then(function(){ b.disabled=false; b.textContent=T('voye'); });
 }
@@ -353,7 +407,9 @@ function siyale(id){ if(!confirm(T('konfimeSiyale'))) return; post('kom_siyale',
 emojis('emo1','nTeks'); emojis('emo2','kTeks'); fotoZone(); modoBarre();
 langue(lire('masbet_lang')||'ht');
 tri('aktif');
-(function(){ var m=/[#&]sije=([A-Z0-9]+)/i.exec(location.hash||''); if(m) ouvri(m[1]); })();
+(function(){ var m=/[#&]sije=([A-Z0-9]+)/i.exec(location.hash||''); if(m) ouvri(m[1]); else if(/^#notif\b/.test(location.hash)) klochOuvri(); })();
+klochChaje(); KLT=setInterval(klochChaje,60000);
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) klochChaje(); });
 </script>
 </body>
 </html>
