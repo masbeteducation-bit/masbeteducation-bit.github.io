@@ -48,6 +48,7 @@
   .post .t{font-size:19px;font-weight:900;margin:6px 0;word-break:break-word}
   .txt{white-space:pre-wrap;word-break:break-word;text-align:justify;text-justify:inter-word}
   .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .act.pat{color:#128c4a;border-color:#bfe8cf;background:#f0fbf4}
   .act{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer}
   .act.on{border-color:var(--rose);color:var(--rose);background:#fff0f4}
   .act.disc{border:0;color:var(--muted);font-weight:600;padding:5px 6px}
@@ -116,14 +117,14 @@ var TXT = {
   ht: { kom:'Kominote', slogan:'Temwayaj, kesyon, lide : pale ak tout moun nan kominote Masbet la.', aktif:'🔥 Aktif', nouvo:'🆕 Nouvo', popile:'❤️ Popilè', plis:'Wè plis',
     fab:'+ Nouvo sijè', nouvoTit:'Nouvo sijè', tit:'Tit', teks:'Sa w vle di', pibliye:'Pibliye', anile:'Anile', retou:'← Tout sijè yo', voye:'Voye',
     pseudo:'Non ou (pseudo) — 2 a 20 lèt', regles:'Tèks ak emoji sèlman. Pa gen lyen ni nimewo telefòn. Respekte tout moun : yon mesaj ki siyale 5 fwa ap kache.',
-    jaime:'❤️', repon:'Reponn', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
+    jaime:'❤️', repon:'Reponn', pataje:'Pataje', patajeTxt:'Vin bay opinyon w sou Kominote Masbet :', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
     kom1:'kòmantè', komN:'kòmantè', okenn:'Poko gen sijè. Kòmanse premye a !', okennKom:'Poko gen kòmantè. Bay pa w !', repaA:function(p){ return 'Repons pou '+p+' · '; }, anileRep:'Anile',
     ekri:'Ekri kòmantè w…', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', kounyeA:'kounye a', minit:'min', e:'è', jou:'j', ou:'(ou)',
     nav:['Akèy','Achte','Match','Live','Kominote'] },
   fr: { kom:'Communauté', slogan:'Témoignages, questions, idées : échangez avec toute la communauté Masbet.', aktif:'🔥 Actifs', nouvo:'🆕 Récents', popile:'❤️ Populaires', plis:'Voir plus',
     fab:'+ Nouveau sujet', nouvoTit:'Nouveau sujet', tit:'Titre', teks:'Votre message', pibliye:'Publier', anile:'Annuler', retou:'← Tous les sujets', voye:'Envoyer',
     pseudo:'Votre nom (pseudo) — 2 à 20 caractères', regles:'Texte et émojis seulement. Pas de lien ni de numéro de téléphone. Respect pour tous : un message signalé 5 fois est masqué.',
-    jaime:'❤️', repon:'Répondre', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
+    jaime:'❤️', repon:'Répondre', pataje:'Partager', patajeTxt:'Venez donner votre avis sur la Communauté Masbet :', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
     kom1:'commentaire', komN:'commentaires', okenn:'Aucun sujet pour l\'instant. Lancez le premier !', okennKom:'Aucun commentaire. Donnez votre avis !', repaA:function(p){ return 'Réponse à '+p+' · '; }, anileRep:'Annuler',
     ekri:'Écrivez votre commentaire…', reseau:'Pas de connexion. Vérifiez internet.', kounyeA:'à l\'instant', minit:'min', e:'h', jou:'j', ou:'(vous)',
     nav:['Accueil','Acheter','Matchs','Live','Communauté'] }
@@ -203,6 +204,15 @@ function pibliye(){
   }).catch(function(e){ msg('mNouvo',esc(e.message)); }).then(function(){ b.disabled=false; });
 }
 
+// ---------- Partager un sujet (WhatsApp ou menu de partage du téléphone) ----------
+var ICO_WA='<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="vertical-align:-3px"><path fill="#25D366" d="M12 1.8a10.2 10.2 0 0 0-8.8 15.4L1.8 22.2l5.1-1.3A10.2 10.2 0 1 0 12 1.8z"/><path fill="#fff" d="M8.7 6.8c-.3 0-.7.1-1 .5-.3.4-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.2 5 4.4 2.5 1 3 .8 3.5.7.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4l-.5-.3-1.8-.9c-.3-.1-.5-.1-.7.1l-.9 1.1c-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6l.5-.5.3-.5v-.5l-.9-2.1c-.2-.5-.4-.5-.6-.5z"/></svg>';
+function patajeSije(){
+  if(!SIJE) return; var s=SIJE.sujet, url=location.origin+location.pathname+'#sije='+encodeURIComponent(s.id);
+  var ext=String(s.texte||'').replace(/\s+/g,' ').trim(); if(ext.length>160) ext=ext.slice(0,157).replace(/\s+\S*$/,'')+'…';
+  var txt='💬 '+s.titre+'\n'+ext+'\n\n'+T('patajeTxt');
+  if(navigator.share){ navigator.share({title:s.titre,text:txt,url:url}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
+}
 // ---------- Sujet ----------
 function ouvri(id){ history.replaceState(null,'','#sije='+id); PARENT=''; zonesPseudo();
   get('kom_sije',{id:id,appareil:appareil()}).then(function(d){ SIJE=d; vue('sije'); afficherSije(); clearInterval(POLL); POLL=setInterval(rechaje,30000); })
@@ -212,7 +222,7 @@ function boutonLike(o){ return '<button class="act'+(o.jaime?' on':'')+'" onclic
 function afficherSije(){
   var s=SIJE.sujet;
   el('post').innerHTML='<div class="meta" style="margin:0">'+avatar(s.pseudo)+'<b style="color:var(--ink)">'+esc(s.pseudo)+(s.moi?' '+esc(T('ou')):'')+'</b><span>· '+esc(depi(s.date))+'</span></div>'+
-    '<div class="t">'+esc(s.titre)+'</div><div class="txt">'+esc(s.texte)+'</div><div class="acts">'+boutonLike(s)+(s.moi?'':'<button class="act disc" onclick="siyale(\''+esc(s.id)+'\')">⚑ '+esc(T('siyale'))+'</button>')+'</div>';
+    '<div class="t">'+esc(s.titre)+'</div><div class="txt">'+esc(s.texte)+'</div><div class="acts">'+boutonLike(s)+'<button class="act pat" onclick="patajeSije()">'+ICO_WA+' '+esc(T('pataje'))+'</button>'+(s.moi?'':'<button class="act disc" onclick="siyale(\''+esc(s.id)+'\')">⚑ '+esc(T('siyale'))+'</button>')+'</div>';
   var ks=SIJE.commentaires, rasin=ks.filter(function(k){ return !k.parent || !ks.some(function(x){ return x.id===k.parent; }); });
   el('nbKom').textContent=ks.length+' '+(ks.length>1?T('komN'):T('kom1'));
   var un=function(k,rep){ return '<div class="kom'+(rep?' rep':'')+'"><div class="h">'+avatar(k.pseudo)+'<b>'+esc(k.pseudo)+(k.moi?' '+esc(T('ou')):'')+'</b><span class="hint">· '+esc(depi(k.date))+'</span></div>'+

@@ -123,6 +123,15 @@
   .defi .dt{font-size:12.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#8a5a00} .defi.fait .dt{color:var(--ok)}
   .defi .dd{font-weight:700;font-size:14.5px;margin-top:2px}
   .btn.mini{padding:8px 14px;font-size:14px}
+  .devC{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fdf2f8,#fff);border:1.5px solid #f5c2dc}
+  .devC .dt{font-weight:900;font-size:16px} .devC .dd{font-size:13.5px;color:var(--muted)}
+  .pts3{display:flex;gap:5px;margin-top:5px} .pts3 i{width:22px;height:7px;border-radius:4px;background:#eadbe4} .pts3 i.ok{background:var(--ok)} .pts3 i.ko{background:var(--err)}
+  .dq{white-space:pre-line;font-size:18px;font-weight:700;line-height:1.45;margin:6px 0 14px}
+  .chx.long{grid-template-columns:1fr} .chx.long button{font-size:15.5px;font-weight:700;text-align:left;padding:12px 14px}
+  .ind{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#fff8ea;border:1.5px dashed #f3cf86;font-size:14.5px}
+  .bInd{border:1.5px solid #f3cf86;background:#fffaf0;color:#8a5a00;border-radius:999px;padding:6px 12px;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;margin-bottom:12px}
+  .patB{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;background:#25D366;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:11px;cursor:pointer;margin-top:10px}
+  .recap{text-align:left;margin:12px 0} .recap div{padding:9px 0;border-top:1px solid var(--line);font-size:14px} .recap b{display:block}
   .gg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   @media (min-width:560px){ .gg{grid-template-columns:repeat(3,1fr)} }
   .gc{position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:0;border-top:4px solid var(--c);background:#fff;border-radius:16px;padding:14px 12px 12px;font:inherit;color:var(--ink);cursor:pointer;box-shadow:0 2px 8px rgba(20,33,61,.08);transition:transform .12s}
@@ -163,6 +172,7 @@
   <p id="sous"></p>
 </div>
 <main id="zone"></main>
+<script src="devinet.js"></script>
 <nav class="navapp" id="nav"></nav>
 <script>
 "use strict";
@@ -201,6 +211,8 @@ var JEUX=[
   {id:'sud', gr:'pez', ic:'🔲', tailles:[4,6,9], nom:function(){ return A('Sidokou','Sudoku'); },
    txt:function(){ return A('Ranpli kare a : chak chif yon sèl fwa nan chak ranje, chak kolòn ak chak bwat.','Remplissez la grille : chaque chiffre une seule fois par ligne, par colonne et par bloc.'); },
    taille:function(n){ return n+' × '+n; }},
+  {id:'dev', gr:'dev', ic:'💡', nb:3, nom:function(){ return A('Devinèt jou a','Énigmes du jour'); },
+   txt:function(){ return A('3 nouvo devinèt chak jou : lojik, mo, kalkil, pyèj. Pran tan w, pa gen kronomèt.','3 nouvelles énigmes chaque jour : logique, mots, calculs, pièges. Prenez votre temps, pas de chrono.'); }},
   {id:'rez', gr:'ges', ic:'📡', nom:function(){ return A('Rezo Wi-Fi mwen','Mon réseau Wi-Fi'); },
    txt:function(){ return A('12 mwa pou fè yon rezo Wi-Fi grandi : envesti, fè piblisite, jere enèji a, siklòn ak konkirans.','12 mois pour faire grandir un réseau Wi-Fi : investir, faire de la publicité, gérer l\'énergie, les cyclones et la concurrence.'); }}
 ];
@@ -486,8 +498,8 @@ function chrono(sec,fin){
 }
 function tete(){ return '<div class="tete"><b>'+esc(JEU.nom())+'</b><span>'+(JEU.nb>1?A('Kesyon ','Question ')+(P.i+1)+' / '+JEU.nb+' · ':'')+'<span id="reste">'+(P.sec||JEU.sec)+' s</span>'+boutonSon()+'</span></div><div class="chrono"><div id="bar" style="width:100%"></div></div>'; }
 function lancer(id){
-  clearInterval(TICK); JEU=jeuParId(id); if(!JEU) return; P={i:0, bons:0, temps:0, ok:0, faux:0, oubli:0}; ECRAN='jeu'; statPartie();
-  if(id==='baraj') barrageIntro(); else if(id==='mem') memIntro(); else if(JEU.gr==='pez') puzIntro(); else if(id==='rez') rezInit(); else qIntro();
+  clearInterval(TICK); JEU=jeuParId(id); if(!JEU) return; P={i:0, bons:0, temps:0, ok:0, faux:0, oubli:0}; ECRAN='jeu'; if(id!=='dev'||!devEtat().fini) statPartie();
+  if(id==='baraj') barrageIntro(); else if(id==='mem') memIntro(); else if(JEU.gr==='pez') puzIntro(); else if(id==='rez') rezInit(); else if(id==='dev') devEcran(); else qIntro();
   window.scrollTo(0,0);
 }
 function qIntro(){
@@ -722,7 +734,7 @@ function sudChiffre(v){
 // =====================================================================
 // v41.9 — Logos des jeux (dessins Masbet), progression : XP, niveaux, série de jours, défi du jour, badges
 // =====================================================================
-var FAM={siy:'#2563eb', mat:'#2563eb', kal:'#7c3aed', mem:'#7c3aed', baraj:'#ea580c', kib:'#ea580c', taq:'#16a34a', han:'#16a34a', sud:'#16a34a', rez:'#0e7490'};
+var FAM={siy:'#2563eb', mat:'#2563eb', kal:'#7c3aed', mem:'#7c3aed', baraj:'#ea580c', kib:'#ea580c', taq:'#16a34a', han:'#16a34a', sud:'#16a34a', rez:'#0e7490', dev:'#db2777'};
 var ICO={
   siy:'<circle cx="11" cy="31" r="4" fill="#fff"/><circle cx="21" cy="27" r="5.5" fill="#fff"/><circle cx="33" cy="22" r="7.5" fill="#fff" fill-opacity=".45" stroke="#fff" stroke-width="2.5" stroke-dasharray="3 3"/><path d="M8 16h16m-4-4 4 4-4 4" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
   mat:'<g fill="#fff"><rect x="9" y="9" width="8" height="8" rx="2"/><rect x="20" y="9" width="8" height="8" rx="2"/><rect x="31" y="9" width="8" height="8" rx="2"/><rect x="9" y="20" width="8" height="8" rx="2"/><circle cx="24" cy="24" r="4.2"/><rect x="31" y="20" width="8" height="8" rx="2"/><rect x="9" y="31" width="8" height="8" rx="2"/><rect x="20" y="31" width="8" height="8" rx="2"/></g><rect x="31" y="31" width="8" height="8" rx="2" fill="#fcd34d"/><text x="35" y="38" text-anchor="middle" font-size="8" font-weight="900" fill="#7c2d12">?</text>',
@@ -733,11 +745,12 @@ var ICO={
   taq:'<g font-size="10" font-weight="900" text-anchor="middle"><rect x="9" y="9" width="14" height="14" rx="3" fill="#fff"/><text x="16" y="20" fill="#16a34a">1</text><rect x="25" y="9" width="14" height="14" rx="3" fill="#fff"/><text x="32" y="20" fill="#16a34a">2</text><rect x="9" y="25" width="14" height="14" rx="3" fill="#fff"/><text x="16" y="36" fill="#16a34a">3</text></g><rect x="25.5" y="25.5" width="13" height="13" rx="3" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="3 2"/>',
   han:'<g fill="#fff"><rect x="6" y="37" width="36" height="3" rx="1.5"/><rect x="11" y="14" width="2.4" height="23"/><rect x="23" y="14" width="2.4" height="23"/><rect x="35" y="14" width="2.4" height="23"/></g><rect x="5" y="31" width="16" height="5" rx="2.5" fill="#fcd34d"/><rect x="7" y="25" width="12" height="5" rx="2.5" fill="#fff"/><rect x="29" y="31" width="14" height="5" rx="2.5" fill="#fff" fill-opacity=".8"/>',
   sud:'<rect x="8" y="8" width="32" height="32" rx="3" fill="#fff"/><path d="M8 18.7h32M8 29.3h32M18.7 8v32M29.3 8v32" stroke="#16a34a" stroke-width="1.6"/><g font-size="8" font-weight="900" text-anchor="middle" fill="#14532d"><text x="13.4" y="16.5">5</text><text x="24" y="27">9</text><text x="34.6" y="37.5">2</text></g>',
+  dev:'<path d="M24 8a11 11 0 0 0-6.6 19.8c1 .8 1.6 1.9 1.6 3.2V33h10v-2c0-1.3.6-2.4 1.6-3.2A11 11 0 0 0 24 8z" fill="#fff"/><rect x="19" y="35" width="10" height="3" rx="1.5" fill="#fff"/><rect x="20.5" y="39.5" width="7" height="2.6" rx="1.3" fill="#fff"/><text x="24" y="25" text-anchor="middle" font-size="13" font-weight="900" fill="#db2777">?</text>',
   rez:'<circle cx="24" cy="33" r="3.5" fill="#fff"/><path d="M15 26a13 13 0 0 1 18 0M10 20a20 20 0 0 1 28 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M24 36v6" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M34 34l4-4 4 4" stroke="#fcd34d" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
 };
 function logo(id,t){ t=t||52; return '<svg class="logo" viewBox="0 0 48 48" width="'+t+'" height="'+t+'" aria-hidden="true"><rect width="48" height="48" rx="13" fill="'+(FAM[id]||'#14213d')+'"/>'+(ICO[id]||'')+'</svg>'; }
 var COURT={siy:['Jwenn sa ki vini apre','Trouvez la suite'], mat:['Desen ki manke a','Le dessin manquant'], kal:['Kalkil rapid','Calcul rapide'], mem:['Sonje chif yo','Retenez les chiffres'],
-  baraj:['Atansyon ak vitès','Attention et vitesse'], kib:['Wè nan espas','Vision dans l\'espace'], taq:['Mete yo nan lòd','Remettez dans l\'ordre'], han:['Deplase plato yo','Déplacez les disques'], sud:['Chif san repete','Chiffres sans répétition'], rez:['Fè rezo w grandi','Faites grandir votre réseau']};
+  baraj:['Atansyon ak vitès','Attention et vitesse'], kib:['Wè nan espas','Vision dans l\'espace'], taq:['Mete yo nan lòd','Remettez dans l\'ordre'], han:['Deplase plato yo','Déplacez les disques'], sud:['Chif san repete','Chiffres sans répétition'], rez:['Fè rezo w grandi','Faites grandir votre réseau'], dev:['3 devinèt chak jou','3 énigmes par jour']};
 
 // ---------- Progression (sur ce téléphone) ----------
 function jourCle(d){ d=d||new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
@@ -757,6 +770,7 @@ var BADGES=[
   {id:'anoi', ic:'🗼', n:['Mèt Anoi','Maître de Hanoï'], d:['4 plato oswa plis, nan minimòm kou','4 disques ou plus, au minimum de coups']},
   {id:'sud9', ic:'🔲', n:['Sidokou 9 × 9','Sudoku 9 × 9'], d:['Fini yon gwo sidokou','Finir un grand sudoku']},
   {id:'defi', ic:'🎯', n:['Defi jou a','Défi du jour'], d:['Reyisi yon defi jou a','Réussir un défi du jour']},
+  {id:'detektif', ic:'🕵️', n:['Detektif','Détective'], d:['3 devinèt jou a san endis','Les 3 énigmes du jour sans indice']},
   {id:'nivo5', ic:'⭐', n:['Nivo 5','Niveau 5'], d:['Rive nivo 5','Atteindre le niveau 5']}
 ];
 var DEFIS=[
@@ -768,6 +782,7 @@ var DEFIS=[
   {j:'kib', ht:'Fè omwen 6 / 8 nan Pliye kib la', fr:'Faites au moins 6 / 8 au Pliage de cubes', ok:function(r){ return r.bons>=6; }},
   {j:'taq', ht:'Fini Takin 3 × 3 anba 3 minit', fr:'Finissez le Taquin 3 × 3 en moins de 3 minutes', ok:function(r){ return r.n>=3&&r.temps<180; }},
   {j:'han', ht:'Fini Tou Anoi ak 4 plato', fr:'Finissez la Tour de Hanoï à 4 disques', ok:function(r){ return r.n>=4; }},
+  {j:'dev', ht:'Jwenn 3 devinèt jou a', fr:'Trouvez les 3 énigmes du jour', ok:function(r){ return r.bons>=3; }},
   {j:'sud', ht:'Fini yon Sidokou 6 × 6', fr:'Finissez un Sudoku 6 × 6', ok:function(r){ return r.n>=6; }}
 ];
 function defiDuJour(){ var d=new Date(), k=Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5); return DEFIS[((k*7)%DEFIS.length+DEFIS.length)%DEFIS.length]; }
@@ -779,7 +794,7 @@ function xpPour(id,r){
   if(id==='taq') return r.n===3?40:80;
   if(id==='han') return r.n*15+(r.coups===Math.pow(2,r.n)-1?20:0);
   if(id==='sud') return {4:30,6:60,9:120}[r.n]||30;
-  if(id==='rez') return r.xp||0;
+  if(id==='rez'||id==='dev') return r.xp||0;
   return 0;
 }
 /** À la fin d'une partie : XP, série de jours, défi, badges. Renvoie le bloc à afficher dans le résultat. */
@@ -798,6 +813,7 @@ function progres(id,r){
   if(id==='han'&&r.n>=4&&r.coups===Math.pow(2,r.n)-1) gagner('anoi');
   if(id==='sud'&&r.n===9) gagner('sud9');
   if(defiFait) gagner('defi');
+  if(id==='dev'&&r.bons===3&&!r.ind) gagner('detektif');
   var apres=niveau(p.xp); if(apres>=5) gagner('nivo5');
   progEcrire(p);
   if(nv.length||apres>avant||defiFait) setTimeout(function(){ SONS.fin(); },700);
@@ -895,6 +911,74 @@ function rezFin(){
   window.scrollTo(0,0);
 }
 
+// =====================================================================
+// 11. DEVINÈT JOU A — 3 énigmes par jour (banque devinet.js, cycle de 90 jours)
+// =====================================================================
+var SITE_JEU=(location.hostname==='masbet.me'||/github\.io$/.test(location.hostname))?'https://masbet.me/psiko.html':location.href.split('#')[0];
+function devEtat(){ var e=null, auj=jourCle(); try{ e=JSON.parse(lire('masbet_psiko_dev')||'null'); }catch(x){} if(!e||e.j!==auj) e={j:auj,r:[null,null,null],ind:[false,false,false],fini:false}; return e; }
+function devEcrire(e){ ecrire('masbet_psiko_dev',JSON.stringify(e)); }
+function devListe(){ return window.DEVINET?DEVINET.duJour(new Date(),LANG):[]; }
+function devPoints(e){ return e.r.map(function(x,i){ return '<i class="'+(x==null?'':x.ok?'ok':'ko')+'"></i>'; }).join(''); }
+function devCarte(){
+  if(!window.DEVINET) return '';
+  var e=devEtat(), n=e.r.filter(function(x){ return x!=null; }).length, b=e.r.filter(function(x){ return x&&x.ok; }).length;
+  var sous=n===0?A('3 nouvo devinèt jodi a','3 nouvelles énigmes aujourd\'hui'):n<3?A('Ou fè '+n+' sou 3, kontinye !','Vous en avez fait '+n+' sur 3, continuez !'):A('✅ '+b+' / 3 jodi a · lòt yo demen','✅ '+b+' / 3 aujourd\'hui · les suivantes demain');
+  return '<div class="card devC">'+logo('dev',48)+'<div style="flex:1;min-width:0"><div class="dt">'+esc(jeuParId('dev').nom())+'</div><div class="dd">'+esc(sous)+'</div><div class="pts3">'+devPoints(e)+'</div></div>'+
+    '<button type="button" class="btn mini" data-jouer="dev">'+(n<3?A('Jwe','Jouer'):A('Wè','Voir'))+'</button></div>';
+}
+function devEcran(){
+  ECRAN='jeu'; JEU=jeuParId('dev'); var e=devEtat(), L=devListe(), i=e.r.indexOf(null);
+  if(!L.length){ document.getElementById('zone').innerHTML='<div class="card">'+A('Devinèt yo poko disponib.','Énigmes indisponibles.')+'</div>'; return; }
+  if(i<0) return devFin();
+  P={dev:i, L:L};
+  var q=L[i], long=q.ch.some(function(c){ return String(c).length>12; });
+  document.getElementById('zone').innerHTML='<div class="card"><div class="tete"><b>💡 '+esc(JEU.nom())+'</b><span>'+A('Devinèt ','Énigme ')+(i+1)+' / 3'+boutonSon()+'</span></div>'+
+    '<div class="pts3" style="margin:0 0 10px">'+devPoints(e)+'</div><div class="dq">'+esc(q.q)+'</div>'+
+    (e.ind[i]?'<div class="ind">💡 '+esc(q.ind)+'</div>':'<button type="button" class="bInd" id="devInd">💡 '+A('Ban m yon endis','Un indice')+'</button>')+
+    '<div class="chx'+(long?' long':'')+'">'+q.ch.map(function(c,k){ return '<button type="button" data-dv="'+k+'">'+esc(c)+'</button>'; }).join('')+'</div><div id="ex"></div></div>'+
+    '<button type="button" class="btn sec plein" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button>';
+  window.scrollTo(0,0);
+}
+function devIndice(){ var e=devEtat(); if(!P||P.dev==null) return; e.ind[P.dev]=true; devEcrire(e); SONS.clic(); devEcran(); }
+function devRepondre(k){
+  var e=devEtat(), i=P&&P.dev; if(i==null||e.r[i]!=null) return;
+  var q=P.L[i], ok=k===q.bon; e.r[i]={c:k,ok:ok}; devEcrire(e); if(ok) SONS.bon(); else SONS.mal();
+  document.querySelectorAll('#zone .chx button').forEach(function(b,j){ b.disabled=true; if(j===q.bon) b.classList.add('bon'); else if(j===k) b.classList.add('mal'); });
+  var bInd=document.getElementById('devInd'); if(bInd) bInd.remove();
+  document.querySelector('#zone .pts3').innerHTML=devPoints(e);
+  document.getElementById('ex').innerHTML='<div class="expl">'+(ok?'<b class="ok">'+A('Bravo !','Bravo !')+'</b> ':'<b class="ko">'+A('Non.','Non.')+'</b> '+A('Repons lan se ','La réponse est ')+'<b>'+esc(q.rep)+'</b>. ')+esc(q.ex)+'</div>'+
+    '<button type="button" class="patB" id="devPat">'+A('Pataje devinèt sa a','Partager cette énigme')+'</button>'+
+    '<div style="margin-top:10px"><button type="button" class="btn plein" id="devSuite">'+(e.r.indexOf(null)<0?A('Wè rezilta a','Voir le résultat'):A('Pwochen devinèt','Énigme suivante'))+'</button></div>';
+}
+function devFin(){
+  var e=devEtat(), L=devListe(), b=e.r.filter(function(x){ return x&&x.ok; }).length, ind=e.ind.some(function(x){ return x; }), bloc='';
+  if(!e.fini){
+    var xp=e.r.reduce(function(s,x,i){ return s+(x&&x.ok?(e.ind[i]?10:20):0); },0)+(b===3?10:0);
+    e.fini=true; devEcrire(e); bloc=progres('dev',{bons:b,nb:3,xp:xp,ind:ind}); SONS.fin();
+    var tot=null; try{ tot=JSON.parse(lire('masbet_psiko_dev_tot')||'null'); }catch(x){} tot=tot||{bons:0,jou:0}; tot.bons+=b; tot.jou++; ecrire('masbet_psiko_dev_tot',JSON.stringify(tot));
+  }
+  var tot2=null; try{ tot2=JSON.parse(lire('masbet_psiko_dev_tot')||'null'); }catch(x){}
+  document.getElementById('zone').innerHTML='<div class="card res"><div class="sous">'+esc(jeuParId('dev').nom())+'</div><div class="gros">'+b+' / 3</div>'+
+    '<div class="sous">'+(b===3?A('Ekselan !','Excellent !'):b===2?A('Byen jwe !','Bien joué !'):A('Demen w ap fè pi byen !','Demain sera meilleur !'))+'</div>'+bloc+
+    (tot2?'<div class="sous" style="margin-top:6px">'+A('Total : '+tot2.bons+' devinèt jwenn an '+tot2.jou+' jou','Total : '+tot2.bons+' énigmes trouvées en '+tot2.jou+' jours')+'</div>':'')+
+    '<div class="recap">'+L.map(function(q,i){ var x=e.r[i]; return '<div>'+(x&&x.ok?'✅':'❌')+' '+esc(q.q.split('\n')[0])+'<b>'+esc(q.rep)+'</b></div>'; }).join('')+'</div>'+
+    '<div class="sous">⏰ '+A('3 nouvo devinèt demen maten.','3 nouvelles énigmes demain matin.')+'</div>'+
+    '<button type="button" class="patB" id="devPatRes">'+A('Pataje rezilta m','Partager mon résultat')+'</button>'+
+    '<div class="actions" style="margin-top:10px"><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button><a class="btn sec" href="index.html#akey" style="text-align:center">'+A('Akèy','Accueil')+'</a></div></div>';
+  window.scrollTo(0,0);
+}
+function devPartager(txt){
+  if(navigator.share){ navigator.share({text:txt,url:SITE_JEU+'#dev'}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+SITE_JEU+'#dev'),'_blank','noopener');
+}
+function devPatajeQ(){
+  if(!P||P.dev==null) return; var q=P.L[P.dev];
+  devPartager('💡 '+A('Devinèt Masbet','Énigme Masbet')+'\n'+q.q+'\n\n'+q.ch.map(function(c,i){ return 'ABCD'.charAt(i)+') '+c; }).join('\n')+'\n\n'+A('Èske w ka jwenn li ? Repons lan nan aplikasyon an :','Saurez-vous la trouver ? Réponse dans l\'application :'));
+}
+function devPatajeRes(){
+  var e=devEtat(), b=e.r.filter(function(x){ return x&&x.ok; }).length;
+  devPartager('💡 '+A('Mwen jwenn '+b+' / 3 devinèt jodi a sou Masbet ','J\'ai trouvé '+b+' / 3 énigmes du jour sur Masbet ')+e.r.map(function(x){ return x&&x.ok?'🟩':'🟥'; }).join('')+'\n'+A('Eseye tou, se gratis :','À vous de jouer, c\'est gratuit :'));
+}
 function recCourt(j){
   if(j.gr==='pez'){ for(var k=0;k<j.tailles.length;k++){ var r=puzRecord(j.id,j.tailles[k]); if(r) return j.taille(j.tailles[k])+' · '+duree(r.temps); } return ''; }
   var x=record(j.id); if(!x) return '';
@@ -907,7 +991,7 @@ function menu(){
     return '<button type="button" class="gc" data-jouer="'+j.id+'" style="--c:'+FAM[j.id]+'">'+logo(j.id)+'<b>'+esc(j.nom())+'</b><small>'+esc(COURT[j.id][LANG==='fr'?1:0])+'</small>'+
       (r?'<span class="med">🏅 '+esc(r)+'</span>':'<span class="nouvo">'+A('NOUVO','NOUVEAU')+'</span>')+'</button>'; };
   var gr=function(g){ return '<div class="gg">'+JEUX.filter(function(j){ return j.gr===g; }).map(carte).join('')+'</div>'; };
-  document.getElementById('zone').innerHTML=blocProgression()+
+  document.getElementById('zone').innerHTML=blocProgression()+devCarte()+
     '<div class="secTit"><span>'+A('Tès sikoteknik','Tests psychotechniques')+'</span>'+boutonSon()+'</div>'+gr('psi')+
     '<div class="secTit"><span>'+A('Pezèl','Casse-tête')+'</span></div>'+gr('pez')+
     '<div class="secTit"><span>'+A('Jesyon','Gestion')+'</span></div>'+gr('ges')+
@@ -927,6 +1011,11 @@ document.addEventListener('click',function(e){
   if(b.id==='memgo'||b.id==='memsuite') return b.id==='memgo'?memMontrer():memSuite();
   if(b.id==='qgo') return questionSuivante();
   if(b.id==='voirBadges') return ecranBadges();
+  if(b.dataset.dv!=null&&!b.disabled) return devRepondre(+b.dataset.dv);
+  if(b.id==='devInd') return devIndice();
+  if(b.id==='devSuite') return devEcran();
+  if(b.id==='devPat') return devPatajeQ();
+  if(b.id==='devPatRes') return devPatajeRes();
   if(b.dataset.prix!=null&&P&&JEU&&JEU.id==='rez'&&!P.fini){ P.prix=+b.dataset.prix; SONS.clic(); return rezRendu(); }
   if(b.dataset.act&&P&&JEU&&JEU.id==='rez') return rezAction(b.dataset.act);
   if(b.id==='go') return barrageJouer();
@@ -946,9 +1035,11 @@ function textes(){
 function langue(l){
   LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG;
   document.getElementById('lHt').classList.toggle('on',LANG==='ht'); document.getElementById('lFr').classList.toggle('on',LANG==='fr');
-  textes(); if(ECRAN==='menu') menu(); else if(ECRAN==='badges') ecranBadges();   // pendant une partie, la langue change à l'écran suivant
+  textes(); if(ECRAN==='menu') menu(); else if(ECRAN==='badges') ecranBadges(); else if(JEU&&JEU.id==='dev'&&P&&P.dev!=null&&!document.querySelector('#zone .chx button:disabled')) devEcran();   // pendant une partie, la langue change à l'écran suivant
 }
 langue(lire('masbet_lang')||'ht'); menu();
+if(/^#dev\b/.test(location.hash)) lancer('dev');
+window.addEventListener('hashchange',function(){ if(/^#dev\b/.test(location.hash)) lancer('dev'); });
 </script>
 </body>
 </html>
