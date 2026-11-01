@@ -60,7 +60,13 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .hChips{display:flex;gap:8px;overflow-x:auto;margin:2px -16px 2px;padding:0 16px 4px;scrollbar-width:none}.hChips::-webkit-scrollbar{display:none}
   .hChips a{flex:0 0 auto;display:inline-flex;gap:6px;align-items:center;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font-size:14px}
   .hChips a b{font-weight:700}
-  .hChips .mic{color:var(--gold)}.hChips .mic.rouge{color:#ff4d4d}
+  .hcWrap{position:relative}
+  .hcF{position:absolute;top:0;bottom:4px;width:52px;border:0;padding:0;display:flex;align-items:center;color:#fff;cursor:pointer;z-index:2}
+  .hcF.hidden{display:none}
+  .hcF .mic{width:30px;height:30px;padding:6px;border-radius:50%;background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+  .hcD{right:-16px;justify-content:flex-end;padding-right:10px;background:linear-gradient(90deg,rgba(20,33,61,0),var(--navy) 60%)}
+  .hcG{left:-16px;justify-content:flex-start;padding-left:10px;background:linear-gradient(270deg,rgba(20,33,61,0),var(--navy) 60%)}
+  .hChips .mic{color:#fff;opacity:.9}.hChips .mic.rouge{color:#ff6b6b;opacity:1}
   main{max-width:560px;margin:-14px auto 0;padding:0 16px 24px}
   .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
   h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
@@ -68,11 +74,11 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .hint{font-size:13px;color:var(--muted)}
   .btn{display:block;width:100%;padding:14px;border:0;border-radius:12px;background:var(--gold);color:var(--navy);font-weight:800;font-size:17px;text-align:center;text-decoration:none}
   .btn.sec{background:#eef0f6;font-size:15px;padding:11px}
-  .hero{background:linear-gradient(135deg,#173a8c,#14213d);color:#fff}
+  .hero{background:var(--navy);color:#fff;border:1px solid rgba(255,255,255,.12)}
   .svc{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
   .svc a{min-width:0;overflow-wrap:anywhere;hyphens:auto}
   .svc a{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;text-decoration:none;color:var(--ink);background:#f6f7fb;border-radius:12px;padding:10px 4px;font-weight:800;font-size:12.5px;line-height:1.2}
-  .svc a span{font-size:26px;color:#173a8c;display:flex}
+  .svc a span{font-size:26px;color:var(--navy);display:flex}
   .lienadm{border:0;background:none;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer;padding:4px}
   .admL{border-top:1px solid #e8ebf3;padding:12px 0}
   .admL:first-child{border-top:0}
@@ -92,7 +98,7 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .offre img{width:100%;height:140px;object-fit:cover;display:block;background:#eef0f6}
   .offre .c{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
   .offre b{font-size:16px}
-  .offre .m{color:var(--gold);font-weight:800;font-size:18px}
+  .offre .m{color:var(--navy);font-weight:800;font-size:18px}
   .offre .t{font-size:14px;color:var(--muted);flex:1}
   .offre a{margin-top:6px;display:inline-block;text-align:center;background:var(--navy);color:#fff;border-radius:10px;padding:9px;font-weight:700;text-decoration:none;font-size:14px}
   /* Météo */
@@ -103,11 +109,11 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .jours{display:flex;gap:8px;margin-top:12px}
   .jour{flex:1;background:#f4f6fb;border-radius:10px;padding:8px;text-align:center;font-size:13px}
   .jour .ic{font-size:22px}
-  .soleil{display:flex;gap:16px;margin-top:10px;font-size:13px;color:var(--muted)}
+  .soleil{display:flex;gap:16px;align-items:center;margin-top:10px;font-size:13px;color:var(--muted)}
   /* Éphéméride */
   .date{font-size:20px;font-weight:800;text-transform:capitalize}
-  .evt{border-left:3px solid var(--gold);padding:4px 0 4px 10px;margin-top:10px;font-size:14.5px}
-  .evt.ht{border-color:#173a8c}
+  .evt{border-left:3px solid #cfd6e4;padding:4px 0 4px 10px;margin-top:10px;font-size:14.5px}
+  .evt.ht{border-color:var(--navy)}
   .evt .a{font-weight:800;margin-right:4px}
   /* Matchs */
   .comp{font-size:12.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin:14px 0 6px}
@@ -234,8 +240,8 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .verrou a{display:block;margin-top:10px;text-align:center;color:#fff;font-weight:700}
   .verrou .e{color:#ffd2d2;font-size:14px;margin-top:8px}
   /* Quiz */
-  .quizhome{background:#f6f7fb;border-radius:14px;padding:14px;margin:12px 0 4px;color:var(--ink)}
-  .qhT{display:flex;align-items:center;gap:10px;font-size:17px;margin-bottom:6px}.qhI{width:38px;height:38px;border-radius:10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+  .quizhome{padding:14px 0 12px;margin:0;border-bottom:1px solid var(--line);color:var(--ink)}
+  .qhT{display:flex;align-items:center;gap:10px;font-size:17px;margin-bottom:6px}.qhI{width:38px;height:38px;border-radius:10px;background:#eef0f5;color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   .quizhome h2{color:var(--navy)}
   .quizhome p{margin:0 0 10px;font-size:14.5px;color:var(--muted)}.quizhome p b{color:var(--ink)}
   .quizhome .btn{background:var(--navy);color:#fff}
@@ -282,7 +288,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .cadeau{display:block;background:#14213d;color:#fff;border-radius:12px;padding:12px 14px;margin:0 0 10px;font-weight:700;font-size:14.5px;text-decoration:none}
   .cadeau span{display:block;color:#fca311;font-size:13.5px;margin-top:3px}
   .quizhome .lien2{display:inline-block;margin-top:10px;color:var(--navy);font-weight:700;font-size:14px}
-  .recomp{background:#fff8ea;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:10px}
+  .recomp{background:#eef0f5;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:10px}
   /* Parcours par étapes */
   .konkou{background:#eef2ff;border-radius:12px;padding:12px;margin-bottom:8px;font-size:14px}
   .konkou b{display:block;font-size:15px}
@@ -341,7 +347,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   nav a.on{color:var(--navy)}
   nav a.live b{color:var(--live)}
   footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
-  .apropo{display:inline-block;margin-top:6px;color:var(--gold);font-weight:700;font-size:14px;text-decoration:none}
+  .apropo{display:inline-block;margin-top:6px;color:rgba(255,255,255,.85);font-weight:700;font-size:14px;text-decoration:none}
   .navlien{display:none}
   /* ===== Ordinateur et tablette en largeur ===== */
   @media (min-width: 900px){
@@ -393,9 +399,9 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .konkou.flash{outline:3px solid #f5a524;outline-offset:2px;transition:outline .3s}
   .jweTete{display:flex;align-items:center;gap:12px;margin-bottom:6px;padding-bottom:12px;position:relative}
   .jweTete:after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line)}.jweTete img{width:78px;height:auto;flex-shrink:0}
-  .jwe a{display:flex;align-items:center;gap:12px;padding:11px 4px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.jwe a:first-child{border-top:0;margin-top:4px}
-  .jwe .ji{font-size:20px;width:38px;height:38px;border-radius:10px;background:#eef1f8;color:#173a8c;display:flex;align-items:center;justify-content:center;flex-shrink:0}.jwe b{display:block;font-size:15px}.jwe small{display:block;color:var(--muted);font-size:13px;line-height:1.3}.jwe i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
-  .jwe .tag{display:inline-block;white-space:nowrap;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;background:#e8f6ee;color:var(--ok)}.jwe .tag.p{background:#fff4dc;color:#8a5a00}
+  .jwe a{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.jwe a:first-child{border-top:0;margin-top:2px}
+  .jwe .ji{font-size:20px;width:38px;height:38px;border-radius:10px;background:#eef0f5;color:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}.jwe b{display:block;font-size:15px}.jwe small{display:block;color:var(--muted);font-size:13px;line-height:1.3}.jwe i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
+  .jwe .tag{display:inline-block;white-space:nowrap;border:1px solid var(--line);font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;background:#eef0f5;color:var(--navy)}.jwe .tag.p{background:#eef0f5;color:var(--navy)}
   .etaps{display:flex;flex-direction:column;gap:0;margin:4px 0 12px}.etaps div{display:flex;gap:10px;align-items:flex-start;padding:7px 0;position:relative}
   .etaps div span.o{width:26px;height:26px;border-radius:50%;background:#eef0f5;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
   .etaps div.f span.o{background:var(--ok);color:#fff}.etaps div.c span.o{background:var(--navy);color:#fff}.etaps div.c b{color:var(--navy)}.etaps small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
@@ -467,28 +473,30 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvc .tvn small.gros{color:#8a5a00;font-weight:700}
   .tvc.off{opacity:.55}
   /* v42.11 — 📜 Istwa jodi a */
-  .isCard{background:#f3ece0;color:var(--navy);border:1px solid #e6dcc8}
-  .isCard h2{color:var(--navy)}.isCard .hint{color:#7a6f5c}
-  .isTag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:#c0392b;color:#fff}
-  .isDate{display:flex;align-items:baseline;gap:8px;margin:8px 0 2px}.isDate b{font-size:44px;line-height:1;font-weight:900;color:var(--navy)}.isDate span{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#c0392b}
-  .isCard .isT{font-size:19px;font-weight:800;margin:6px 0 4px;line-height:1.25}.isCard .isX{font-size:14px;color:#4b5263;line-height:1.5;font-family:Georgia,'Times New Roman',serif;border-left:3px solid #c0392b;padding-left:10px;margin-top:8px}
-  .isCard .btn{background:var(--navy);color:#fff}.isCard .lien2{color:var(--navy)}
-  .isPage{position:fixed;inset:0;z-index:85;background:#f6f4ee;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .hI{display:inline-flex;width:30px;height:30px;border-radius:9px;background:#eef0f5;color:var(--navy);align-items:center;justify-content:center;font-size:17px;vertical-align:middle;margin-right:2px}
+  .isBloc{margin:12px 0 4px;padding:14px 0 6px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .isBloc .hint{color:var(--muted)}
+  .isLab{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .isTag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--navy);color:#fff}
+  .isDate{display:flex;align-items:baseline;gap:8px;margin:8px 0 2px}.isDate b{font-size:44px;line-height:1;font-weight:900;color:var(--navy)}.isDate span{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .isBloc .isT{font-size:19px;font-weight:800;margin:6px 0 4px;line-height:1.25}.isBloc .isX{font-size:14px;color:#4b5263;line-height:1.5;border-left:3px solid var(--navy);padding-left:10px;margin-top:8px}
+  .isBloc .btn{background:var(--navy);color:#fff}.isBloc .lien2{color:var(--navy)}
+  .isPage{position:fixed;inset:0;z-index:85;background:var(--bg);overflow-y:auto;-webkit-overflow-scrolling:touch}
   .isPage .isBar{position:sticky;top:0;display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));background:#14213d;color:#fff;z-index:2}
   .isPage .isBar b{flex:1;font-size:15px}.isPage .isBar button{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;min-width:38px;height:38px;font-size:17px;font-weight:800;padding:0 10px}
   .isFeuille{max-width:640px;margin:0 auto;padding:18px 18px calc(30px + env(safe-area-inset-bottom));color:#1f2a44}
-  .isFeuille .isDate b{font-size:64px;color:#14213d}.isFeuille .isDate span{color:#c0392b}
+  .isFeuille .isDate b{font-size:64px;color:#14213d}.isFeuille .isDate span{color:var(--muted)}
   .isFeuille h1{font-size:26px;line-height:1.2;margin:10px 0 12px;color:#14213d}
   .isFeuille .isTexte{font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.65}
   .isKes{margin:18px 0;padding:14px;border-left:5px solid var(--gold);background:#fff;border-radius:0 12px 12px 0;font-weight:700}
-  .isKes small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c0392b;margin-bottom:4px}
+  .isKes small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
   .isActs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.isActs .btn{flex:1;min-width:140px;margin:0;text-align:center}
   .isNav{display:flex;justify-content:space-between;gap:8px;margin-top:16px}.isNav a{flex:1;padding:10px;border-radius:12px;background:#fff;border:1px solid #e3e6ee;font-size:13px;color:#14213d;text-decoration:none}
   .isNav a b{display:block;font-size:14px}.isNav a.d{text-align:right}
   .isSrc{font-size:12px;color:#6b7280;margin-top:14px}
-  .isListe h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#c0392b;margin:18px 0 6px}
+  .isListe h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
   .isListe a{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid #e3e6ee;text-decoration:none;color:#1f2a44}
-  .isListe a b{min-width:28px;font-size:18px;color:#14213d}.isListe a.auj{background:#fff7e0;border-radius:8px;padding-left:6px}
+  .isListe a b{min-width:28px;font-size:18px;color:#14213d}.isListe a.auj{background:#fff;border-radius:8px;padding-left:6px}
   .tvLect{position:fixed;inset:0;z-index:80;background:#1d4f91 url(photos/ciel_tv.jpg) center/cover no-repeat;display:flex;flex-direction:column}
   .tvBar{display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));color:#fff;background:rgba(11,18,36,.55)}
   .tvBar b{flex:1;min-width:0;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -525,11 +533,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 </div>
 <div class="horsLigne hidden" id="horsLigne"></div>
 <header>
-  <div class="hChips" role="navigation" aria-label="Masbet">
+  <div class="hcWrap"><div class="hChips" id="hChips" role="navigation" aria-label="Masbet">
     <a href="achte.html#wifi"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg> <b data-t="chWifi"></b></a><a href="#videyo&tv"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 3l4 4 4-4"/></svg> <b>TV</b></a><a href="#match"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.6-1.6M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3 3.6 8.7"/></svg> <b data-t="chMatch"></b></a><a href="#videyo"><svg class="mic rouge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10M4.2 4.2a11 11 0 0 0 0 15.6M19.8 4.2a11 11 0 0 1 0 15.6"/></svg> <b>Live</b></a>
     <a href="#quiz"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg> <b>Quiz</b></a><a href="psiko.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><path d="M17.25 13.2l4 4-4 4-4-4z"/></svg> <b data-t="chJwet"></b></a><a href="kominote.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg> <b data-t="chKom"></b></a><a href="#istwa&d=liste"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4.5v4h4"/><path d="M12 7.5V12l3.2 2"/></svg> <b data-t="chIstwa"></b></a>
     <a href="biblio.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h5v16h-5z"/><path d="m15.8 5.3 3.9-1 3.3 14.6-3.9 1z"/></svg> <b data-t="chLiv"></b></a><a href="suite.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg> <b>Masbet Suite</b></a><a href="meditasyon.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.2-1.6-7.5-4.6-7.5-9 3.2 0 5.6 1.6 7.5 4.3 1.9-2.7 4.3-4.3 7.5-4.3 0 4.4-3.3 7.4-7.5 9z"/><path d="M12 15.8c-1.6-2.6-1.6-6.4 0-10.3 1.6 3.9 1.6 7.7 0 10.3z"/></svg> <b data-t="chMed"></b></a>
-  </div>
+  </div><button type="button" class="hcF hcG hidden" aria-label="Services précédents"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hcF hcD hidden" aria-label="Autres services"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
   <p><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
 </header>
 
@@ -548,14 +556,13 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     <div id="liveHome"></div>
     <div class="card hidden" id="cNotif"></div>
     <div class="card hero">
-      <h2><span style="color:var(--gold)"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg></span> <span data-t="heroTitre"></span></h2>
+      <h2><span style="color:#fff"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg></span> <span data-t="heroTitre"></span></h2>
       <p data-t="heroTxt"></p>
       <a class="btn" href="achte.html#wifi" data-t="heroBtn"></a>
     </div>
-    <div class="card isCard hidden" id="cIstwa"></div>
 
     <div class="card" id="cJwe">
-      <div class="jweTete"><img src="jwe-logo.png" alt="Masbet : Jwe · Fòme · Genyen" width="78" height="92"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
+      <div class="jweTete"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
       <div class="quizhome hidden" id="cQuizHome">
       <div class="qhT"><span class="qhI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg></span><b data-t="quizTitre"></b></div>
       <div id="cadeauHome"></div>
@@ -568,25 +575,27 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     </div>
 
     <div class="card" id="cOffres">
-      <h2>🎁 <span data-t="offres"></span></h2>
+      <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="5" rx="1.2"/><path d="M5 13v8h14v-8M12 8v13"/><path d="M12 8c-2-3-6-3-6-.5S10 8 12 8zm0 0c2-3 6-3 6-.5S14 8 12 8z"/></svg></span> <span data-t="offres"></span></h2>
       <div id="offres"><div class="skel"></div><div class="skel"></div></div>
     </div>
 
     <div class="card" id="cMeteo">
-      <h2>🌤️ <span data-t="meteo"></span><small id="meteoLieu"></small></h2>
+      <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg></span> <span data-t="meteo"></span><small id="meteoLieu"></small></h2>
       <div id="meteo"><div class="skel"></div><div class="skel"></div></div>
     </div>
 
-    <div class="card">
-      <h2>📅 <span data-t="ephem"></span></h2>
-      <div class="date" id="date"></div>
-      <div id="ephem"><div class="skel"></div></div>
-    </div>
 
     <div class="card" id="cMatchMini">
-      <h2>⚽ <span data-t="matchJodi"></span></h2>
+      <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.6-1.6M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3 3.6 8.7"/></svg></span> <span data-t="matchJodi"></span></h2>
       <div id="matchMini"><div class="skel"></div></div>
       <a class="btn sec" href="#match" style="margin-top:10px" data-t="toutMatch"></a>
+    </div>
+
+    <div class="card" id="cJour">
+      <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span> <span data-t="ephem"></span></h2>
+      <div class="date" id="date"></div>
+      <div class="isBloc hidden" id="cIstwa"></div>
+      <div id="ephem"><div class="skel"></div></div>
     </div>
   </section>
 
@@ -741,7 +750,7 @@ var TXT = {
     lives:'Live Masbet', peyan:'LIVE PEYAN', tikeKod:'Kòd tikè', ouvri:'Ouvri', achteTike:'Achte tikè', tikePri:function(p){ return 'Tikè : '+p+' HTG'; }, gratis:'GRATIS', gratisGade:'Gratis : vin gade l isit la, san tikè.', tikeAide:'Live peyan yo mande yon tikè. Yon tikè louvri yon live peyan, nenpòt ki live. Ou ka achte plizyè davans : chak live sèvi ak yon tikè. Antre kòd la isit la.', tikeMwen:'Tikè ou yo :', pasLive:'Pa gen live kounye a', pwochenAnons:'Pwochen live la ap anonse isit la.', achteDavans:'Achte tikè ou davans', gratisSou:'Lives gratis : swiv Masbet sou', klikeGade:'Klike pou gade', achteYonTike:'Achte yon tikè', mwenGenKod:'Mwen gen yon kòd tikè :', tikeRegle:'1 tikè = 1 live. Chak nouvo live mande yon nouvo tikè. Kòd la mache sou 2 telefòn pou menm live la.', tikeRete:function(n){ return n>0?'Kòd sa a rete '+n+' live.':'Kòd sa a fin itilize ; pwochen live la ap mande yon lòt tikè.'; }, tikeDavans:'Achte tikè ou davans.', tikeOk:'Tikè valab ✓', anDirek:'AN DIREK', gade:'Gade', gadeFb:'Gade sou Facebook', prochainLive:'Pwochen live', aucunLive:'Pa gen live kounye a. Gade pwogram nan anba a.', pwograme:'PWOGRAME', replay:'REPLAY', liveDonnees:'Yon live konsome anpil done.', a:'a',
     installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', iosEtap:'<b>Sou iPhone :</b><br>1. Louvri paj sa a nan <b>Safari</b>.<br>2. Peze bouton <b>Pataje</b> a (kare ak flèch ⬆️ anba ekran an).<br>3. Chwazi <b>« Sur l\'écran d\'accueil »</b> (Add to Home Screen), epi <b>Ajouter</b>.', iosApp:'<b>Ou nan WhatsApp oswa Facebook :</b> peze ⋯ oswa ⬆️ epi chwazi <b>« Ouvrir dans Safari »</b>. Apre sa, swiv etap yo.', aucuneOffre:'Pa gen ofri pou kounye a.',
     meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
-    pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Nan listwa', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
+    pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Lòt kote nan lemonn jou sa a', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
     aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Ribrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
     reporte:'Ranvwaye', annule:'Anile', quota:'Nou rive nan limit mizajou pou jodi a. Rezilta yo ka an reta.', erreurMatch:'Pa ka chaje match yo kounye a.',
     majA:'Mete ajou', aucuneVideo:'Poko gen videyo.', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', aide:'Ou bezwen èd ? WhatsApp : ',
@@ -796,7 +805,7 @@ var TXT = {
     lives:'Lives Masbet', peyan:'LIVE PAYANT', tikeKod:'Code ticket', ouvri:'Ouvrir', achteTike:'Acheter un ticket', tikePri:function(p){ return 'Ticket : '+p+' HTG'; }, gratis:'GRATUIT', gratisGade:'Gratuit : regardez-le ici, sans ticket.', tikeAide:'Les lives payants demandent un ticket. Un ticket ouvre un live payant, n\'importe lequel. Vous pouvez en acheter plusieurs d\'avance : chaque live utilise un ticket. Entrez le code ici.', tikeMwen:'Vos tickets :', pasLive:'Pas de live en ce moment', pwochenAnons:'Le prochain live sera annoncé ici.', achteDavans:'Acheter mon ticket d\'avance', gratisSou:'Lives gratuits : suivez Masbet sur', klikeGade:'Cliquer pour regarder', achteYonTike:'Acheter un ticket', mwenGenKod:'J\'ai un code ticket :', tikeRegle:'1 ticket = 1 live. Chaque nouveau live demande un nouveau ticket. Le code marche sur 2 téléphones pour ce même live.', tikeRete:function(n){ return n>0?'Ce code ouvre encore '+n+' live'+(n>1?'s':'')+'.':'Ce code est épuisé ; le prochain live demandera un autre ticket.'; }, tikeDavans:'Achetez votre ticket à l\'avance.', tikeOk:'Ticket valide ✓', anDirek:'EN DIRECT', gade:'Regarder', gadeFb:'Regarder sur Facebook', prochainLive:'Prochain live', aucunLive:'Pas de live en ce moment. Voir le programme ci-dessous.', pwograme:'PROGRAMMÉ', replay:'REDIFFUSION', liveDonnees:'Un live consomme beaucoup de données.', a:'à',
     installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', iosEtap:'<b>Sur iPhone :</b><br>1. Ouvrez cette page dans <b>Safari</b>.<br>2. Touchez le bouton <b>Partager</b> (carré avec flèche ⬆️ en bas de l\'écran).<br>3. Choisissez <b>« Sur l\'écran d\'accueil »</b>, puis <b>Ajouter</b>.', iosApp:'<b>Vous êtes dans WhatsApp ou Facebook :</b> touchez ⋯ ou ⬆️ et choisissez <b>« Ouvrir dans Safari »</b>. Suivez ensuite les étapes.', aucuneOffre:'Aucune offre pour le moment.',
     meteoIndispo:'Météo indisponible pour le moment.', ressenti:'Ressenti', humidite:'Humidité', vent:'Vent', lever:'Lever du soleil', coucher:'Coucher du soleil',
-    pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
+    pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ailleurs dans le monde ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
     aucunMatch:'Aucun match des compétitions suivies aujourd\'hui.', footOff:'La rubrique matchs n\'est pas encore activée.', direct:'EN DIRECT', mt:'MT', fini:'Terminé',
     reporte:'Reporté', annule:'Annulé', quota:'Limite de mises à jour atteinte pour aujourd\'hui. Les scores peuvent être en retard.', erreurMatch:'Impossible de charger les matchs pour le moment.',
     majA:'Mis à jour', aucuneVideo:'Pas encore de vidéos.', reseau:'Pas de connexion. Vérifiez votre internet.', aide:'Besoin d\'aide ? WhatsApp : ',
@@ -945,7 +954,7 @@ function afficherMeteo(){
     '<div class="ds">'+esc(libelle(m.code))+' · '+T('ressenti')+' '+Math.round(m.ressenti)+'°</div>'+
     '<div class="ds">'+T('humidite')+' '+esc(m.humidite)+'% · '+T('vent')+' '+Math.round(m.vent)+' km/h</div></div></div>'+
     '<div class="jours">'+j+'</div>'+
-    '<div class="soleil"><span>🌅 '+T('lever')+' '+esc(heure(m.lever))+'</span><span>🌇 '+T('coucher')+' '+esc(heure(m.coucher))+'</span></div>'+
+    '<div class="soleil"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v6M8.5 6.5 12 3l3.5 3.5M4 18h16M7 18a5 5 0 0 1 10 0M2 22h20"/></svg> '+T('lever')+' '+esc(heure(m.lever))+'</span><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9V3M8.5 5.5 12 9l3.5-3.5M4 18h16M7 18a5 5 0 0 1 10 0M2 22h20"/></svg> '+T('coucher')+' '+esc(heure(m.coucher))+'</span></div>'+
     '<div class="hint" style="margin-top:6px;font-size:11px">'+T('meteoSrc')+'</div>';
 }
 
@@ -965,7 +974,7 @@ function afficherEphem(){
     h+='<div class="hint" style="margin-top:12px;font-weight:700">'+T('ceJour')+' '+T('fr')+'</div>';
     e.monde.slice(0,4).forEach(function(x){ h+='<div class="evt"><span class="a">'+esc(x.annee)+'</span>'+esc(x.texte)+'</div>'; });
   }
-  el.innerHTML=h||'<div class="hint" style="margin-top:8px">'+T('rienEphem')+'</div>';
+  el.innerHTML=h;   // v42.11 : la carte montre déjà Istwa jodi a, pas besoin de « rien pour ce jour »
 }
 
 // ---------- v42.11 — 📜 Istwa jodi a (istwa.js : une page par grande date, créole + français) ----------
@@ -981,7 +990,7 @@ function afficherIstwa(){
   var auj=isMMJJ(new Date()), x=isProchaine(), jodi=x&&x.d===auj, n=isL();
   var jours=0; if(!jodi){ var d=new Date(), cible=new Date(d.getFullYear(),Number(x.d.slice(0,2))-1,Number(x.d.slice(3))); if(cible<d) cible.setFullYear(d.getFullYear()+1); jours=Math.ceil((cible-d)/864e5); }
   var m1=/^[\s\S]*?[.!?](?=\s|$)/.exec(x.x[n]), ext=m1?m1[0]:x.x[n];   // 1re phrase (sans « lookbehind » : vieux iPhone)
-  c.innerHTML='<h2><span style="color:#c0392b"><svg class=\"mic\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3.5 12a8.5 8.5 0 1 0 2.6-6.1\"/><path d=\"M3 4.5v4h4\"/><path d=\"M12 7.5V12l3.2 2\"/></svg></span> '+AL('Istwa jodi a','Istwa jodi a · Histoire du jour')+'</h2>'+
+  c.innerHTML='<div class="isLab"><svg class=\"mic\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3.5 12a8.5 8.5 0 1 0 2.6-6.1\"/><path d=\"M3 4.5v4h4\"/><path d=\"M12 7.5V12l3.2 2\"/></svg> '+esc(AL('Istwa jodi a','Histoire du jour'))+'</div>'+
     (jodi?'':'<div class="hint">'+esc(AL('Pwochen gwo dat : nan '+jours+' jou','Prochaine grande date : dans '+jours+' jour'+(jours>1?'s':'')))+'</div>')+
     '<div class="isDate"><b>'+Number(x.d.slice(3))+'</b><span>'+esc(isMoisNom(x.d.slice(0,2)))+(x.a?' '+x.a:'')+'</span></div><span class="isTag">'+esc(isCat(x.c))+'</span>'+
     '<div class="isT">'+esc(x.t[n])+'</div><div class="isX">'+esc(ext)+'</div>'+
@@ -1076,7 +1085,7 @@ function afficherQuizHome(){
   c.classList.remove('hidden'); afficherCadeau(); afficherPakouHome(); afficherKonkouHome();
   if(!QZ.questions || !QZ.questions.length){ document.getElementById('quizHomeTxt').textContent=T('quizPoko'); document.getElementById('quizHomeBtn').textContent=T('quizWe'); return; }
   var e=QZ.etat||{};
-  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):AL('5 kesyon, 20 segonn chak. Yon sèl chans pa jou.','5 questions, 20 secondes chacune. Une seule chance par jour.'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(recompTxt())+'</b>':'');
+  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):AL('5 kesyon, 20 segonn chak. Yon sèl chans pa jou.','5 questions, 20 secondes chacune. Une seule chance par jour.'))+(QZ.recompense&&!e.fini?'<br><b>'+esc(recompTxt())+'</b>':'');
   document.getElementById('quizHomeBtn').textContent=e.fini?T('quizWe'):T('quizJwe');
   var g=document.getElementById('cGenies'); g.classList.toggle('hidden',!QZ.genies); if(QZ.genies) document.getElementById('geniesLien').href=QZ.genies;
 }
@@ -2810,6 +2819,20 @@ function klochAkey(){
     s.textContent=n>99?'99+':String(n); s.classList.toggle('hidden',!n); }).catch(function(){});
 }
 setTimeout(klochAkey,2500); setInterval(klochAkey,120000); document.addEventListener('visibilitychange',function(){ if(!document.hidden) klochAkey(); });
+
+/* v42.11 : l'entête défile — flèches + petit mouvement d'invitation (3 premières visites) */
+(function(){
+  var z=document.getElementById('hChips'); if(!z) return;
+  var g=document.querySelector('.hcG'), d=document.querySelector('.hcD');
+  function maj(){ var max=z.scrollWidth-z.clientWidth; g.classList.toggle('hidden',z.scrollLeft<8); d.classList.toggle('hidden',max<8||z.scrollLeft>max-8); }
+  z.addEventListener('scroll',maj,{passive:true}); window.addEventListener('resize',maj);
+  g.addEventListener('click',function(){ z.scrollBy({left:-z.clientWidth*.7,behavior:'smooth'}); });
+  d.addEventListener('click',function(){ z.scrollBy({left:z.clientWidth*.7,behavior:'smooth'}); });
+  maj(); setTimeout(maj,400);
+  var n=0; try{ n=+localStorage.getItem('masbet_chips_vu')||0; localStorage.setItem('masbet_chips_vu',n+1); }catch(e){}
+  if(n<3) setTimeout(function(){ if(z.scrollLeft>0||z.scrollWidth-z.clientWidth<8) return;
+    z.scrollTo({left:90,behavior:'smooth'}); setTimeout(function(){ z.scrollTo({left:0,behavior:'smooth'}); },900); },1200);
+})();
 </script>
 </body>
 </html>
