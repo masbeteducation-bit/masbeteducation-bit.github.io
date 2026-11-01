@@ -6,17 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
-<meta name="description" content="MasbetAirNet : Wi-Fi Ansavo. Achte kòd ak MonCash oswa NatCash, ofri, match an dirèk, meteyo.">
+<meta name="description" content="Masbet, aplikasyon Ansavo : Wi-Fi ak MonCash oswa NatCash, TV ak match an dirèk, lives, quiz, jwèt lespri, kominote, istwa jodi a.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>MasbetAirNet — Wi-Fi, match, lives Ansavo</title>
+<title>Masbet — Wi-Fi, TV, match, quiz, kominote · Ansavo</title>
 <link rel="canonical" href="https://masbet.me/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="MasbetAirNet">
-<meta property="og:title" content="MasbetAirNet — Wi-Fi, match, lives Ansavo">
-<meta property="og:description" content="Achte kòd Wi-Fi ak MonCash oswa NatCash, gade match ak lives Masbet, jwe quiz la.">
+<meta property="og:site_name" content="Masbet">
+<meta property="og:title" content="Masbet — Tout Ansavo nan yon sèl aplikasyon">
+<meta property="og:description" content="Wi-Fi ak MonCash/NatCash, TV ak match an dirèk, lives, quiz, jwèt lespri, kominote, istwa jodi a. Gratis.">
 <meta property="og:url" content="https://masbet.me/">
-<meta property="og:image" content="https://masbet.me/photos/partage-masbet.jpg">
+<meta property="og:image" content="https://masbet.me/photos/og/akey.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Logo Masbet Education">
@@ -30,6 +30,7 @@
 <script src="config.js"></script>
 <script src="temps.js"></script>
 <script src="pataje.js"></script>
+<script src="istwa.js" defer></script>
 <script>
 /* Version Google Play (application Android) : ouverte avec ?play=1, ou depuis l'application (android-app://).
    Gardé pour la session seulement : le même téléphone dans Chrome reste la version web complète. */
@@ -53,6 +54,9 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   header .brand{font-weight:800;font-size:20px}
   header .brand span{color:var(--gold)}
   header p{margin:2px 0 0;color:#c9d0e3;font-size:14px}
+  .hChips{display:flex;gap:8px;overflow-x:auto;margin:12px -16px 2px;padding:0 16px 4px;scrollbar-width:none}.hChips::-webkit-scrollbar{display:none}
+  .hChips a{flex:0 0 auto;display:inline-flex;gap:6px;align-items:center;padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);color:#fff;text-decoration:none;font-size:14px}
+  .hChips a b{font-weight:700}
   main{max-width:560px;margin:-14px auto 0;padding:0 16px 24px}
   .card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
   h2{font-size:17px;margin:0 0 10px;display:flex;align-items:center;gap:8px}
@@ -456,6 +460,29 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   @media (max-width:560px){ .tvg{grid-template-columns:repeat(2,minmax(0,1fr))} .tvc{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:7px} .tvc .tvl{flex:0 0 auto;width:100%;height:42px} .tvc .tvl.logo{width:100%;flex-basis:auto;height:50px;padding:4px} }
   .tvc .tvn small.gros{color:#8a5a00;font-weight:700}
   .tvc.off{opacity:.55}
+  /* v42.11 — 📜 Istwa jodi a */
+  .isCard{background:linear-gradient(135deg,#14213d,#1f3a6b);color:#fff}
+  .isCard h2{color:#fff}.isCard .hint{color:#c9d3ea}
+  .isTag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:#f5b301;color:#14213d}
+  .isDate{display:flex;align-items:baseline;gap:8px;margin:8px 0 2px}.isDate b{font-size:40px;line-height:1;font-weight:900}.isDate span{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#f5b301}
+  .isCard .isT{font-size:19px;font-weight:800;margin:6px 0 4px;line-height:1.25}.isCard .isX{font-size:14px;color:#e4e9f5;line-height:1.45}
+  .isCard .btn{background:#f5b301;color:#14213d}.isCard .lien2{color:#fff}
+  .isPage{position:fixed;inset:0;z-index:85;background:#f6f4ee;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .isPage .isBar{position:sticky;top:0;display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));background:#14213d;color:#fff;z-index:2}
+  .isPage .isBar b{flex:1;font-size:15px}.isPage .isBar button{border:0;background:rgba(255,255,255,.14);color:#fff;border-radius:999px;min-width:38px;height:38px;font-size:17px;font-weight:800;padding:0 10px}
+  .isFeuille{max-width:640px;margin:0 auto;padding:18px 18px calc(30px + env(safe-area-inset-bottom));color:#1f2a44}
+  .isFeuille .isDate b{font-size:64px;color:#14213d}.isFeuille .isDate span{color:#c0392b}
+  .isFeuille h1{font-size:26px;line-height:1.2;margin:10px 0 12px;color:#14213d}
+  .isFeuille .isTexte{font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.65}
+  .isKes{margin:18px 0;padding:14px;border-left:5px solid #f5b301;background:#fff;border-radius:0 12px 12px 0;font-weight:700}
+  .isKes small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#c0392b;margin-bottom:4px}
+  .isActs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.isActs .btn{flex:1;min-width:140px;margin:0;text-align:center}
+  .isNav{display:flex;justify-content:space-between;gap:8px;margin-top:16px}.isNav a{flex:1;padding:10px;border-radius:12px;background:#fff;border:1px solid #e3e6ee;font-size:13px;color:#14213d;text-decoration:none}
+  .isNav a b{display:block;font-size:14px}.isNav a.d{text-align:right}
+  .isSrc{font-size:12px;color:#6b7280;margin-top:14px}
+  .isListe h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#c0392b;margin:18px 0 6px}
+  .isListe a{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid #e3e6ee;text-decoration:none;color:#1f2a44}
+  .isListe a b{min-width:28px;font-size:18px;color:#14213d}.isListe a.auj{background:#fff7e0;border-radius:8px;padding-left:6px}
   .tvLect{position:fixed;inset:0;z-index:80;background:#1d4f91 url(photos/ciel_tv.jpg) center/cover no-repeat;display:flex;flex-direction:column}
   .tvBar{display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:calc(10px + env(safe-area-inset-top));color:#fff;background:rgba(11,18,36,.55)}
   .tvBar b{flex:1;min-width:0;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -491,13 +518,20 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 </div>
 <div class="horsLigne hidden" id="horsLigne"></div>
 <header>
-  <div class="brand">Masbet<span>AirNet</span></div>
-  <p><span data-t="slogan"></span><br><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
+  <div class="brand">Masbet<span> · Ansavo</span></div>
+  <p><span data-t="slogan"></span></p>
+  <div class="hChips" role="navigation" aria-label="Masbet">
+    <a href="achte.html#wifi">📶 <b data-t="chWifi"></b></a><a href="#videyo&tv">📺 <b>TV</b></a><a href="#match">⚽ <b data-t="chMatch"></b></a><a href="#videyo">🔴 <b>Live</b></a>
+    <a href="#quiz">🧠 <b>Quiz</b></a><a href="psiko.html">🧩 <b data-t="chJwet"></b></a><a href="kominote.html">💬 <b data-t="chKom"></b></a><a href="#istwa&d=liste">📜 <b data-t="chIstwa"></b></a>
+    <a href="biblio.html">📚 <b data-t="chLiv"></b></a><a href="meditasyon.html">🕊️ <b>Meditasyon</b></a>
+  </div>
+  <p><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
 </header>
 
 <main>
   <div class="install hidden" id="install"><span data-t="installTxt"></span><button id="btnInstall" data-t="installBtn"></button></div>
   <div class="iosAide hidden" id="iosAide"></div>
+<div class="isPage hidden" id="isPage" role="dialog" aria-modal="true"><div class="isBar"><button type="button" onclick="istwaFermer()" aria-label="Retour">←</button><b>📜 Istwa jodi a</b><button type="button" onclick="istwaListe()" aria-label="Toutes les dates"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" style="vertical-align:-4px"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2zm12 7H5v10h14zM7 11h3v3H7zm5 0h3v3h-3z"/></svg></button><button type="button" onclick="istwaPataje()" aria-label="Partager" id="isPat"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg></button></div><div class="isFeuille" id="isFeuille"></div></div>
 
   <!-- ===== Akèy ===== -->
   <section id="vAkey">
@@ -513,6 +547,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
       <p data-t="heroTxt"></p>
       <a class="btn" href="achte.html#wifi" data-t="heroBtn"></a>
     </div>
+    <div class="card isCard hidden" id="cIstwa"></div>
 
     <div class="card" id="cSvc">
       <h2>✨ <span data-t="svcTitre"></span></h2>
@@ -670,10 +705,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 var CONTENU = window.MASBET_CONTENU || '';   // projet Google « Contenu » (offres, météo, matchs…)
 var TXT = {
   ht: {
-    slogan:'Wi-Fi Ansavo · Rapid, pa chè, toupre w', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
+    slogan:'Wi-Fi, TV, match, lives, quiz, jwèt, kominote, istwa… tout Ansavo nan yon sèl aplikasyon.', chWifi:'Wi-Fi', chMatch:'Match', chJwet:'Jwèt lespri', chKom:'Kominote', chIstwa:'Istwa jodi a', chLiv:'Liv', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
     heroBtn:'Achte kounye a', offres:'Ofri yo', meteo:'Meteyo', ephem:'Jodi a', matchJodi:'Match jodi a', toutMatch:'Wè tout match yo',
     videyo:'Videyo', videyoAide:'Videyo yo konsome done. Gade yo lè w konekte sou Wi-Fi a.', nAkey:'Akèy', nAchte:'Achte', nMatch:'Match', nVideyo:'Live', nKod:'Kòd mwen',
-    apropo:'Konsènan MasbetAirNet →', nApropo:'Konsènan nou', quizTitre:'Quiz jodi a', quizJwe:'Jwe kounye a', quizWe:'Wè rezilta ak klasman', quizTxt:'5 kesyon (2 fasil, 2 mwayen, 1 difisil), 20 segonn pou chak (40 segonn pou kalkil difisil yo). Yon sèl chans pa jou !', quizDeja:function(s){ return 'Ou fè '+s+'/5 jodi a. Tounen demen pou yon lòt quiz !'; },
+    apropo:'MasbetAirNet, rezo Wi-Fi Ansavo a →', nApropo:'Konsènan nou', quizTitre:'Quiz jodi a', quizJwe:'Jwe kounye a', quizWe:'Wè rezilta ak klasman', quizTxt:'5 kesyon (2 fasil, 2 mwayen, 1 difisil), 20 segonn pou chak (40 segonn pou kalkil difisil yo). Yon sèl chans pa jou !', quizDeja:function(s){ return 'Ou fè '+s+'/5 jodi a. Tounen demen pou yon lòt quiz !'; },
     pseudo:'Non jwè w (ap parèt nan klasman an)', telQuiz:'Telefòn ou (pa obligatwa, pou nou rele w si w genyen)', komanse:'Kòmanse', kesyon:'Kesyon', swivan:'Kesyon swivan', wèRezilta:'Wè rezilta a',
     bon:'Bravo, se sa !', pabon:'Non, se pa sa.', tanFini:'Tan an fini !', repons:'Bon repons lan :', rezilta:'Rezilta ou jodi a', segonn:'s',
     klasman:'Klasman', kJodi:'Jodi a', kSemen:'Semèn nan', pakoJwe:'Pèsonn poko jwe. Se ou ki premye ?', geniesTxt:'Plis quiz ak defi sou platfòm Les Génies d\'Haïti.', geniesBtn:'Ale sou Les Génies d\'Haïti ↗', quizPoko:'Quiz la poko pare. Tounen pita.', jou:'jou',
@@ -725,10 +760,10 @@ var TXT = {
     w:{0:'Syèl klè',1:'Prèske klè',2:'Kèk nyaj',3:'Syèl kouvri',45:'Bwouya',48:'Bwouya',51:'Ti farinaj',53:'Farinaj',55:'Farinaj fò',61:'Ti lapli',63:'Lapli',65:'Gwo lapli',80:'Ti avès',81:'Avès',82:'Gwo avès',95:'Loraj',96:'Loraj ak lagrèl',99:'Gwo loraj'}
   },
   fr: {
-    slogan:'Wi-Fi d\'Anse-à-Veau · Rapide, pas cher, près de vous', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
+    slogan:'Wi-Fi, TV, matchs, lives, quiz, jeux, communauté, histoire… tout Anse-à-Veau dans une seule application.', chWifi:'Wi-Fi', chMatch:'Matchs', chJwet:'Jeux d\'esprit', chKom:'Communauté', chIstwa:'Histoire du jour', chLiv:'Livres', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
     heroBtn:'Acheter maintenant', offres:'Offres', meteo:'Météo', ephem:'Aujourd\'hui', matchJodi:'Matchs du jour', toutMatch:'Voir tous les matchs',
     videyo:'Vidéos', videyoAide:'Les vidéos consomment des données. Regardez-les une fois connecté au Wi-Fi.', nAkey:'Accueil', nAchte:'Acheter', nMatch:'Matchs', nVideyo:'Live', nKod:'Mes codes',
-    apropo:'À propos de MasbetAirNet →', nApropo:'À propos', quizTitre:'Quiz du jour', quizJwe:'Jouer maintenant', quizWe:'Voir le résultat et le classement', quizTxt:'5 questions (2 faciles, 2 moyennes, 1 difficile), 20 secondes chacune (40 secondes pour les calculs difficiles). Une seule chance par jour !', quizDeja:function(s){ return 'Vous avez fait '+s+'/5 aujourd\'hui. Revenez demain pour un autre quiz !'; },
+    apropo:'MasbetAirNet, le réseau Wi-Fi d\'Anse-à-Veau →', nApropo:'À propos', quizTitre:'Quiz du jour', quizJwe:'Jouer maintenant', quizWe:'Voir le résultat et le classement', quizTxt:'5 questions (2 faciles, 2 moyennes, 1 difficile), 20 secondes chacune (40 secondes pour les calculs difficiles). Une seule chance par jour !', quizDeja:function(s){ return 'Vous avez fait '+s+'/5 aujourd\'hui. Revenez demain pour un autre quiz !'; },
     pseudo:'Votre nom de joueur (affiché dans le classement)', telQuiz:'Votre téléphone (facultatif, pour vous contacter si vous gagnez)', komanse:'Commencer', kesyon:'Question', swivan:'Question suivante', wèRezilta:'Voir le résultat',
     bon:'Bravo, c\'est ça !', pabon:'Non, ce n\'est pas ça.', tanFini:'Temps écoulé !', repons:'Bonne réponse :', rezilta:'Votre résultat du jour', segonn:'s',
     klasman:'Classement', kJodi:'Aujourd\'hui', kSemen:'Cette semaine', pakoJwe:'Personne n\'a encore joué. Serez-vous le premier ?', geniesTxt:'Plus de quiz et de défis sur la plateforme Les Génies d\'Haïti.', geniesBtn:'Aller sur Les Génies d\'Haïti ↗', quizPoko:'Le quiz n\'est pas encore prêt. Revenez plus tard.', jou:'jours',
@@ -942,6 +977,62 @@ function afficherEphem(){
   }
   el.innerHTML=h||'<div class="hint" style="margin-top:8px">'+T('rienEphem')+'</div>';
 }
+
+// ---------- v42.11 — 📜 Istwa jodi a (istwa.js : une page par grande date, créole + français) ----------
+var IS_D='';
+function isMMJJ(d){ return ('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function isListeDonnees(){ return (window.ISTWA&&ISTWA.liste)||[]; }
+function isL(x){ return LANG==='fr'?1:0; }
+function isMoisNom(mm){ return T('mois')[Number(mm)-1]; }
+function isCat(c){ var k=window.ISTWA&&ISTWA.cat[c]; return k?k[isL()]:''; }
+function isProchaine(){ var L=isListeDonnees(), auj=isMMJJ(new Date()); for(var i=0;i<L.length;i++) if(L[i].d>=auj) return L[i]; return L[0]; }
+function afficherIstwa(){
+  var c=document.getElementById('cIstwa'), L=isListeDonnees(); if(!c) return; if(!L.length){ c.classList.add('hidden'); return; }
+  var auj=isMMJJ(new Date()), x=isProchaine(), jodi=x&&x.d===auj, n=isL();
+  var jours=0; if(!jodi){ var d=new Date(), cible=new Date(d.getFullYear(),Number(x.d.slice(0,2))-1,Number(x.d.slice(3))); if(cible<d) cible.setFullYear(d.getFullYear()+1); jours=Math.ceil((cible-d)/864e5); }
+  var m1=/^[\s\S]*?[.!?](?=\s|$)/.exec(x.x[n]), ext=m1?m1[0]:x.x[n];   // 1re phrase (sans « lookbehind » : vieux iPhone)
+  c.innerHTML='<h2>📜 '+AL('Istwa jodi a','Istwa jodi a · Histoire du jour')+'</h2>'+
+    (jodi?'':'<div class="hint">'+esc(AL('Pwochen gwo dat : nan '+jours+' jou','Prochaine grande date : dans '+jours+' jour'+(jours>1?'s':'')))+'</div>')+
+    '<div class="isDate"><b>'+Number(x.d.slice(3))+'</b><span>'+esc(isMoisNom(x.d.slice(0,2)))+(x.a?' '+x.a:'')+'</span></div><span class="isTag">'+esc(isCat(x.c))+'</span>'+
+    '<div class="isT">'+esc(x.t[n])+'</div><div class="isX">'+esc(ext)+'</div>'+
+    '<a class="btn" href="#istwa&d='+x.d+'" style="margin-top:12px">'+esc(AL('Li tout istwa a','Lire toute l\'histoire'))+'</a>'+
+    '<a class="lien2" href="#istwa&d=liste">'+esc(AL('Tout gwo dat ane a','Toutes les grandes dates de l\'année'))+' →</a>';
+  c.classList.remove('hidden');
+}
+function istwaOuvrir(d){
+  var p=document.getElementById('isPage'), f=document.getElementById('isFeuille'), L=isListeDonnees(), n=isL();
+  if(!L.length){ if(!window.ISTWA){ setTimeout(function(){ istwaOuvrir(d); },300); } return; }
+  p.classList.remove('hidden'); document.body.style.overflow='hidden';
+  if(d==='liste'){ IS_D=''; document.getElementById('isPat').style.visibility='hidden'; var auj=isMMJJ(new Date()), mois='';
+    f.innerHTML='<h1>'+esc(AL('Gwo dat ane a','Les grandes dates de l\'année'))+'</h1><div class="hint">'+esc(AL('Fèt nasyonal, jou ferye, jounen entènasyonal, istwa, tranbleman tè, siklòn…','Fêtes nationales, jours fériés, journées internationales, histoire, séismes, cyclones…'))+'</div><div class="isListe">'+
+      L.map(function(x){ var m=x.d.slice(0,2), h=''; if(m!==mois){ mois=m; h+='<h3>'+esc(isMoisNom(m))+'</h3>'; }
+        return h+'<a href="#istwa&d='+x.d+'" class="'+(x.d===auj?'auj':'')+'"><b>'+Number(x.d.slice(3))+'</b><span>'+esc(x.t[n])+'<br><span class="hint">'+esc(isCat(x.c))+(x.a?' · '+x.a:'')+'</span></span></a>'; }).join('')+'</div>';
+    p.scrollTop=0; return; }
+  var i=-1; L.forEach(function(x,k){ if(x.d===d) i=k; }); if(i<0){ istwaOuvrir('liste'); return; }
+  var x=L[i], av=L[(i-1+L.length)%L.length], ap=L[(i+1)%L.length]; IS_D=x.d; document.getElementById('isPat').style.visibility='';
+  statEnvoyer('vue','istwa');
+  f.innerHTML='<span class="isTag">'+esc(isCat(x.c))+'</span><div class="isDate"><b>'+Number(x.d.slice(3))+'</b><span>'+esc(isMoisNom(x.d.slice(0,2)))+(x.a?' '+x.a:'')+'</span></div>'+
+    '<h1>'+esc(x.t[n])+'</h1><div class="isTexte">'+esc(x.x[n])+'</div>'+
+    (x.ch&&x.ch.length?'<div class="isKes" style="border-left-color:#1d8a4e"><small style="color:#1d8a4e">'+esc(AL('Fèt chanpèt jodi a','Fêtes patronales du jour'))+'</small>'+x.ch.map(function(c){ return esc(c[LANG==='fr'?'fr':'ht']); }).join('<br>')+'</div>':'')+
+    '<div class="isKes"><small>'+esc(AL('Kesyon jodi a','Question du jour'))+'</small>'+esc(x.k[n])+'</div>'+
+    '<div class="isActs"><button type="button" class="btn" onclick="istwaPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html">💬 '+esc(AL('Reponn nan Kominote a','Répondre dans la Communauté'))+'</a></div>'+
+    '<div class="isNav"><a href="#istwa&d='+av.d+'">← '+Number(av.d.slice(3))+' '+esc(isMoisNom(av.d.slice(0,2)))+'<b>'+esc(av.t[n])+'</b></a><a class="d" href="#istwa&d='+ap.d+'">'+Number(ap.d.slice(3))+' '+esc(isMoisNom(ap.d.slice(0,2)))+' →<b>'+esc(ap.t[n])+'</b></a></div>'+
+    '<div class="isSrc">'+esc(AL('Sous : ','Sources : '))+esc(x.s||'')+'</div>';
+  p.scrollTop=0;
+}
+function istwaFermer(){ document.getElementById('isPage').classList.add('hidden'); document.body.style.overflow=''; if(/^#istwa/.test(location.hash)){ try{ history.replaceState(null,'',location.pathname+location.search+'#akey'); }catch(e){} vue(); } }
+function istwaListe(){ location.hash='#istwa&d=liste'; }
+function istwaPataje(){
+  var x=null; isListeDonnees().forEach(function(y){ if(y.d===IS_D) x=y; }); if(!x) return; statEnvoyer('partage'); var n=isL();
+  var txt='📜 '+Number(x.d.slice(3))+' '+isMoisNom(x.d.slice(0,2))+(x.a?' '+x.a:'')+' — '+x.t[n]+'\n'+x.k[n], url=SITE+'istwa/'+x.d;   // page de partage avec image d'aperçu (elle renvoie vers #istwa&d=…)
+  if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:x.t[n]});
+  if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
+}
+function istwaRoute(){ var m=/^#istwa&d=([0-9]{2}-[0-9]{2}|liste)/.exec(location.hash||''); if(m) istwaOuvrir(m[1]); else if(!document.getElementById('isPage').classList.contains('hidden')){ document.getElementById('isPage').classList.add('hidden'); document.body.style.overflow=''; } }
+window.addEventListener('hashchange',istwaRoute);
+window.addEventListener('DOMContentLoaded',function(){ afficherIstwa(); istwaRoute(); });
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!document.getElementById('isPage').classList.contains('hidden')) istwaFermer(); });
 
 // ---------- Offres ----------
 function afficherOffres(){
@@ -2152,7 +2243,7 @@ function chargerAccueil(){
 }
 function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div><div class="pfond"><a href="confidentialite.html?lang='+LANG+'" style="color:inherit">'+esc(AL('Konfidansyalite','Confidentialité'))+'</a></div>'; }
 function toutAfficher(){ afficherLokal();
-  afficherDate();
+  afficherDate(); try{ afficherIstwa(); if(IS_D&&!document.getElementById('isPage').classList.contains('hidden')) istwaOuvrir(IS_D); }catch(e){}
   if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv();
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
   if(MAT) afficherMatchs();

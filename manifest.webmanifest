@@ -1,7 +1,7 @@
 {
-  "name": "MasbetAirNet",
-  "short_name": "MasbetAirNet",
-  "description": "Wi-Fi Ansavo : achte kòd ak MonCash oswa NatCash, ofri, match an dirèk, meteyo.",
+  "name": "Masbet — Ansavo",
+  "short_name": "Masbet",
+  "description": "Tout Ansavo nan yon sèl aplikasyon : Wi-Fi, TV, match, lives, quiz, jwèt lespri, kominote, istwa jodi a.",
   "lang": "ht",
   "start_url": "./index.html",
   "scope": "./",
