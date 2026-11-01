@@ -449,8 +449,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvc .tvl.logo{flex-basis:58px;width:58px;background:#fff!important;border:1px solid var(--line);padding:3px}
   .tvc .tvl img{width:100%;height:100%;object-fit:contain;display:block}
   .tvc .tvn{min-width:0;flex:1}
-  .tvc .tvn b{display:block;font-size:13.5px;line-height:1.2;overflow-wrap:anywhere}
-  .tvc .tvn small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+  .tvc .tvn b{display:block;font-size:13.5px;line-height:1.2;overflow-wrap:break-word;hyphens:auto}
+  .tvc .tvn small{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tvc .tvn small.hors{white-space:normal}
+  /* v42.10 — téléphone : logo en haut sur toute la largeur, nom en dessous (plus de mots coupés en deux) */
+  @media (max-width:560px){ .tvg{grid-template-columns:repeat(2,minmax(0,1fr))} .tvc{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:7px} .tvc .tvl{flex:0 0 auto;width:100%;height:42px} .tvc .tvl.logo{width:100%;flex-basis:auto;height:50px;padding:4px} }
   .tvc .tvn small.gros{color:#8a5a00;font-weight:700}
   .tvc.off{opacity:.55}
   .tvLect{position:fixed;inset:0;z-index:80;background:#1d4f91 url(photos/ciel_tv.jpg) center/cover no-repeat;display:flex;flex-direction:column}
@@ -1953,8 +1956,9 @@ function afficherTv(){
   var tuile=function(c){ var i=l.indexOf(c);
     var aLogo=!!(c.logo&&/^https:\/\//.test(c.logo)), ini=esc(tvInitiales(c.nom));
     var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
-    var sous=c.hors?esc(T('tvHors')):c.type!=='hls'?'YouTube':c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
-    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(c.gros&&!c.hors?' class="gros"':'')+'>'+sous+'</small>':'')+'</span></button>'; };
+    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
+    var cl=c.hors?'hors':(c.gros||(mes&&mes>=1.5))?'gros':'';
+    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+(cl==='gros'&&mes?'📶 ':'')+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
   document.getElementById('tvZone').innerHTML=TVCAT?bloc(TVCAT):cats.map(function(c){ return '<div class="tvcat">'+(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c))+'</div>'+bloc(c); }).join('');
 }
@@ -1990,7 +1994,7 @@ function tvLancer(url){
       // v42.10 — la qualité reste FIXE (aucun changement automatique), mais c'est la personne qui la choisit :
       // Basse (économie), Moyenne (par défaut), Haute. Le choix est retenu sur le téléphone.
       TVH=new Hls({autoStartLoad:false, capLevelToPlayerSize:false, defaultAudioCodec:'mp4a.40.2', maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
-      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ var n=0; try{ n=tvNiveau(TVH.levels); TVH.startLevel=n; TVH.loadLevel=n; TVH.autoLevelCapping=n; }catch(e){} if(TVH.startLoad) TVH.startLoad(-1); tvQAfficher(n); lecture(); });
+      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ var n=0; try{ n=tvNiveau(TVH.levels); TVH.startLevel=n; TVH.loadLevel=n; TVH.autoLevelCapping=n; }catch(e){} if(TVH.startLoad) TVH.startLoad(-1); tvQAfficher(n); tvGoNoter(); lecture(); });
       TVH.on(Hls.Events.ERROR,function(ev,d){ if(!d||!d.fatal||moi!==TVI) return;
         if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&TVREC<2){ TVREC++; if(TVREC===2&&TVH.swapAudioCodec) TVH.swapAudioCodec(); TVH.recoverMediaError(); return; }   // 1re fois : réparer ; 2e fois : autre format audio
         tvEchec(); });
@@ -2024,6 +2028,13 @@ function tvChoix(L){ // les 3 choix proposés : b = le plus léger, h = le meill
 }
 function tvNiveau(L){ var o=tvChoix(L), x=o[tvQPref()]||o.b; return x?x.i:0; }
 function tvGo(b){ return b?Math.max(0.1,Math.round(b*3600/8/1e8)/10):0; }   // bits/s → Go par heure
+function tvGoLire(){ try{ return JSON.parse(localStorage.getItem('masbet_tv_go')||'{}')||{}; }catch(e){ return {}; } }
+function tvGoMesure(c){ var m=tvGoLire()[tvSlug(c.nom)]; return m&&m[tvQPref()]||0; }
+function tvGoNoter(){ // consommation réelle de chaque qualité de la chaîne, gardée sur ce téléphone pour la liste
+  var c=tvListe()[TVI]; if(!c||!TVH||!TVH.levels) return; var o=tvChoix(TVH.levels), m={};
+  ['b','m','h'].forEach(function(k){ if(o[k]&&o[k].b) m[k]=tvGo(o[k].b); }); if(!m.b) return;
+  var t=tvGoLire(); t[tvSlug(c.nom)]=m; try{ localStorage.setItem('masbet_tv_go',JSON.stringify(t)); }catch(e){}
+}
 function tvQAfficher(n){
   var bt=document.getElementById('tvQ'), m=document.getElementById('tvQm'); m.classList.add('hidden');
   if(!TVH||!TVH.levels||tvNiveaux(TVH.levels).length<2){ bt.classList.add('hidden'); return; }
@@ -2064,7 +2075,7 @@ function tvLienDirect(l){
   var ct=document.getElementById('cTv'); if(ct) ct.scrollIntoView({block:'start'});
   setTimeout(function(){ tvJouer(i); },300);
 }
-function tvFermer(){ tvArreter(); TVI=-1; document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; }
+function tvFermer(){ var avant=TVI; tvArreter(); TVI=-1; if(avant>=0) try{ afficherTv(); }catch(e){} document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; }
 (function(){ var v=document.getElementById('tvVid');
   v.addEventListener('playing',function(){ tvMsg(''); });
   v.addEventListener('waiting',function(){ if(TVI>=0) tvMsg(T('tvCharge')); });
