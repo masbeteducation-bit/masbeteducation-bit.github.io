@@ -50,6 +50,7 @@
   .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
   .act.pat{color:#128c4a;border-color:#bfe8cf;background:#f0fbf4}
   .act{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer}
+  .act .coeur{vertical-align:-3px}
   .act.on{border-color:var(--rose);color:var(--rose);background:#fff0f4}
   .act.disc{border:0;color:var(--muted);font-weight:600;padding:5px 6px}
   .kom{border-top:1px solid var(--line);padding:10px 0}
@@ -280,7 +281,9 @@ function ouvri(id){ history.replaceState(null,'','#sije='+id); PARENT=''; zonesP
   get('kom_sije',{id:id,appareil:appareil()}).then(function(d){ SIJE=d; vue('sije'); afficherSije(); clearInterval(POLL); POLL=setInterval(rechaje,30000); })
     .catch(function(e){ vue('lis'); msg('mLis',esc(e.message)); }); }
 function rechaje(){ if(!SIJE||document.hidden) return; get('kom_sije',{id:SIJE.sujet.id,appareil:appareil()}).then(function(d){ SIJE=d; afficherSije(); }).catch(function(){}); }
-function boutonLike(o){ return '<button class="act'+(o.jaime?' on':'')+'" onclick="like(\''+esc(o.id)+'\')">❤️ '+o.likes+'</button>'; }
+// Cœur vide (contour) tant qu'on n'a pas aimé ; cœur rouge plein après le « j'aime »
+function coeur(plein){ return '<svg class="coeur" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 20.6l-1.2-1.1C6.2 15.4 3.2 12.7 3.2 9.3 3.2 6.6 5.3 4.5 8 4.5c1.5 0 3 .7 4 1.9 1-1.2 2.5-1.9 4-1.9 2.7 0 4.8 2.1 4.8 4.8 0 3.4-3 6.1-7.6 10.2L12 20.6z" fill="'+(plein?'#e11d48':'none')+'" stroke="'+(plein?'#e11d48':'#8a93a8')+'" stroke-width="1.9" stroke-linejoin="round"/></svg>'; }
+function boutonLike(o){ return '<button class="act'+(o.jaime?' on':'')+'" aria-pressed="'+(o.jaime?'true':'false')+'" onclick="like(\''+esc(o.id)+'\')">'+coeur(o.jaime)+' '+o.likes+'</button>'; }
 function afficherSije(){
   var s=SIJE.sujet;
   el('post').classList.toggle('img',!!s.foto);
