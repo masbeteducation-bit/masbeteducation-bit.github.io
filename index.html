@@ -344,6 +344,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     .top{max-width:1180px;margin:0 auto;padding:14px 24px 10px}
     header{padding:14px 0 30px}
     header .brand,header p{max-width:1180px;margin-left:auto;margin-right:auto;padding:0 24px}
+    header .hChips{max-width:1180px;margin:12px auto 2px;padding:0 24px 4px;flex-wrap:wrap}
     nav{position:sticky;top:0;bottom:auto;max-width:none;justify-content:center;gap:4px;border-top:0;border-bottom:1px solid var(--line);padding:0;box-shadow:0 2px 6px rgba(20,33,61,.06)}
     nav a{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:14px 18px;font-size:15px;border-bottom:3px solid transparent}
     nav a span{display:inline;font-size:18px}
@@ -518,12 +519,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 </div>
 <div class="horsLigne hidden" id="horsLigne"></div>
 <header>
-  <div class="brand">Masbet<span> · Ansavo</span></div>
-  <p><span data-t="slogan"></span></p>
+  <div class="brand">Masbet</div>
   <div class="hChips" role="navigation" aria-label="Masbet">
     <a href="achte.html#wifi">📶 <b data-t="chWifi"></b></a><a href="#videyo&tv">📺 <b>TV</b></a><a href="#match">⚽ <b data-t="chMatch"></b></a><a href="#videyo">🔴 <b>Live</b></a>
     <a href="#quiz">🧠 <b>Quiz</b></a><a href="psiko.html">🧩 <b data-t="chJwet"></b></a><a href="kominote.html">💬 <b data-t="chKom"></b></a><a href="#istwa&d=liste">📜 <b data-t="chIstwa"></b></a>
-    <a href="biblio.html">📚 <b data-t="chLiv"></b></a><a href="meditasyon.html">🕊️ <b>Meditasyon</b></a>
+    <a href="biblio.html">📚 <b data-t="chLiv"></b></a><a href="meditasyon.html">🕊️ <b data-t="chMed"></b></a>
   </div>
   <p><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
 </header>
@@ -705,7 +705,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 var CONTENU = window.MASBET_CONTENU || '';   // projet Google « Contenu » (offres, météo, matchs…)
 var TXT = {
   ht: {
-    slogan:'Wi-Fi, TV, match, lives, quiz, jwèt, kominote, istwa… tout Ansavo nan yon sèl aplikasyon.', chWifi:'Wi-Fi', chMatch:'Match', chJwet:'Jwèt lespri', chKom:'Kominote', chIstwa:'Istwa jodi a', chLiv:'Liv', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
+    slogan:'Wi-Fi, TV, match, lives, quiz, jwèt, kominote, istwa… tout Ansavo nan yon sèl aplikasyon.', chWifi:'Wi-Fi', chMatch:'Match', chJwet:'Jwèt lespri', chKom:'Kominote', chIstwa:'Istwa jodi a', chLiv:'Liv', chMed:'Meditasyon', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
     heroBtn:'Achte kounye a', offres:'Ofri yo', meteo:'Meteyo', ephem:'Jodi a', matchJodi:'Match jodi a', toutMatch:'Wè tout match yo',
     videyo:'Videyo', videyoAide:'Videyo yo konsome done. Gade yo lè w konekte sou Wi-Fi a.', nAkey:'Akèy', nAchte:'Achte', nMatch:'Match', nVideyo:'Live', nKod:'Kòd mwen',
     apropo:'MasbetAirNet, rezo Wi-Fi Ansavo a →', nApropo:'Konsènan nou', quizTitre:'Quiz jodi a', quizJwe:'Jwe kounye a', quizWe:'Wè rezilta ak klasman', quizTxt:'5 kesyon (2 fasil, 2 mwayen, 1 difisil), 20 segonn pou chak (40 segonn pou kalkil difisil yo). Yon sèl chans pa jou !', quizDeja:function(s){ return 'Ou fè '+s+'/5 jodi a. Tounen demen pou yon lòt quiz !'; },
@@ -760,7 +760,7 @@ var TXT = {
     w:{0:'Syèl klè',1:'Prèske klè',2:'Kèk nyaj',3:'Syèl kouvri',45:'Bwouya',48:'Bwouya',51:'Ti farinaj',53:'Farinaj',55:'Farinaj fò',61:'Ti lapli',63:'Lapli',65:'Gwo lapli',80:'Ti avès',81:'Avès',82:'Gwo avès',95:'Loraj',96:'Loraj ak lagrèl',99:'Gwo loraj'}
   },
   fr: {
-    slogan:'Wi-Fi, TV, matchs, lives, quiz, jeux, communauté, histoire… tout Anse-à-Veau dans une seule application.', chWifi:'Wi-Fi', chMatch:'Matchs', chJwet:'Jeux d\'esprit', chKom:'Communauté', chIstwa:'Histoire du jour', chLiv:'Livres', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
+    slogan:'Wi-Fi, TV, matchs, lives, quiz, jeux, communauté, histoire… tout Anse-à-Veau dans une seule application.', chWifi:'Wi-Fi', chMatch:'Matchs', chJwet:'Jeux d\'esprit', chKom:'Communauté', chIstwa:'Histoire du jour', chLiv:'Livres', chMed:'Méditation', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
     heroBtn:'Acheter maintenant', offres:'Offres', meteo:'Météo', ephem:'Aujourd\'hui', matchJodi:'Matchs du jour', toutMatch:'Voir tous les matchs',
     videyo:'Vidéos', videyoAide:'Les vidéos consomment des données. Regardez-les une fois connecté au Wi-Fi.', nAkey:'Accueil', nAchte:'Acheter', nMatch:'Matchs', nVideyo:'Live', nKod:'Mes codes',
     apropo:'MasbetAirNet, le réseau Wi-Fi d\'Anse-à-Veau →', nApropo:'À propos', quizTitre:'Quiz du jour', quizJwe:'Jouer maintenant', quizWe:'Voir le résultat et le classement', quizTxt:'5 questions (2 faciles, 2 moyennes, 1 difficile), 20 secondes chacune (40 secondes pour les calculs difficiles). Une seule chance par jour !', quizDeja:function(s){ return 'Vous avez fait '+s+'/5 aujourd\'hui. Revenez demain pour un autre quiz !'; },
