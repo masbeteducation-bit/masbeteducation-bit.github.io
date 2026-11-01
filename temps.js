@@ -39,13 +39,22 @@
     var app = lireApp(); if (!o || app.length < 8) return; var vide = true; for (var k in o.g) { if (o.g[k][0]) vide = false; } if (vide) return;
     balise({ api: 'stat', appareil: app, ev: 'perf', m: o.g });
   }
+  var CACHES = 0, QUITTE = false;   // nombre de fois où l'écran a été caché ; page en train d'être quittée
+  document.addEventListener('visibilitychange', function () { if (document.hidden) CACHES++; });
+  window.addEventListener('pagehide', function () { QUITTE = true; });
+  window.addEventListener('pageshow', function () { QUITTE = false; });
   if (window.fetch) {
     var fetch0 = window.fetch;
     window.fetch = function (res, opt) {
       var u = typeof res === 'string' ? res : (res && res.url) || '', g = (u.indexOf(url) === 0 || (DIST && u.indexOf(DIST) === 0)) ? groupe(u, opt && opt.body) : '';
       var p = fetch0.apply(this, arguments); if (!g) return p;
-      var t0 = Date.now();
-      p.then(function (r) { mesurer(g, Date.now() - t0, !!(r && (r.ok || r.type === 'opaque'))); }, function () { mesurer(g, Date.now() - t0, false); });
+      // v42.10 — on ne mesure que ce qui dépend vraiment de Google : pas les demandes faites pendant que l'écran
+      // était caché (téléphone en veille = demande ralentie par le téléphone), pas celles coupées parce qu'on quitte
+      // la page, pas celles faites sans internet (Wi-Fi sans ticket, plus de forfait).
+      var t0 = Date.now(), c0 = CACHES, horsLigne = navigator.onLine === false;
+      var garder = function () { return !horsLigne && navigator.onLine !== false && !document.hidden && c0 === CACHES && !QUITTE; };
+      p.then(function (r) { if (garder()) mesurer(g, Date.now() - t0, !!(r && (r.ok || r.type === 'opaque'))); },
+        function (e) { if (garder() && !(e && e.name === 'AbortError' && Date.now() - t0 < 29000)) mesurer(g, Date.now() - t0, false); });
       return p;
     };
   }
