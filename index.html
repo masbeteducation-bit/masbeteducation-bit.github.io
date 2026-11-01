@@ -461,6 +461,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvEcran{position:relative;width:100%;aspect-ratio:16/9;max-height:calc(100vh - 160px);background:#000;margin:auto 0}
   .tvEcran video,.tvEcran iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
   .tvMsg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;padding:20px;font-weight:700;font-size:15px;pointer-events:none}
+  .tvBar #tvQ{width:auto;min-width:44px;padding:0 11px;font-size:13px;letter-spacing:.3px}
+  .tvQm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding:8px 12px;background:rgba(11,18,36,.75)}
+  .tvQm button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;line-height:1.25;text-align:center}
+  .tvQm button small{display:block;font-weight:500;opacity:.85;font-size:11.5px}
+  .tvQm button.on{background:#fff;color:#14213d;border-color:#fff}
   .tvInfo{color:#e8edf8;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:rgba(11,18,36,.55)}
   .tvLogo{display:flex;justify-content:center;padding:0 0 14px}
   .tvLogo img{width:150px;height:auto;background:rgba(255,255,255,.88);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
@@ -642,7 +647,8 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 <div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
 <div class="sheet hidden" id="notifSheet" role="dialog" aria-modal="true"></div>
 <div class="tvLect hidden" id="tvLect" role="dialog" aria-modal="true">
-  <div class="tvBar"><b id="tvNom"></b><span class="tag g" data-t="gratis"></span><button type="button" onclick="tvFermer()" aria-label="Fermer">✕</button></div>
+  <div class="tvBar"><b id="tvNom"></b><span class="tag g" data-t="gratis"></span><button type="button" onclick="tvQMenu()" aria-label="Qualité" id="tvQ" class="hidden">HD</button><button type="button" onclick="tvPataje()" aria-label="Partager" id="tvPat"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" style="vertical-align:-4px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg></button><button type="button" onclick="tvFermer()" aria-label="Fermer">✕</button></div>
+  <div class="tvQm hidden" id="tvQm"></div>
   <div class="tvEcran" id="tvEcran"><video id="tvVid" playsinline controls preload="none"></video><div class="tvMsg" id="tvMsg"></div></div>
   <div class="tvLogo"><img src="logo.png" alt="Masbet Education" width="560" height="166"></div>
   <div class="tvInfo" id="tvInfo"></div>
@@ -1937,6 +1943,7 @@ function tvInitiales(n){ var m=String(n).replace(/\(.*?\)/g,'').trim().split(/\s
 function tvPause(){ return (ACC&&ACC.lives||[]).some(function(x){ return x&&x.statut==='direk'&&x.payant; }); }
 function afficherTv(){
   var l=tvListe(), carte=document.getElementById('cTv'), pause=tvPause(), lien=document.querySelector('#cSvc a[href="#videyo&tv"]');
+  setTimeout(function(){ tvLienDirect(l); },0);
   if(lien) lien.classList.toggle('hidden',pause||!l.length);
   carte.classList.toggle('hidden',pause||!l.length); if(pause||!l.length) return;
   var cats=[]; l.forEach(function(c){ if(cats.indexOf(c.cat)<0) cats.push(c.cat); });
@@ -1979,10 +1986,11 @@ function tvLancer(url){
   hlsPret.catch(function(){}).then(function(){
     if(moi!==TVI) return;
     if(window.Hls&&Hls.isSupported()){
-      // v41.6c — son « robotique » : il venait des changements de qualité en cours de route (le son change de format).
-      // La qualité est maintenant FIXÉE à la plus basse (celle mesurée dans le test) : plus de changement, et moins de données.
-      TVH=new Hls({startLevel:0, capLevelToPlayerSize:false, defaultAudioCodec:'mp4a.40.2', maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
-      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ try{ TVH.autoLevelCapping=0; TVH.loadLevel=0; }catch(e){} lecture(); });
+      // v41.6c — son « robotique » : il venait des changements AUTOMATIQUES de qualité en cours de route.
+      // v42.10 — la qualité reste FIXE (aucun changement automatique), mais c'est la personne qui la choisit :
+      // Basse (économie), Moyenne (par défaut), Haute. Le choix est retenu sur le téléphone.
+      TVH=new Hls({autoStartLoad:false, capLevelToPlayerSize:false, defaultAudioCodec:'mp4a.40.2', maxBufferLength:20, maxMaxBufferLength:30, backBufferLength:10, manifestLoadingMaxRetry:2, levelLoadingMaxRetry:2, fragLoadingMaxRetry:3});
+      TVH.on(Hls.Events.MANIFEST_PARSED,function(){ var n=0; try{ n=tvNiveau(TVH.levels); TVH.startLevel=n; TVH.loadLevel=n; TVH.autoLevelCapping=n; }catch(e){} if(TVH.startLoad) TVH.startLoad(-1); tvQAfficher(n); lecture(); });
       TVH.on(Hls.Events.ERROR,function(ev,d){ if(!d||!d.fatal||moi!==TVI) return;
         if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&TVREC<2){ TVREC++; if(TVREC===2&&TVH.swapAudioCodec) TVH.swapAudioCodec(); TVH.recoverMediaError(); return; }   // 1re fois : réparer ; 2e fois : autre format audio
         tvEchec(); });
@@ -1996,8 +2004,66 @@ function tvEchec(){
   if(c.secours&&!TVSEC){ TVSEC=true; tvDetruire(); tvMsg(T('tvCharge')); tvLancer(c.secours); return; }
   tvDetruire(); tvMsg(T('tvErr'));
 }
-function tvDetruire(){ TVNAT=false; if(TVH){ try{ TVH.destroy(); }catch(e){} TVH=null; } var v=document.getElementById('tvVid'); try{ v.pause(); }catch(e){} v.removeAttribute('src'); try{ v.load(); }catch(e){} }
+function tvDetruire(){ TVNAT=false; var q=document.getElementById('tvQ'); if(q) q.classList.add('hidden'); var qm=document.getElementById('tvQm'); if(qm) qm.classList.add('hidden'); if(TVH){ try{ TVH.destroy(); }catch(e){} TVH=null; } var v=document.getElementById('tvVid'); try{ v.pause(); }catch(e){} v.removeAttribute('src'); try{ v.load(); }catch(e){} }
 function tvArreter(){ tvDetruire(); var f=document.getElementById('tvIfr'); if(f) f.remove(); tvMsg(''); }
+// v42.10 : choix de la qualité (fixe pendant la lecture → pas de son robotique)
+function tvQPref(){ var q=''; try{ q=localStorage.getItem('masbet_tv_q')||''; }catch(e){} return /^[bmh]$/.test(q)?q:'m'; }
+function tvNiveaux(L){ // niveaux utiles, du plus léger au plus lourd (sans doublons, max 1080p)
+  var a=(L||[]).map(function(l,i){ return {i:i, h:l.height||0, b:l.bitrate||0}; }).filter(function(x){ return !x.h||x.h<=1080; });
+  if(!a.length) a=(L||[]).map(function(l,i){ return {i:i, h:l.height||0, b:l.bitrate||0}; });
+  a.sort(function(x,y){ return (x.h-y.h)||(x.b-y.b); });
+  var r=[]; a.forEach(function(x){ var d=r[r.length-1]; if(d&&d.h===x.h&&x.h) { if(x.b<d.b) r[r.length-1]=x; } else r.push(x); });
+  return r;
+}
+function tvChoix(L){ // les 3 choix proposés : b = le plus léger, h = le meilleur, m = proche de 480p
+  var r=tvNiveaux(L); if(!r.length) return {};
+  var o={b:r[0], h:r[r.length-1]}, m=r[0];
+  r.forEach(function(x){ if(x.h&&x.h<=540&&x.h>=m.h) m=x; });
+  if(m===o.b&&r.length>2) m=r[Math.floor((r.length-1)/2)]; else if(m===o.b&&r.length===2) m=o.h;
+  o.m=m; return o;
+}
+function tvNiveau(L){ var o=tvChoix(L), x=o[tvQPref()]||o.b; return x?x.i:0; }
+function tvGo(b){ return b?Math.max(0.1,Math.round(b*3600/8/1e8)/10):0; }   // bits/s → Go par heure
+function tvQAfficher(n){
+  var bt=document.getElementById('tvQ'), m=document.getElementById('tvQm'); m.classList.add('hidden');
+  if(!TVH||!TVH.levels||tvNiveaux(TVH.levels).length<2){ bt.classList.add('hidden'); return; }
+  var l=TVH.levels[n]||{}, h=l.height||0;
+  bt.textContent=h>=720?'HD':h?h+'p':'SD'; bt.classList.remove('hidden');
+  var g=tvGo(l.bitrate); if(g) document.getElementById('tvInfo').textContent=T('tvDonnees')(g);
+}
+function tvQMenu(){
+  var m=document.getElementById('tvQm'); if(!m.classList.contains('hidden')){ m.classList.add('hidden'); return; }
+  if(!TVH||!TVH.levels) return; var o=tvChoix(TVH.levels), p=tvQPref(), vu={};
+  var N={b:AL('Ba · ekonomi','Basse · économie'), m:AL('Mwayen','Moyenne'), h:AL('Wo','Haute')};
+  m.innerHTML=['b','m','h'].filter(function(k){ if(!o[k]||vu[o[k].i]) return false; vu[o[k].i]=1; return true; }).map(function(k){
+    var x=o[k], g=tvGo(x.b);
+    return '<button type="button" data-q="'+k+'" class="'+(k===p||(o[p]&&o[p].i===x.i)?'on':'')+'">'+esc(N[k])+'<small>'+(x.h?x.h+'p':'')+(g?' · ≈ '+String(g).replace('.',',')+' Go/'+AL('èdtan','h'):'')+'</small></button>';
+  }).join('');
+  m.classList.remove('hidden');
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('#tvQm button[data-q]'); if(!b) return;
+  try{ localStorage.setItem('masbet_tv_q',b.getAttribute('data-q')); }catch(x){}
+  document.getElementById('tvQm').classList.add('hidden');
+  var c=tvListe()[TVI]; if(!c||c.type!=='hls') return;
+  tvDetruire(); tvMsg(T('tvCharge')); tvLancer(TVSEC&&c.secours?c.secours:c.lien);   // on relance au nouveau niveau, puis il reste fixe
+});
+// v42.9 : partager la chaîne qu'on regarde — le lien ouvre directement la même chaîne (#videyo&kanal=…)
+function tvSlug(n){ return String(n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\+/g,'-plus').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40); }
+function tvPataje(){
+  var c=tvListe()[TVI]; if(!c) return; statEnvoyer('partage');
+  var url=SITE+'#videyo&kanal='+tvSlug(c.nom), txt=AL('📺 M ap gade « '+c.nom+' » gratis sou Masbet. Vin gade l tou :','📺 Je regarde « '+c.nom+' » gratuitement sur Masbet. Viens regarder :');
+  if(window.masbetPataje) return masbetPataje({texte:txt, url:url, titre:c.nom});
+  if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
+}
+var TV_LIEN_FAIT=false;
+function tvLienDirect(l){
+  if(TV_LIEN_FAIT||!l.length) return; var m=/[#&]kanal=([a-z0-9-]+)/.exec(location.hash||''); TV_LIEN_FAIT=true; if(!m||tvPause()) return;
+  var i=-1; l.forEach(function(c,k){ if(i<0&&tvSlug(c.nom)===m[1]) i=k; }); if(i<0) return;
+  var ct=document.getElementById('cTv'); if(ct) ct.scrollIntoView({block:'start'});
+  setTimeout(function(){ tvJouer(i); },300);
+}
 function tvFermer(){ tvArreter(); TVI=-1; document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; }
 (function(){ var v=document.getElementById('tvVid');
   v.addEventListener('playing',function(){ tvMsg(''); });
@@ -2101,7 +2167,7 @@ function vue(){
   if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK||PAK.memo) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON||KON.memo) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
   else clearInterval(QTIMER);
   ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
-  if(v==='videyo'&&/[#&]tv\b/.test(location.hash)){ var ct=document.getElementById('cTv'); setTimeout(function(){ ct.scrollIntoView({block:'start'}); },60); }
+  if(v==='videyo'&&/[#&](tv\b|kanal=)/.test(location.hash)){ var ct=document.getElementById('cTv'); setTimeout(function(){ ct.scrollIntoView({block:'start'}); },60); }
   if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]sertifika(?!=)/.test(location.hash)){ var cs=document.getElementById('cSert'); cs.classList.remove('hidden'); chargerCerts(true); setTimeout(function(){ cs.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]defi/.test(location.hash)){ var cd=document.getElementById('cDefi'); cd.classList.remove('hidden'); if(!DT) chargerDefi(); setTimeout(function(){ cd.scrollIntoView({block:'start'}); },60); }
