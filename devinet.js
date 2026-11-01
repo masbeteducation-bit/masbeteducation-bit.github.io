@@ -347,16 +347,23 @@
 
   // 2.5 Prix (piège classique) : deux objets coûtent T ensemble, l'un coûte D de plus
   (function () {
-    var r = rng(505), n = 0, t = 0, OBJ = [['yon kreyon', 'yon kaye', 'un crayon', 'un cahier', 'kreyon an', 'le crayon'], ['yon ze', 'yon pen', 'un œuf', 'un pain', 'ze a', 'l\'œuf'],
-      ['yon sachè dlo', 'yon boutèy ji', 'un sachet d\'eau', 'une bouteille de jus', 'sachè dlo a', 'le sachet d\'eau'], ['yon gòm', 'yon règ', 'une gomme', 'une règle', 'gòm nan', 'la gomme']];
+    // [ht objet 1, ht objet 2, fr objet 1, fr objet 2, ht défini 1, ht défini 2, fr défini 1, fr défini 2]
+    var r = rng(505), n = 0, t = 0, OBJ = [['yon kreyon', 'yon kaye', 'un crayon', 'un cahier', 'kreyon an', 'kaye a', 'le crayon', 'le cahier'],
+      ['yon ze', 'yon pen', 'un œuf', 'un pain', 'ze a', 'pen an', 'l\'œuf', 'le pain'],
+      ['yon sachè dlo', 'yon boutèy ji', 'un sachet d\'eau', 'une bouteille de jus', 'sachè dlo a', 'boutèy ji a', 'le sachet d\'eau', 'la bouteille de jus'],
+      ['yon gòm', 'yon règ', 'une gomme', 'une règle', 'gòm nan', 'règ la', 'la gomme', 'la règle']];
     while (n < 15 && t < 999) {
       t++;
-      var s = 5 * ent(r, 1, 10), Dd = 5 * ent(r, 2, 20), T = 2 * s + Dd, o = pick(r, OBJ);
+      var s = 5 * ent(r, 1, 10), Dd = 5 * ent(r, 2, 20), T = 2 * s + Dd, o = pick(r, OBJ), R = T - Dd;
       var ch = choix(s, [T - Dd, T / 2, s + 5, Dd], r).map(String);
-      var h = { q: cap(o[0]) + ' ak ' + o[1] + ' koute ' + T + ' goud ansanm. ' + cap(o[1].replace('yon ', '')) + ' a koute ' + Dd + ' goud plis pase ' + o[4] + '. Konbyen ' + o[4] + ' koute ?',
-        ind: 'Si ' + o[4] + ' te koute ' + (T - Dd) + ' goud, lòt la t ap koute konbyen ?', ex: o[4] + ' = (' + T + ' − ' + Dd + ') ÷ 2 = ' + s + ' goud ; lòt la = ' + (s + Dd) + ' ; total ' + T + '.', rep: String(s) + ' G', faux: ch.slice(1).map(function (x) { return x + ' G'; }) };
-      var f = { q: cap(o[2]) + ' et ' + o[3] + ' coûtent ' + T + ' gourdes ensemble. ' + cap(o[3].replace(/^une? /, '')) + ' coûte ' + Dd + ' gourdes de plus que ' + o[5] + '. Combien coûte ' + o[5] + ' ?',
-        ind: 'Si ' + o[5] + ' coûtait ' + (T - Dd) + ' gourdes, combien coûterait l\'autre ?', ex: cap(o[5]) + ' = (' + T + ' − ' + Dd + ') ÷ 2 = ' + s + ' gourdes ; l\'autre = ' + (s + Dd) + ' ; total ' + T + '.', rep: String(s) + ' G', faux: ch.slice(1).map(function (x) { return x + ' G'; }) };
+      var h = { q: cap(o[0]) + ' ak ' + o[1] + ' koute ' + T + ' goud ansanm. ' + cap(o[5]) + ' koute ' + Dd + ' goud plis pase ' + o[4] + '. Konbyen ' + o[4] + ' koute ?',
+        ind: 'Si ' + o[4] + ' te koute ' + R + ' goud, ' + o[5] + ' t ap koute ' + (R + Dd) + ' : total la t ap ' + (2 * R + Dd) + ', pa ' + T + '.',
+        ex: 'Retire diferans ' + Dd + ' goud la : rete ' + T + ' − ' + Dd + ' = ' + R + ' goud, ki separe an 2 pati egal (de bagay yo konsa koute menm pri). Kidonk ' + o[4] + ' = ' + R + ' ÷ 2 = ' + s + ' goud ; ' + o[5] + ' = ' + s + ' + ' + Dd + ' = ' + (s + Dd) + ' ; total ' + s + ' + ' + (s + Dd) + ' = ' + T + '.',
+        rep: String(s) + ' G', faux: ch.slice(1).map(function (x) { return x + ' G'; }) };
+      var f = { q: cap(o[2]) + ' et ' + o[3] + ' coûtent ' + T + ' gourdes ensemble. ' + cap(o[7]) + ' coûte ' + Dd + ' gourdes de plus que ' + o[6] + '. Combien coûte ' + o[6] + ' ?',
+        ind: 'Si ' + o[6] + ' coûtait ' + R + ' gourdes, ' + o[7] + ' coûterait ' + (R + Dd) + ' : le total ferait ' + (2 * R + Dd) + ', pas ' + T + '.',
+        ex: 'On enlève l\'écart de ' + Dd + ' gourdes : il reste ' + T + ' − ' + Dd + ' = ' + R + ' gourdes, à partager en 2 parts égales (les deux objets coûtent alors pareil). Donc ' + o[6] + ' = ' + R + ' ÷ 2 = ' + s + ' gourdes ; ' + o[7] + ' = ' + s + ' + ' + Dd + ' = ' + (s + Dd) + ' ; total ' + s + ' + ' + (s + Dd) + ' = ' + T + '.',
+        rep: String(s) + ' G', faux: ch.slice(1).map(function (x) { return x + ' G'; }) };
       if (F('pr' + n, h, f)) n++;
     }
   })();
