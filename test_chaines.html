@@ -90,7 +90,57 @@ const S2=[
  ['Jeunesse, sport, musique','A2i Music','https://stream.sen-gt.com/A2iMusic/myStream/playlist.m3u8'],
  ['Jeunesse, sport, musique','Novela Channel','https://video1.getstreamhosting.com:1936/8284/8284/playlist.m3u8']
 ];
-const SERIE=/serie=1/.test(location.search)?1:2; const CHAINES=SERIE===1?S1:S2;
+const S3=[
+ ["Foot international", "FIFA+ (français)", "https://37b4c228.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWZyX0ZJRkFQbHVzRnJlbmNoX0hMUw/playlist.m3u8"],
+ ["Foot international", "FIFA+ (anglais)", "https://ba3e2e93.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1nYl9GSUZBUGx1c0VuZ2xpc2hfSExT/playlist.m3u8"],
+ ["Foot international", "FIFA+ (anglais) (secours)", "https://a62dad94.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmFrdXRlblRWLWV1X0ZJRkFQbHVzRW5nbGlzaF9ITFM/playlist.m3u8"],
+ ["Foot international", "FIFA+ (espagnol, Amériques)", "https://6c849fb3.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctbXhfRklGQVBsdXNTcGFuaXNoLTFfSExT/playlist.m3u8"],
+ ["Foot international", "FIFA+ Women", "https://cffda8ff.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/U2Ftc3VuZy1nYl9GSUZBUGx1c3dvbWVuX0hMUw/playlist.m3u8"],
+ ["Foot international", "FIFA+ (États-Unis)", "https://d2w9q46ikgrcwx.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-of5cbk3sav3w5/v1/sysdata_s_p_a_fifa_7/samsungheadend_us/latest/main/hls/playlist.m3u8"],
+ ["Foot international", "CBS Sports Golazo (foot, anglais)", "https://proped3fhg87.airspace-cdn.cbsivideo.com/golazo-live-dai/master/golazo-live-dai.m3u8"],
+ ["Foot international", "beIN SPORTS XTRA (anglais)", "https://d9ssxzmclhfo4.cloudfront.net/bein_sports.m3u8"],
+ ["Foot international", "Real Madrid TV (espagnol)", "https://rmtv.akamaized.net/hls/live/2043153/rmtv-es-web/master.m3u8"],
+ ["Foot international", "MUTV (Manchester United)", "https://fastly.live.brightcove.com/6374054671112/eu-west-1/6058004203001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoiYXplMnp5LmVncmVzcy55ODN1ZWIiLCJhY2NvdW50X2lkIjoiNjA1ODAwNDIwMzAwMSIsImVobiI6ImZhc3RseS5saXZlLmJyaWdodGNvdmUuY29tIiwiaXNzIjoiYmxpdmUtcGxheWJhY2stc291cmNlLWFwaSIsInN1YiI6InBhdGhtYXB0b2tlbiIsImF1ZCI6WyI2MDU4MDA0MjAzMDAxIl0sImp0aSI6IjYzNzQwNTQ2NzExMTIifQ.3FmuTna3DAmY7xlhK5fk6LMrosrtrR5VsU2QOgYO5y4/playlist-hls.m3u8"],
+ ["Sport", "Red Bull TV", "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8"],
+ ["Sport", "Red Bull TV (secours)", "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_3360.m3u8"],
+ ["Sport", "Fubo Sports Network", "https://aegis-cloudfront-1.tubi.video/c2ac89da-5c69-439e-b85d-d87de0548b54/5.m3u8"],
+ ["Sport", "Fubo Sports Network (secours)", "https://aegis-cloudfront-1.tubi.video/c2ac89da-5c69-439e-b85d-d87de0548b54/playlist.m3u8"],
+ ["Sport", "talkSPORT", "https://af7a8b4e.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctZ2JfdGFsa1NQT1JUX0hMUw/playlist.m3u8"],
+ ["Sport", "Trace Sport Stars HD", "https://channels.trace.plus/Traceprod/TRACE_SPORT_STARS_hd/index.m3u8"],
+ ["Éducation", "Canal Savoir (Québec)", "https://hls.savoir.media/live/stream.m3u8"],
+ ["Éducation", "PBS Kids", "https://livestream.pbskids.org/out/v1/14507d931bbe48a69287e4850e53443c/est.m3u8"],
+ ["Éducation", "TVOKids (Ontario)", "https://fastly.live.brightcove.com/6369851620112/us-east-1/15364602001/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3N0IjoicGZncmlmLmVncmVzcy50N2M3emwiLCJhY2NvdW50X2lkIjoiMTUzNjQ2MDIwMDEiLCJlaG4iOiJmYXN0bHkubGl2ZS5icmlnaHRjb3ZlLmNvbSIsImlzcyI6ImJsaXZlLXBsYXliYWNrLXNvdXJjZS1hcGkiLCJzdWIiOiJwYXRobWFwdG9rZW4iLCJhdWQiOlsiMTUzNjQ2MDIwMDEiXSwianRpIjoiNjM2OTg1MTYyMDExMiJ9.zRE6fD9JwdbNLUIK5zgvlTAvXCQ3HeeE5p0yH0Pd3-Q/playlist-hls.m3u8"],
+ ["Éducation", "World Channel (PBS)", "https://world.lls.pbs.org/index.m3u8"],
+ ["Éducation", "Classic Arts Showcase", "https://classicarts.akamaized.net/hls/live/1024257/CAS/master.m3u8"],
+ ["Documentaires", "Curiosity Now (sciences)", "https://amg00170-amg00170c4-samsung-gb-4232.playouts.now.amagi.tv/playlist.m3u8"],
+ ["Documentaires", "Curiosity Now (sciences) (secours)", "https://amg00170-curiositystream-amg00170c3-rakuten-us-2289.playouts.now.amagi.tv/playlist/amg00170-curiositystreamllcfast-curiositynowrow-rakutenus/playlist.m3u8"],
+ ["Documentaires", "Curiosity Explora (espagnol)", "https://d2bvy2sb4c0dbv.cloudfront.net/CuriosityEspanol.m3u8"],
+ ["Documentaires", "Documentary+", "https://d1kx9y4yhe8h6h.cloudfront.net/playlist.m3u8"],
+ ["Documentaires", "Terra Mater WILD (nature)", "https://53ff3982.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/UmxheHhUVi1ldV9UZXJyYU1hdGVyV2lsZF9ITFM/playlist.m3u8"],
+ ["Documentaires", "WildEarth (safari en direct)", "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01290-wildearthmediap-wildearth-samsungnl/playlist.m3u8"],
+ ["Documentaires", "WildEarth (safari en direct) (secours)", "https://cdn-ue1-prod.tsv2.amagi.tv/linear/amg01290-wildearthmediap-wildearth-samsungse/playlist.m3u8"],
+ ["Documentaires", "Adventure Earth", "https://autentic-adventure-earth-1-eu.rakuten.wurl.tv/playlist.m3u8"],
+ ["Documentaires", "Adventure Earth (secours)", "https://autentic-adventure-earth-1-gb.samsung.wurl.tv/playlist.m3u8"],
+ ["Documentaires", "Autentic History", "https://9e754fa707344ccca6d84955c8fcaf36.mediatailor.us-east-1.amazonaws.com/v1/master/44f73ba4d03e9607dcd9bebdcb8494d86964f1d8/RlaxxTV-eu_AutenticHistory/playlist.m3u8"],
+ ["Documentaires", "Autentic History (secours)", "https://autentic-autentichistory-1-gb.samsung.wurl.tv/playlist.m3u8"],
+ ["Documentaires", "NatureTime", "https://shls-live-ak.akamaized.net/out/v1/b06a89a463764d3688cda337d40dc5bf/index.m3u8"],
+ ["Documentaires", "Francophonie24 (français)", "https://5421175365ea3.streamlock.net/live/smil:switch.smil/playlist.m3u8"],
+ ["Documentaires", "CGTN Documentary", "https://hlspackager.akamaized.net/live/DB/CGTN_DOCUMENTARY/HLS/CGTN_DOCUMENTARY.m3u8"],
+ ["Documentaires", "CGTN Documentary (secours)", "https://english-livebkali.cgtn.com/live/doccgtn.m3u8"],
+ ["Grands projets & sciences", "Space Live (espace)", "https://d111bsx9oooqoh.cloudfront.net/playlist.m3u8"],
+ ["Grands projets & sciences", "Bloomberg Originals", "https://86fdc85a.wurl.com/master/f36d25e7e52f1ba8d7e56eb859c636563214f541/TEctZ2JfQmxvb21iZXJnT3JpZ2luYWxzX0hMUw/playlist.m3u8"],
+ ["Grands projets & sciences", "Bloomberg Originals (secours)", "https://bloomberg.com/media-manifest/streams/qt.m3u8"],
+ ["Grands projets & sciences", "NHK World-Japan", "https://masterpl.hls.nhkworld.jp/hls/w/live/smarttv.m3u8"],
+ ["Grands projets & sciences", "NHK World-Japan (secours)", "https://media-osa.hls.nhkworld.jp/hls/w/live/master.m3u8"],
+ ["Grands projets & sciences", "DroneTV", "https://airvuz-dronetv-1-us.ohlscdn.wurl.tv/playlist.m3u8"],
+ ["Info internationale", "DW (anglais)", "https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/master.m3u8"],
+ ["Info internationale", "DW (espagnol)", "https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/master.m3u8"],
+ ["Info internationale", "CGTN Français", "https://amg01314-cgtn-amg01314c2-rakuten-us-1319.playouts.now.amagi.tv/cgtn-fr-rakuten/playlist.m3u8"],
+ ["Info internationale", "CGTN Français (secours)", "https://francais-livews.cgtn.com/hls/LSvev95OuFZtKLc6CeKEFYXj220802LSTeV6PO0Ut9r71Uq3k5goCA220802cd/playlist.m3u8"],
+ ["Info internationale", "Al Jazeera English", "https://live-hls-apps-aje-fa.getaj.net/AJE/index.m3u8"],
+ ["Info internationale", "Al Jazeera English (secours)", "https://live-hls-apps-aje-v3-fa.getaj.net/AJE/index.m3u8"]
+];
+const SERIE=/serie=1/.test(location.search)?1:/serie=3/.test(location.search)?3:2; const CHAINES=SERIE===1?S1:SERIE===3?S3:S2;
 const $=s=>document.querySelector(s); const RES=[];
 function delai(p,ms){ const c=new AbortController(); const t=setTimeout(()=>c.abort(),ms); return [c.signal,()=>clearTimeout(t)]; }
 async function lire(url,ms,binaire){ const [sig,fin]=delai(null,ms); try{ const r=await fetch(url,{cache:'no-store',signal:sig}); if(!r.ok) return {http:r.status};
@@ -135,6 +185,6 @@ $('#liste').onclick=async e=>{ const b=e.target.closest('button[data-i]'); if(!b
     v.muted=false; await v.play().catch(()=>{ v.muted=true; return v.play(); }); $('#lmsg').textContent=c[1]; }catch(err){ $('#lmsg').textContent=c[1]+' · impossible de lire'; } };
 v.addEventListener('playing',()=>{ const t=$('#lmsg').textContent; if(/chargement/.test(t)) $('#lmsg').textContent=t.replace(' · chargement…',''); });
 $('#fermer').onclick=()=>{ v.pause(); if(hls){ hls.destroy(); hls=null; } v.removeAttribute('src'); v.load(); $('#lecteur').style.display='none'; };
-$('#serie').innerHTML=SERIE===2?'<b>Série 2</b> : 23 nouvelles chaînes et 2e essai pour 5 chaînes haïtiennes · <a href="?serie=1">revoir la série 1</a>':'<b>Série 1</b> · <a href="?serie=2">passer à la série 2</a>';
+$('#serie').innerHTML=SERIE===3?'<b>Série 3</b> : '+S3.length+' chaînes — foot international, sport, éducation, documentaires, grands projets · <a href="?serie=1">série 1</a> · <a href="?serie=2">série 2</a>':SERIE===2?'<b>Série 2</b> : 23 nouvelles chaînes et 2e essai pour 5 chaînes haïtiennes · <a href="?serie=1">revoir la série 1</a>':'<b>Série 1</b> · <a href="?serie=2">passer à la série 2</a>';
 dessiner();
 </script></body></html>
