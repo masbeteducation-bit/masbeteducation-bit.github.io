@@ -28,11 +28,15 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Masbet">
 <script src="config.js"></script>
+<script src="temps.js"></script>
+<script src="pataje.js"></script>
 <script>
 /* Version Google Play (application Android) : ouverte avec ?play=1, ou depuis l'application (android-app://).
    Gardé pour la session seulement : le même téléphone dans Chrome reste la version web complète. */
 var PLAY=(function(){ try{ if(/[?&]play=1\b/.test(location.search)||/^android-app:\/\//.test(document.referrer||'')) sessionStorage.setItem('masbet_play','1'); return sessionStorage.getItem('masbet_play')==='1'; }catch(e){ return /[?&]play=1\b/.test(location.search); } })();
 if(PLAY) document.documentElement.classList.add('play');
+/* v42.5 : 1re visite de ce téléphone (avant création de son identifiant) → compteur « nouveaux téléphones » */
+var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&&!localStorage.getItem('masbet_st_premye'); }catch(e){ return false; } })();
 </script>
 <style>
   :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
@@ -431,7 +435,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .kom.moi b{color:#c2185b}
   .horsLigne{position:sticky;top:0;z-index:55;background:#5d6782;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:7px 10px}
   .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#fff7e6;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
-  .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#25d366;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
+  .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#173a8c;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
   /* v41.6 — TV gratuite */
   .tvcats{display:flex;gap:6px;overflow-x:auto;margin:10px -4px 10px;padding:0 4px 4px;scrollbar-width:none}
   .tvcats::-webkit-scrollbar{display:none}
@@ -2252,10 +2256,11 @@ function reacEnvoyer(){
     function(e){ b.disabled=false; i.disabled=false; var m=(e&&e.message)||''; if(/Kreye yon kont/.test(m)) kontMete(''); var z=document.getElementById('rMsg'); if(z) z.innerHTML='<div class="err">'+esc(!m||/fetch|abort|network/i.test(m)?T('reseau'):m)+'</div>'; });
 }
 
-// ---------- Partage (WhatsApp ou menu du téléphone) ----------
+// ---------- Partage : menu du téléphone (toutes les applications) ou fenêtre Masbet (pataje.js) ----------
 var SITE='https://masbet.me/';
 function pataje(txt){
   statEnvoyer('partage');
+  if(window.masbetPataje) return masbetPataje({texte:txt, url:SITE, titre:'Masbet'});
   if(navigator.share){ navigator.share({text:txt, url:SITE}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+SITE),'_blank','noopener');
 }
@@ -2271,7 +2276,7 @@ function icoWa(bulle,tel){ return '<svg class="ico" viewBox="0 0 24 24" aria-hid
 var ICO_FB='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1877F2"/><path fill="#fff" d="M13.3 22.9v-7.6h2.6l.4-3.1h-3v-1.9c0-.9.3-1.5 1.5-1.5h1.6V6c-.3 0-1.2-.1-2.3-.1-2.3 0-3.8 1.4-3.8 3.9v2.3H7.7v3.1h2.6v7.5c1 .3 2 .3 3 .2z"/></svg>';
 var ICO_YT='<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="5" width="22" height="14" rx="4.5" fill="#FF0000"/><path fill="#fff" d="M9.8 8.8v6.4l5.6-3.2z"/></svg>';
 function icoReseau(nom,lien){ var t=(nom+' '+lien).toLowerCase(); return /facebook|fb\.watch/.test(t)?ICO_FB:/youtu/.test(t)?ICO_YT:/whatsapp|wa\.me/.test(t)?icoWa('#25D366','#fff'):''; }
-function btnPataje(onclick){ return '<button class="patBtn" onclick="'+onclick+'">'+icoWa('#fff','#25D366')+AL('Pataje sou WhatsApp','Partager sur WhatsApp')+'</button>'; }
+function btnPataje(onclick){ return '<button class="patBtn" onclick="'+onclick+'"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg>'+AL('Pataje','Partager')+'</button>'; }
 
 // ---------- Hors connexion ----------
 var HORS=false;
@@ -2286,11 +2291,17 @@ function statJourCle(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.get
 function statEnvoyer(ev,page){
   if(!CONTENU) return;
   var j=statJourCle(), n=Number(lire('masbet_st_n_'+j)||0); if(n>=40) return; ecrire('masbet_st_n_'+j,String(n+1));
-  var envoi=function(){ apiPost('stat',{appareil:appareil(), ev:ev, page:page||''}).catch(function(){}); };
+  var envoi=function(){ apiPost('stat',{appareil:appareil(), ev:ev, page:page||'', tp:window.MASBET_TP||''}).catch(function(){}); };
   // au démarrage, la statistique part juste après les lectures : le téléphone envoie d'abord le contenu à afficher
   var t=(window.performance&&performance.now)?performance.now():9999; if(t<1500) setTimeout(envoi,400); else envoi();
 }
-function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecrire('masbet_st_j',j); statEnvoyer('jou'); } }
+function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecrire('masbet_st_j',j); statEnvoyer('jou'); }
+  // v42.5 : téléphone vu pour la 1re fois (les anciens sont marqués sans être comptés)
+  if(!lire('masbet_st_premye')){ ecrire('masbet_st_premye',j); if(NOUVO_TEL) statEnvoyer('nouvo'); }
+  // v42.5 : ouverte depuis l'icône de l'écran d'accueil (application installée), une fois par jour
+  var icone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true||PLAY;
+  if(icone&&lire('masbet_st_ic')!==j){ ecrire('masbet_st_ic',j); statEnvoyer('icone'); } }
+window.addEventListener('appinstalled',function(){ statEnvoyer('install'); });   // v42.5 : installation (Android / Chrome)
 function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
 document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
 

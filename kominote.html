@@ -12,6 +12,8 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
+<script src="temps.js"></script>
+<script src="pataje.js"></script>
 <title>Masbet Kominote</title>
 <style>
   :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--rose:#e0245e}
@@ -48,7 +50,7 @@
   .post .t{font-size:19px;font-weight:900;margin:6px 0;word-break:break-word}
   .txt{white-space:pre-wrap;word-break:break-word;text-align:justify;text-justify:inter-word}
   .acts{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-  .act.pat{color:#128c4a;border-color:#bfe8cf;background:#f0fbf4}
+  .act.pat{color:#173a8c;border-color:#c7d2fe;background:#eef2ff}
   .act{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:800;cursor:pointer}
   .act .coeur{vertical-align:-3px}
   .kloch{position:relative;border:0;background:rgba(255,255,255,.12);color:#fff;border-radius:50%;width:38px;height:38px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
@@ -347,6 +349,7 @@ function patajeSije(){
   var ext=String(s.texte||'').replace(/\s+/g,' ').trim(); if(ext.length>160) ext=ext.slice(0,157).replace(/\s+\S*$/,'')+'…';
   var txt='💬 '+s.titre+'\n'+ext+'\n\n'+T('patajeTxt');
   if(!DEMO) post('stat',{appareil:appareil(),ev:'partage'}).catch(function(){});
+  if(window.masbetPataje) return masbetPataje({texte:txt, url:url, titre:s.titre});
   if(navigator.share){ navigator.share({title:s.titre,text:txt,url:url}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
 }
@@ -364,7 +367,7 @@ function afficherSije(){
   var s=SIJE.sujet;
   el('post').classList.toggle('img',!!s.foto);
   el('post').innerHTML=(s.foto?imgFoto(s.foto,'kf','eager'):'')+'<div class="c">'+(s.fotoAtann?'<div class="atann">'+esc(T('fotoAtann'))+'</div>':s.fotoRefize?'<div class="atann">'+esc(T('fotoRefize'))+'</div>':'')+'<div class="meta" style="margin:0">'+avatar(s.pseudo)+'<b style="color:var(--ink)">'+esc(s.pseudo)+(s.moi?' '+esc(T('ou')):'')+'</b><span>· '+esc(depi(s.date))+'</span></div>'+
-    '<div class="t">'+esc(s.titre)+'</div><div class="txt">'+esc(s.texte)+'</div><div class="acts">'+boutonLike(s)+'<button class="act pat" onclick="patajeSije()">'+ICO_WA+' '+esc(T('pataje'))+'</button>'+(s.moi?'':'<button class="act disc" onclick="siyale(\''+esc(s.id)+'\')">⚑ '+esc(T('siyale'))+'</button>')+'</div></div>';
+    '<div class="t">'+esc(s.titre)+'</div><div class="txt">'+esc(s.texte)+'</div><div class="acts">'+boutonLike(s)+'<button class="act pat" onclick="patajeSije()"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg> '+esc(T('pataje'))+'</button>'+(s.moi?'':'<button class="act disc" onclick="siyale(\''+esc(s.id)+'\')">⚑ '+esc(T('siyale'))+'</button>')+'</div></div>';
   var ks=SIJE.commentaires, rasin=ks.filter(function(k){ return !k.parent || !ks.some(function(x){ return x.id===k.parent; }); });
   if(SIJE._partiel){ el('nbKom').textContent='💬 '+(s.nb||0)+' '+((s.nb||0)>1?T('komN'):T('kom1')); el('koms').innerHTML='<div class="chaj"><i></i>'+esc(T('chajKom'))+'</div>'; return; }
   el('nbKom').textContent=ks.length+' '+(ks.length>1?T('komN'):T('kom1'));

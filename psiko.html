@@ -11,6 +11,8 @@
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
+<script src="temps.js"></script>
+<script src="pataje.js"></script>
 <title>Tès sikoteknik — Masbet</title>
 <style>
   :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--bleu:#173a8c}
@@ -130,7 +132,7 @@
   .chx.long{grid-template-columns:1fr} .chx.long button{font-size:15.5px;font-weight:700;text-align:left;padding:12px 14px}
   .ind{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#fff8ea;border:1.5px dashed #f3cf86;font-size:14.5px}
   .bInd{border:1.5px solid #f3cf86;background:#fffaf0;color:#8a5a00;border-radius:999px;padding:6px 12px;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;margin-bottom:12px}
-  .patB{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;background:#25D366;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:11px;cursor:pointer;margin-top:10px}
+  .patB{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;background:#173a8c;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:11px;cursor:pointer;margin-top:10px}
   .recap{text-align:left;margin:12px 0} .recap div{padding:9px 0;border-top:1px solid var(--line);font-size:14px} .recap b{display:block}
   .gg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   @media (min-width:560px){ .gg{grid-template-columns:repeat(3,1fr)} }
@@ -951,7 +953,7 @@ function devRepondre(k){
   var bInd=document.getElementById('devInd'); if(bInd) bInd.remove();
   document.querySelector('#zone .pts3').innerHTML=devPoints(e);
   document.getElementById('ex').innerHTML='<div class="expl">'+(ok?'<b class="ok">'+A('Bravo !','Bravo !')+'</b> ':'<b class="ko">'+A('Non.','Non.')+'</b> '+A('Repons lan se ','La réponse est ')+'<b>'+esc(q.rep)+'</b>. ')+esc(q.ex)+'</div>'+
-    '<button type="button" class="patB" id="devPat">'+A('Pataje devinèt sa a','Partager cette énigme')+'</button>'+
+    '<button type="button" class="patB" id="devPat"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg> '+A('Pataje devinèt sa a','Partager cette énigme')+'</button>'+
     '<div style="margin-top:10px"><button type="button" class="btn plein" id="devSuite">'+(e.r.indexOf(null)<0?A('Wè rezilta a','Voir le résultat'):A('Pwochen devinèt','Énigme suivante'))+'</button></div>';
 }
 function devFin(){
@@ -967,12 +969,13 @@ function devFin(){
     (tot2?'<div class="sous" style="margin-top:6px">'+A('Total : '+tot2.bons+' devinèt jwenn an '+tot2.jou+' jou','Total : '+tot2.bons+' énigmes trouvées en '+tot2.jou+' jours')+'</div>':'')+
     '<div class="recap">'+L.map(function(q,i){ var x=e.r[i]; return '<div>'+(x&&x.ok?'✅':'❌')+' '+esc(q.q.split('\n')[0])+'<b>'+esc(q.rep)+'</b></div>'; }).join('')+'</div>'+
     '<div class="sous">⏰ '+A('3 nouvo devinèt demen maten.','3 nouvelles énigmes demain matin.')+'</div>'+
-    '<button type="button" class="patB" id="devPatRes">'+A('Pataje rezilta m','Partager mon résultat')+'</button>'+
+    '<button type="button" class="patB" id="devPatRes"><svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg> '+A('Pataje rezilta m','Partager mon résultat')+'</button>'+
     '<div class="actions" style="margin-top:10px"><button type="button" class="btn sec" data-menu="1">'+A('Lòt jwèt','Autres jeux')+'</button><a class="btn sec" href="index.html#akey" style="text-align:center">'+A('Akèy','Accueil')+'</a></div></div>';
   window.scrollTo(0,0);
 }
 function devPartager(txt){
   statEv('partage');
+  if(window.masbetPataje) return masbetPataje({texte:txt, url:SITE_JEU+'#dev', titre:A('Devinèt Masbet','Énigmes Masbet')});
   if(navigator.share){ navigator.share({text:txt,url:SITE_JEU+'#dev'}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+SITE_JEU+'#dev'),'_blank','noopener');
 }
