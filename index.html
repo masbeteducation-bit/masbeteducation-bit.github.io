@@ -234,9 +234,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .verrou a{display:block;margin-top:10px;text-align:center;color:#fff;font-weight:700}
   .verrou .e{color:#ffd2d2;font-size:14px;margin-top:8px}
   /* Quiz */
-  .quizhome{background:linear-gradient(135deg,#fca311,#f77f00);color:var(--navy)}
+  .quizhome{background:#f6f7fb;border-radius:14px;padding:14px;margin:12px 0 4px;color:var(--ink)}
+  .qhT{display:flex;align-items:center;gap:10px;font-size:17px;margin-bottom:6px}.qhI{width:38px;height:38px;border-radius:10px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   .quizhome h2{color:var(--navy)}
-  .quizhome p{margin:0 0 10px;font-size:14.5px}
+  .quizhome p{margin:0 0 10px;font-size:14.5px;color:var(--muted)}.quizhome p b{color:var(--ink)}
   .quizhome .btn{background:var(--navy);color:#fff}
   .qhead{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);font-weight:700;margin-bottom:8px}
   .qbar{height:6px;background:#eef0f6;border-radius:4px;overflow:hidden;margin-bottom:14px}
@@ -355,7 +356,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     nav a.on{border-bottom-color:var(--gold)}
     nav .navlien{display:flex}
     main{max-width:1180px;padding:0 24px 40px}
-    #vAkey:not(.hidden){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
+    #vAkey:not(.hidden){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;grid-auto-flow:row dense}
     #cJwe{grid-row:span 2}
     #lokHome,#cNotif,#cSert{grid-column:1 / -1}#lokHome:empty{display:none}
     #vAkey .card{margin:0}
@@ -391,10 +392,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .sheet.bas{max-height:48vh}
   .konkou.flash{outline:3px solid #f5a524;outline-offset:2px;transition:outline .3s}
   .jweTete{display:flex;align-items:center;gap:12px;margin-bottom:6px;padding-bottom:12px;position:relative}
-  .jweTete:after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:linear-gradient(90deg,#173a8c,#1d8a4e 55%,#d4a017)}.jweTete img{width:78px;height:auto;flex-shrink:0}
+  .jweTete:after{content:'';position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--line)}.jweTete img{width:78px;height:auto;flex-shrink:0}
   .jwe a{display:flex;align-items:center;gap:12px;padding:11px 4px;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}.jwe a:first-child{border-top:0;margin-top:4px}
-  .jwe .ji{font-size:26px;width:34px;text-align:center;flex-shrink:0}.jwe b{display:block;font-size:15px}.jwe small{display:block;color:var(--muted);font-size:13px;line-height:1.3}.jwe i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
-  .jwe .tag{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;background:#e8f6ee;color:var(--ok)}.jwe .tag.p{background:#fff4dc;color:#8a5a00}
+  .jwe .ji{font-size:20px;width:38px;height:38px;border-radius:10px;background:#eef1f8;color:#173a8c;display:flex;align-items:center;justify-content:center;flex-shrink:0}.jwe b{display:block;font-size:15px}.jwe small{display:block;color:var(--muted);font-size:13px;line-height:1.3}.jwe i{margin-left:auto;font-style:normal;color:var(--muted);font-size:20px}
+  .jwe .tag{display:inline-block;white-space:nowrap;font-size:11px;font-weight:800;border-radius:999px;padding:1px 7px;margin-left:6px;vertical-align:2px;background:#e8f6ee;color:var(--ok)}.jwe .tag.p{background:#fff4dc;color:#8a5a00}
   .etaps{display:flex;flex-direction:column;gap:0;margin:4px 0 12px}.etaps div{display:flex;gap:10px;align-items:flex-start;padding:7px 0;position:relative}
   .etaps div span.o{width:26px;height:26px;border-radius:50%;background:#eef0f5;color:var(--muted);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0}
   .etaps div.f span.o{background:var(--ok);color:#fff}.etaps div.c span.o{background:var(--navy);color:#fff}.etaps div.c b{color:var(--navy)}.etaps small{display:block;color:var(--muted);font-size:13px;line-height:1.3}
@@ -527,7 +528,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   <div class="hChips" role="navigation" aria-label="Masbet">
     <a href="achte.html#wifi"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg> <b data-t="chWifi"></b></a><a href="#videyo&tv"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 3l4 4 4-4"/></svg> <b>TV</b></a><a href="#match"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.6-1.6M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3 3.6 8.7"/></svg> <b data-t="chMatch"></b></a><a href="#videyo"><svg class="mic rouge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10M4.2 4.2a11 11 0 0 0 0 15.6M19.8 4.2a11 11 0 0 1 0 15.6"/></svg> <b>Live</b></a>
     <a href="#quiz"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg> <b>Quiz</b></a><a href="psiko.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><path d="M17.25 13.2l4 4-4 4-4-4z"/></svg> <b data-t="chJwet"></b></a><a href="kominote.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg> <b data-t="chKom"></b></a><a href="#istwa&d=liste"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4.5v4h4"/><path d="M12 7.5V12l3.2 2"/></svg> <b data-t="chIstwa"></b></a>
-    <a href="biblio.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h5v16h-5z"/><path d="m15.8 5.3 3.9-1 3.3 14.6-3.9 1z"/></svg> <b data-t="chLiv"></b></a><a href="meditasyon.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.2-1.6-7.5-4.6-7.5-9 3.2 0 5.6 1.6 7.5 4.3 1.9-2.7 4.3-4.3 7.5-4.3 0 4.4-3.3 7.4-7.5 9z"/><path d="M12 15.8c-1.6-2.6-1.6-6.4 0-10.3 1.6 3.9 1.6 7.7 0 10.3z"/></svg> <b data-t="chMed"></b></a>
+    <a href="biblio.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h5v16h-5z"/><path d="m15.8 5.3 3.9-1 3.3 14.6-3.9 1z"/></svg> <b data-t="chLiv"></b></a><a href="suite.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg> <b>Masbet Suite</b></a><a href="meditasyon.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.2-1.6-7.5-4.6-7.5-9 3.2 0 5.6 1.6 7.5 4.3 1.9-2.7 4.3-4.3 7.5-4.3 0 4.4-3.3 7.4-7.5 9z"/><path d="M12 15.8c-1.6-2.6-1.6-6.4 0-10.3 1.6 3.9 1.6 7.7 0 10.3z"/></svg> <b data-t="chMed"></b></a>
   </div>
   <p><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
 </header>
@@ -553,31 +554,16 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     </div>
     <div class="card isCard hidden" id="cIstwa"></div>
 
-    <div class="card" id="cSvc">
-      <h2><span data-t="svcTitre"></span></h2>
-      <div class="svc">
-        <a href="achte.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 14.5h4"/></svg></span><b data-t="svcPay"></b></a>
-        <a href="suite.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg></span><b>Masbet Suite</b></a>
-        <a href="kominote.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg></span><b data-t="svcKom"></b></a>
-        <a href="biblio.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h5v16h-5z"/><path d="m15.8 5.3 3.9-1 3.3 14.6-3.9 1z"/></svg></span><b data-t="svcBib"></b></a>
-        <a href="meditasyon.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.2-1.6-7.5-4.6-7.5-9 3.2 0 5.6 1.6 7.5 4.3 1.9-2.7 4.3-4.3 7.5-4.3 0 4.4-3.3 7.4-7.5 9z"/><path d="M12 15.8c-1.6-2.6-1.6-6.4 0-10.3 1.6 3.9 1.6 7.7 0 10.3z"/></svg></span><b data-t="svcMed"></b></a>
-        <a href="#videyo&tv"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 3l4 4 4-4"/></svg></span><b data-t="svcTv"></b></a>
-        <a href="psiko.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><path d="M17.25 13.2l4 4-4 4-4-4z"/></svg></span><b data-t="svcJwet"></b></a>
-      </div>
-    </div>
-
-    <div class="card quizhome hidden" id="cQuizHome">
-      <h2>🧠 <span data-t="quizTitre"></span></h2>
+    <div class="card" id="cJwe">
+      <div class="jweTete"><img src="jwe-logo.png" alt="Masbet : Jwe · Fòme · Genyen" width="78" height="92"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
+      <div class="quizhome hidden" id="cQuizHome">
+      <div class="qhT"><span class="qhI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg></span><b data-t="quizTitre"></b></div>
       <div id="cadeauHome"></div>
       <p id="quizHomeTxt"></p>
       <div id="konHome"></div>
       <div id="pakHome"></div>
       <a class="btn" href="#quiz" id="quizHomeBtn" data-t="quizJwe"></a>
-      <a class="lien2" href="#quiz&antren" data-t="antLien"></a>
     </div>
-
-    <div class="card" id="cJwe">
-      <div class="jweTete"><img src="jwe-logo.png" alt="Masbet : Jwe · Fòme · Genyen" width="78" height="92"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
       <div class="jwe" id="jweZone"></div>
     </div>
 
@@ -728,7 +714,7 @@ var TXT = {
     pakTout:'👑 Ou fini tout pakou sa a. Ou se yon Jeni !', pakRetire:'Kesyon sa a te retire nan bank lan : li konte kòm yon bon repons.', pakTan:'Tan an fini pou kesyon sa a.',
     konkouTitre:'Konkou Masbet', konkouTxt:function(e,n){ return 'Valide etap '+e+' nan '+n+' pakou pou w resevwa envitasyon nan Konkou a.'; }, konkouPwo:function(v,n){ return v+' / '+n+' pakou'; },
     invTitre:'Ou envite nan Konkou Masbet !', invMsg:'N ap kontakte w pou dat manch kalifikasyon yo.', invTel:'Kite nimewo telefòn ou pou nou ka kontakte w :', invTelOk:'Nimewo w anrejistre ✓', voye:'Voye', invVoir:'Wè detay yo →',
-    pakHome:function(b,v,n){ return '🎯 Pakou mwen : '+b+' badj · Konkou '+v+'/'+n+' →'; },
+    pakHome:function(b,v,n){ return 'Pakou mwen : '+b+' badj · Konkou '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Revize erè m yo ('+n+')'; }, revTitre:'Revizyon', revTxt:'Kesyon ou te rate yo. Lè w jwenn yon kesyon, li soti nan lis la.', revFin:function(s,n,r){ return 'Ou jwenn '+s+' sou '+n+'. Rete '+r+' kesyon pou revize.'; },
     proTitre:'Espas pwofesyonèl', proTxt:'Pou pwofesyonèl ak etidyan : 12 ribrik metye ak syans, 5 etap chak. Ribrik sa yo pa antre nan Quiz jou a ni nan Konkou a.',
     etapesPro:['Apranti','Debitan','Konfime','Pwofesyonèl','Ekspè'], proGratis:function(g){ return g?'Etap 1'+(g>1?' rive '+g:'')+' gratis nan chak ribrik, san limit. Etap '+(g+1)+' rive 5 ak atestasyon an : Pass Pro.':'Espas pwofesyonèl la mande Pass Pro a.'; }, proEssaiKont:function(n){ return n+' kesyon gratis pou w eseye : kreye yon kont Masbet (yon non ase).'; }, proEssaiReste:function(r,n){ return 'Rete '+r+' kesyon gratis sou '+n+'.'; }, proEssaiFini:function(n){ return 'Ou fin itilize '+n+' kesyon gratis yo. Pran Pass Pro a pou w kontinye.'; }, proKreyeKont:'👤 Kreye kont mwen', proDenyeTes:function(r){ return 'Atansyon : rete '+r+' kesyon gratis. Tès sa a ap dènye tès gratis ou.'; }, passKod:'Kòd Pass Pro', passAktive:'Aktive', passAchte:'Achte yon Pass Pro', passEkspire:'Dènye Pass ou a ekspire.',
@@ -783,7 +769,7 @@ var TXT = {
     pakTout:'👑 Parcours terminé : vous êtes un Génie !', pakRetire:'Cette question a été retirée de la banque : elle compte comme une bonne réponse.', pakTan:'Temps écoulé pour cette question.',
     konkouTitre:'Concours Masbet', konkouTxt:function(e,n){ return 'Validez l\'étape '+e+' dans '+n+' parcours pour recevoir l\'invitation au Concours.'; }, konkouPwo:function(v,n){ return v+' / '+n+' parcours'; },
     invTitre:'Vous êtes invité au Concours Masbet !', invMsg:'Nous vous contacterons pour les dates des manches de qualification.', invTel:'Laissez votre numéro pour que nous puissions vous contacter :', invTelOk:'Numéro enregistré ✓', voye:'Envoyer', invVoir:'Voir les détails →',
-    pakHome:function(b,v,n){ return '🎯 Mes parcours : '+b+' badge(s) · Concours '+v+'/'+n+' →'; },
+    pakHome:function(b,v,n){ return 'Mes parcours : '+b+' badge(s) · Concours '+v+'/'+n+' →'; },
     revBtn:function(n){ return 'Réviser mes erreurs ('+n+')'; }, revTitre:'Révision', revTxt:'Les questions que vous avez manquées. Une question réussie sort de la liste.', revFin:function(s,n,r){ return 'Vous avez trouvé '+s+' sur '+n+'. Il reste '+r+' question(s) à réviser.'; },
     proTitre:'Espace professionnel', proTxt:'Pour les professionnels et les étudiants : 12 rubriques métiers et sciences, 5 étapes chacune. Ces rubriques n\'entrent ni dans le Quiz du jour ni dans le Concours.',
     etapesPro:['Apprenti','Débutant','Confirmé','Professionnel','Expert'], proGratis:function(g){ return g?(g>1?'Étapes 1 à '+g+' gratuites':'Étape 1 gratuite')+' dans chaque rubrique, sans limite. Étapes '+(g+1)+' à 5 et attestation : Pass Pro.':'L\'Espace professionnel demande le Pass Pro.'; }, proEssaiKont:function(n){ return n+' questions gratuites pour essayer : créez un compte Masbet (un nom suffit).'; }, proEssaiReste:function(r,n){ return 'Il reste '+r+' questions gratuites sur '+n+'.'; }, proEssaiFini:function(n){ return 'Vous avez utilisé les '+n+' questions gratuites. Prenez le Pass Pro pour continuer.'; }, proKreyeKont:'👤 Créer mon compte', proDenyeTes:function(r){ return 'Attention : il reste '+r+' questions gratuites. Ce test sera votre dernier test gratuit.'; }, passKod:'Code Pass Pro', passAktive:'Activer', passAchte:'Acheter un Pass Pro', passEkspire:'Votre dernier Pass a expiré.',
@@ -827,8 +813,8 @@ Object.assign(TXT.ht,{
     defiPase:function(n,p){ return 'Genyen semèn pase a : '+n+' ('+p+' pwen)'; }, defiOuGenyen:'🎉 Ou genyen Defi semèn pase a !', defiPriByento:'Pri a ap rive byento : Pass Pro a ap aktive poukont li sou telefòn ou.',
     defiBon:function(b,t){ return b+' bon repons sou '+t; }, defiRang:function(r,n){ return r===1?'🥇 Ou premye nan semèn nan ('+n+' jwè) !':'Ou '+r+'e nan semèn nan ('+n+' jwè).'; }, defiMeyo:function(m){ return 'Pi bon nòt ou semèn sa a : '+m+' pwen.'; },
     defiRetou:'Retounen nan Defi a', defiPataje:function(p,r){ return '🏁 Mwen fè '+p+' pwen nan Defi Masbet la ('+r+'e nan semèn nan). Vin eseye !'; },
-    jweTitre:'Jwe · Fòme · Genyen', jweSou:'Aprann pandan w ap jwe, epi genyen pri.',
-    jwe:[['🧠','Quiz jou a','5 kesyon chak jou · pi bon nan semèn nan genyen','#quiz','Gratis'],['🏁','Defi Masbet','10 kesyon difisil · ganyan semèn nan : Pass Pro gratis 24 è','#quiz&defi','Tikè'],['🏆','Konkou Masbet','Manch, demi-final, final : gwo konkou nasyonal la','#quiz&konkou','Gratis'],['🎯','Pakou ak badj','Monte etap pa etap nan chak ribrik, ranmase badj','#quiz&pakou','Gratis'],['💼','Espas pwofesyonèl','12 metye ak syans · atestasyon Masbet','#quiz&pro','Etap 1-2 gratis'],['📚','Antrene w pa ribrik','San tan, otan fwa ou vle, ak koreksyon','#quiz&antren','Gratis'],['🧩','Jwèt lespri','Tès sikoteknik (lojik, kalkil, memwa…) ak pezèl : prepare konkou yo','psiko.html','Gratis']],
+    jweTitre:'Jwe · Fòme · Genyen', jweSou:'Tout gratis, eksepte Defi a (tikè) ak Espas pwo a (Pass Pro, etap 1-2 gratis).',
+    jwe:[['flag','Defi Masbet','10 kesyon difisil · Pass Pro 24 è pou ganyan an','#quiz&defi','Tikè'],['coupe','Konkou Masbet','Manch, demi-final ak final nasyonal','#quiz&konkou',''],['cible','Pakou ak badj','Monte etap pa etap, ranmase badj','#quiz&pakou',''],['pro','Espas pwofesyonèl','12 metye ak syans · atestasyon','#quiz&pro','Pass Pro'],['livre','Antrene w pa ribrik','San kwonomèt, ak koreksyon','#quiz&antren',''],['jeux','Jwèt lespri','Lojik, kalkil, memwa, pezèl','psiko.html','']],
     konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
 });
 Object.assign(TXT.fr,{
@@ -838,8 +824,8 @@ Object.assign(TXT.fr,{
     defiPase:function(n,p){ return 'Gagnant de la semaine passée : '+n+' ('+p+' points)'; }, defiOuGenyen:'🎉 Vous avez gagné le Défi de la semaine passée !', defiPriByento:'Votre prix arrive bientôt : le Pass Pro s\'active tout seul sur votre téléphone.',
     defiBon:function(b,t){ return b+' bonnes réponses sur '+t; }, defiRang:function(r,n){ return r===1?'🥇 Vous êtes 1er de la semaine ('+n+' joueurs) !':'Vous êtes '+r+'e de la semaine ('+n+' joueurs).'; }, defiMeyo:function(m){ return 'Votre meilleur score cette semaine : '+m+' points.'; },
     defiRetou:'Retour au Défi', defiPataje:function(p,r){ return '🏁 J\'ai fait '+p+' points au Défi Masbet ('+r+'e de la semaine). Venez essayer !'; },
-    jweTitre:'Jouer · Se former · Gagner', jweSou:'Apprenez en jouant, et gagnez des prix.',
-    jwe:[['🧠','Quiz du jour','5 questions par jour · le meilleur de la semaine gagne','#quiz','Gratuit'],['🏁','Défi Masbet','10 questions difficiles · le gagnant de la semaine : Pass Pro gratuit 24 h','#quiz&defi','Ticket'],['🏆','Concours Masbet','Manches, demi-finale, finale : le grand concours national','#quiz&konkou','Gratuit'],['🎯','Parcours et badges','Montez étape par étape dans chaque rubrique, gagnez des badges','#quiz&pakou','Gratuit'],['💼','Espace professionnel','12 métiers et sciences · attestation Masbet','#quiz&pro','Étapes 1-2 gratuites'],['📚','S\'entraîner par rubrique','Sans chrono, autant de fois que vous voulez, avec correction','#quiz&antren','Gratuit'],['🧩','Jeux d\'esprit','Tests psychotechniques (logique, calcul, mémoire…) et casse-tête : préparez les concours','psiko.html','Gratuit']],
+    jweTitre:'Jouer · Se former · Gagner', jweSou:'Tout est gratuit, sauf le Défi (ticket) et l\'Espace pro (Pass Pro, étapes 1-2 gratuites).',
+    jwe:[['flag','Défi Masbet','10 questions difficiles · Pass Pro 24 h au gagnant','#quiz&defi','Ticket'],['coupe','Concours Masbet','Manches, demi-finale et finale nationale','#quiz&konkou',''],['cible','Parcours et badges','Montez étape par étape, gagnez des badges','#quiz&pakou',''],['pro','Espace professionnel','12 métiers et sciences · attestation','#quiz&pro','Pass Pro'],['livre','S\'entraîner par rubrique','Sans chrono, avec correction','#quiz&antren',''],['jeux','Jeux d\'esprit','Logique, calcul, mémoire, casse-tête','psiko.html','']],
     konEtaps:function(e,n,man,demi){ return [['Parcours','Validez l\'étape '+e+' dans '+n+' parcours : vous recevez une invitation.'],['Invitation','Le Concours démarre quand il y a assez d\'invités.'],['Manches',man+' manches en ligne. Chaque bonne réponse donne des points (étape 5 = 5 points).'],['Demi-finale','Les '+demi+' meilleurs se qualifient. Vérification par SMS.'],['Finale','La grande finale : le vainqueur du Concours Masbet.']]; }, konKijanTit:'Comment marche le Concours',
 });
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
@@ -1090,7 +1076,7 @@ function afficherQuizHome(){
   c.classList.remove('hidden'); afficherCadeau(); afficherPakouHome(); afficherKonkouHome();
   if(!QZ.questions || !QZ.questions.length){ document.getElementById('quizHomeTxt').textContent=T('quizPoko'); document.getElementById('quizHomeBtn').textContent=T('quizWe'); return; }
   var e=QZ.etat||{};
-  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):T('quizTxt'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(recompTxt())+'</b>':'');
+  document.getElementById('quizHomeTxt').innerHTML=esc(e.fini?T('quizDeja')(e.score):AL('5 kesyon, 20 segonn chak. Yon sèl chans pa jou.','5 questions, 20 secondes chacune. Une seule chance par jour.'))+(QZ.recompense&&!e.fini?'<br><b>🎁 '+esc(recompTxt())+'</b>':'');
   document.getElementById('quizHomeBtn').textContent=e.fini?T('quizWe'):T('quizJwe');
   var g=document.getElementById('cGenies'); g.classList.toggle('hidden',!QZ.genies); if(QZ.genies) document.getElementById('geniesLien').href=QZ.genies;
 }
@@ -1809,7 +1795,8 @@ function ouvrirTike(k, code, silencieux){
 // ---------- Pilotage des lives (code administrateur) ----------
 function afficherJwe(){
   var z=document.getElementById('jweZone'); if(!z) return;
-  z.innerHTML=T('jwe').map(function(j){ return '<a href="'+j[3]+'"><span class="ji">'+j[0]+'</span><span style="min-width:0"><b>'+esc(j[1])+'<span class="tag'+(/25|Tik|Tick/.test(j[4])?' p':'')+'">'+esc(j[4])+'</span></b><small>'+esc(j[2])+'</small></span><i>›</i></a>'; }).join('');
+  var IC={"flag": "<path d=\"M5 21V4\"/><path d=\"M5 4h12l-2.2 4L17 12H5\"/>", "coupe": "<path d=\"M8 4h8v5a4 4 0 0 1-8 0z\"/><path d=\"M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8M9.5 17h5\"/>", "cible": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/>", "pro": "<rect x=\"3\" y=\"7\" width=\"18\" height=\"13\" rx=\"2.5\"/><path d=\"M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2\"/>", "livre": "<path d=\"M3 5.5c3-1 6-1 9 1 3-2 6-2 9-1V19c-3-1-6-1-9 1-3-2-6-2-9-1z\"/><path d=\"M12 6.5V20\"/>", "jeux": "<rect x=\"3\" y=\"3\" width=\"7.5\" height=\"7.5\" rx=\"1.6\"/><rect x=\"13.5\" y=\"3\" width=\"7.5\" height=\"7.5\" rx=\"1.6\"/><rect x=\"3\" y=\"13.5\" width=\"7.5\" height=\"7.5\" rx=\"1.6\"/><path d=\"M17.25 13.2l4 4-4 4-4-4z\"/>"};
+  z.innerHTML=T('jwe').map(function(j){ return '<a href="'+j[3]+'"><span class="ji"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true">'+(IC[j[0]]||'')+'</svg></span><span style="min-width:0"><b>'+esc(j[1])+(j[4]?'<span class="tag p">'+esc(j[4])+'</span>':'')+'</b><small>'+esc(j[2])+'</small></span><i>›</i></a>'; }).join('');
 }
 function etapsKonkou(k,m){
   var c=PAK&&PAK.concours||{}, cur;
@@ -2040,7 +2027,7 @@ function tvInitiales(n){ var m=String(n).replace(/\(.*?\)/g,'').trim().split(/\s
 // Quelqu'un qui regarde déjà une chaîne n'est pas coupé. La TV revient dès que le live n'est plus en direct.
 function tvPause(){ return (ACC&&ACC.lives||[]).some(function(x){ return x&&x.statut==='direk'&&x.payant; }); }
 function afficherTv(){
-  var l=tvListe(), carte=document.getElementById('cTv'), pause=tvPause(), lien=document.querySelector('#cSvc a[href="#videyo&tv"]');
+  var l=tvListe(), carte=document.getElementById('cTv'), pause=tvPause(), lien=document.querySelector('.hChips a[href="#videyo&tv"]');
   setTimeout(function(){ tvLienDirect(l); },0);
   if(lien) lien.classList.toggle('hidden',pause||!l.length);
   carte.classList.toggle('hidden',pause||!l.length); if(pause||!l.length) return;
@@ -2475,7 +2462,7 @@ function statDemarrage(){ var j=statJourCle(); if(lire('masbet_st_j')!==j){ ecri
   if(icone&&lire('masbet_st_ic')!==j){ ecrire('masbet_st_ic',j); statEnvoyer('icone'); } }
 window.addEventListener('appinstalled',function(){ statEnvoyer('install'); });   // v42.5 : installation (Android / Chrome)
 function statVue(v){ var p={akey:'accueil',quiz:'quiz',match:'match',videyo:'live'}[v]||'autres'; if(p===STAT_DERN) return; STAT_DERN=p; statEnvoyer('vue',p); }
-document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('#cSvc a'); if(a) statEnvoyer('vue','services'); });
+document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('.hChips a'); if(a) statEnvoyer('vue','services'); });
 
 // QR code (byte mode, correction M, versions 1 à 10) : renvoie une matrice de booléens (true = noir).
 // Écrit pour les certificats Masbet (lien de vérification), sans bibliothèque externe.
