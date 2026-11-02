@@ -49,7 +49,7 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   /* coins du haut arrondis comme l'écran du téléphone : le bleu nuit de la barre d'état continue derrière */
   .top{border-radius:26px 26px 0 0}
   html{background:var(--navy)}body{background:linear-gradient(var(--navy),var(--navy)) top/100% 140px no-repeat,var(--bg)}
-  .top img{display:block;width:100%;max-width:200px;height:auto}
+  .top img{display:block;height:44px;width:auto;max-width:56%;object-fit:contain;object-position:left center;flex:0 1 auto;min-width:0}
   .lang{display:flex;border:1.5px solid var(--line);border-radius:20px;overflow:hidden;flex-shrink:0}
   .lang button{border:0;background:#fff;color:var(--muted);font-weight:800;font-size:13px;padding:6px 10px}
   .lang button.on{background:var(--navy);color:#fff}
@@ -394,7 +394,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .kontBtn.on{background:#fff;border-color:var(--navy)}
   .kloch{position:relative;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--navy);flex-shrink:0}
   .kloch .bd{position:absolute;top:-5px;right:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:#e11d48;color:#fff;font-size:11.5px;font-weight:900;line-height:19px;text-align:center;border:2px solid #fff}
-  .top img{min-width:0;flex:1 1 auto}
+
   @media (max-width:420px){.top{padding:10px 12px 6px;gap:8px}.kontBtn{padding:6px 9px;max-width:118px}.kontBtn:not(.on) .kl{display:none}.lang button{padding:6px 8px}}
   .sheetFond{position:fixed;inset:0;background:rgba(10,15,30,.38);z-index:60}
   .sheet{position:fixed;left:0;right:0;bottom:0;z-index:61;background:#fff;border-radius:18px 18px 0 0;max-height:72vh;display:flex;flex-direction:column;box-shadow:0 -8px 30px rgba(0,0,0,.22);padding-bottom:env(safe-area-inset-bottom);max-width:640px;margin:0 auto}
@@ -563,6 +563,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
       <p data-t="heroTxt"></p>
       <a class="btn" href="achte.html#wifi" data-t="heroBtn"></a>
     </div>
+<script>/* v42.12 : l'entête s'affiche complet dès le début du chargement */(function(){var l='ht',k='';try{l=localStorage.getItem('masbet_lang')==='fr'?'fr':'ht';k=localStorage.getItem('masbet_kont')||'';}catch(e){}
+var D=l==='fr'?{chWifi:'Wi-Fi',chMatch:'Matchs',chJwet:"Jeux d'esprit",chKom:'Communauté',chIstwa:'Histoire du jour',chLiv:'Livres',chMed:'Méditation',apropo:"MasbetAirNet, le réseau Wi-Fi d'Anse-à-Veau →",heroTitre:'Acheter un code Wi-Fi',heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',heroBtn:'Acheter maintenant'}:{chWifi:'Wi-Fi',chMatch:'Match',chJwet:'Jwèt lespri',chKom:'Kominote',chIstwa:'Istwa jodi a',chLiv:'Liv',chMed:'Meditasyon',apropo:'MasbetAirNet, rezo Wi-Fi Ansavo a →',heroTitre:'Achte kòd Wi-Fi',heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',heroBtn:'Achte kounye a'};
+document.documentElement.lang=l;var h=document.querySelectorAll('header [data-t], .hero [data-t]');for(var i=0;i<h.length;i++){var v=D[h[i].getAttribute('data-t')];if(v&&!h[i].textContent)h[i].textContent=v;}
+var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('span');s.className='kl';s.textContent=' '+k;b.appendChild(s);b.classList.add('on');}
+['lHt','lFr'].forEach(function(id){var x=document.getElementById(id);if(x)x.classList.toggle('on',(id==='lFr')===(l==='fr'));});})();</script>
 
     <div class="card" id="cJwe">
       <div class="jweTete"><div><h2 style="margin:0"><span data-t="jweTitre"></span></h2><div class="hint" data-t="jweSou"></div></div></div>
