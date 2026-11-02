@@ -28,7 +28,7 @@
 <script src="config.js"></script>
 <script src="temps.js"></script>
 <style>
-  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e}
+  :root{--navy:#14213d;--gold:#06b6d4;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e}
   *{box-sizing:border-box}
   :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
   .skip{position:absolute;left:-999px;top:8px;z-index:3000;background:var(--gold);color:var(--navy);padding:8px 12px;border-radius:8px;font-weight:700}
@@ -445,7 +445,7 @@ function carte() {
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(m);
   var pts = [[18.503459, -73.3457, 'Plas Piblik / Place Publique'], [18.497354, -73.347085, 'PA sou pon']];
   pts.forEach(function (p) {
-    L.circle([p[0], p[1]], { radius: 120, color: '#fca311', fillColor: '#fca311', fillOpacity: .18, weight: 1 }).addTo(m);
+    L.circle([p[0], p[1]], { radius: 120, color: '#06b6d4', fillColor: '#06b6d4', fillOpacity: .18, weight: 1 }).addTo(m);
     L.marker([p[0], p[1]]).addTo(m).bindPopup('<b>' + p[2] + '</b><br>Wi-Fi Masbet.AirNet');
   });
   m.fitBounds(pts.map(function (p) { return [p[0], p[1]]; }), { padding: [60, 60] });

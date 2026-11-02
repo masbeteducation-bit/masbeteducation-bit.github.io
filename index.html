@@ -40,7 +40,7 @@ if(PLAY) document.documentElement.classList.add('play');
 var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&&!localStorage.getItem('masbet_st_premye'); }catch(e){ return false; } })();
 </script>
 <style>
-  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
+  :root{--navy:#14213d;--gold:#06b6d4;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--live:#d62828}
   *{box-sizing:border-box}
   html,body{overscroll-behavior-y:contain}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
@@ -93,7 +93,10 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .hero h2{color:#fff}
   .hero p{margin:0 0 12px;color:#dfe4f2;font-size:15px}
   /* Offres */
-  .offres{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;margin:0 -4px}
+  .offres{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;margin:0 -4px;scrollbar-width:none}.offres::-webkit-scrollbar{display:none}
+  .ofWrap{position:relative}.ofWrap .hcF{bottom:4px}.ofWrap .hcD{right:-4px;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 65%)}.ofWrap .hcG{left:-4px;background:linear-gradient(270deg,rgba(255,255,255,0),#fff 65%)}
+  .ofWrap .hcF .mic{background:var(--navy);color:#fff}
+  .lienPlus{border:0;background:none;padding:8px 0 0;font:inherit;font-size:14px;font-weight:700;color:var(--navy);text-decoration:underline;cursor:pointer}
   .offre{flex:0 0 82%;scroll-snap-align:start;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;margin:0 4px;display:flex;flex-direction:column}
   .offre img{width:100%;height:140px;object-fit:cover;display:block;background:#eef0f6}
   .offre .c{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -212,7 +215,7 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .verrou .pr{color:var(--gold);font-weight:800;font-size:18px;margin:4px 0 8px}
   .verrou .vt{font-size:19px;font-weight:900;line-height:1.25}
   .affiche{position:relative;border-radius:14px;overflow:hidden;color:#fff;
-    background:radial-gradient(circle at 88% 12%,rgba(252,163,17,.55),transparent 42%),radial-gradient(circle at 8% 95%,rgba(46,196,182,.38),transparent 46%),repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px),linear-gradient(160deg,#0b1430 0%,#173a8c 58%,#14213d 100%);
+    background:radial-gradient(circle at 88% 12%,rgba(6,182,212,.55),transparent 42%),radial-gradient(circle at 8% 95%,rgba(46,196,182,.38),transparent 46%),repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px),linear-gradient(160deg,#0b1430 0%,#173a8c 58%,#14213d 100%);
     box-shadow:0 8px 24px rgba(20,33,61,.25)}
   .affiche .afh{min-height:210px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;padding:12px 14px}
   .affiche .afmil{display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -220,7 +223,7 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .affiche .aflogo img{height:30px;width:auto}
   .affiche .aft{font-size:20px;font-weight:900;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.45)}
   .affiche .afpr{display:inline-block;margin-top:6px;background:rgba(0,0,0,.35);color:var(--gold);font-weight:800;border-radius:999px;padding:3px 10px;font-size:14px}
-  .affiche .afplay{width:68px;height:68px;border-radius:50%;border:0;background:var(--gold);color:var(--navy);font-size:30px;font-weight:900;box-shadow:0 0 0 10px rgba(252,163,17,.25),0 6px 18px rgba(0,0,0,.35);cursor:pointer;padding:0}
+  .affiche .afplay{width:68px;height:68px;border-radius:50%;border:0;background:var(--gold);color:var(--navy);font-size:30px;font-weight:900;box-shadow:0 0 0 10px rgba(6,182,212,.25),0 6px 18px rgba(0,0,0,.35);cursor:pointer;padding:0}
   .affiche .aflbl{font-weight:800;font-size:15px;text-shadow:0 2px 6px rgba(0,0,0,.5)}
   .affiche.ouvert .afmil{display:none}.affiche.ouvert .afh{min-height:0}
   .affiche .afchoix{background:rgba(8,14,34,.82);padding:14px;border-top:1px solid rgba(255,255,255,.12)}
@@ -286,7 +289,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .rubs button.tout{grid-column:1 / -1;background:var(--navy);border-color:var(--navy);color:#fff}
   .rubs button.tout span{color:#dfe4f2}
   .cadeau{display:block;background:#14213d;color:#fff;border-radius:12px;padding:12px 14px;margin:0 0 10px;font-weight:700;font-size:14.5px;text-decoration:none}
-  .cadeau span{display:block;color:#fca311;font-size:13.5px;margin-top:3px}
+  .cadeau span{display:block;color:#06b6d4;font-size:13.5px;margin-top:3px}
   .quizhome .lien2{display:inline-block;margin-top:10px;color:var(--navy);font-weight:700;font-size:14px}
   .recomp{background:#eef0f5;border-radius:10px;padding:10px 12px;font-size:14px;font-weight:700;margin-bottom:10px}
   /* Parcours par étapes */
@@ -310,7 +313,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .dots{display:flex;gap:6px}
   .dots i{font-style:normal;width:30px;height:30px;border-radius:50%;background:#eef0f6;color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
   .dots i.v{background:#fff3dc;font-size:16px}
-  .dots i.c{background:var(--navy);color:#fff;box-shadow:0 0 0 3px rgba(252,163,17,.45)}
+  .dots i.c{background:var(--navy);color:#fff;box-shadow:0 0 0 3px rgba(6,182,212,.45)}
   .pfini{background:#fff3dc;border-radius:10px;padding:10px;text-align:center;font-weight:800;margin-top:4px}
   .fete{border-radius:12px;padding:12px;margin:10px 0;font-weight:700;text-align:center}
   .fete.ok{background:#e8f6ee;color:var(--ok)}.fete.ko{background:#fff3dc;color:#8a5a00}
@@ -318,7 +321,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .fete span{display:block;font-weight:600;font-size:14px;margin-top:4px;color:var(--ink)}
   .fete.inv span{color:#dfe4f2}
   .attest{border:5px double var(--navy);border-radius:10px;padding:18px 12px;text-align:center;background:#fffdf7}
-  .attest .at1{font-weight:900;font-size:19px;color:var(--navy)}.attest .at2{letter-spacing:1px;text-transform:uppercase;font-weight:800;font-size:13px;color:var(--gold);margin:4px 0 12px}
+  .attest .at1{font-weight:900;font-size:19px;color:var(--navy)}.attest .at2{letter-spacing:1px;text-transform:uppercase;font-weight:800;font-size:13px;color:#0e7490;margin:4px 0 12px}
   .attest .at3{font-size:13.5px;color:var(--muted);margin-top:8px}.attest .at4{font-size:24px;font-weight:900;margin:2px 0}.attest .at5{font-size:17px;font-weight:800;color:#173a8c}.attest .at6{font-family:ui-monospace,Menlo,monospace;font-weight:700;margin:12px 0 6px}
   .attest .atsig{margin:16px auto 0;font-size:14px;line-height:1.35}.attest .atl{width:180px;max-width:70%;border-top:1px solid var(--navy);margin:0 auto 6px}
   .pfond{margin-top:6px;font-size:12.5px;color:var(--muted)}
@@ -337,7 +340,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .vide{text-align:center;color:var(--muted);padding:18px 6px;font-size:14px}
   .err{background:#fdecea;color:var(--err);padding:10px;border-radius:10px;font-size:14px}
   .hidden{display:none!important}
-  .install{display:flex;gap:10px;align-items:center;background:#fff8ea;border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px}
+  .install{display:flex;gap:10px;align-items:center;background:#e7f8fb;border:1.5px solid var(--gold);border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:14px}
   .iosAide{background:#fff;border:1.5px solid var(--gold);border-radius:12px;padding:12px 14px;margin:-4px 0 12px;font-size:14.5px;line-height:1.55}
   .iosAide b{color:var(--navy)}
   .install button{border:0;background:var(--navy);color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;white-space:nowrap}
@@ -450,7 +453,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .kom b{color:var(--navy)} .kom small{color:var(--muted);margin-left:6px;font-size:11.5px}
   .kom.moi b{color:#c2185b}
   .horsLigne{position:sticky;top:0;z-index:55;background:#5d6782;color:#fff;text-align:center;font-size:13px;font-weight:700;padding:7px 10px}
-  .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#fff7e6;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
+  .kodGwo{font-size:30px;font-weight:900;letter-spacing:2px;text-align:center;background:#e7f8fb;border:2px dashed var(--gold);border-radius:14px;padding:14px;margin:12px 0;user-select:all}
   .patBtn{display:inline-flex;align-items:center;gap:6px;border:0;background:#173a8c;color:#fff;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px;margin-top:10px}
   /* v41.6 — TV gratuite */
   .tvcats{display:flex;gap:6px;overflow-x:auto;margin:10px -4px 10px;padding:0 4px 4px;scrollbar-width:none}
@@ -947,7 +950,7 @@ function afficherMeteo(){
   if(!m){ el.innerHTML='<div class="hint">'+T('meteoIndispo')+'</div>'; return; }
   document.getElementById('meteoLieu').textContent=m.lieu||'';
   var j=(m.jours||[]).map(function(d,i){
-    var lab=i===0?T('auj'):i===1?T('dem'):T('jours')[new Date(d.date+'T12:00:00').getDay()];
+    var lab=i===0?T('auj'):i===1?T('dem'):T('jours')[new Date(d.date+'T12:00:00').getDay()]; lab=lab.charAt(0).toUpperCase()+lab.slice(1);
     return '<div class="jour"><div>'+esc(lab)+'</div><div class="ic">'+icone(d.code,1)+'</div><b>'+Math.round(d.max)+'°</b> / '+Math.round(d.min)+'°<div class="hint">💧 '+esc(d.pluie==null?'–':d.pluie)+'%</div></div>';
   }).join('');
   el.innerHTML='<div class="meteo"><div class="ic">'+icone(m.code,m.jour)+'</div><div><div class="tp">'+Math.round(m.temp)+'°C</div>'+
@@ -961,8 +964,8 @@ function afficherMeteo(){
 // ---------- Éphéméride ----------
 function afficherDate(){
   var d=new Date();
-  var s=LANG==='fr' ? T('jours')[d.getDay()]+' '+d.getDate()+' '+T('mois')[d.getMonth()]+' '+d.getFullYear()
-                    : T('jours')[d.getDay()]+' '+d.getDate()+' '+T('mois')[d.getMonth()]+' '+d.getFullYear();
+  var j=T('jours')[d.getDay()], n=d.getDate();
+  var s=j.charAt(0).toUpperCase()+j.slice(1)+' '+(LANG==='fr'&&n===1?'1er':n)+' '+T('mois')[d.getMonth()]+' '+d.getFullYear();
   document.getElementById('date').textContent=s;
 }
 function afficherEphem(){
@@ -972,7 +975,8 @@ function afficherEphem(){
   (e.haiti||[]).forEach(function(x){ h+='<div class="evt ht"><span class="a">🇭🇹 '+T('aHaiti')+' —</span>'+esc(LANG==='fr'?x.fr:x.ht)+'</div>'; });
   if((e.monde||[]).length){
     h+='<div class="hint" style="margin-top:12px;font-weight:700">'+T('ceJour')+' '+T('fr')+'</div>';
-    e.monde.slice(0,4).forEach(function(x){ h+='<div class="evt"><span class="a">'+esc(x.annee)+'</span>'+esc(x.texte)+'</div>'; });
+    e.monde.slice(0,4).forEach(function(x,i){ h+='<div class="evt'+(i>1?' hidden evtPlus':'')+'"><span class="a">'+esc(x.annee)+'</span>'+esc(x.texte)+'</div>'; });
+    if(e.monde.length>2) h+='<button type="button" class="lienPlus" onclick="document.querySelectorAll(\'.evtPlus\').forEach(function(x){x.classList.remove(\'hidden\')});this.remove()">'+esc(AL('Wè plis','Voir plus'))+' →</button>';
   }
   el.innerHTML=h;   // v42.11 : la carte montre déjà Istwa jodi a, pas besoin de « rien pour ce jour »
 }
@@ -1037,13 +1041,22 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!document.
 function afficherOffres(){
   var el=document.getElementById('offres'), o=ACC&&ACC.offres||[];
   if(!o.length){ el.innerHTML='<div class="hint">'+T('aucuneOffre')+'</div>'; return; }
-  el.innerHTML='<div class="offres">'+o.map(function(x){
+  el.innerHTML='<div class="ofWrap"><div class="offres">'+o.map(function(x){
     var lien=lienSur(x.lien||'achte.html'), bt=x.bouton||T('heroBtn');
     var ext=x.lien?' target="_blank" rel="noopener"':'';
     return '<div class="offre">'+(x.image?'<img loading="lazy" src="'+esc(x.image)+'" alt="">':'')+
       '<div class="c"><b>'+esc(x.titre)+'</b>'+(x.mention?'<div class="m">'+esc(x.mention)+'</div>':'')+
       '<div class="t">'+esc(x.texte)+'</div><a href="'+esc(lien)+'"'+ext+'>'+esc(bt)+'</a></div></div>';
-  }).join('')+'</div>';
+  }).join('')+'</div><button type="button" class="hcF hcG hidden" aria-label="Précédent"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hcF hcD hidden" aria-label="Suivant"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>';
+  fleches(el.querySelector('.offres'),el.querySelector('.hcG'),el.querySelector('.hcD'));
+}
+function fleches(z,g,d){
+  if(!z||!g||!d) return;
+  function maj(){ var max=z.scrollWidth-z.clientWidth; g.classList.toggle('hidden',z.scrollLeft<8); d.classList.toggle('hidden',max<8||z.scrollLeft>max-8); }
+  z.addEventListener('scroll',maj,{passive:true}); window.addEventListener('resize',maj);
+  g.addEventListener('click',function(){ z.scrollBy({left:-z.clientWidth*.7,behavior:'smooth'}); });
+  d.addEventListener('click',function(){ z.scrollBy({left:z.clientWidth*.7,behavior:'smooth'}); });
+  maj(); setTimeout(maj,400);
 }
 
 // ---------- Quiz ----------
@@ -2823,12 +2836,7 @@ setTimeout(klochAkey,2500); setInterval(klochAkey,120000); document.addEventList
 /* v42.11 : l'entête défile — flèches + petit mouvement d'invitation (3 premières visites) */
 (function(){
   var z=document.getElementById('hChips'); if(!z) return;
-  var g=document.querySelector('.hcG'), d=document.querySelector('.hcD');
-  function maj(){ var max=z.scrollWidth-z.clientWidth; g.classList.toggle('hidden',z.scrollLeft<8); d.classList.toggle('hidden',max<8||z.scrollLeft>max-8); }
-  z.addEventListener('scroll',maj,{passive:true}); window.addEventListener('resize',maj);
-  g.addEventListener('click',function(){ z.scrollBy({left:-z.clientWidth*.7,behavior:'smooth'}); });
-  d.addEventListener('click',function(){ z.scrollBy({left:z.clientWidth*.7,behavior:'smooth'}); });
-  maj(); setTimeout(maj,400);
+  fleches(z,document.querySelector('.hcWrap .hcG'),document.querySelector('.hcWrap .hcD'));
   var n=0; try{ n=+localStorage.getItem('masbet_chips_vu')||0; localStorage.setItem('masbet_chips_vu',n+1); }catch(e){}
   if(n<3) setTimeout(function(){ if(z.scrollLeft>0||z.scrollWidth-z.clientWidth<8) return;
     z.scrollTo({left:90,behavior:'smooth'}); setTimeout(function(){ z.scrollTo({left:0,behavior:'smooth'}); },900); },1200);

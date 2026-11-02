@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="Jwèt lespri Masbet — Tès sikoteknik">
 <meta name="twitter:card" content="summary_large_image">
 <style>
-  :root{--navy:#14213d;--gold:#fca311;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--bleu:#173a8c}
+  :root{--navy:#14213d;--gold:#06b6d4;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--bleu:#173a8c}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
   .hero{color:#fff;padding:18px 16px 34px;background:linear-gradient(135deg,#173a8c,#14213d)}
@@ -56,7 +56,7 @@
   .chrono div.bas{background:var(--err)}
   .seq{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:10px 0 16px}
   .seq span{min-width:46px;padding:10px 8px;border-radius:10px;background:#f6f7fb;border:1px solid var(--line);font-size:22px;font-weight:800;text-align:center}
-  .seq span.q{background:#fff4dc;border-color:#f3cf86;color:#8a5a00}
+  .seq span.q{background:#e7f8fb;border-color:#f3cf86;color:#8a5a00}
   .chx{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .chx button{border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px 8px;font:inherit;font-size:20px;font-weight:800;color:var(--ink);cursor:pointer}
   .chx button.bon{border-color:var(--ok);background:#e3f6ea}
@@ -71,7 +71,7 @@
   .grille button.m{background:#dbe6ff;color:var(--bleu);text-decoration:line-through}
   .grille button.f-ok{background:#e3f6ea;color:var(--ok)}
   .grille button.f-faux{background:#fdecea;color:var(--err)}
-  .grille button.f-oubli{background:#fff4dc;color:#8a5a00;outline:2px solid #f3cf86}
+  .grille button.f-oubli{background:#e7f8fb;color:#8a5a00;outline:2px solid #f3cf86}
   .patron{display:flex;justify-content:center;margin:4px 0 6px}
   .patron svg{max-width:100%;height:auto}
   .lbl{text-align:center;font-size:13px;color:var(--muted);margin-bottom:10px}
@@ -110,7 +110,7 @@
   .taq .vide{background:#eef0f6}
   .han{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
   .pic{position:relative;height:150px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;padding:0}
-  .pic.sel{border-color:var(--gold);background:#fff8ea}
+  .pic.sel{border-color:var(--gold);background:#e7f8fb}
   .pic .tige{position:absolute;left:50%;bottom:8px;width:6px;height:118px;margin-left:-3px;border-radius:3px;background:#c9cfdc}
   .pic .socle{position:absolute;left:8%;right:8%;bottom:4px;height:6px;border-radius:3px;background:#9aa3b8}
   .pic .dq{position:absolute;left:50%;transform:translateX(-50%);height:16px;border-radius:8px;transition:bottom .15s}
@@ -119,19 +119,19 @@
   .sud button{aspect-ratio:1;border:0;border-right:1px solid #d5dae6;border-bottom:1px solid #d5dae6;background:#fff;font:inherit;font-weight:700;color:var(--bleu);padding:0;cursor:pointer;touch-action:manipulation}
   .sud.s4 button{font-size:26px} .sud.s6 button{font-size:22px} .sud.s9 button{font-size:18px}
   .sud button.fixe{color:var(--ink);font-weight:900;background:#f6f7fb;cursor:default}
-  .sud button.sel{background:#fff4dc}
+  .sud button.sel{background:#e7f8fb}
   .sud button.conflit{color:var(--err);background:#fdecea}
   .sud-pave{max-width:420px;margin:0 auto 6px}
   .prog .pl{display:flex;gap:14px;align-items:center}
   .niv{width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--gold) 0 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);flex-shrink:0;box-shadow:inset 0 0 0 4px #fff3}
   .niv b{font-size:24px;line-height:1} .niv small{font-size:10.5px;font-weight:800;text-transform:uppercase}
   .pt{display:flex;justify-content:space-between;align-items:baseline;gap:8px} .pt b{font-size:17px} .pt span{font-size:13px;font-weight:800;color:var(--muted)}
-  .barre{height:10px;border-radius:10px;background:#eef0f6;overflow:hidden;margin:6px 0 4px} .barre div{height:100%;border-radius:10px;background:linear-gradient(90deg,#fca311,#f97316)}
+  .barre{height:10px;border-radius:10px;background:#eef0f6;overflow:hidden;margin:6px 0 4px} .barre div{height:100%;border-radius:10px;background:linear-gradient(90deg,#06b6d4,#0891b2)}
   .barre.fine{height:6px;margin:4px 0 0}
   .ps{font-size:12.5px;color:var(--muted)}
   .stats{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:14px}
-  .lienb{border:0;background:#fff8ea;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
-  .defi{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#fff8ea,#fff);border:1.5px solid #f6dfae}
+  .lienb{border:0;background:#e7f8fb;border-radius:999px;padding:6px 12px;font:inherit;font-size:14px;cursor:pointer;color:var(--ink)}
+  .defi{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,#e7f8fb,#fff);border:1.5px solid #f6dfae}
   .defi.fait{background:#effaf3;border-color:#bfe7cc}
   .defi .dt{font-size:12.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;color:#8a5a00} .defi.fait .dt{color:var(--ok)}
   .defi .dd{font-weight:700;font-size:14.5px;margin-top:2px}
@@ -141,7 +141,7 @@
   .pts3{display:flex;gap:5px;margin-top:5px} .pts3 i{width:22px;height:7px;border-radius:4px;background:#eadbe4} .pts3 i.ok{background:var(--ok)} .pts3 i.ko{background:var(--err)}
   .dq{white-space:pre-line;font-size:18px;font-weight:700;line-height:1.45;margin:6px 0 14px}
   .chx.long{grid-template-columns:1fr} .chx.long button{font-size:15.5px;font-weight:700;text-align:left;padding:12px 14px}
-  .ind{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#fff8ea;border:1.5px dashed #f3cf86;font-size:14.5px}
+  .ind{margin:0 0 12px;padding:10px 12px;border-radius:12px;background:#e7f8fb;border:1.5px dashed #f3cf86;font-size:14.5px}
   .bInd{border:1.5px solid #f3cf86;background:#fffaf0;color:#8a5a00;border-radius:999px;padding:6px 12px;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer;margin-bottom:12px}
   .patB{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:12px;background:#173a8c;color:#fff;font:inherit;font-weight:800;font-size:15px;padding:11px;cursor:pointer;margin-top:10px}
   .recap{text-align:left;margin:12px 0} .recap div{padding:9px 0;border-top:1px solid var(--line);font-size:14px} .recap b{display:block}
@@ -154,10 +154,10 @@
   .gc .med{margin-top:6px;font-size:11.5px;font-weight:800;color:var(--ok)}
   .gc .nouvo{position:absolute;top:10px;right:10px;font-size:10px;font-weight:900;letter-spacing:.05em;background:var(--c);color:#fff;border-radius:999px;padding:2px 7px}
   .intro .ih{display:flex;gap:12px;align-items:center;margin-bottom:10px} .intro .ih b{display:block;font-size:19px} .intro .ih>div{flex:1;min-width:0}
-  .gain{margin:10px 0 4px;padding:12px;border-radius:12px;background:#fff8ea;border:1.5px solid #f6dfae}
+  .gain{margin:10px 0 4px;padding:12px;border-radius:12px;background:#e7f8fb;border:1.5px solid #f6dfae}
   .gain .xp{font-size:22px;font-weight:900;color:#c2410c} .gain .g1{font-weight:800;margin-top:4px} .gain .g2{font-size:13.5px;color:var(--muted);margin-top:4px}
   .badges{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-  .bdg{border:1.5px solid #f6dfae;background:#fff8ea;border-radius:12px;padding:10px;text-align:center} .bdg span{font-size:30px;display:block}
+  .bdg{border:1.5px solid #f6dfae;background:#e7f8fb;border-radius:12px;padding:10px;text-align:center} .bdg span{font-size:30px;display:block}
   .bdg b{display:block;font-size:14px;margin-top:2px} .bdg small{display:block;font-size:12px;color:var(--muted);margin-top:2px}
   .bdg.non{background:#f6f7fb;border-color:var(--line);opacity:.55} .bdg.non span{filter:grayscale(1)}
   .tab{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
@@ -413,7 +413,7 @@ function svgFig(x){
 function svgMatrice(q){
   var h='<svg viewBox="0 0 186 186" width="216" height="216" role="img" aria-label="matrice">';
   for(var i=0;i<9;i++){ var X=3+(i%3)*60, Y=3+Math.floor(i/3)*60;
-    h+='<rect x="'+X+'" y="'+Y+'" width="60" height="60" fill="'+(i===8?'#fff4dc':'#fff')+'" stroke="#14213d" stroke-width="1.2"/>';
+    h+='<rect x="'+X+'" y="'+Y+'" width="60" height="60" fill="'+(i===8?'#e7f8fb':'#fff')+'" stroke="#14213d" stroke-width="1.2"/>';
     h+=i===8?'<text x="'+(X+30)+'" y="'+(Y+41)+'" text-anchor="middle" font-size="28" font-weight="800" fill="#8a5a00">?</text>':'<g transform="translate('+X+' '+Y+')">'+svgFig(q.g[i])+'</g>'; }
   return h+'</svg>';
 }
