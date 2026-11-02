@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://lh3.googleusercontent.com https://drive.google.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="description" content="Masbet Kominote : temwayaj, diskisyon, kòmantè.">
+<meta name="description" content="Kominote Masbet — Pale sou sa w ap viv. Temwayaj, diskisyon, kòmantè.">
 <meta name="theme-color" content="#14213d">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -18,13 +18,13 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Masbet">
 <meta property="og:locale" content="fr_HT">
-<meta property="og:title" content="Kominote Masbet — Pale sou Ansavo">
-<meta property="og:description" content="Nouvèl, foto, temwayaj ak diskisyon sou Ansavo. Kòmante, renmen, pataje.">
+<meta property="og:title" content="Kominote Masbet — Pale sou sa w ap viv">
+<meta property="og:description" content="Nouvèl, foto, temwayaj ak diskisyon. Kòmante, renmen, pataje.">
 <meta property="og:url" content="https://masbet.me/kominote">
-<meta property="og:image" content="https://masbet.me/photos/og/kominote.jpg?v=2">
+<meta property="og:image" content="https://masbet.me/photos/og/kominote.jpg?v=5">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Kominote Masbet — Pale sou Ansavo">
+<meta property="og:image:alt" content="Kominote Masbet — Pale sou sa w ap viv">
 <meta name="twitter:card" content="summary_large_image">
 <style>
   :root{--navy:#14213d;--gold:#06b6d4;--bg:#f4f5f8;--card:#fff;--ink:#14213d;--muted:#5d6782;--line:#e2e5ee;--ok:#1d8a4e;--err:#c0392b;--rose:#e0245e}
@@ -164,14 +164,14 @@
 "use strict";
 var API = window.MASBET_CONTENU || '', DEMO = !API;
 var TXT = {
-  ht: { kom:'Kominote', slogan:'Temwayaj, kesyon, lide : pale ak tout moun nan kominote Masbet la.', aktif:'🔥 Aktif', nouvo:'🆕 Nouvo', popile:'❤️ Popilè', plis:'Wè plis',
+  ht: { kom:'Kominote', slogan:'Pale sou sa w ap viv. Temwayaj, kesyon, lide : pale ak tout moun nan kominote a.', aktif:'🔥 Aktif', nouvo:'🆕 Nouvo', popile:'❤️ Popilè', plis:'Wè plis',
     fab:'+ Nouvo sijè', nouvoTit:'Nouvo sijè', tit:'Tit', teks:'Sa w vle di', pibliye:'Pibliye', anile:'Anile', retou:'← Tout sijè yo', voye:'Voye',
     pseudo:'Non ou (pseudo) — 2 a 20 lèt', regles:'Tèks ak emoji sèlman. Pa gen lyen ni nimewo telefòn. Respekte tout moun : yon mesaj ki siyale 5 fwa ap kache.',
     jaime:'❤️', repon:'Reponn', klochTit:'🔔 Notifikasyon', klochVid:'Poko gen anyen. Lè yon moun renmen oswa kòmante sa w pibliye, w ap wè l isit la.', kLike:function(q,n,ti){ return kiMoun(q,n,'ht')+' renmen sijè w « '+ti+' »'; }, kLikeK:function(q,n,ti){ return kiMoun(q,n,'ht')+' renmen kòmantè w nan « '+ti+' »'; }, kKom:function(q,ti){ return q+' kòmante sijè w « '+ti+' »'; }, kRep:function(q,ti){ return q+' reponn kòmantè w nan « '+ti+' »'; }, yonMoun:'Yon moun', apPibliye:'⏳ Ap pibliye…', apVoye:'⏳ Ap voye…', chajKom:'Ap chaje kòmantè yo…', foto:'📷 Ajoute yon foto (opsyonèl)', fotoRetire:'✕ Retire', fotoInfo:'Foto a ap parèt apre ekip Masbet fin verifye l (souvan menm jou a).', fotoLi:'Foto sa a pa ka li. Eseye yon lòt.', fotoAtann:'📷 Foto w la ap tann verifikasyon Masbet : se ou sèl ki konnen l la pou kounye a.', fotoRefize:'📷 Masbet pa t kenbe foto a ; sijè w la rete pibliye.', modo:'🛡 Foto pou valide', modoOk:'✅ Valide', modoNo:'❌ Refize', modoVid:'Pa gen foto k ap tann.', pataje:'Pataje', patajeTxt:'Vin bay opinyon w sou Kominote Masbet :', siyale:'Siyale', siyaleOk:'Mèsi, nou resevwa siyalman an.', konfimeSiyale:'Siyale mesaj sa a kòm pa apwopriye ?',
     kom1:'kòmantè', komN:'kòmantè', okenn:'Poko gen sijè. Kòmanse premye a !', okennKom:'Poko gen kòmantè. Bay pa w !', repaA:function(p){ return 'Repons pou '+p+' · '; }, anileRep:'Anile',
     ekri:'Ekri kòmantè w…', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', kounyeA:'kounye a', minit:'min', e:'è', jou:'j', ou:'(ou)',
     nav:['Akèy','Achte','Match','Live','Kominote'] },
-  fr: { kom:'Communauté', slogan:'Témoignages, questions, idées : échangez avec toute la communauté Masbet.', aktif:'🔥 Actifs', nouvo:'🆕 Récents', popile:'❤️ Populaires', plis:'Voir plus',
+  fr: { kom:'Communauté', slogan:'Parlez de ce que vous vivez. Témoignages, questions, idées : échangez avec toute la communauté.', aktif:'🔥 Actifs', nouvo:'🆕 Récents', popile:'❤️ Populaires', plis:'Voir plus',
     fab:'+ Nouveau sujet', nouvoTit:'Nouveau sujet', tit:'Titre', teks:'Votre message', pibliye:'Publier', anile:'Annuler', retou:'← Tous les sujets', voye:'Envoyer',
     pseudo:'Votre nom (pseudo) — 2 à 20 caractères', regles:'Texte et émojis seulement. Pas de lien ni de numéro de téléphone. Respect pour tous : un message signalé 5 fois est masqué.',
     jaime:'❤️', repon:'Répondre', klochTit:'🔔 Notifications', klochVid:'Rien pour l\'instant. Quand quelqu\'un aime ou commente ce que vous publiez, vous le verrez ici.', kLike:function(q,n,ti){ return kiMoun(q,n,'fr')+' aimé votre sujet « '+ti+' »'; }, kLikeK:function(q,n,ti){ return kiMoun(q,n,'fr')+' aimé votre commentaire dans « '+ti+' »'; }, kKom:function(q,ti){ return q+' a commenté votre sujet « '+ti+' »'; }, kRep:function(q,ti){ return q+' a répondu à votre commentaire dans « '+ti+' »'; }, yonMoun:'Quelqu\'un', apPibliye:'⏳ Publication…', apVoye:'⏳ Envoi…', chajKom:'Chargement des commentaires…', foto:'📷 Ajouter une photo (facultatif)', fotoRetire:'✕ Retirer', fotoInfo:'La photo s\'affichera après vérification par l\'équipe Masbet (souvent le jour même).', fotoLi:'Impossible de lire cette photo. Essayez-en une autre.', fotoAtann:'📷 Votre photo attend la vérification Masbet : vous seul la voyez pour l\'instant.', fotoRefize:'📷 Masbet n\'a pas retenu la photo ; votre sujet reste publié.', modo:'🛡 Photos à valider', modoOk:'✅ Valider', modoNo:'❌ Refuser', modoVid:'Aucune photo en attente.', pataje:'Partager', patajeTxt:'Venez donner votre avis sur la Communauté Masbet :', siyale:'Signaler', siyaleOk:'Merci, signalement reçu.', konfimeSiyale:'Signaler ce message comme inapproprié ?',
