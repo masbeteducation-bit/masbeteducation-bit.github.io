@@ -119,7 +119,7 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .jour .ic{font-size:22px}
   .soleil{display:flex;gap:16px;align-items:center;margin-top:10px;font-size:13px;color:var(--muted)}
   /* Éphéméride */
-  .date{font-size:20px;font-weight:800;text-transform:capitalize}
+  .date{font-size:20px;font-weight:800}
   .evt{border-left:3px solid #cfd6e4;padding:4px 0 4px 10px;margin-top:10px;font-size:14.5px}
   .evt.ht{border-color:var(--navy)}
   .evt .a{font-weight:800;margin-right:4px}
@@ -959,9 +959,21 @@ function icone(c,jour){
 }
 function libelle(c){ var w=T('w'); if(w[c]) return w[c]; var k=Object.keys(w).map(Number).filter(function(x){return x<=c;}).pop(); return w[k]||''; }
 function heure(iso){ var m=String(iso||'').match(/T(\d{2}):(\d{2})/); return m?m[1]+':'+m[2]:''; }
+// v42.15 : si Google n'a pas la météo (Open-Meteo refuse parfois les serveurs de Google), le téléphone la demande lui-même
+var METEO_TEL=null, METEO_TEL_T=0;
+function meteoTelephone(){
+  if(METEO_TEL_T&&Date.now()-METEO_TEL_T<600000) return; METEO_TEL_T=Date.now();
+  var lat=(ACC&&ACC.meteoLat)||18.5036, lon=(ACC&&ACC.meteoLon)||-73.3457;
+  fetch('https://api.open-meteo.com/v1/forecast?latitude='+lat+'&longitude='+lon+'&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m,is_day&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset&timezone=America%2FPort-au-Prince&forecast_days=3',{credentials:'omit'})
+    .then(function(r){ return r.json(); }).then(function(j){ var c=j.current||{}, d=j.daily||{}; if(c.temperature_2m==null) return;
+      METEO_TEL={ lieu:'Anse-à-Veau', temp:c.temperature_2m, ressenti:c.apparent_temperature, humidite:c.relative_humidity_2m, code:c.weather_code, vent:c.wind_speed_10m, jour:c.is_day,
+        lever:(d.sunrise||[])[0]||'', coucher:(d.sunset||[])[0]||'', maj:c.time||'',
+        jours:(d.time||[]).map(function(t,i){ return {date:t,code:d.weather_code[i],max:d.temperature_2m_max[i],min:d.temperature_2m_min[i],pluie:d.precipitation_probability_max[i]}; }) };
+      if(ACC&&!ACC.meteo) afficherMeteo(); }).catch(function(){});
+}
 function afficherMeteo(){
-  var el=document.getElementById('meteo'), m=ACC&&ACC.meteo;
-  if(!m){ el.innerHTML='<div class="hint">'+T('meteoIndispo')+'</div>'; return; }
+  var el=document.getElementById('meteo'), m=ACC&&ACC.meteo||METEO_TEL;
+  if(!m){ el.innerHTML='<div class="hint">'+T('meteoIndispo')+'</div>'; if(ACC) meteoTelephone(); return; }
   document.getElementById('meteoLieu').textContent=m.lieu||'';
   var j=(m.jours||[]).map(function(d,i){
     var lab=i===0?T('auj'):i===1?T('dem'):T('jours')[new Date(d.date+'T12:00:00').getDay()]; lab=lab.charAt(0).toUpperCase()+lab.slice(1);
@@ -2255,7 +2267,10 @@ function chargerAccueil(){
     return;
   }
   api('accueil').then(function(d){
-      var ancien=ACC; ACC=d; ecrire('masbet_accueil', JSON.stringify(d));
+      var ancien=ACC;
+      // v42.15 : météo momentanément indisponible chez Google → on garde la dernière bonne (moins de 12 h)
+      if(d&&!d.meteo&&ancien&&ancien.meteo){ var tm=Date.parse(ancien.meteo.maj||''); if(!tm||Date.now()-tm<12*3600e3) d.meteo=ancien.meteo; }
+      ACC=d; ecrire('masbet_accueil', JSON.stringify(d));
       if(!ancien || !DEJA){ DEJA=true; toutAfficher(); return; }
       // Mise à jour discrète : on ne redessine que ce qui a changé (une vidéo en cours n'est pas coupée)
       var ch=function(k){ return JSON.stringify(ancien[k])!==JSON.stringify(d[k]); };

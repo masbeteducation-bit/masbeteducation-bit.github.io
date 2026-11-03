@@ -410,10 +410,14 @@
     var deja = L.filter(function (x) { return x.d === d; })[0], v = parJour[d];
     if (deja) { deja.ch = v; return; }
     var vh = v.map(function (x) { return x.ht.split(' — ')[0]; }).join(', '), vf = v.map(function (x) { return x.fr.split(' — ')[0]; }).join(', ');
+    // v42.15 : la date en toutes lettres au lieu de « Aujourd'hui » (la carte montre aussi la PROCHAINE fête, quelques jours avant)
+    var jj = Number(d.slice(3)), mm = Number(d.slice(0, 2)) - 1;
+    var MH = ['janvye', 'fevriye', 'mas', 'avril', 'me', 'jen', 'jiyè', 'out', 'septanm', 'oktòb', 'novanm', 'desanm'], MF = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    var dh = (jj === 1 ? '1ye' : jj) + ' ' + MH[mm], df = 'Le ' + (jj === 1 ? '1er' : jj) + ' ' + MF[mm];
     L.push({ d: d, c: 'P', a: null, ch: v,
       t: ['Fèt chanpèt : ' + vh, 'Fête patronale : ' + vf],
-      x: ['Jodi a, ' + et(v.map(function (x) { var p = x.ht.split(' — '); return p[0] + ' (' + p[1] + ')'; }), 'ak') + ' fete fèt chanpèt ' + (v.length > 1 ? 'yo' : 'li') + '. Fèt chanpèt se gwo moman kominote a : mès ak pwosesyon, men tou bal, mizik, konpetisyon, machann, ak tout pitit lavil la ki retounen lakay.',
-          'Aujourd\'hui, ' + et(v.map(function (x) { var p = x.fr.split(' — '); return p[0] + ' (' + p[1] + ')'; }), 'et') + ' ' + (v.length > 1 ? 'célèbrent leur' : 'célèbre sa') + ' fête patronale. La fête patronale est un grand moment pour la communauté : messe et procession, mais aussi bals, musique, compétitions, marchands, et retour au pays de tous les enfants de la ville.'],
+      x: [dh.charAt(0).toUpperCase() + dh.slice(1) + ', ' + et(v.map(function (x) { var p = x.ht.split(' — '); return p[0] + ' (' + p[1] + ')'; }), 'ak') + ' fete fèt chanpèt ' + (v.length > 1 ? 'yo' : 'li') + '. Fèt chanpèt se gwo moman kominote a : mès ak pwosesyon, men tou bal, mizik, konpetisyon, machann, ak tout pitit lavil la ki retounen lakay.',
+          df + ', ' + et(v.map(function (x) { var p = x.fr.split(' — '); return p[0] + ' (' + p[1] + ')'; }), 'et') + ' ' + (v.length > 1 ? 'célèbrent leur' : 'célèbre sa') + ' fête patronale. La fête patronale est un grand moment pour la communauté : messe et procession, mais aussi bals, musique, compétitions, marchands, et retour au pays de tous les enfants de la ville.'],
       k: ['Ki fèt chanpèt ou pa janm rate ?', 'Quelle fête patronale ne manquez-vous jamais ?'],
       s: 'Calendriers paroissiaux (Potomitan ; Haiti-Référence)' });
   });
