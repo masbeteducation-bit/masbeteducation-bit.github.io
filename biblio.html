@@ -12,6 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
 <script src="temps.js"></script>
+<script src="pataje.js"></script>
 <script src="biblio/livre-sante.js"></script>
 <script src="biblio/livre-agronomie.js"></script>
 <script src="biblio/livre-gestion-projet.js"></script>
@@ -105,7 +106,7 @@
 </main>
 <div id="lecteur" class="hidden" onscroll="defile()">
   <div class="lbar"><button onclick="fermer()" aria-label="Fermer">←</button><div class="tt" id="lTitre"></div>
-    <button onclick="taille(-1)" aria-label="A-">A−</button><button onclick="taille(1)" aria-label="A+">A+</button><button onclick="sommaire()" id="bToc">☰</button></div>
+    <button onclick="taille(-1)" aria-label="A-">A−</button><button onclick="taille(1)" aria-label="A+">A+</button><button onclick="sommaire()" id="bToc">☰</button><button onclick="patajeLiv()" aria-label="Pataje / Partager" style="display:flex;align-items:center"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg></button></div>
   <div class="prog"><i id="prog"></i></div>
   <div class="pages" id="pages"></div>
 </div>
@@ -182,6 +183,12 @@ function ouvrir(id){
   setTimeout(function(){ L.scrollTop=p*(L.scrollHeight-L.clientHeight); defile(); },30);
   history.replaceState(null,'','#livre='+id);
 }
+/** v42.14 : partager un livre → lien masbet.me/liv/<id> avec son propre aperçu (titre, domaine, image). */
+function patajeLiv(){ if(!LIVRE) return; var url='https://masbet.me/liv/'+LIVRE.id, D=DOMAINES[LIVRE.domaine]||DOMAINES.gestion;
+  var txt='📖 '+LIVRE.titre+(LIVRE.soustitre?'\n'+LIVRE.soustitre:'')+'\n\n'+(LANG==='fr'?'Gratuit sur la Bibliothèque Masbet 👇':'Gratis nan Bibliyotèk Masbet 👇');
+  try{ var u=window.MASBET_CONTENU, a=lire('masbet_appareil'); if(u&&a) fetch(u,{method:'POST',body:JSON.stringify({api:'stat',appareil:a,ev:'partage'})}).catch(function(){}); }catch(e){}
+  if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:LIVRE.titre});
+  if(navigator.share) navigator.share({title:LIVRE.titre,text:txt,url:url}).catch(function(){}); }
 function aller(i){ el('toc').classList.add('hidden'); var s=el('pg'+i); if(s) el('lecteur').scrollTop=s.offsetTop-50; }
 function sommaire(){ el('toc').classList.toggle('hidden'); }
 function fermer(){ el('lecteur').classList.add('hidden'); el('toc').classList.add('hidden'); document.body.style.overflow=''; LIVRE=null; history.replaceState(null,'',location.pathname); liste(); }

@@ -29,6 +29,11 @@
 <meta name="apple-mobile-web-app-title" content="Masbet">
 <script src="config.js"></script>
 <script src="temps.js"></script>
+<script>/* v42.13 : la demande de l'Accueil part dès le début de la page (avant la lecture du gros script) */
+(function(){ var u=window.MASBET_CONTENU; if(!u||!window.fetch) return;
+  try{ window.MASBET_PRE={t:Date.now(), p:fetch(u+'?api=accueil&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'})
+    .then(function(r){ return r.text().then(function(x){ return {status:r.status,x:x}; }); })}; window.MASBET_PRE.p.catch(function(){}); }catch(e){} })();   // .catch : pas d'alerte si le réseau échoue (la page refait la demande)
+</script>
 <script src="pataje.js"></script>
 <script src="istwa.js" defer></script>
 <script>
@@ -822,6 +827,7 @@ var TXT = {
     w:{0:'Ciel clair',1:'Peu nuageux',2:'Partiellement nuageux',3:'Couvert',45:'Brouillard',48:'Brouillard',51:'Bruine légère',53:'Bruine',55:'Bruine forte',61:'Pluie faible',63:'Pluie',65:'Forte pluie',80:'Averses faibles',81:'Averses',82:'Fortes averses',95:'Orage',96:'Orage et grêle',99:'Fort orage'}
   }
 };
+var ACC_MEM=false, AFF_MES=false;   // v42.13 : Accueil gardé sur le téléphone ? mesure déjà envoyée ?
 var LANG='ht', ACC=null, MAT=null, TMATCH=null, DEJA=false;
 Object.assign(TXT.ht,{
     sertTitre:'Sètifika mwen', defiTitre:'Defi Masbet', defiRegles:function(n,s){ return n+' kesyon difisil, '+s+' segonn chak (40 segonn pou kalkil, 90 segonn pou egzèsis). Bon repons = 10 pwen + tan ki rete a (jiska '+s+' pwen, menm pou kesyon ki gen plis tan). 1 tikè = 1 chans ; pi bon nòt ou nan semèn nan konte.'; },
@@ -924,7 +930,10 @@ function apiSeul(action, params){
   var extra=apiExtra(params);
   var cleM=apiCleM(action,extra);
   var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ctl.abort();},30000):null;
-  return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined})
+  var envoi=function(){ return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined}); };
+  // v42.13 : l'Accueil a peut-être déjà été demandé au tout début de la page → on reprend cette réponse
+  var pre=null; if(action==='accueil'&&!extra&&window.MASBET_PRE&&Date.now()-window.MASBET_PRE.t<25000){ pre=window.MASBET_PRE.p; window.MASBET_PRE=null; }
+  return (pre?pre.then(function(o){ return {status:o.status,text:function(){ return Promise.resolve(o.x); }}; },envoi):envoi())
     .then(function(r){ return r.text().then(function(x){
       try{ return JSON.parse(x); }
       catch(e){ var er=new Error(''); er.detail='Google '+r.status+' : '+x.replace(/<style[\s\S]*?<\/style>|<script[\s\S]*?<\/script>/gi,' ').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,160); throw er; } }); })
@@ -2260,9 +2269,14 @@ function chargerAccueil(){
     function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
 }
 function piedFondateur(){ return '<div class="pfond">Masbet Education · '+esc(T('fondate'))+'Duckhens Lespérance</div><div class="pfond"><a href="confidentialite.html?lang='+LANG+'" style="color:inherit">'+esc(AL('Konfidansyalite','Confidentialité'))+'</a></div>'; }
+function affMesurer(){   // v42.13 : secondes entre l'ouverture de la page et l'Accueil affiché (nouveau téléphone ou téléphone qui revient)
+  if(AFF_MES||!ACC||!CONTENU||!window.performance||!performance.now) return; AFF_MES=true;
+  var ms=Math.round(performance.now()), k=ACC_MEM?'rev':'nou'; if(document.hidden||ms>60000) return;
+  setTimeout(function(){ apiPost('stat',{appareil:appareil(),ev:'aff',k:k,ms:ms}).catch(function(){}); },3000);
+}
 function toutAfficher(){ afficherLokal();
   afficherDate(); try{ afficherIstwa(); if(IS_D&&!document.getElementById('isPage').classList.contains('hidden')) istwaOuvrir(IS_D); }catch(e){}
-  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv();
+  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv(); affMesurer();
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
   if(MAT) afficherMatchs();
   if(QZ){ afficherQuizHome(); if(vueActive()==='quiz' && !(QZ.etat&&QZ.etat.joue&&!QZ.etat.fini)) afficherQuiz(); }
@@ -2818,7 +2832,7 @@ function notifSauver(){
 function notifArreter(){ notifDesactiver().then(function(){ notifCarte(); notifBell(); fermerSheets(); }); }
 
 // ---------- Démarrage ----------
-try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c) ACC=c; }catch(e){}
+try{ var c=JSON.parse(lire('masbet_accueil')||'null'); if(c){ ACC=c; ACC_MEM=true; } }catch(e){}
 langue(lire('masbet_lang')||'ht');
 vue();
 verifierAttestationUrl();

@@ -12,6 +12,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <script src="config.js"></script>
 <script src="temps.js"></script>
+<script src="pataje.js"></script>
 <title>Meditasyon Masbet</title>
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Masbet">
@@ -52,6 +53,10 @@
   .sit{font-size:19px;text-align:center;padding:6px 8px}
   .sit .ref{font:700 13px system-ui,sans-serif;color:var(--muted);margin-top:6px}
   .pratik{background:#e7f8fb;border:1.5px solid #f6dfae}
+  .patBtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:14px;padding:13px;margin:4px 0 14px;background:#14213d;color:#fff;font:800 16px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;cursor:pointer}
+  .patBtn svg{color:#06b6d4}
+  .pataje{font:14px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#fff;border-radius:14px;padding:11px 14px;margin-bottom:14px;box-shadow:0 2px 10px rgba(30,30,60,.06);color:var(--muted)}
+  .pataje a{color:var(--c1);font-weight:800}
   .pied{font:13px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--muted);text-align:center;margin:18px 0}
   .navapp{position:fixed;left:0;right:0;bottom:0;display:flex;background:#fff;border-top:1px solid var(--line);z-index:50;padding-bottom:env(safe-area-inset-bottom);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   .navapp a{flex:1;text-align:center;padding:8px 2px 7px;color:var(--muted);text-decoration:none;font-size:11.5px;font-weight:700}
@@ -205,22 +210,37 @@ function sagesse(w){
   var eq=LANG==='fr'?w.eq:'', tr=eq||w[LANG];
   return '« '+esc(tr||w.o)+' »'+(tr?'<div class="kr">« '+esc(w.o)+' »</div>':'')+
     (eq&&w.fr&&w.fr!==eq?'<div class="mam">'+esc('Mot à mot : « '+w.fr+' »')+'</div>':'')+'<div class="ref">— '+esc(w.ref)+'</div>'; }
+var SLUG=['dimanch','lendi','madi','mekredi','jedi','vandredi','samdi'];
+/** v42.14 : méditation partagée (#m=madi-3) → on montre exactement celle-là, même un autre jour. */
+function partagee(){ var m=/[#&]m=([a-z]+)-([1-4])\b/.exec(location.hash||''); if(!m) return null; var j=SLUG.indexOf(m[1]); return j<0?null:{j:j,k:Number(m[2])-1}; }
+function jodiA(){ history.replaceState(null,'',location.pathname); afficher(); scrollTo(0,0); }
+function patajeMed(){
+  var P=partagee(), d=new Date(), j=P?P.j:d.getDay(), k=P?P.k:numSemaine(d), t=TEM[j], x=k&&t.x[k-1]?t.x[k-1][LANG]:t[LANG];
+  var url='https://masbet.me/med/'+SLUG[j]+'-'+(k+1), p1=String(x.r[0]).replace(/\s+/g,' '); var m=/^(.{40,}?[.!?…])(\s|$)/.exec(p1); p1=m?m[1]:p1.slice(0,160);
+  var txt=(LANG==='fr'?'Méditation du jour : ':'Meditasyon jodi a : ')+(k&&t.x[k-1]?t.x[k-1][LANG].t||t[LANG].t:t[LANG].t)+'\n'+p1+'\n\n'+(LANG==='fr'?'À lire sur Masbet 👇':'Li l sou Masbet 👇');
+  try{ var u=window.MASBET_CONTENU, a=lire('masbet_appareil'); if(u&&a) fetch(u,{method:'POST',body:JSON.stringify({api:'stat',appareil:a,ev:'partage'})}).catch(function(){}); }catch(e){}
+  if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:t[LANG].t});
+  if(navigator.share) navigator.share({title:t[LANG].t,text:txt,url:url}).catch(function(){});
+}
 function afficher(){
-  var d=new Date(), j=d.getDay(), t=TEM[j], k=numSemaine(d), x=t[LANG];   // jour selon le fuseau horaire du téléphone
+  var P=partagee(), d=new Date(), j=P?P.j:d.getDay(), t=TEM[j], k=P?P.k:numSemaine(d), x=t[LANG];   // jour selon le fuseau horaire du téléphone (ou méditation partagée)
   if(k>0 && t.x[k-1]){ var y=t.x[k-1][LANG]; x={t:x.t, r:y.r, p:y.p}; }    // réflexion de la semaine (1 à 4)
   document.documentElement.style.setProperty('--c1',t.c[0]); document.documentElement.style.setProperty('--c2',t.c[1]);
   document.querySelector('meta[name=theme-color]').content=t.c[0];
-  document.getElementById('jou').textContent=JOU[LANG][j]+' · '+d.toLocaleDateString(LANG==='fr'?'fr-FR':'fr-HT',{day:'numeric',month:'long'});
+  document.getElementById('jou').textContent=P?JOU[LANG][j]:JOU[LANG][j]+' · '+d.toLocaleDateString(LANG==='fr'?'fr-FR':'fr-HT',{day:'numeric',month:'long'});
   document.getElementById('titre').innerHTML='<span class="ico">'+t.ico+'</span>'+esc(x.t);
   document.title=(LANG==='fr'?'Méditation — ':'Meditasyon — ')+x.t;
   var L=LANG==='fr'?{r:'Réflexion',v:'Paroles pour aujourd\'hui',s:'Sagesse',p:'À vivre aujourd\'hui',src:'Versets : Louis Segond 1910 · créole : traduction libre Masbet Education'}
                    :{r:'Refleksyon',v:'Pawòl pou jodi a',s:'Sajès',p:'Pou viv jodi a',src:'Vèsè yo : Louis Segond 1910 · kreyòl : tradiksyon lib Masbet Education'};
   var vs=t.v.map(function(v){ return '<div class="vese"><div class="t">« '+esc(LANG==='fr'?v[0]:v[1])+' »</div>'+'<div class="ref">'+esc(v[2])+'</div></div>'; }).join('');
+  var aut=P&&!(P.j===d.getDay()&&P.k===numSemaine(d));
   document.getElementById('contenu').innerHTML=
+    (aut?'<div class="pataje">'+(LANG==='fr'?'Méditation partagée avec vous. ':'Meditasyon yo pataje avè w. ')+'<a href="#" onclick="jodiA();return false">'+(LANG==='fr'?'Voir celle d\'aujourd\'hui →':'Wè sa jodi a →')+'</a></div>':'')+
     '<div class="card"><h2>'+L.r+' <span class="nref">'+(k+1)+' / 4</span></h2>'+x.r.map(function(p){ return '<p>'+esc(p)+'</p>'; }).join('')+'</div>'+
     '<div class="card"><h2>'+L.v+'</h2>'+vs+'</div>'+
     '<div class="card sit"><h2>'+L.s+'</h2>'+sagesse(t.s)+'</div>'+
     '<div class="card pratik"><h2>'+L.p+'</h2><p style="margin:0">'+esc(x.p)+'</p></div>'+
+    '<button type="button" class="patBtn" onclick="patajeMed()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>'+(LANG==='fr'?'Partager cette méditation':'Pataje meditasyon sa a')+'</button>'+
     '<div class="pied"><span style="font-size:11.5px">'+L.src+'</span></div>';
   var n=LANG==='fr'?['Accueil','Acheter','Matchs','Live','Communauté']:['Akèy','Achte','Match','Live','Kominote'];
   document.getElementById('nav').innerHTML='<a href="index.html#akey"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/></svg></span>'+n[0]+'</a><a href="achte.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg></span>'+n[1]+'</a><a href="index.html#match"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.6-1.6M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3 3.6 8.7"/></svg></span>'+n[2]+'</a><a href="index.html#videyo"><span><svg class="mic rouge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10M4.2 4.2a11 11 0 0 0 0 15.6M19.8 4.2a11 11 0 0 1 0 15.6"/></svg></span>'+n[3]+'</a><a href="kominote.html"><span><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg></span>'+n[4]+'</a>';
