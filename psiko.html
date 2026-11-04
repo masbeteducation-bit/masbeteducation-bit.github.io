@@ -1058,6 +1058,7 @@ function langue(l){
   textes(); if(ECRAN==='menu') menu(); else if(ECRAN==='badges') ecranBadges(); else if(JEU&&JEU.id==='dev'&&P&&P.dev!=null&&!document.querySelector('#zone .chx button:disabled')) devEcran();   // pendant une partie, la langue change à l'écran suivant
 }
 langue(lire('masbet_lang')||'ht'); menu();
+if(window.masbetAffiche) masbetAffiche();   // v42.16 : contenu affiché (temps d'attente d'un nouveau téléphone)
 if(/^#dev\b/.test(location.hash)) lancer('dev');
 window.addEventListener('hashchange',function(){ if(/^#dev\b/.test(location.hash)) lancer('dev'); });
 </script>

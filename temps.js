@@ -12,6 +12,22 @@
   }
   window.MASBET_TP = typeAppareil();
   var url = window.MASBET_CONTENU || '';
+
+  /* v42.16 — pages d'arrivée (liens partagés : Kominote, Méditation, livres, Jeux d'esprit).
+     Avant, seul l'Accueil comptait « visiteur », « nouveau téléphone » et « page vue » : un visiteur venu de Facebook
+     qui restait sur la Méditation n'était compté nulle part. Mêmes clés que l'Accueil → jamais compté deux fois. */
+  var PAGE = (function () { var p = location.pathname || ''; return /kominote/.test(p) ? 'kom' : /meditasyon/.test(p) ? 'med' : /biblio/.test(p) ? 'liv' : /psiko/.test(p) ? 'psi' : ''; })();
+  function lsL(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsE(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  var NOUVEAU = !lsL('masbet_appareil') && !lsL('masbet_st_premye');   // découvre Masbet sur cette page
+  if (PAGE && !lsL('masbet_appareil')) { var al = 'abcdefghijkmnpqrstuvwxyz23456789', a = 'A'; for (var i = 0; i < 19; i++) a += al.charAt(Math.floor(Math.random() * al.length)); lsE('masbet_appareil', a); }
+  var AFF_FAIT = false;
+  /** Appelé par la page quand son contenu est affiché : temps d'attente d'un téléphone qui découvre Masbet. */
+  window.masbetAffiche = function () {
+    if (AFF_FAIT || !PAGE || !NOUVEAU || !url) return; AFF_FAIT = true;
+    var ms = window.performance && performance.now ? Math.round(performance.now()) : 0; if (!ms || ms > 60000 || document.hidden) return;
+    setTimeout(function () { balise({ api: 'stat', appareil: lsL('masbet_appareil') || '', ev: 'aff', k: 'nou', p: PAGE, ms: ms }); }, 2500);
+  };
   if (!url) return;
 
   /* v42.7 — santé du système : durée et réussite de chaque échange avec Google (Contenu et distributeur).
@@ -74,6 +90,14 @@
     } catch (e) {}
     try { (fetch0 || fetch)(url, { method: 'POST', body: corps, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain;charset=utf-8' } }).catch(function () {}); } catch (e) {}
   }
+  // v42.16 : visiteur du jour, nouveau téléphone et vue, sur les pages d'arrivée (l'Accueil le fait lui-même)
+  if (PAGE) setTimeout(function () {
+    var app = lireApp(); if (app.length < 8) return;
+    var d = new Date(), j = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+    if (lsL('masbet_st_j') !== j) { lsE('masbet_st_j', j); balise({ api: 'stat', appareil: app, ev: 'jou', tp: window.MASBET_TP || '' }); }
+    if (!lsL('masbet_st_premye')) { lsE('masbet_st_premye', j); if (NOUVEAU) setTimeout(function () { balise({ api: 'stat', appareil: app, ev: 'nouvo' }); }, 400); }
+    setTimeout(function () { balise({ api: 'stat', appareil: app, ev: 'vue', page: PAGE }); }, 800);
+  }, 1500);
   // v42.7 : vue de la page Acheter (parcours d'achat)
   if (/achte\.html$/.test(location.pathname)) setTimeout(function () { var app = lireApp(); if (app.length >= 8) balise({ api: 'stat', appareil: app, ev: 'vue', page: 'achte' }); }, 1500);
   document.addEventListener('visibilitychange', function () { if (document.hidden) envoyer(true); else depuis = Date.now(); });

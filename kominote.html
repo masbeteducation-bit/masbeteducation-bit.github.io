@@ -213,6 +213,10 @@ function get(action,p){ if(DEMO) return demo(action,p); var q='api='+action; Obj
   return repons(fetch(API+'?'+q+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'})); }
 function post(action,p){ if(DEMO) return demo(action,p);
   return repons(fetch(API,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({api:action},p))})); }
+/** v42.16 : RÉSERVE CLOUDFLARE (/api/kom_lis, /api/kom_sije) — copie commune, rapide (0,1–0,3 s) ; Google complète ensuite. */
+function reserve(chemin){ var h=location.hostname; if(DEMO||!window.fetch||!(h==='masbet.me'||/\.masbet\.me$/.test(h)||/\.pages\.dev$/.test(h)||window.MASBET_RESERVE)) return Promise.reject(new Error('pas de réserve'));
+  return fetch('/api/'+chemin,{credentials:'omit',cache:'no-store'}).then(function(r){ return r.json(); }).then(function(j){ if(!j||j.ok!==true||!j.data) throw new Error('réserve'); return j.data; }); }
+function affiche(){ if(window.masbetAffiche) masbetAffiche(); }
 function repons(pr){ return pr.then(function(r){ return r.json(); },function(){ throw new Error(T('reseau')); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||T('reseau')); return j.data; }); }
 
 // ---------- Démo (sans adresse Contenu) ----------
@@ -263,9 +267,12 @@ function chaje(n){
     var c=null; try{ c=JSON.parse(lire(cleLis())||'null'); }catch(e){}
     if(c&&c.sujets){ LIS=c.sujets; afficherLis(); } else if(LIS.length&&!PAJ) afficherLis(); else el('lis').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
   } else el('lis').innerHTML='<div class="skel"></div><div class="skel"></div><div class="skel"></div>';
-  var tr=TRI, q=Q, pg=PAGE;
-  get('kom_lis',{tri:TRI,page:PAGE,q:Q,appareil:appareil()}).then(function(d){ if(tr!==TRI||q!==Q||pg!==PAGE) return;
-    LIS=d.sujets; PAJ=d; afficherLis(); afficherPaj(); msg('mLis','');
+  var tr=TRI, q=Q, pg=PAGE, recu=false;
+  // 1re visite (rien sur le téléphone) : la copie Cloudflare s'affiche tout de suite, Google complète ensuite (« mes » sujets, j'aime)
+  if(premiere&&!(c&&c.sujets)) reserve('kom_lis?tri='+encodeURIComponent(TRI)).then(function(d){ if(recu||tr!==TRI||q!==Q||pg!==PAGE) return;
+    LIS=d.sujets; PAJ=d; afficherLis(); afficherPaj(); msg('mLis',''); affiche(); }).catch(function(){});
+  get('kom_lis',{tri:TRI,page:PAGE,q:Q,appareil:appareil()}).then(function(d){ recu=true; if(tr!==TRI||q!==Q||pg!==PAGE) return;
+    LIS=d.sujets; PAJ=d; afficherLis(); afficherPaj(); msg('mLis',''); affiche();
     if(premiere){ try{ ecrire(cleLis(),JSON.stringify({t:Date.now(),sujets:d.sujets})); }catch(e){} } })
     .catch(function(e){ msg('mLis',esc(e.message)); });
 }
@@ -416,8 +423,11 @@ function patajeSije(){
 function ouvri(id){ history.replaceState(null,'','#sije='+id); PARENT=''; zonesPseudo();
   var deja=LIS.filter(function(s){ return s.id===id; })[0];
   if(deja){ SIJE={sujet:deja,commentaires:[],_partiel:true}; vue('sije'); afficherSije(); }
-  get('kom_sije',{id:id,appareil:appareil()}).then(function(d){ if(location.hash.indexOf(id)<0) return; SIJE=d; if(!deja) vue('sije'); afficherSije(); clearInterval(POLL); POLL=setInterval(rechaje,30000); })
-    .catch(function(e){ vue('lis'); msg('mLis',esc(e.message)); }); }
+  var recu=false;   // v42.16 : lien partagé → le sujet et ses commentaires arrivent d'abord de la copie Cloudflare
+  reserve('kom_sije?id='+encodeURIComponent(id)).then(function(d){ if(recu||location.hash.indexOf(id)<0) return; var vu=SIJE&&!SIJE._partiel; SIJE=d; if(!deja&&!vu) vue('sije'); afficherSije(); affiche(); }).catch(function(){});
+  get('kom_sije',{id:id,appareil:appareil()}).then(function(d){ recu=true; if(location.hash.indexOf(id)<0) return; var ouvert=!el('vSije').classList.contains('hidden'); SIJE=d; if(!ouvert) vue('sije'); afficherSije(); affiche(); clearInterval(POLL); POLL=setInterval(rechaje,30000); })
+    .catch(function(e){ if(SIJE&&!SIJE._partiel&&e.message===T('reseau')) return;   // Google injoignable mais le sujet est déjà affiché (réserve) : on le garde
+      vue('lis'); msg('mLis',esc(e.message)); }); }
 function rechaje(){ if(!SIJE||document.hidden) return; get('kom_sije',{id:SIJE.sujet.id,appareil:appareil()}).then(function(d){ SIJE=d; Object.keys(LK).forEach(function(id){ var e=LK[id]; if(e.attente) objetsLike(id).forEach(function(o){ if(o.jaime!==e.voulu){ o.jaime=e.voulu; o.likes=Math.max(0,(o.likes||0)+(e.voulu?1:-1)); } }); }); afficherSije(); }).catch(function(){}); }
 // Cœur vide (contour) tant qu'on n'a pas aimé ; cœur rouge plein après le « j'aime »
 function coeur(plein){ return '<svg class="coeur" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 20.6l-1.2-1.1C6.2 15.4 3.2 12.7 3.2 9.3 3.2 6.6 5.3 4.5 8 4.5c1.5 0 3 .7 4 1.9 1-1.2 2.5-1.9 4-1.9 2.7 0 4.8 2.1 4.8 4.8 0 3.4-3 6.1-7.6 10.2L12 20.6z" fill="'+(plein?'#e11d48':'none')+'" stroke="'+(plein?'#e11d48':'#8a93a8')+'" stroke-width="1.9" stroke-linejoin="round"/></svg>'; }

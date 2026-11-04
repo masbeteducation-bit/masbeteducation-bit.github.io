@@ -202,6 +202,7 @@ document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey) && /^
 FS=Number(lire('masbet_biblio_fs')||17); taille(0);
 langue(lire('masbet_lang')||'fr');
 (function(){ var m=/[#&]livre=([a-z0-9-]+)/.exec(location.hash||''); if(m) ouvrir(m[1]); })();
+if(window.masbetAffiche) masbetAffiche();   // v42.16 : contenu affiché (temps d'attente d'un nouveau téléphone)
 </script>
 </body>
 </html>
