@@ -29,10 +29,17 @@
 <meta name="apple-mobile-web-app-title" content="Masbet">
 <script src="config.js"></script>
 <script src="temps.js"></script>
-<script>/* v42.13 : la demande de l'Accueil part dès le début de la page (avant la lecture du gros script) */
+<script>/* v42.13 : la demande de l'Accueil part dès le début de la page (avant la lecture du gros script)
+   v42.16 : d'abord la RÉSERVE CLOUDFLARE (/api/accueil, 0,1–0,3 s), et Google seulement si la réserve ne répond pas */
+window.masbetReserve=function(){
+  var h=location.hostname; if(!window.fetch||!(h==='masbet.me'||/\.masbet\.me$/.test(h)||/\.pages\.dev$/.test(h)||window.MASBET_RESERVE)) return Promise.reject(new Error('pas de réserve'));
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ ctl.abort(); },6000):null;
+  return fetch('/api/accueil',{credentials:'omit',cache:'no-store',signal:ctl?ctl.signal:undefined}).then(function(r){ return r.text().then(function(x){ if(t) clearTimeout(t);
+    var j=JSON.parse(x); if(!j||j.ok!==true||!j.data) throw new Error('réserve vide'); return {status:r.status,x:x}; }); }, function(e){ if(t) clearTimeout(t); throw e; });
+};
 (function(){ var u=window.MASBET_CONTENU; if(!u||!window.fetch) return;
-  try{ window.MASBET_PRE={t:Date.now(), p:fetch(u+'?api=accueil&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'})
-    .then(function(r){ return r.text().then(function(x){ return {status:r.status,x:x}; }); })}; window.MASBET_PRE.p.catch(function(){}); }catch(e){} })();   // .catch : pas d'alerte si le réseau échoue (la page refait la demande)
+  var google=function(){ return fetch(u+'?api=accueil&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.text().then(function(x){ return {status:r.status,x:x}; }); }); };
+  try{ window.MASBET_PRE={t:Date.now(), p:window.masbetReserve().catch(google)}; window.MASBET_PRE.p.catch(function(){}); }catch(e){} })();   // .catch : pas d'alerte si le réseau échoue (la page refait la demande)
 </script>
 <script src="pataje.js"></script>
 <script src="istwa.js" defer></script>
@@ -422,7 +429,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .cert{width:1123px;height:794px;box-sizing:border-box;padding:18px;background:#fbf8f0;font-family:Georgia,'Times New Roman',serif;color:#1c2233}
   .cert .c1{width:100%;height:100%;box-sizing:border-box;border:8px solid #14213d;padding:8px}
   .cert .c2{width:100%;height:100%;box-sizing:border-box;border:2px solid #b8892b;padding:26px 60px 18px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center}
-  .cert .ch img{height:50px;width:auto;display:block;margin:0 auto 6px}.cert .ck{font-size:12px;letter-spacing:4px;color:#7a5a14;font-weight:700;font-family:system-ui,sans-serif}
+  .cert .ch img{height:72px;width:auto;display:block;margin:0 auto 6px}.cert .ck{font-size:12px;letter-spacing:4px;color:#7a5a14;font-weight:700;font-family:system-ui,sans-serif}
   .cert .ct{font-size:44px;font-weight:700;letter-spacing:6px;color:#14213d;line-height:1.05}
   .cert .cl{display:flex;align-items:center;gap:12px}.cert .cl i{display:block;width:90px;height:2px;background:#b8892b}.cert .cl b{display:block;width:9px;height:9px;background:#b8892b;transform:rotate(45deg)}
   .cert .cd{font-size:18px;font-style:italic;color:#3a4258}
@@ -933,6 +940,7 @@ function apiSeul(action, params){
   var envoi=function(){ return fetch(CONTENU+'?api='+encodeURIComponent(action)+extra+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow',signal:ctl?ctl.signal:undefined}); };
   // v42.13 : l'Accueil a peut-être déjà été demandé au tout début de la page → on reprend cette réponse
   var pre=null; if(action==='accueil'&&!extra&&window.MASBET_PRE&&Date.now()-window.MASBET_PRE.t<25000){ pre=window.MASBET_PRE.p; window.MASBET_PRE=null; }
+  else if(action==='accueil'&&!extra&&window.masbetReserve) pre=window.masbetReserve();   // v42.16 : mises à jour (toutes les 2 min) aussi par la réserve
   return (pre?pre.then(function(o){ return {status:o.status,text:function(){ return Promise.resolve(o.x); }}; },envoi):envoi())
     .then(function(r){ return r.text().then(function(x){
       try{ return JSON.parse(x); }
@@ -2601,7 +2609,7 @@ var CERT_TEXTE={
   FINALISTE:'Qualifié parmi les meilleurs candidats à l’issue des manches de qualification et de la demi-finale du Concours Masbet.',
   CHAMPION:'Vainqueur de la finale du Concours Masbet, au terme des manches de qualification, de la demi-finale et de la finale.',
   PARCOURS:'Les cinq étapes de ce parcours ont été validées par des tests chronométrés corrigés par Masbet Education, avec au moins 90 % de bonnes réponses.',
-  MIL:'Mille bonnes réponses dans les jeux chronométrés de Masbet Education : Quiz du jour, parcours, Espace professionnel, Défi et Concours.'
+  MIL:'Ce certificat reconnaît la régularité et l’effort dans l’apprentissage, à travers les jeux éducatifs chronométrés de Masbet Education.'
 };
 function estAttest(x){ return x&&(x.type==='PARCOURS'||x.type==='MIL'); }
 function lienCert(n){ return SITE+'#sertifika='+encodeURIComponent(n); }
@@ -2614,8 +2622,8 @@ function afficherCerts(montrer){
   var l=CERTS||[], mil=MIL&&!MIL.n&&MIL.bonnes>0?MIL:null;
   if(!l.length && !mil && !montrer){ c.classList.add('hidden'); return; }
   c.classList.remove('hidden');
-  var barre=mil?'<div class="sertL"><div class="si">💯</div><div style="flex:1;min-width:0"><b>'+esc(AL('Atestasyon 1000 bon repons','Attestation 1000 bonnes réponses'))+'</b><div class="hint">'+esc(AL(Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bon repons nan jwèt kwonometre yo (Quiz jou a, pakou, Espas pro, Defi, Konkou).',Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bonnes réponses dans les jeux chronométrés (Quiz du jour, parcours, Espace pro, Défi, Concours).'))+'</div><div class="kbar" style="margin-top:6px"><div style="width:'+Math.min(100,Math.round(100*mil.bonnes/mil.objectif))+'%"></div></div></div></div>':'';
-  if(!l.length){ z.innerHTML=barre+'<div class="hint">'+esc(AL('Ou poko gen sètifika. Fini yon pakou ak 90 %, rive nan 1000 bon repons, genyen Defi Masbet la oswa rive nan final Konkou a.','Pas encore de certificat. Terminez un parcours avec 90 %, atteignez 1000 bonnes réponses, gagnez le Défi Masbet ou atteignez la finale du Concours.'))+'</div>'; return; }
+  var barre=mil?'<div class="sertL"><div class="si">💯</div><div style="flex:1;min-width:0"><b>'+esc(AL('Sètifika Angajman Edikatif','Certificat d’Engagement Éducatif'))+'</b><div class="hint">'+esc(AL(Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bon repons nan jwèt kwonometre yo (Quiz jou a, pakou, Espas pro, Defi, Konkou).',Math.min(mil.bonnes,mil.objectif)+' / '+mil.objectif+' bonnes réponses dans les jeux chronométrés (Quiz du jour, parcours, Espace pro, Défi, Concours).'))+'</div><div class="kbar" style="margin-top:6px"><div style="width:'+Math.min(100,Math.round(100*mil.bonnes/mil.objectif))+'%"></div></div></div></div>':'';
+  if(!l.length){ z.innerHTML=barre+'<div class="hint">'+esc(AL('Ou poko gen sètifika. Fini yon pakou ak 90 %, rive nan 1000 bon repons (Sètifika Angajman Edikatif), genyen Defi Masbet la oswa rive nan final Konkou a.','Pas encore de certificat. Terminez un parcours avec 90 %, atteignez 1000 bonnes réponses (Certificat d’Engagement Éducatif), gagnez le Défi Masbet ou atteignez la finale du Concours.'))+'</div>'; return; }
   z.innerHTML=barre+l.map(function(x,i){
     var h='<div class="sertL"><div class="si">'+(x.type==='CHAMPION'?'🏆':x.type==='FINALISTE'?'🥈':x.type==='PARCOURS'?'📜':x.type==='MIL'?'💯':'🏁')+'</div><div style="flex:1;min-width:0"><b>'+esc(x.titre)+'</b><div class="hint">'+esc(x.detail)+'</div><div class="hint">N° '+esc(x.n)+'</div>';
     if(x.aRemplir) h+='<div class="sertNom"><label class="hint" for="sn'+i+'">'+esc(AL('Non konplè ou, jan l ap parèt sou sètifika a (prenon ak non) :','Votre nom complet, tel qu’il apparaîtra sur le certificat (prénom et nom) :'))+'</label>'+
@@ -2637,15 +2645,15 @@ function htmlCert(x){
     '<circle cx="60" cy="60" r="57" fill="none" stroke="#b8892b" stroke-width="2.5"/><circle cx="60" cy="60" r="51" fill="none" stroke="#b8892b" stroke-width="1"/><circle cx="60" cy="60" r="31" fill="none" stroke="#b8892b" stroke-width="1"/>'+
     '<text font-family="Georgia,serif" font-size="9.5" font-weight="700" fill="#14213d" letter-spacing="2"><textPath href="#arcCert">MASBET EDUCATION · ANSE-À-VEAU · </textPath></text>'+
     '<text x="60" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#14213d">'+esc(String(x.date||'').slice(-4))+'</text><text x="60" y="75" text-anchor="middle" font-size="12" fill="#b8892b">★</text></svg>';
-  var at=estAttest(x);
-  return '<div class="cert" role="img" aria-label="'+esc((at?'Attestation Masbet — ':'Certificat de mérite — ')+x.nom+' — '+x.titre)+'"><div class="c1"><div class="c2">'+
+  var at=x.type==='PARCOURS', eng=x.type==='MIL';   // v97 : MIL = « Certificat d'Engagement Éducatif » (masculin, titre propre)
+  return '<div class="cert" role="img" aria-label="'+esc((at?'Attestation Masbet — ':eng?'Certificat d’Engagement Éducatif — ':'Certificat de mérite — ')+x.nom+(eng?'':' — '+x.titre))+'"><div class="c1"><div class="c2">'+
     '<div class="ch"><img src="logo.png" alt="Masbet Education"><div class="ck">MASBET EDUCATION · ANSE-À-VEAU, NIPPES, HAÏTI</div></div>'+
-    '<div class="ct">'+(at?'ATTESTATION DE RÉUSSITE':'CERTIFICAT DE MÉRITE')+'</div><div class="cl"><i></i><b></b><i></i></div>'+
+    '<div class="ct">'+(at?'ATTESTATION DE RÉUSSITE':eng?'CERTIFICAT D’ENGAGEMENT ÉDUCATIF':'CERTIFICAT DE MÉRITE')+'</div><div class="cl"><i></i><b></b><i></i></div>'+
     '<div class="cd">'+(at?'délivrée à':'décerné à')+'</div><div class="cn">'+esc(x.nom)+'</div>'+
-    '<div class="cd">'+(x.type==='PARCOURS'?'pour avoir réussi le':x.type==='MIL'?'pour avoir atteint':'pour avoir obtenu le titre de')+'</div><div class="cti">'+esc(x.titre)+'</div><div class="cde">'+esc(x.detail)+'</div>'+
+    '<div class="cd">'+(x.type==='PARCOURS'?'pour avoir réussi le':eng?'en reconnaissance de son engagement, avec':'pour avoir obtenu le titre de')+'</div><div class="cti">'+esc(eng?'1 000 bonnes réponses':x.titre)+'</div><div class="cde">'+esc(x.detail)+'</div>'+
     '<div class="ctx">'+esc(CERT_TEXTE[x.type]||'')+'</div>'+
     '<div class="cb"><div class="cbl">'+(at?'Délivrée':'Délivré')+' à Anse-à-Veau,<br>le '+esc(x.date)+'</div><div>'+sceau+'</div><div class="cbr"><img class="csig" src="signature.png" alt="Signature de Duckhens Lespérance"><div class="csl"></div><b>Duckhens Lespérance, ing.</b><span>PDG, Fondateur de Masbet Education</span></div></div>'+
-    '<div class="cf"><div class="cq">'+qrSvg(lienCert(x.n),78)+'</div><div class="cft"><b>'+(at?'Attestation':'Certificat')+' N° '+esc(x.n)+'</b> — vérifiable en scannant ce code ou sur '+esc(lienCert(x.n).replace(/^https:\/\//,''))+'<br>'+(at?'Cette attestation confirme un résultat obtenu sur la plateforme éducative Masbet Education.':'Ce certificat atteste un résultat obtenu dans une compétition organisée par Masbet Education.')+'</div></div>'+
+    '<div class="cf"><div class="cq">'+qrSvg(lienCert(x.n),78)+'</div><div class="cft"><b>'+(at?'Attestation':'Certificat')+' N° '+esc(x.n)+'</b> — vérifiable en scannant ce code ou sur '+esc(lienCert(x.n).replace(/^https:\/\//,''))+'<br>'+(at?'Cette attestation confirme un résultat obtenu sur la plateforme éducative Masbet Education.':eng?'Ce certificat confirme un résultat obtenu sur la plateforme éducative Masbet Education.':'Ce certificat atteste un résultat obtenu dans une compétition organisée par Masbet Education.')+'</div></div>'+
     '</div></div></div>';
 }
 function certOuvrir(i){ var x=CERTS&&CERTS[i]; if(x) certAfficher(x); }
@@ -2659,7 +2667,7 @@ function certEchelle(){ var e=document.getElementById('cvEch'); if(!e) return; v
 window.addEventListener('resize',function(){ if(CERT_VUE) certEchelle(); });
 function certFermer(){ CERT_VUE=null; document.getElementById('certVue').classList.add('hidden'); document.body.classList.remove('certOuvert'); }
 function certImprimer(){ document.body.classList.add('imprCert'); setTimeout(function(){ window.print(); setTimeout(function(){ document.body.classList.remove('imprCert'); },500); },60); }
-function certPataje(){ var x=CERT_VUE; if(x) pataje((estAttest(x)?'📜 ':'🎓 ')+x.nom+' — '+x.titre+' ('+x.detail+'). '+(estAttest(x)?'Attestation':'Certificat')+' Masbet N° '+x.n+' : '+lienCert(x.n)); }
+function certPataje(){ var x=CERT_VUE; if(x) pataje((estAttest(x)?'📜 ':'🎓 ')+x.nom+' — '+x.titre+' ('+(x.type==='MIL'?'1 000 bonnes réponses — ':'')+x.detail+'). '+(x.type==='PARCOURS'?'Attestation':'Certificat')+' Masbet N° '+x.n+' : '+lienCert(x.n)); }
 /** Lien de vérification #sertifika=MC-… (scan du QR code) */
 function verifierCertUrl(){
   var m=/[#&]sertifika=([A-Za-z0-9-]+)/.exec(location.hash||''), c=document.getElementById('cVerif');
