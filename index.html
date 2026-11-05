@@ -281,6 +281,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .attv{margin-top:10px;font-weight:700;color:#173a8c}
   @media (prefers-reduced-motion:reduce){ .qchoix button .att{animation:none;border-right-color:#173a8c} }
   .qexpl{margin-top:12px;padding:12px;border-radius:10px;font-size:14.5px}
+  .pcharj{font-size:13.5px;color:var(--gris,#5d6782);margin:6px 0 2px}
+  .prevue{margin:12px 0 4px;border:1px solid #e2e5ee;border-radius:12px;background:#fff}
+  .prevue summary{cursor:pointer;padding:12px 14px;font-weight:700;color:#14213d}
+  .prq{padding:10px 14px;border-top:1px solid #eef0f5;font-size:14px;line-height:1.45}
+  .prq .prt{font-weight:600;margin-bottom:3px} .prq .prm{color:#b3261e} .prq .prx{color:#5d6782;margin-top:3px}
   .qexpl.ok{background:#e8f6ee;color:var(--ok)}.qexpl.ko{background:#fdecea;color:var(--err)}
   .qexpl span{display:block;color:var(--ink);font-weight:500;margin-top:4px;white-space:pre-line}
   .qscore{text-align:center;padding:10px 0}
@@ -1381,21 +1386,42 @@ function pakCommencer(i){
     pakReprendre(etat);
   }, function(e){ b.disabled=false; document.getElementById('pMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
-function pakReprendre(etat){ PRUN=RUN_ETAPE; PT=etat; PREP=null; pakQuestion(); }
+function pakReprendre(etat){ PRUN=RUN_ETAPE; PT=etat; PREP=null; PREVUE=[]; pakQuestion(); }
 function pakQuestion(){
   var z=document.getElementById(PRUN.zone); clearInterval(PTIMER); PATT=false; PECRAN='q';
-  z.innerHTML='<div class="skel"></div><div class="skel"></div>';
+  // v99 : la carte garde sa hauteur pendant le chargement (plus de saut d'écran)
+  if(z.offsetHeight>80) z.style.minHeight=z.offsetHeight+'px';
+  z.innerHTML='<div class="pcharj" role="status">'+esc(AL('Kesyon an ap vini…','Question en chargement…'))+'</div><div class="skel"></div><div class="skel"></div>';
   api(PRUN.q,{appareil:appareil(), id:PT.id}).then(function(d){
     PT=d.etat;
-    if(d.etat.fini || !d.question){ PT=null; if(PRUN.mode==='konkou'){ PECRAN=''; chargerKonkou(); } else if(PRUN.mode==='pro'){ PECRAN=''; PRUN=RUN_ETAPE; afficherPro(); chargerPro(); } else { PECRAN='tiles'; afficherPakou(); chargerPakou(); } return; }
-    PQ=d.question; PFIN=Date.now()+Math.max(0,PQ.reste)*1000; pakRendre();
-    PTIMER=setInterval(function(){
-      var r=Math.max(0,PFIN-Date.now()), b=document.getElementById('pB'), t=document.getElementById('pT');
-      if(!b){ clearInterval(PTIMER); return; }
-      b.style.width=(100*r/(PQ.temps*1000))+'%'; b.classList.toggle('bas',r<6000); t.textContent=Math.ceil(r/1000)+' '+T('segonn');
-      if(r<=0){ clearInterval(PTIMER); pakRep(-1); }
-    },250);
-  }, function(e){ z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn" style="margin-top:10px" onclick="pakQuestion()">'+T('swivan')+'</button>'; });
+    if(d.etat.fini || !d.question){ PT=null; z.style.minHeight=''; if(PRUN.mode==='konkou'){ PECRAN=''; chargerKonkou(); } else if(PRUN.mode==='pro'){ PECRAN=''; PRUN=RUN_ETAPE; afficherPro(); chargerPro(); } else { PECRAN='tiles'; afficherPakou(); chargerPakou(); } return; }
+    pakLancer(d.question);
+  }, function(e){ z.style.minHeight=''; z.innerHTML='<div class="err">'+esc(errMsg(e))+'</div><button class="btn" style="margin-top:10px" onclick="pakQuestion()">'+T('swivan')+'</button>'; });
+}
+/** Affiche une question et lance son chrono (appelé au chargement, ou tout de suite après la réponse précédente en mode enchaîné). */
+function pakLancer(q){
+  clearInterval(PTIMER); PATT=false; PECRAN='q';
+  PQ=q; PFIN=Date.now()+Math.max(0,PQ.reste)*1000; pakRendre();
+  var z=document.getElementById(PRUN.zone); if(z) z.style.minHeight='';
+  PTIMER=setInterval(function(){
+    var r=Math.max(0,PFIN-Date.now()), b=document.getElementById('pB'), t=document.getElementById('pT');
+    if(!b){ clearInterval(PTIMER); return; }
+    b.style.width=(100*r/(PQ.temps*1000))+'%'; b.classList.toggle('bas',r<6000); t.textContent=Math.ceil(r/1000)+' '+T('segonn');
+    if(r<=0){ clearInterval(PTIMER); pakRep(-1); }
+  },250);
+}
+/** v99 : parcours et Espace pro enchaînés (pas le Concours) — ✓ / ✗ sans montrer la bonne réponse, correction complète à la fin. */
+function pakEnchaine(){ return PRUN.mode!=='konkou'; }
+var PREVUE=[];
+function revueHtml(){
+  if(!PREVUE.length) return '';
+  var l=PREVUE.slice().sort(function(a,b){ return a.n-b.n; });
+  return '<details class="prevue"><summary>📖 '+esc(AL('Wè koreksyon an ('+l.length+' kesyon)','Voir la correction ('+l.length+' questions)'))+'</summary>'+
+    l.map(function(x){ var q=x.q, ex=LANG==='fr'?x.explFr:x.explHt;
+      return '<div class="prq '+(x.correct?'ok':'ko')+'"><div class="prt">'+(x.correct?'✅':'❌')+' '+(x.n+1)+'. '+esc(qTxt(q))+'</div>'+
+        (q.choix&&x.bonne>=0?'<div>'+esc(AL('Bon repons : ','Bonne réponse : '))+'<b>'+esc(q.choix[x.bonne])+'</b></div>':'')+
+        (!x.correct&&q.choix?'<div class="prm">'+esc(AL('Repons ou : ','Votre réponse : '))+(x.choix>=0?esc(q.choix[x.choix]):esc(AL('tan an fini','temps écoulé')))+'</div>':'')+
+        (ex?'<div class="prx">'+esc(ex)+'</div>':'')+'</div>'; }).join('')+'</details>';
 }
 function pakRendre(){
   var z=document.getElementById(PRUN.zone), q=PQ, r=Math.max(0,PFIN-Date.now());
@@ -1411,8 +1437,10 @@ function pakRep(j){
   var q=PQ;
   document.querySelectorAll('#'+PRUN.zone+' .qchoix button').forEach(function(b){ b.disabled=true; });
   marquerChoix('pc', j, 'pExpl');
-  api(PRUN.r,{appareil:appareil(), id:PT.id, n:q.n, choix:j<0?'temps':j}).then(function(r){
+  var auto=pakEnchaine(), qa={appareil:appareil(), id:PT.id, n:q.n, choix:j<0?'temps':j}; if(auto) qa.suite=1;
+  api(PRUN.r,qa).then(function(r){
     enleverChoix();
+    if(auto){ pakEnchainer(q, r); return; }
     PECRAN='corr'; PT.score=r.score; PT.points=r.points; PT.pos=q.n+1;
     if(r.bonne>=0 && document.getElementById('pc'+r.bonne)) document.getElementById('pc'+r.bonne).classList.add('bon');
     if(r.choix>=0 && !r.correct && document.getElementById('pc'+r.choix)) document.getElementById('pc'+r.choix).classList.add('faux');
@@ -1429,6 +1457,20 @@ function pakRep(j){
     else pakQuestion();   // réponse déjà enregistrée (réseau coupé au retour) : on se resynchronise
   });
 }
+function pakEnchainer(q, r){
+  PECRAN='corr'; PT.score=r.score; PT.points=r.points; PT.pos=q.n+1;
+  if(!q.retiree) PREVUE.push({n:q.n, q:q, choix:r.choix, bonne:r.bonne, correct:r.correct, explHt:r.explHt, explFr:r.explFr});
+  if(!r.correct && r.bonne>=0) noterErreur(q, r.bonne, r.explHt, r.explFr);
+  // seulement le choix du joueur en vert ou rouge : la bonne réponse n'est pas montrée pendant le test
+  var b=r.choix>=0&&document.getElementById('pc'+r.choix); if(b) b.classList.add(r.correct?'bon':'faux');
+  var x=document.getElementById('pExpl');
+  if(x) x.innerHTML='<div class="qexpl '+(r.correct?'ok':'ko')+'"><b>'+(r.correct?T('bon'):(r.choix<0?T('pakTan'):AL('Pa bon.','Pas la bonne réponse.')))+'</b></div>';
+  var z=document.getElementById(PRUN.zone); if(z&&z.offsetHeight>80) z.style.minHeight=z.offsetHeight+'px';
+  setTimeout(function(){
+    if(r.fini){ PREP=r; if(z) z.style.minHeight=''; if(PRUN.mode==='pro'){ chargerPro(true); proResultat(); } else { chargerPakou(); pakResultat(); } return; }
+    if(r.suivante){ PT.pos=r.suivante.n; pakLancer(r.suivante); } else pakQuestion();   // ancien serveur : on recharge la question
+  }, r.correct?900:1300);
+}
 function pakResultat(){
   var r=PREP; if(!r) return afficherPakou();
   PECRAN='res'; PT={fini:true};
@@ -1437,7 +1479,7 @@ function pakResultat(){
   if(r.rattrapage){ var sp=r.parcours||{};
     h+='<div class="fete '+(sp.merite?'inv':'ok')+'">'+esc(AL('Tès ratrapaj fini. Pakou a kounye a : ','Test de rattrapage terminé. Parcours maintenant : ')+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %)')+'<span>'+esc(sp.merite?AL('📜 Ou genyen atestasyon Masbet la ! Antre non konplè ou nan « Sètifika mwen ».','📜 Vous obtenez l\'attestation Masbet ! Inscrivez votre nom complet dans « Mes certificats ».'):AL('Atestasyon an mande 90 %. Ou ka eseye yon lòt etap.','L\'attestation demande 90 %. Vous pouvez essayer une autre étape.'))+'</span></div>'+
       (sp.merite?'<button class="btn" style="margin-bottom:8px" onclick="voirCerts()">📜 '+esc(AL('Wè atestasyon an','Voir l\'attestation'))+'</button>':'');
-    h+='<button class="btn '+(sp.merite?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
+    h+=revueHtml()+'<button class="btn '+(sp.merite?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
     document.getElementById('pakZone').innerHTML=h; return; }
   if(r.reussi) h+='<div class="fete ok">'+esc(T('pakReyisi')(e,nomEtape(e)))+'<span>'+esc(T('pakBadj')(BADJ[e-1],nomEtape(e)))+'</span>'+
     '<span>'+esc(r.etape>5?T('pakTout'):T('pakSwiv')(r.etape,nomEtape(r.etape)))+'</span></div>';
@@ -1446,6 +1488,7 @@ function pakResultat(){
   if(r.parcours){ var sp=r.parcours;
     if(sp.merite) h+='<div class="fete inv">📜 '+esc(AL('Atestasyon Masbet ! ','Attestation Masbet ! ')+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %)')+'<span>'+esc(AL('Antre non konplè ou nan « Sètifika mwen » pou l parèt sou atestasyon an.','Inscrivez votre nom complet dans « Mes certificats » pour qu\'il apparaisse sur l\'attestation.'))+'</span></div><button class="btn" style="margin-bottom:8px" onclick="voirCerts()">📜 '+esc(AL('Wè atestasyon an','Voir l\'attestation'))+'</button>';
     else h+='<div class="fete ko">'+esc(AL('Pakou fini ak '+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %). Atestasyon Masbet la mande 90 %.','Parcours terminé avec '+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %). L\'attestation Masbet demande 90 %.'))+'</div>'; }
+  h+=revueHtml();
   var ne=erreurs().length;
   if(ne && !r.reussi) h+='<button class="btn" onclick="revCommencer()">🔁 '+esc(T('revBtn')(ne))+'</button>';
   h+='<button class="btn '+(ne&&!r.reussi?'sec':'')+'" style="margin-top:8px" onclick="afficherPakou();chargerPakou()">'+T('pakRetounen')+'</button>';
@@ -1642,7 +1685,7 @@ function proIntro(i){
   var p=PRO&&PRO.rubriques[i]; if(!p) return;
   PROI=i; PROECRAN='intro';
   var z=document.getElementById('proZone'), seuil=Math.ceil(p.seuil*PRO.nbQuestions/10-1e-9);
-  if(PRO.enCours && PRO.enCours.parcours===p.nom){ PRUN=RUN_PRO; PT=PRO.enCours; PREP=null; return pakQuestion(); }
+  if(PRO.enCours && PRO.enCours.parcours===p.nom){ PRUN=RUN_PRO; PT=PRO.enCours; PREP=null; PREVUE=[]; return pakQuestion(); }
   z.innerHTML='<h2 style="margin-top:0">'+esc(nomPro(p.nom))+'</h2><div class="pe" style="font-weight:800">'+esc(T('etap')+' '+p.etape+' · '+etapePro(p.etape))+'</div>'+
     '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+
     (lire('masbet_pseudo')?'':'<label class="hint" for="prPseudo">'+T('pseudo')+'</label><input class="champ" id="prPseudo" maxlength="20">')+
@@ -1652,7 +1695,7 @@ function proCommencer(i){
   var p=PRO.rubriques[i], inp=document.getElementById('prPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('prGo');
   b.disabled=true;
   api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps);
-      PRUN=RUN_PRO; PT=etat; PREP=null; pakQuestion(); },
+      PRUN=RUN_PRO; PT=etat; PREP=null; PREVUE=[]; pakQuestion(); },
     function(e){ b.disabled=false; if(proEssaiErr(e)) return; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
 function proResultat(){
@@ -1663,7 +1706,7 @@ function proResultat(){
   if(r.reussi) h+='<div class="fete ok">'+esc(T('proReyisi')(e,etapePro(e)))+'<span>'+esc(r.etape>5?T('proTout'):T('pakSwiv')(r.etape,etapePro(r.etape)))+'</span></div>';
   else h+='<div class="fete ko">'+esc(T('pakRate')(r.score,r.seuil))+'</div>';
   if(r.attestation) h+='<div class="fete inv">📜 '+esc(T('attNouvo'))+'<span>'+esc(r.attestation)+'</span></div>';
-  h+='<button class="btn" onclick="PRUN=RUN_ETAPE;afficherPro();chargerPro()">'+T('proRetounen')+'</button>';
+  h+=revueHtml()+'<button class="btn" onclick="PRUN=RUN_ETAPE;afficherPro();chargerPro()">'+T('proRetounen')+'</button>';
   document.getElementById('proZone').innerHTML=h; PRUN=RUN_ETAPE;
 }
 // Entraînement libre dans une rubrique pro (niveaux 1-2 sans Pass, 1-5 avec)
