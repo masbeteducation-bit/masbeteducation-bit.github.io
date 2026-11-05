@@ -282,6 +282,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   @media (prefers-reduced-motion:reduce){ .qchoix button .att{animation:none;border-right-color:#173a8c} }
   .qexpl{margin-top:12px;padding:12px;border-radius:10px;font-size:14.5px}
   .pcharj{font-size:13.5px;color:var(--gris,#5d6782);margin:6px 0 2px}
+  .btn.charge{opacity:.9;cursor:progress} .btn.charge .att{display:inline-block;vertical-align:-3px;margin-right:6px;width:16px;height:16px;border:2.5px solid #14213d;border-right-color:transparent;border-radius:50%;animation:tourne .8s linear infinite}
   .prevue{margin:12px 0 4px;border:1px solid #e2e5ee;border-radius:12px;background:#fff}
   .prevue summary{cursor:pointer;padding:12px 14px;font-weight:700;color:#14213d}
   .prq{padding:10px 14px;border-top:1px solid #eef0f5;font-size:14px;line-height:1.45}
@@ -1376,15 +1377,17 @@ function pakIntro(i,re){
     (lire('masbet_pseudo')?'':'<label class="hint" for="pPseudo">'+T('pseudo')+'</label><input class="champ" id="pPseudo" maxlength="20">')+
     '<button class="btn" id="pGo" onclick="pakCommencer('+i+')">'+T('komanse')+'</button>'+
     '<button class="btn sec" style="margin-top:8px" onclick="afficherPakou()">'+T('pakRetounen')+'</button><div id="pMsg"></div>';
+  versCarte('cPakou');
 }
 function pakCommencer(i){
   var p=PAK.parcours[i], inp=document.getElementById('pPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('pGo');
-  b.disabled=true;
-  var q={appareil:appareil(), pseudo:ps, parcours:p.nom}; if(PRATT) q.etape=PRATT;
+  btnCharge(b,true);
+  var q={appareil:appareil(), pseudo:ps, parcours:p.nom, suite:1}; if(PRATT) q.etape=PRATT;
   api('etapedebut',q).then(function(etat){
     if(inp) ecrire('masbet_pseudo',ps);
-    pakReprendre(etat);
-  }, function(e){ b.disabled=false; document.getElementById('pMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+    if(etat.question){ var q1=etat.question; delete etat.question; PRUN=RUN_ETAPE; PT=etat; PREP=null; PREVUE=[]; pakLancer(q1); versCarte('cPakou'); }
+    else pakReprendre(etat);
+  }, function(e){ btnCharge(b,false); document.getElementById('pMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
 function pakReprendre(etat){ PRUN=RUN_ETAPE; PT=etat; PREP=null; PREVUE=[]; pakQuestion(); }
 function pakQuestion(){
@@ -1412,6 +1415,10 @@ function pakLancer(q){
 }
 /** v99 : parcours et Espace pro enchaînés (pas le Concours) — ✓ / ✗ sans montrer la bonne réponse, correction complète à la fin. */
 function pakEnchaine(){ return PRUN.mode!=='konkou'; }
+/** v101 : remonte au début de la carte (l'écran d'étape s'ouvre en haut de la carte, pas là où on a touché). */
+function versCarte(id){ var c=document.getElementById(id); if(!c) return; var r=c.getBoundingClientRect(); if(r.top<0||r.top>innerHeight*0.4) c.scrollIntoView({behavior:'smooth',block:'start'}); }
+/** v101 : bouton « Commencer » : réaction immédiate (rond qui tourne + texte), pour qu'on sache que le clic a marché. */
+function btnCharge(b,on){ if(!b) return; if(on){ b.dataset.txt=b.innerHTML; b.disabled=true; b.classList.add('charge'); b.innerHTML='<span class="att" aria-hidden="true"></span> '+esc(AL('N ap prepare tès la…','Préparation du test…')); } else { b.disabled=false; b.classList.remove('charge'); if(b.dataset.txt) b.innerHTML=b.dataset.txt; } }
 var PREVUE=[];
 function revueHtml(){
   if(!PREVUE.length) return '';
@@ -1641,7 +1648,7 @@ function chargerPro(resultat){
 function essayerPassUrl(){ var c=passUrl(); if(c && PRO && !(PRO.pass&&PRO.pass.valide) && window.PASS_TENTE!==c){ window.PASS_TENTE=c; activerPass(c); } }
 function blocPass(){
   var p=PRO.pass||{};
-  if(p.valide) return '<div class="konkou"><b>✓ '+esc(T('passAktif')(dateLongue(p.jusqua)))+'</b><span class="hint">'+esc(T('passTout'))+'</span></div>';
+  if(p.valide) return '<div class="konkou"><b>✓ '+esc(p.jusqua?T('passAktif')(dateLongue(p.jusqua)):(p.admin?AL('Pass Pro aktif (administratè).','Pass Pro actif (administrateur).'):AL('Pass Pro aktif.','Pass Pro actif.')))+'</b><span class="hint">'+esc(T('passTout'))+'</span></div>';
   var tete='<b>🎁 '+esc(T('proGratis')(proGratuites()))+'</b>';
   return '<div class="konkou" id="blocPass">'+tete+'<span class="pxn">'+esc(PRO.passTexte||'')+'</span>'+
     '<div class="row"><input id="passCode" placeholder="'+T('passKod')+'" autocapitalize="characters" value="'+esc(passUrl())+'"><button onclick="activerPass()">'+T('passAktive')+'</button></div>'+
@@ -1690,13 +1697,15 @@ function proIntro(i){
     '<div class="regles">'+esc(T('proRegles')(PRO.nbQuestions,seuil))+'</div>'+
     (lire('masbet_pseudo')?'':'<label class="hint" for="prPseudo">'+T('pseudo')+'</label><input class="champ" id="prPseudo" maxlength="20">')+
     '<button class="btn" id="prGo" onclick="proCommencer('+i+')">'+T('komanse')+'</button><button class="btn sec" style="margin-top:8px" onclick="afficherPro()">'+T('proRetounen')+'</button><div id="prMsg"></div>';
+  versCarte('cPro');
 }
 function proCommencer(i){
   var p=PRO.rubriques[i], inp=document.getElementById('prPseudo'), ps=inp?inp.value.trim():(lire('masbet_pseudo')||''), b=document.getElementById('prGo');
-  b.disabled=true;
-  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps);
-      PRUN=RUN_PRO; PT=etat; PREP=null; PREVUE=[]; pakQuestion(); },
-    function(e){ b.disabled=false; if(proEssaiErr(e)) return; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
+  btnCharge(b,true);
+  api('etapedebut',{appareil:appareil(), pseudo:ps, parcours:p.nom, suite:1}).then(function(etat){ if(inp) ecrire('masbet_pseudo',ps);
+      var q1=etat.question; delete etat.question;
+      PRUN=RUN_PRO; PT=etat; PREP=null; PREVUE=[]; if(q1){ pakLancer(q1); versCarte('cPro'); } else pakQuestion(); },
+    function(e){ btnCharge(b,false); if(proEssaiErr(e)) return; document.getElementById('prMsg').innerHTML='<div class="err" style="margin-top:8px">'+esc(errMsg(e))+'</div>'; });
 }
 function proResultat(){
   var r=PREP; if(!r) return afficherPro();
