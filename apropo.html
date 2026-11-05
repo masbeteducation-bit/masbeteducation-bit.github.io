@@ -16,7 +16,7 @@
 <meta property="og:url" content="https://masbet.me/apropo.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta property="og:title" content="MasbetAirNet — Wi-Fi kominotè Ansavo">
-<meta property="og:description" content="Wi-Fi kominotè Ansavo : Plas Piblik, PA sou pon, Kay Diderot, Rue Salomon. Achte kòd ou ak MonCash oswa NatCash.">
+<meta property="og:description" content="Wi-Fi kominotè Ansavo : Plas Piblik, Sou Pon, Kay Diderot, Ri Salomon. Achte kòd ou ak MonCash oswa NatCash.">
 <meta property="og:image" content="https://masbet.me/photos/og/apropo.jpg?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -202,9 +202,9 @@
       <div class="carte">
         <ul class="zones">
           <li><b>📍 Plas Piblik / Place Publique</b><small data-t="z1"></small></li>
-          <li><b>📍 PA sou pon</b><small data-t="z2"></small></li>
+          <li><b>📍 Sou Pon</b><small data-t="z2"></small></li>
           <li><b>📍 Kay Diderot</b><small data-t="z3"></small></li>
-          <li><b>📍 Rue Salomon</b><small data-t="z3"></small></li>
+          <li><b>📍 Rue Salomon</b><small data-t="z4"></small></li>
         </ul>
         <p class="avis" data-t="zAvis"></p>
       </div>
@@ -292,7 +292,7 @@ var TXT = {
     n2t:'Teknoloji solid', n2:'Koneksyon satelit Starlink ak pwen aksè Grandstream, ki mache ak enèji solè.',
     n3t:'Masbet Education', n3:'Edikasyon, espò, kilti, syans ak lavi kominotè : tounwa, quiz Les Génies d\'Haïti, lives sou YouTube ak Facebook.',
     zTitre:'Zòn kouvèti', zSous:'Kote w ka konekte sou Wi-Fi MasbetAirNet jodi a.',
-    z1:'Nan Plas Piblik Ansavo.', z2:'Bò pon an.', z3:'Bò PA sou pon.',
+    z1:'Nan Plas Piblik Ansavo.', z2:'Pwen aksè Sou Pon, Ri Larivyè.', z3:'Ri Larivyè.', z4:'Ri Salomon, Ansavo.',
     carteRepli:'Gade kat la sou OpenStreetMap', zAvis:'Rezo a ap grandi. Ou vle Wi-Fi nan zòn pa w ? Ekri nou sou WhatsApp.',
     pTitre:'Pri yo', pSous:'Pri yo mete ajou otomatikman.', chaj:'Ap chaje…',
     pAvis:'Tout pake yo bay aksè sou rezo Masbet.AirNet, nan zòn ki endike pi wo yo.',
@@ -317,7 +317,7 @@ var TXT = {
     n2t:'Une technologie fiable', n2:'Connexion satellite Starlink et points d\'accès Grandstream, alimentés à l\'énergie solaire.',
     n3t:'Masbet Education', n3:'Éducation, sport, culture, sciences et vie communautaire : tournois, quiz Les Génies d\'Haïti, lives sur YouTube et Facebook.',
     zTitre:'Zones de couverture', zSous:'Où se connecter au Wi-Fi MasbetAirNet aujourd\'hui.',
-    z1:'Sur la Place Publique d\'Anse-à-Veau.', z2:'Près du pont.', z3:'Près de PA sou pon.',
+    z1:'Sur la Place Publique d\'Anse-à-Veau.', z2:'Point d\'accès Sou Pon, rue de la Rivière.', z3:'Rue de la Rivière.', z4:'Rue Salomon, Anse-à-Veau.',
     carteRepli:'Voir la carte sur OpenStreetMap', zAvis:'Le réseau s\'étend. Vous voulez le Wi-Fi dans votre quartier ? Écrivez-nous sur WhatsApp.',
     pTitre:'Tarifs', pSous:'Les tarifs sont mis à jour automatiquement.', chaj:'Chargement…',
     pAvis:'Tous les forfaits donnent accès au réseau Masbet.AirNet, dans les zones indiquées plus haut.',
@@ -443,7 +443,7 @@ function carte() {
   }
   var m = L.map('carte', { scrollWheelZoom: false, dragging: !L.Browser.mobile, tap: false }).setView([18.5004, -73.3464], 16);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(m);
-  var pts = [[18.503459, -73.3457, 'Plas Piblik / Place Publique'], [18.497354, -73.347085, 'PA sou pon']];
+  var pts = [[18.503459, -73.3457, 'Plas Piblik / Place Publique'], [18.497354, -73.347085, 'Sou Pon']];
   pts.forEach(function (p) {
     L.circle([p[0], p[1]], { radius: 120, color: '#06b6d4', fillColor: '#06b6d4', fillOpacity: .18, weight: 1 }).addTo(m);
     L.marker([p[0], p[1]]).addTo(m).bindPopup('<b>' + p[2] + '</b><br>Wi-Fi Masbet.AirNet');
