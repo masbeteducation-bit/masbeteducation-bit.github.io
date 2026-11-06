@@ -282,6 +282,12 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   @media (prefers-reduced-motion:reduce){ .qchoix button .att{animation:none;border-right-color:#173a8c} }
   .qexpl{margin-top:12px;padding:12px;border-radius:10px;font-size:14.5px}
   .pcharj{font-size:13.5px;color:var(--gris,#5d6782);margin:6px 0 2px}
+  /* v103 : l'Espace professionnel se distingue nettement des parcours (bandeau marine, tuiles teintées, espace avant) */
+  #cPro{margin-top:26px;padding-top:0;overflow:hidden;border:1.5px solid #14213d}
+  #cPro>h2{margin:0 -16px 14px;padding:13px 16px;background:#14213d;color:#fff;flex-wrap:wrap;row-gap:0}
+  #cPro>h2 .hI{background:rgba(255,255,255,.14);color:#fff}
+  #cPro>h2::after{content:attr(data-sous);display:block;flex-basis:100%;margin-left:40px;font-size:12.5px;font-weight:600;color:#9fe7f3;letter-spacing:.2px}
+  #proZone .pak{background:#f4f6fb;border-color:#d3d9e8}
   .btn.charge{opacity:.9;cursor:progress} .btn.charge .att{display:inline-block;vertical-align:-3px;margin-right:6px;width:16px;height:16px;border:2.5px solid #14213d;border-right-color:transparent;border-radius:50%;animation:tourne .8s linear infinite}
   .prevue{margin:12px 0 4px;border:1px solid #e2e5ee;border-radius:12px;background:#fff}
   .prevue summary{cursor:pointer;padding:12px 14px;font-weight:700;color:#14213d}
@@ -650,7 +656,7 @@ var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('sp
       <div id="pakZone"><div class="skel"></div></div>
     </div>
     <div class="card hidden" id="cPro">
-      <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg></span> <span data-t="proTitre"></span></h2>
+      <h2 id="proH2"><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg></span> <span data-t="proTitre"></span></h2>
       <div id="proZone"><div class="skel"></div></div>
     </div>
     <div class="card hidden" id="cAntren">
@@ -1656,6 +1662,7 @@ function blocPass(){
 }
 function proGratuites(){ var g=PRO&&PRO.gratuites; return typeof g==='number'?g:2; }
 function afficherPro(){
+  var h2p=document.getElementById('proH2'); if(h2p) h2p.setAttribute('data-sous',AL('Metye ak syans · apa de pakou yo','Métiers et sciences · à part des parcours'));
   var c=document.getElementById('cPro'), z=document.getElementById('proZone');
   if(!PRO) return;
   c.classList.remove('hidden'); PROECRAN='tiles'; PA=null; if(PRUN===RUN_PRO){ PT=null; clearInterval(PTIMER); }
