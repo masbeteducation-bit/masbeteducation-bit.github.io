@@ -857,7 +857,7 @@ Object.assign(TXT.ht,{
     defiRetou:'Retounen nan Defi a', defiPataje:function(p,r){ return '🏁 Mwen fè '+p+' pwen nan Defi Masbet la ('+r+'e nan semèn nan). Vin eseye !'; },
     jweTitre:'Jwe · Fòme · Genyen', jweSou:'Tout gratis, eksepte Defi a (tikè) ak Espas pwo a (Pass Pro, etap 1-2 gratis).',
     jwe:[['flag','Defi Masbet','10 kesyon difisil · Pass Pro 24 è pou ganyan an','#quiz&defi','Tikè'],['coupe','Konkou Masbet','Manch, demi-final ak final nasyonal','#quiz&konkou',''],['cible','Pakou ak badj','Monte etap pa etap, ranmase badj','#quiz&pakou',''],['pro','Espas pwofesyonèl','12 metye ak syans · atestasyon','#quiz&pro','Pass Pro'],['livre','Antrene w pa ribrik','San kwonomèt, ak koreksyon','#quiz&antren',''],['jeux','Jwèt lespri','Lojik, kalkil, memwa, pezèl','psiko.html','']],
-    konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
+    konEtaps:function(e,n,man,demi){ return [['Pakou','Valide etap '+e+' nan '+n+' pakou : ou resevwa yon envitasyon.'],['Envitasyon','Konkou a kòmanse lè gen ase moun envite.'],['Manch yo',man+' manch sou entènèt, '+(man-1)+' pi bon yo konte. Chak bon repons bay pwen (etap 5 = 5 pwen).'],['Demi-final','Pi bon '+demi+' yo kalifye. Verifikasyon pa SMS.'],['Final','Gran final la : ganyan Konkou Masbet la.']]; }, konKijanTit:'Kijan Konkou a mache',
 });
 Object.assign(TXT.fr,{
     sertTitre:'Mes certificats', defiTitre:'Défi Masbet', defiRegles:function(n,s){ return n+' questions difficiles, '+s+' secondes chacune (40 secondes pour les calculs, 90 secondes pour les exercices). Bonne réponse = 10 points + le temps restant (jusqu\'à '+s+' points, même pour les questions plus longues). 1 ticket = 1 chance ; votre meilleur score de la semaine compte.'; },
@@ -868,7 +868,7 @@ Object.assign(TXT.fr,{
     defiRetou:'Retour au Défi', defiPataje:function(p,r){ return '🏁 J\'ai fait '+p+' points au Défi Masbet ('+r+'e de la semaine). Venez essayer !'; },
     jweTitre:'Jouer · Se former · Gagner', jweSou:'Tout est gratuit, sauf le Défi (ticket) et l\'Espace pro (Pass Pro, étapes 1-2 gratuites).',
     jwe:[['flag','Défi Masbet','10 questions difficiles · Pass Pro 24 h au gagnant','#quiz&defi','Ticket'],['coupe','Concours Masbet','Manches, demi-finale et finale nationale','#quiz&konkou',''],['cible','Parcours et badges','Montez étape par étape, gagnez des badges','#quiz&pakou',''],['pro','Espace professionnel','12 métiers et sciences · attestation','#quiz&pro','Pass Pro'],['livre','S\'entraîner par rubrique','Sans chrono, avec correction','#quiz&antren',''],['jeux','Jeux d\'esprit','Logique, calcul, mémoire, casse-tête','psiko.html','']],
-    konEtaps:function(e,n,man,demi){ return [['Parcours','Validez l\'étape '+e+' dans '+n+' parcours : vous recevez une invitation.'],['Invitation','Le Concours démarre quand il y a assez d\'invités.'],['Manches',man+' manches en ligne. Chaque bonne réponse donne des points (étape 5 = 5 points).'],['Demi-finale','Les '+demi+' meilleurs se qualifient. Vérification par SMS.'],['Finale','La grande finale : le vainqueur du Concours Masbet.']]; }, konKijanTit:'Comment marche le Concours',
+    konEtaps:function(e,n,man,demi){ return [['Parcours','Validez l\'étape '+e+' dans '+n+' parcours : vous recevez une invitation.'],['Invitation','Le Concours démarre quand il y a assez d\'invités.'],['Manches',man+' manches en ligne, les '+(man-1)+' meilleures comptent. Chaque bonne réponse donne des points (étape 5 = 5 points).'],['Demi-finale','Les '+demi+' meilleurs se qualifient. Vérification par SMS.'],['Finale','La grande finale : le vainqueur du Concours Masbet.']]; }, konKijanTit:'Comment marche le Concours',
 });
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
@@ -1497,6 +1497,7 @@ function pakResultat(){
   if(r.reussi) h+='<div class="fete ok">'+esc(T('pakReyisi')(e,nomEtape(e)))+'<span>'+esc(T('pakBadj')(BADJ[e-1],nomEtape(e)))+'</span>'+
     '<span>'+esc(r.etape>5?T('pakTout'):T('pakSwiv')(r.etape,nomEtape(r.etape)))+'</span></div>';
   else h+='<div class="fete ko">'+esc(T('pakRate')(r.score,r.seuil))+'</div>';
+  if(r.nouvelleInvitation) chargerKonkou(true);   // v106 : le compteur d'invités se met à jour tout de suite
   if(r.nouvelleInvitation) h+='<div class="fete inv">🎓 '+esc(T('invTitre'))+'<span>'+esc(T('invMsg'))+'</span></div>';
   if(r.parcours){ var sp=r.parcours;
     if(sp.merite) h+='<div class="fete inv">📜 '+esc(AL('Atestasyon Masbet ! ','Attestation Masbet ! ')+sp.bonnes+'/'+sp.total+' ('+sp.pct+' %)')+'<span>'+esc(AL('Antre non konplè ou nan « Sètifika mwen » pou l parèt sou atestasyon an.','Inscrivez votre nom complet dans « Mes certificats » pour qu\'il apparaisse sur l\'attestation.'))+'</span></div><button class="btn" style="margin-bottom:8px" onclick="voirCerts()">📜 '+esc(AL('Wè atestasyon an','Voir l\'attestation'))+'</button>';
@@ -1919,7 +1920,7 @@ function etapsKonkou(k,m){
   else if(['annonce','manche','entre'].indexOf(k.phase)>=0) cur=2;
   else if(['demiAttente','demi','demiFin'].indexOf(k.phase)>=0) cur=3;
   else cur=4;
-  var L=T('konEtaps')(c.etape||3,c.requis||4,(k.manches||[]).length||3,k.demiNb||10);
+  var L=T('konEtaps')(c.etape||3,c.requis||4,(k.manches||[]).length||4,k.demiNb||25);
   return '<div class="hint" style="font-weight:800;margin-bottom:2px">'+esc(T('konKijanTit'))+'</div><div class="etaps">'+L.map(function(x,i){
     return '<div class="'+(i<cur?'f':i===cur?'c':'')+'"><span class="o">'+(i<cur?'✓':i+1)+'</span><span><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></span></div>'; }).join('')+'</div>';
 }
