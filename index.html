@@ -525,6 +525,8 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   #cEdito .edImgC{display:block;margin:-16px -16px 12px;border-radius:10px 10px 0 0;overflow:hidden;aspect-ratio:16/9;background:#e9ecf2}
   #cEdito .edImgC img{width:100%;height:100%;object-fit:cover;display:block}
   .edImgP{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:12px;margin:4px 0 16px;background:#e9ecf2}
+  .edReac{display:block;font-size:12px;font-weight:600;opacity:.75;margin-top:3px}
+  .edReacC{display:block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--muted)}
   #cEdito .edT{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:800;line-height:1.25;margin:8px 0 6px;color:#14213d}
   #cEdito .edX{font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.55;color:#4b5263;text-align:justify;hyphens:auto}
   #cEdito .btn{background:var(--navy);color:#fff;margin-top:12px}
@@ -2355,12 +2357,17 @@ function edDate(p){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(p||''); if(!m) return 
   var M=LANG==='fr'?['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm'];
   return Number(m[3])+' '+M[mo-1]+' '+m[1]; }
 function edParas(t){ return String(t||'').split(/\n\s*\n/).map(function(p){ p=p.trim(); return p?'<p>'+esc(p).replace(/\n/g,'<br>')+'</p>':''; }).join(''); }
+function edReac(e,btn){   // v111 : commentaires et « j'aime » du sujet dans la Communauté
+  if(!e||!e.sujet) return ''; var k=e.kom||0, l=e.likes||0;
+  var t=k||l?'💬 '+k+' '+AL('kòmantè',k>1?'commentaires':'commentaire')+' · ❤ '+l:AL('Bay premye opinyon an !','Soyez le premier à réagir !');
+  return btn?'<small class="edReac">'+esc(t)+'</small>':(k||l?'<span class="edReacC">'+esc(t)+'</span>':'');
+}
 function edLab(){ return '<div class="isLab"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h4"/></svg> '+esc(AL('Editoryal Masbet','Éditorial Masbet'))+'</div>'; }
 function afficherEdito(){
   var c=document.getElementById('cEdito'); if(!c) return; var e=EDITO&&EDITO.dernier;
   if(!e){ c.classList.add('hidden'); c.innerHTML=''; return; }
   var tx=edT(e,'texte').replace(/\s+/g,' ').trim(), ext=tx.length>260?tx.slice(0,260).replace(/\s+\S*$/,'')+'…':tx;
-  c.innerHTML=(e.image?'<a href="#edito&id='+encodeURIComponent(e.id)+'" class="edImgC"><img src="'+esc(e.image)+'" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></a>':'')+edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><div class="edT">'+esc(edT(e,'titre'))+'</div><div class="edX">'+esc(ext)+'</div>'+
+  c.innerHTML=(e.image?'<a href="#edito&id='+encodeURIComponent(e.id)+'" class="edImgC"><img src="'+esc(e.image)+'" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></a>':'')+edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><div class="edT">'+esc(edT(e,'titre'))+'</div><div class="edX">'+esc(ext)+'</div>'+edReac(e,false)+
     '<a class="btn" href="#edito&id='+encodeURIComponent(e.id)+'">'+esc(AL('Li editoryal la','Lire l\'éditorial'))+'</a>'+
     ((EDITO.liste||[]).length>1?'<a class="lien2" href="#edito&d=liste" style="color:var(--navy)">'+esc(AL('Ansyen editoryal yo','Éditoriaux précédents'))+' →</a>':'');
   c.classList.remove('hidden');
@@ -2387,7 +2394,7 @@ function editoOuvrir(id){
   f.innerHTML=edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><h1>'+esc(edT(e,'titre'))+'</h1>'+
     (e.image?'<img class="edImgP" src="'+esc(e.image)+'" alt="" onerror="this.style.display=\'none\'">':'')+
     '<div class="edTexte">'+edParas(edT(e,'texte'))+'</div><div class="edSign">— '+esc(e.signature||'Duckhens Lespérance')+'</div>'+
-    '<div class="isActs"><button type="button" class="btn" onclick="editoPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html'+(/^KS[A-Z0-9]{4,18}$/.test(e.sujet||'')?'#sije='+e.sujet:'')+'">💬 '+esc(AL('Bay opinyon w nan Kominote a','Réagir dans la Communauté'))+'</a></div>'+
+    '<div class="isActs"><button type="button" class="btn" onclick="editoPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html'+(/^KS[A-Z0-9]{4,18}$/.test(e.sujet||'')?'#sije='+e.sujet:'')+'">💬 '+esc(AL('Bay opinyon w nan Kominote a','Réagir dans la Communauté'))+edReac(e,true)+'</a></div>'+
     (autres.length?'<div class="edAutres"><h3>'+esc(AL('Lòt editoryal','Autres éditoriaux'))+'</h3>'+autres.map(function(x){ return '<a href="#edito&id='+encodeURIComponent(x.id)+'">'+esc(edT(x,'titre'))+'<span>'+esc(edDate(x.publie))+'</span></a>'; }).join('')+'</div>':'');
   p.scrollTop=0;
 }
