@@ -520,6 +520,22 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .isActs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.isActs .btn{flex:1;min-width:140px;margin:0;text-align:center}
   .isNav{display:flex;justify-content:space-between;gap:8px;margin-top:16px}.isNav a{flex:1;padding:10px;border-radius:12px;background:#fff;border:1px solid #e3e6ee;font-size:13px;color:#14213d;text-decoration:none}
   .isNav a b{display:block;font-size:14px}.isNav a.d{text-align:right}
+  /* v109 — 📰 Éditorial Masbet */
+  #cEdito{border-top:4px solid var(--gold)}
+  #cEdito .edImgC{display:block;margin:-16px -16px 12px;border-radius:10px 10px 0 0;overflow:hidden;aspect-ratio:16/9;background:#e9ecf2}
+  #cEdito .edImgC img{width:100%;height:100%;object-fit:cover;display:block}
+  .edImgP{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:12px;margin:4px 0 16px;background:#e9ecf2}
+  #cEdito .edT{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:800;line-height:1.25;margin:8px 0 6px;color:#14213d}
+  #cEdito .edX{font-family:Georgia,'Times New Roman',serif;font-size:15px;line-height:1.55;color:#4b5263;text-align:justify;hyphens:auto}
+  #cEdito .btn{background:var(--navy);color:#fff;margin-top:12px}
+  .edDate{font-size:12px;font-weight:700;color:var(--muted);margin-top:2px}
+  .edFeuille .edTexte{font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.7;text-align:justify;hyphens:auto}
+  .edFeuille .edTexte p{margin:0 0 14px}
+  .edFeuille .edTexte p:first-child::first-letter{float:left;font-size:54px;line-height:.9;font-weight:900;padding:4px 8px 0 0;color:#14213d}
+  .edSign{margin:20px 0 6px;padding-top:12px;border-top:2px solid #14213d;font-style:italic;font-weight:700;color:#14213d}
+  .edAutres{margin-top:26px}.edAutres h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+  .edAutres a{display:block;padding:10px 0;border-bottom:1px solid #e3e6ee;text-decoration:none;color:#1f2a44;font-weight:700}
+  .edAutres a span{display:block;font-size:12px;font-weight:600;color:var(--muted)}
   .isSrc{font-size:12px;color:#6b7280;margin-top:14px}
   .isListe h3{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:18px 0 6px}
   .isListe a{display:flex;gap:10px;align-items:baseline;padding:9px 0;border-bottom:1px solid #e3e6ee;text-decoration:none;color:#1f2a44}
@@ -562,7 +578,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 <header>
   <div class="hcWrap"><div class="hChips" id="hChips" role="navigation" aria-label="Masbet">
     <a href="achte.html#wifi"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg> <b data-t="chWifi"></b></a><a href="#videyo&tv"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 3l4 4 4-4"/></svg> <b>TV</b></a><a href="#match"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.4 4.4H9.6l-1.4-4.4z"/><path d="M12 3v4.5M15.8 10.3l4.6-1.6M14.4 14.7l2.8 3.9M9.6 14.7l-2.8 3.9M8.2 10.3 3.6 8.7"/></svg> <b data-t="chMatch"></b></a><a href="#videyo"><svg class="mic rouge" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"/><path d="M7 7a7 7 0 0 0 0 10M17 7a7 7 0 0 1 0 10M4.2 4.2a11 11 0 0 0 0 15.6M19.8 4.2a11 11 0 0 1 0 15.6"/></svg> <b>Live</b></a>
-    <a href="#quiz"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg> <b>Quiz</b></a><a href="psiko.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><path d="M17.25 13.2l4 4-4 4-4-4z"/></svg> <b data-t="chJwet"></b></a><a href="kominote.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg> <b data-t="chKom"></b></a><a href="#istwa&d=liste"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4.5v4h4"/><path d="M12 7.5V12l3.2 2"/></svg> <b data-t="chIstwa"></b></a>
+    <a href="#quiz"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.4c-.6.3-1 .8-1 1.5v.6"/><circle cx="12" cy="17" r="1.1" fill="currentColor" stroke="none"/></svg> <b>Quiz</b></a><a href="psiko.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.6"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.6"/><path d="M17.25 13.2l4 4-4 4-4-4z"/></svg> <b data-t="chJwet"></b></a><a href="kominote.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H10l-6 4.5z"/><path d="M8.5 10.5h7"/></svg> <b data-t="chKom"></b></a>
     <a href="biblio.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h5v16h-5z"/><path d="m15.8 5.3 3.9-1 3.3 14.6-3.9 1z"/></svg> <b data-t="chLiv"></b></a><a href="suite.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5h6v2M3 12.5h18M10.5 12.5v2h3v-2"/></svg> <b>Masbet Suite</b></a><a href="meditasyon.html"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5c-4.2-1.6-7.5-4.6-7.5-9 3.2 0 5.6 1.6 7.5 4.3 1.9-2.7 4.3-4.3 7.5-4.3 0 4.4-3.3 7.4-7.5 9z"/><path d="M12 15.8c-1.6-2.6-1.6-6.4 0-10.3 1.6 3.9 1.6 7.7 0 10.3z"/></svg> <b data-t="chMed"></b></a>
   </div><button type="button" class="hcF hcG hidden" aria-label="Services précédents"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button type="button" class="hcF hcD hidden" aria-label="Autres services"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
   <p><a class="apropo" href="apropo.html" data-t="apropo"></a></p>
@@ -571,6 +587,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
 <main>
   <div class="install hidden" id="install"><span data-t="installTxt"></span><button id="btnInstall" data-t="installBtn"></button></div>
   <div class="iosAide hidden" id="iosAide"></div>
+<div class="isPage hidden" id="edPage" role="dialog" aria-modal="true"><div class="isBar"><button type="button" onclick="editoFermer()" aria-label="Retour">←</button><b id="edBarT">📰</b><button type="button" onclick="location.hash='#edito&d=liste'" id="edBarL">☰</button></div><div class="isFeuille edFeuille" id="edFeuille"></div></div>
 <div class="isPage hidden" id="isPage" role="dialog" aria-modal="true"><div class="isBar"><button type="button" onclick="istwaFermer()" aria-label="Retour">←</button><b>📜 Istwa jodi a</b><button type="button" onclick="istwaListe()" aria-label="Toutes les dates"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" style="vertical-align:-4px"><path fill="currentColor" d="M7 2h2v2h6V2h2v2h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2zm12 7H5v10h14zM7 11h3v3H7zm5 0h3v3h-3z"/></svg></button><button type="button" onclick="istwaPataje()" aria-label="Partager" id="isPat"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" style="vertical-align:-3px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg></button></div><div class="isFeuille" id="isFeuille"></div></div>
 
   <!-- ===== Akèy ===== -->
@@ -605,6 +622,8 @@ var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('sp
     </div>
       <div class="jwe" id="jweZone"></div>
     </div>
+
+    <div class="card hidden" id="cEdito"></div>
 
     <div class="card" id="cOffres">
       <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="5" rx="1.2"/><path d="M5 13v8h14v-8M12 8v13"/><path d="M12 8c-2-3-6-3-6-.5S10 8 12 8zm0 0c2-3 6-3 6-.5S14 8 12 8z"/></svg></span> <span data-t="offres"></span></h2>
@@ -892,7 +911,7 @@ function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 
 // v4.4 — Vitesse : les lectures demandées au même moment partent ensemble dans UNE requête (?api=lot),
 // les demandes identiques en cours sont partagées. Ancien serveur sans « lot » : retour automatique aux requêtes séparées.
-var LOT_PERMIS={accueil:1,matchs:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,defi:1,certs:1,lokal:1,kont_moi:1,lok_reac:1};
+var LOT_PERMIS={accueil:1,matchs:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,defi:1,certs:1,lokal:1,kont_moi:1,lok_reac:1,edito:1};
 var LOT_A_PART={matchs:1,accueil:1,quiz:1}, LOT_ONGLET={pakou:1,pro:1,rubriques:1,defi:1,konkou:1};
 var LOT_FILE=[], LOT_T=null, LOT_KO=false, EN_VOL={}, NB_REQ=0;
 function apiExtra(params){ var extra=''; if(params) Object.keys(params).forEach(function(k){ extra+='&'+encodeURIComponent(k)+'='+encodeURIComponent(params[k]); }); return extra; }
@@ -2328,12 +2347,68 @@ function planifierMatchs(){
 }
 
 // ---------- Accueil ----------
+// ---------- v109 : 📰 Éditorial Masbet (publié depuis la page Admin, lu ici en créole ou en français) ----------
+var EDITO=null, ED_ID='';
+try{ EDITO=JSON.parse(lire('masbet_edito')||'null'); }catch(e){ EDITO=null; }
+function edT(e,k){ var h=e[k+'Ht']||'', f=e[k+'Fr']||''; return LANG==='fr'?(f||h):(h||f); }
+function edDate(p){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(p||''); if(!m) return ''; var mo=Number(m[2]);
+  var M=LANG==='fr'?['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm'];
+  return Number(m[3])+' '+M[mo-1]+' '+m[1]; }
+function edParas(t){ return String(t||'').split(/\n\s*\n/).map(function(p){ p=p.trim(); return p?'<p>'+esc(p).replace(/\n/g,'<br>')+'</p>':''; }).join(''); }
+function edLab(){ return '<div class="isLab"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h4"/></svg> '+esc(AL('Editoryal Masbet','Éditorial Masbet'))+'</div>'; }
+function afficherEdito(){
+  var c=document.getElementById('cEdito'); if(!c) return; var e=EDITO&&EDITO.dernier;
+  if(!e){ c.classList.add('hidden'); c.innerHTML=''; return; }
+  var tx=edT(e,'texte').replace(/\s+/g,' ').trim(), ext=tx.length>260?tx.slice(0,260).replace(/\s+\S*$/,'')+'…':tx;
+  c.innerHTML=(e.image?'<a href="#edito&id='+encodeURIComponent(e.id)+'" class="edImgC"><img src="'+esc(e.image)+'" alt="" loading="lazy" onerror="this.parentNode.style.display=\'none\'"></a>':'')+edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><div class="edT">'+esc(edT(e,'titre'))+'</div><div class="edX">'+esc(ext)+'</div>'+
+    '<a class="btn" href="#edito&id='+encodeURIComponent(e.id)+'">'+esc(AL('Li editoryal la','Lire l\'éditorial'))+'</a>'+
+    ((EDITO.liste||[]).length>1?'<a class="lien2" href="#edito&d=liste" style="color:var(--navy)">'+esc(AL('Ansyen editoryal yo','Éditoriaux précédents'))+' →</a>':'');
+  c.classList.remove('hidden');
+}
+function chargerEdito(){ if(!CONTENU) return; api('edito').then(function(d){ if(!d) return; var av=JSON.stringify(EDITO); EDITO=d; ecrire('masbet_edito',JSON.stringify(d)); if(av!==JSON.stringify(d)){ afficherEdito(); if(ED_ID) editoOuvrir(ED_ID); } },function(){}); }
+var ED_CACHE={};
+function editoOuvrir(id){
+  var p=document.getElementById('edPage'), f=document.getElementById('edFeuille'); ED_ID=id;
+  p.classList.remove('hidden'); document.body.style.overflow='hidden';
+  document.getElementById('edBarT').textContent='📰 '+AL('Editoryal Masbet','Éditorial Masbet');
+  document.getElementById('edBarL').setAttribute('aria-label',AL('Tout editoryal yo','Tous les éditoriaux'));
+  var L=(EDITO&&EDITO.liste)||[];
+  if(id==='liste'){
+    f.innerHTML='<h1>'+esc(AL('Editoryal Masbet','Éditoriaux Masbet'))+'</h1>'+(L.length?'<div class="edAutres">'+L.map(function(x){ return '<a href="#edito&id='+encodeURIComponent(x.id)+'">'+esc(edT(x,'titre'))+'<span>'+esc(edDate(x.publie))+'</span></a>'; }).join('')+'</div>':'<div class="hint">'+esc(AL('Poko gen editoryal.','Aucun éditorial pour l\'instant.'))+'</div>');
+    p.scrollTop=0; return; }
+  var e=EDITO&&EDITO.dernier&&EDITO.dernier.id===id?EDITO.dernier:ED_CACHE[id];
+  if(!e){ f.innerHTML='<div class="hint" style="padding:30px 0">'+esc(AL('Chajman…','Chargement…'))+'</div>';
+    if(!CONTENU) return;
+    api('edito',{id:id}).then(function(d){ if(ED_ID!==id) return; if(d&&d.edito){ ED_CACHE[id]=d.edito; editoOuvrir(id); } else f.innerHTML='<div class="hint" style="padding:30px 0">'+esc(AL('Editoryal sa a pa disponib.','Cet éditorial n\'est pas disponible.'))+'</div>'; },
+      function(){ if(ED_ID===id) f.innerHTML='<div class="err">'+T('reseau')+'</div>'; });
+    return; }
+  if(p.getAttribute('data-vu')!==id){ p.setAttribute('data-vu',id); statEnvoyer('vue','edito'); }
+  var autres=L.filter(function(x){ return x.id!==id; }).slice(0,8);
+  f.innerHTML=edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><h1>'+esc(edT(e,'titre'))+'</h1>'+
+    (e.image?'<img class="edImgP" src="'+esc(e.image)+'" alt="" onerror="this.style.display=\'none\'">':'')+
+    '<div class="edTexte">'+edParas(edT(e,'texte'))+'</div><div class="edSign">— '+esc(e.signature||'Duckhens Lespérance')+'</div>'+
+    '<div class="isActs"><button type="button" class="btn" onclick="editoPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html'+(/^KS[A-Z0-9]{4,18}$/.test(e.sujet||'')?'#sije='+e.sujet:'')+'">💬 '+esc(AL('Bay opinyon w nan Kominote a','Réagir dans la Communauté'))+'</a></div>'+
+    (autres.length?'<div class="edAutres"><h3>'+esc(AL('Lòt editoryal','Autres éditoriaux'))+'</h3>'+autres.map(function(x){ return '<a href="#edito&id='+encodeURIComponent(x.id)+'">'+esc(edT(x,'titre'))+'<span>'+esc(edDate(x.publie))+'</span></a>'; }).join('')+'</div>':'');
+  p.scrollTop=0;
+}
+function editoPataje(){
+  var e=EDITO&&EDITO.dernier&&EDITO.dernier.id===ED_ID?EDITO.dernier:ED_CACHE[ED_ID]; if(!e) return; statEnvoyer('partage');
+  var txt='📰 '+AL('Editoryal Masbet','Éditorial Masbet')+' — '+edT(e,'titre'), url=SITE+'e/'+encodeURIComponent(e.id);   // v110 : page d'aperçu (titre + image) qui renvoie vers l'éditorial
+  if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:edT(e,'titre')});
+  if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
+}
+function editoFermer(){ document.getElementById('edPage').classList.add('hidden'); document.body.style.overflow=''; ED_ID=''; if(/^#edito/.test(location.hash)){ try{ history.replaceState(null,'',location.pathname+location.search+'#akey'); }catch(e){} vue(); } }
+function editoRoute(){ var m=/^#edito&(?:id=([A-Z0-9]{4,20})|d=(liste))/.exec(location.hash||''); if(m) editoOuvrir(m[1]||'liste'); else if(!document.getElementById('edPage').classList.contains('hidden')){ document.getElementById('edPage').classList.add('hidden'); document.body.style.overflow=''; ED_ID=''; } }
+window.addEventListener('hashchange',editoRoute);
+window.addEventListener('DOMContentLoaded',function(){ afficherEdito(); editoRoute(); });
 function chargerAccueil(){
   if(!CONTENU){   // projet Contenu pas encore branché : on garde seulement l'achat et la date
     ['cOffres','cMeteo','cMatchMini'].forEach(function(id){ document.getElementById(id).classList.add('hidden'); });
     document.getElementById('ephem').innerHTML=''; document.getElementById('matchs').innerHTML=''; document.getElementById('vids').innerHTML='';
     return;
   }
+  chargerEdito();
   api('accueil').then(function(d){
       var ancien=ACC;
       // v42.15 : météo momentanément indisponible chez Google → on garde la dernière bonne (moins de 12 h)
@@ -2357,7 +2432,7 @@ function affMesurer(){   // v42.13 : secondes entre l'ouverture de la page et l'
   var ms=Math.round(performance.now()), k=ACC_MEM?'rev':'nou'; if(document.hidden||ms>60000) return;
   setTimeout(function(){ apiPost('stat',{appareil:appareil(),ev:'aff',k:k,ms:ms}).catch(function(){}); },3000);
 }
-function toutAfficher(){ afficherLokal();
+function toutAfficher(){ afficherLokal(); try{ afficherEdito(); if(ED_ID) editoOuvrir(ED_ID); }catch(e){}
   afficherDate(); try{ afficherIstwa(); if(IS_D&&!document.getElementById('isPage').classList.contains('hidden')) istwaOuvrir(IS_D); }catch(e){}
   if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv(); affMesurer();
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
@@ -2566,7 +2641,7 @@ var HORS=false;
 function horsLigne(v){ HORS=!!v; var b=document.getElementById('horsLigne'); if(!b) return; b.classList.toggle('hidden',!HORS); b.textContent='📵 '+AL('San koneksyon : w ap wè dènye enfòmasyon ki te anrejistre yo.','Pas de connexion : vous voyez les dernières informations enregistrées.'); }
 window.addEventListener('offline',function(){ horsLigne(true); });
 window.addEventListener('online',function(){ horsLigne(false); chargerAccueil(); chargerLokal(); });
-var API_MEMOIRE={accueil:1,matchs:1,lokal:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,lok_reac:1};
+var API_MEMOIRE={accueil:1,matchs:1,lokal:1,quiz:1,classement:1,rubriques:1,pakou:1,konkou:1,pro:1,lok_reac:1,edito:1};
 
 // ---------- Statistiques anonymes (compteurs par jour, rien de personnel) ----------
 var STAT_DERN='';
