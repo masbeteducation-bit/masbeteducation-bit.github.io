@@ -528,6 +528,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .edFeuille.aff .edImgP{max-height:none}
   #cEdito .edImgC.aff{aspect-ratio:auto;background:#14213d}
   #cEdito .edImgC.aff img{height:auto;max-height:400px;object-fit:contain}
+  .edLg{display:inline-block;margin:-4px 0 12px;padding:3px 9px;border-radius:99px;background:#eef0f5;color:#4b5263;font-size:12.5px;font-weight:700}
   .edReac{display:block;font-size:12px;font-weight:600;opacity:.75;margin-top:3px}
   .edReacC{display:block;margin-top:8px;font-size:12.5px;font-weight:700;color:var(--muted)}
   #cEdito .edT{font-family:Georgia,'Times New Roman',serif;font-size:21px;font-weight:800;line-height:1.25;margin:8px 0 6px;color:#14213d}
@@ -2365,6 +2366,13 @@ function edReac(e,btn){   // v111 : commentaires et « j'aime » du sujet dans l
   var t=k||l?'💬 '+k+' '+AL('kòmantè',k>1?'commentaires':'commentaire')+' · ❤ '+l:AL('Bay premye opinyon an !','Soyez le premier à réagir !');
   return btn?'<small class="edReac">'+esc(t)+'</small>':(k||l?'<span class="edReacC">'+esc(t)+'</span>':'');
 }
+function edLangue(e){   // v113 : éditorial écrit dans une seule langue (celle de l'auteur)
+  var ht=!!(e.texteHt||(!e.texteFr&&e.titreHt)), fr=!!(e.texteFr||(!e.texteHt&&e.titreFr)), x=e.texteHt||e.texteFr;
+  if(!x||(ht&&fr)) return '';
+  if(LANG==='fr'&&!e.texteFr) return '<div class="edLg">🇭🇹 Éditorial écrit en créole</div>';
+  if(LANG!=='fr'&&!e.texteHt) return '<div class="edLg">🇫🇷 Editoryal sa a ekri an franse</div>';
+  return '';
+}
 function edLab(){ return '<div class="isLab"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 9h7M7 12h7M7 15h4"/></svg> '+esc(AL('Editoryal Masbet','Éditorial Masbet'))+'</div>'; }
 function afficherEdito(){
   var c=document.getElementById('cEdito'); if(!c) return; var e=EDITO&&EDITO.dernier;
@@ -2396,7 +2404,7 @@ function editoOuvrir(id){
   if(p.getAttribute('data-vu')!==id){ p.setAttribute('data-vu',id); statEnvoyer('vue','edito'); }
   var autres=L.filter(function(x){ return x.id!==id; }).slice(0,8);
   f.classList.toggle('aff',!e.texteHt&&!e.texteFr);
-  f.innerHTML=edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><h1>'+esc(edT(e,'titre'))+'</h1>'+
+  f.innerHTML=edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><h1>'+esc(edT(e,'titre'))+'</h1>'+edLangue(e)+
     (e.image?'<img class="edImgP" src="'+esc(e.image)+'" alt="" onerror="this.style.display=\'none\'">':'')+
     '<div class="edTexte">'+edParas(edT(e,'texte'))+'</div><div class="edSign">— '+esc(e.signature||'Duckhens Lespérance')+'</div>'+
     '<div class="isActs"><button type="button" class="btn" onclick="editoPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html'+(/^KS[A-Z0-9]{4,18}$/.test(e.sujet||'')?'#sije='+e.sujet:'')+'">💬 '+esc(AL('Bay opinyon w nan Kominote a','Réagir dans la Communauté'))+edReac(e,true)+'</a></div>'+
