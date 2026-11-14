@@ -39,7 +39,8 @@ function page(id, e) {
   const cible = '/' + (e ? '#edito&id=' + id : '#edito&d=liste');
   const url = SITE + '/e/' + id;
   const titre = e ? '📰 ' + coupe(e.titreHt || e.titreFr, 100) : 'Editoryal Masbet';
-  const desc = e ? coupe(e.texteHt || e.texteFr, 180) + ' — ' + coupe(e.signature || 'Masbet Education', 50) : 'Editoryal Masbet Education, an kreyòl ak an franse.';
+  const txt = e ? (e.texteHt || e.texteFr || '') : '';   // v112 : format affiche (sans texte) → titre français en description
+  const desc = e ? (txt ? coupe(txt, 180) : coupe(e.titreFr || 'Afich Masbet Education', 180)) + ' — ' + coupe(e.signature || 'Masbet Education', 50) : 'Editoryal Masbet Education, an kreyòl ak an franse.';
   const image = e && /^https:\/\//.test(e.image || '') ? e.image : IMAGE_DEFAUT;
   return `<!doctype html>
 <html lang="ht"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -69,4 +70,3 @@ export async function onRequestGet(ctx) {
   if (e) ctx.waitUntil(cache.put(cle, rep.clone()));
   return rep;
 }
-
