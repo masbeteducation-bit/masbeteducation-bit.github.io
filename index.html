@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
 <meta name="description" content="Masbet, yon sèl aplikasyon pou tout moun : Wi-Fi ak MonCash oswa NatCash, TV ak match an dirèk, lives, quiz, jwèt lespri, kominote, istwa jodi a.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Masbet — Wi-Fi, TV, match, quiz, kominote</title>
 <link rel="canonical" href="https://masbet.me/">
@@ -559,6 +559,17 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvQm button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;line-height:1.25;text-align:center}
   .tvQm button small{display:block;font-weight:500;opacity:.85;font-size:11.5px}
   .tvQm button.on{background:#fff;color:#14213d;border-color:#fff}
+  .mtvLogo{position:absolute;top:8px;right:8px;z-index:3;width:min(22%,110px);pointer-events:none;opacity:.88;background:rgba(255,255,255,.82);border-radius:8px;padding:3px 6px;box-sizing:border-box}
+  .mtvLogo img{display:block;width:100%;height:auto}
+  .mtvTrans{position:absolute;inset:0;z-index:4;background:radial-gradient(circle at 50% 45%,#1d4f91 0%,#0b1224 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .45s ease}
+  .mtvTrans.on{opacity:1}
+  .mtvTrans img{width:46%;max-width:260px;height:auto;background:rgba(255,255,255,.92);border-radius:12px;padding:6px 12px;box-sizing:border-box;animation:mtvPop 1.6s ease-out both}
+  .mtvTrans small{color:#cfe0ff;font-size:12px;font-weight:800;letter-spacing:.16em}
+  .mtvTrans b{color:#fff;font-size:15px;max-width:86%;text-align:center;line-height:1.3}
+  @keyframes mtvPop{0%{transform:scale(.82);opacity:0}45%{transform:scale(1.04);opacity:1}100%{transform:scale(1);opacity:1}}
+  @media (prefers-reduced-motion:reduce){ .mtvTrans img{animation:none} .mtvTrans{transition:none} }
+  .tvEcran #mtvJ{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .nw{white-space:nowrap}
   .tvInfo{color:#e8edf8;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:rgba(11,18,36,.55)}
   .tvLogo{display:flex;justify-content:center;padding:0 0 14px}
   .tvLogo img{width:150px;height:auto;background:rgba(255,255,255,.88);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
@@ -898,11 +909,13 @@ Object.assign(TXT.fr,{
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
 // v41.6 — TV gratuite
-Object.assign(TXT.ht,{svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done entènèt.', tvTout:'Tout',
+Object.assign(TXT.ht,{mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
+  svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done entènèt.', tvTout:'Tout',
   tvHors:'Pa sou antèn kounye a', tvCharge:'Chajman…', tvErr:'Chèn sa a pa disponib kounye a. Eseye pita, oswa chwazi yon lòt chèn.', tvGros:'📶 Gwo forfè',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/èdtan'; }, tvNb:function(n){ return n+' chèn'; }, tvYt:'Si chèn nan pa an dirèk kounye a, YouTube ap di l.',
   tvDonnees:function(g){ return 'Chèn sa a konsome apeprè '+String(g).replace('.',',')+' Go pa èdtan.'; }});
-Object.assign(TXT.fr,{svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme des données internet.', tvTout:'Toutes',
+Object.assign(TXT.fr,{mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
+  svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme des données internet.', tvTout:'Toutes',
   tvHors:'Hors antenne pour le moment', tvCharge:'Chargement…', tvErr:'Cette chaîne n\'est pas disponible pour le moment. Réessayez plus tard ou choisissez une autre chaîne.', tvGros:'📶 Gros forfait',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/heure'; }, tvNb:function(n){ return n+' chaînes'; }, tvYt:'Si la chaîne n\'est pas en direct en ce moment, YouTube l\'indiquera.',
   tvDonnees:function(g){ return 'Cette chaîne consomme environ '+String(g).replace('.',',')+' Go par heure.'; }});
@@ -2159,8 +2172,8 @@ function jouer(id){
 // ---------- v41.6 — TV gratuite (onglet « Chaînes TV » de la feuille Contenu) ----------
 var TVCAT='', TVI=-1, TVH=null, TVNAT=false, TVSEC=false, TVREC=0, HLS_JS='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js';
 var TV_CAT_HT={'Haïti':'Ayiti','Antilles':'Antiy','Info':'Nouvèl','Sport, musique, cuisine':'Espò, mizik, kizin','International':'Entènasyonal','Jeunesse':'Timoun','Musique':'Mizik','Sport':'Espò','Foot international':'Foutbòl entènasyonal','Éducation':'Edikasyon','Documentaires':'Dokimantè','Sciences et grands projets':'Syans ak gwo pwojè'};
-var TV_CAT_ICO={'Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽','Foot international':'🏆','Éducation':'🎓','Documentaires':'🎬','Sciences et grands projets':'🚀'};
-function tvListe(){ return (ACC&&Array.isArray(ACC.tv)?ACC.tv:[]).filter(function(c){ return c&&c.nom&&(c.type==='hls'?/^https:\/\//.test(c.lien||''):/^(yt|ytc)$/.test(c.type)); }); }
+var TV_CAT_ICO={'Masbet':'⭐','Haïti':'🇭🇹','Gospel':'🙏','Antilles':'🌴','Info':'📰','Sport, musique, cuisine':'⚽','International':'🌍','Jeunesse':'🧸','Musique':'🎵','Sport':'⚽','Foot international':'🏆','Éducation':'🎓','Documentaires':'🎬','Sciences et grands projets':'🚀'};
+function tvListe(){ return (ACC&&Array.isArray(ACC.tv)?ACC.tv:[]).filter(function(c){ return c&&c.nom&&(c.type==='hls'?/^https:\/\//.test(c.lien||''):/^(yt|ytc|mtv)$/.test(c.type)); }); }
 function tvCatNom(c){ return LANG==='ht'&&TV_CAT_HT[c]?TV_CAT_HT[c]:c; }
 function tvCouleur(s){ var h=0; s=String(s); for(var i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))%360; return 'hsl('+h+',55%,38%)'; }
 function tvInitiales(n){ var m=String(n).replace(/\(.*?\)/g,'').trim().split(/\s+/).filter(function(w){ return /^[A-Za-zÀ-ÿ0-9]/.test(w); }); return (m.length>1?m[0].charAt(0)+m[1].charAt(0):String(m[0]||'TV').slice(0,2)).toUpperCase(); }
@@ -2177,9 +2190,10 @@ function afficherTv(){
   document.getElementById('tvNb').textContent=T('tvNb')(l.length);
   document.getElementById('tvCats').innerHTML=['' ].concat(cats).map(function(c){ return '<button type="button" role="tab" class="'+(c===TVCAT?'on':'')+'" data-cat="'+esc(c)+'">'+(c?(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c)):esc(T('tvTout')))+'</button>'; }).join('');
   var tuile=function(c){ var i=l.indexOf(c);
-    var aLogo=!!(c.logo&&/^https:\/\//.test(c.logo)), ini=esc(tvInitiales(c.nom));
+    if(c.type==='mtv') c.logo='logo.png';
+    var aLogo=!!(c.logo&&(/^https:\/\//.test(c.logo)||c.type==='mtv')), ini=esc(tvInitiales(c.nom));
     var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
-    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
+    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type==='mtv'?esc(T('mtvSous')):c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
     var cl=c.hors?'hors':(c.gros||(mes&&mes>=1.5))?'gros':'';
     return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+(cl==='gros'&&mes?'📶 ':'')+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
@@ -2196,6 +2210,7 @@ function tvJouer(i){
   document.getElementById('tvInfo').textContent=c.type!=='hls'?T('tvYt'):c.go?T('tvDonnees')(c.go):T('liveDonnees');
   document.getElementById('tvLect').classList.remove('hidden'); document.body.style.overflow='hidden';
   statEnvoyer('vue','tv');
+  if(c.type==='mtv'){ mtvJouer(); return; }
   if(c.type!=='hls'){
     var src=c.type==='ytc'?'https://www.youtube-nocookie.com/embed/live_stream?channel='+encodeURIComponent(c.id)+'&autoplay=1&playsinline=1':'https://www.youtube-nocookie.com/embed/'+encodeURIComponent(c.id)+'?autoplay=1&playsinline=1&rel=0';
     tvMsg(''); document.getElementById('tvVid').style.display='none';
@@ -2232,7 +2247,117 @@ function tvEchec(){
   tvDetruire(); tvMsg(T('tvErr'));
 }
 function tvDetruire(){ TVNAT=false; var q=document.getElementById('tvQ'); if(q) q.classList.add('hidden'); var qm=document.getElementById('tvQm'); if(qm) qm.classList.add('hidden'); if(TVH){ try{ TVH.destroy(); }catch(e){} TVH=null; } var v=document.getElementById('tvVid'); try{ v.pause(); }catch(e){} v.removeAttribute('src'); try{ v.load(); }catch(e){} }
-function tvArreter(){ tvDetruire(); var f=document.getElementById('tvIfr'); if(f) f.remove(); tvMsg(''); }
+function tvArreter(){ mtvArreter(); tvDetruire(); var f=document.getElementById('tvIfr'); if(f) f.remove(); tvMsg(''); }
+// v114 — Masbet TV : toutes les vidéos de la chaîne YouTube @MasbetHT, dans un ordre tiré au sort chaque jour.
+// L'ordre est le même sur tous les téléphones et la position dépend de l'heure : comme une vraie chaîne,
+// on arrive au milieu de l'émission en cours. Logo Masbet en haut à droite de l'image.
+// Les passages programmés depuis la page Admin (grille) passent avant la rotation, à l'heure dite.
+var MTV={liste:null, prog:[], ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
+function mtvH(ms){ var d=new Date(ms); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+function mtvCreneau(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(now>=x[0]&&now<x[0]+x[3]*1000&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
+function mtvProchain(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(x[0]>now&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
+function mtvCharger(d){
+  MTV.liste=(d&&Array.isArray(d.v)?d.v:[]).filter(function(x){ return x&&/^[A-Za-z0-9_-]{11}$/.test(x[0])&&x[2]>0; });
+  MTV.prog=(d&&Array.isArray(d.p)?d.p:[]).filter(function(x){ return x&&x[0]>0&&/^[A-Za-z0-9_-]{11}$/.test(x[1])&&x[3]>0; });
+  MTV.ordre=null; MTV.jour=''; MTV.cache=Date.now();
+}
+function mtvHasard(s){ var h=1779033703^s.length; for(var i=0;i<s.length;i++){ h=Math.imul(h^s.charCodeAt(i),3432918353); h=h<<13|h>>>19; }
+  return function(){ h=Math.imul(h^h>>>16,2246822507); h=Math.imul(h^h>>>13,3266489909); h^=h>>>16; return (h>>>0)/4294967296; }; }
+function mtvOrdre(){
+  var j=new Date().toISOString().slice(0,10);
+  if(MTV.jour===j&&MTV.ordre) return MTV.ordre;
+  var a=MTV.liste.slice().sort(function(x,y){ return x[0]<y[0]?-1:x[0]>y[0]?1:0; }), r=mtvHasard('masbet-tv-'+j);   // même départ partout, puis même tirage
+  for(var i=a.length-1;i>0;i--){ var k=Math.floor(r()*(i+1)), t=a[i]; a[i]=a[k]; a[k]=t; }
+  MTV.jour=j; MTV.ordre=a; return a;
+}
+function mtvPosition(){
+  var o=mtvOrdre(), tot=0; o.forEach(function(x){ tot+=x[2]; }); if(!tot) return null;
+  var now=Date.now()/1000, t=(now-Math.floor(now/86400)*86400)%tot;
+  for(var i=0;i<o.length;i++){ if(t<o[i][2]) return {i:i, off:Math.floor(t)}; t-=o[i][2]; }
+  return {i:0, off:0};
+}
+function mtvInfo(titre,prog,prochain,suite){
+  var t='', now=Date.now();
+  if(titre) t=(prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+titre;
+  if(prochain&&(prochain[0]-now<3600e3||!suite)) t+=(t?'  ·  ':'')+T('mtvApre')+' ('+mtvH(prochain[0])+') : '+prochain[2];
+  else if(suite) t+=(t?'  ·  ':'')+T('mtvApre')+' : '+suite;
+  document.getElementById('tvInfo').textContent=t;
+}
+function mtvJouer(){
+  MTV.actif=true; document.getElementById('tvVid').style.display='none'; document.getElementById('tvInfo').textContent=''; tvMsg(T('tvCharge'));
+  var ec=document.getElementById('tvEcran');
+  if(!document.getElementById('mtvLogo')){ var lg=document.createElement('div'); lg.id='mtvLogo'; lg.className='mtvLogo'; lg.innerHTML='<img src="logo.png" alt="">'; ec.appendChild(lg); }
+  var frais=MTV.liste&&Date.now()-MTV.cache<30*60e3;   // liste et grille relues toutes les 30 minutes
+  var pr=frais?Promise.resolve():api('mtv').then(mtvCharger);
+  pr.then(function(){ if(!MTV.actif) return; tvMsg(''); mtvSuivant(); },
+    function(){ if(MTV.actif) tvMsg(T('mtvErr')); });
+}
+function mtvSuivant(){
+  if(!MTV.actif||!MTV.liste) return; clearTimeout(MTV.t);
+  if(Date.now()-MTV.cache>30*60e3){ MTV.cache=Date.now(); api('mtv').then(function(d){ mtvCharger(d); },function(){}); }   // grille relue en fond
+  var now=Date.now(), c=mtvCreneau(now), pro=mtvProchain(now), id, off=0, live=false, reste, titre, suite='';
+  if(c){   // passage programmé en cours
+    id=c[1]; titre=c[2]; live=!!c[5]; off=live?0:c[4]+Math.floor((now-c[0])/1000); reste=(c[0]+c[3]*1000-now)/1000; MTV.cur={k:c[0]+c[1]};
+  } else if(MTV.liste.length){   // rotation
+    var p=mtvPosition(), o=MTV.ordre, n=0;
+    while(MTV.ko[o[p.i][0]]&&n<o.length){ p={i:(p.i+1)%o.length, off:0}; n++; }   // vidéo refusée par YouTube sur ce téléphone : on saute
+    MTV.i=p.i; var x=o[p.i]; id=x[0]; titre=x[1]; off=p.off; reste=x[2]-p.off+20; MTV.cur={i:p.i};
+    if(o.length>1) suite=o[(p.i+1)%o.length][1];
+  } else {   // rien en rotation : on attend le prochain passage
+    MTV.cur=null; mtvCouper(); document.getElementById('tvInfo').textContent='';
+    if(pro){ tvMsg(T('mtvPwochen')+' '+mtvH(pro[0])+' : '+pro[2]); MTV.t=setTimeout(mtvSuivant,Math.max(2,(pro[0]-now)/1000+0.5)*1000); }
+    else tvMsg(T('mtvErr'));
+    return;
+  }
+  tvMsg('');
+  if(pro) reste=Math.min(reste,(pro[0]-now)/1000+0.5);   // un passage programmé coupe la rotation à l'heure dite
+  MTV.t=setTimeout(mtvSuivant,Math.max(2,reste)*1000);   // aussi filet de sécurité si le lecteur ne signale pas la fin
+  mtvInfo(titre,!!c,pro,suite);
+  if(!MTV.cid||MTV.cid!==id+'|'+(c?c[0]:'r')){ MTV.cid=id+'|'+(c?c[0]:'r'); mtvTransition(titre); }   // pas d'habillage si on relance la même émission
+  if(MTV.p&&MTV.p.loadVideoById){ try{ var q={videoId:id}; if(!live) q.startSeconds=off; MTV.p.loadVideoById(q); return; }catch(e){} }
+  mtvLecteur(id,off,live);
+}
+// Habillage entre deux vidéos : logo Masbet ~2 s, pendant que la suivante se charge en dessous.
+function mtvTransition(titre){
+  var e=document.getElementById('mtvTrans');
+  if(!e){ e=document.createElement('div'); e.id='mtvTrans'; e.className='mtvTrans'; e.setAttribute('aria-hidden','true'); document.getElementById('tvEcran').appendChild(e); }
+  e.innerHTML='<img src="logo.png" alt=""><small>MASBET TV</small><b>'+esc(titre||'')+'</b>'; e.classList.add('on');
+  MTV.td=Date.now(); clearTimeout(MTV.tt); MTV.tt=setTimeout(mtvTransFin,6000);   // au plus 6 s, même si le lecteur ne répond pas
+}
+function mtvTransFin(){ var reste=2200-(Date.now()-(MTV.td||0)); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e) e.classList.remove('on'); }
+function mtvFin(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; mtvSuivant(); }
+function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
+function mtvLecteur(id,off,live){
+  var ec=document.getElementById('tvEcran'), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
+  var d=document.createElement('div'); d.id='mtvJ'; ec.insertBefore(d,document.getElementById('mtvLogo'));
+  var pret=window.YT&&YT.Player?Promise.resolve():new Promise(function(ok,ko){
+    var avant=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=function(){ if(avant) try{ avant(); }catch(e){} ok(); };
+    chargerScript('https://www.youtube.com/iframe_api').catch(ko); setTimeout(function(){ ko(new Error('yt')); },10000); });
+  pret.then(function(){
+    if(!MTV.actif||!document.getElementById('mtvJ')) return;
+    MTV.p=new YT.Player('mtvJ',{host:'https://www.youtube-nocookie.com', videoId:id,
+      playerVars:live?{autoplay:1, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, start:off, modestbranding:1, iv_load_policy:3},
+      events:{ onReady:function(e){ try{ e.target.playVideo(); }catch(x){} },
+        onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1) mtvTransFin(); },
+        onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
+  },function(){
+    // lecteur YouTube indisponible : fenêtre vidéo simple, la minuterie passe à la suivante
+    if(!MTV.actif) return; var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
+    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0'+(live?'':'&start='+off);
+    var dd=document.getElementById('mtvJ'); if(dd) dd.replaceWith(f); else ec.insertBefore(f,document.getElementById('mtvLogo'));
+  });
+}
+function mtvArreter(){
+  MTV.actif=false; clearTimeout(MTV.t);
+  if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){}
+  MTV.p=null; MTV.cid=''; clearTimeout(MTV.tt); ['mtvJ','mtvLogo','mtvTrans'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
+}
+// Retour sur l'application après plus d'une minute : on rejoint l'émission en cours.
+var MTV_CACHE_T=0;
+document.addEventListener('visibilitychange',function(){
+  if(document.visibilityState==='hidden'){ MTV_CACHE_T=Date.now(); return; }
+  if(MTV.actif&&MTV_CACHE_T&&Date.now()-MTV_CACHE_T>60e3) mtvSuivant();
+});
 // v42.10 : choix de la qualité (fixe pendant la lecture → pas de son robotique)
 function tvQPref(){ var q=''; try{ q=localStorage.getItem('masbet_tv_q')||''; }catch(e){} return /^[bmh]$/.test(q)?q:'m'; }
 function tvNiveaux(L){ // niveaux utiles, du plus léger au plus lourd (sans doublons, max 1080p)
@@ -2360,7 +2485,8 @@ function edT(e,k){ var h=e[k+'Ht']||'', f=e[k+'Fr']||''; return LANG==='fr'?(f||
 function edDate(p){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(p||''); if(!m) return ''; var mo=Number(m[2]);
   var M=LANG==='fr'?['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm'];
   return Number(m[3])+' '+M[mo-1]+' '+m[1]; }
-function edParas(t){ return String(t||'').split(/\n\s*\n/).map(function(p){ p=p.trim(); return p?'<p>'+esc(p).replace(/\n/g,'<br>')+'</p>':''; }).join(''); }
+function edNw(h){ return h.replace(/\+?\d+(?:[ \u00a0\-]\d+)+/g,function(m){ return m.length<5?m:'<span class="nw">'+m.replace(/ /g,'\u00a0')+'</span>'; }); }   // v114 : « +509 3553-3817 », « 10 000 » restent sur une ligne
+function edParas(t){ return String(t||'').split(/\n\s*\n/).map(function(p){ p=p.trim(); return p?'<p>'+edNw(esc(p)).replace(/\n/g,'<br>')+'</p>':''; }).join(''); }
 function edReac(e,btn){   // v111 : commentaires et « j'aime » du sujet dans la Communauté
   if(!e||!e.sujet) return ''; var k=e.kom||0, l=e.likes||0;
   var t=k||l?'💬 '+k+' '+AL('kòmantè',k>1?'commentaires':'commentaire')+' · ❤ '+l:AL('Bay premye opinyon an !','Soyez le premier à réagir !');
