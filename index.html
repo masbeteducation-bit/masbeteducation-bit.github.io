@@ -2193,7 +2193,7 @@ function afficherTv(){
     if(c.type==='mtv') c.logo='logo.png';
     var aLogo=!!(c.logo&&(/^https:\/\//.test(c.logo)||c.type==='mtv')), ini=esc(tvInitiales(c.nom));
     var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
-    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type==='mtv'?esc(T('mtvSous')):c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
+    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type==='mtv'?'':c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
     var cl=c.hors?'hors':(c.gros||(mes&&mes>=1.5))?'gros':'';
     return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+(cl==='gros'&&mes?'📶 ':'')+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
