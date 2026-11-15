@@ -391,6 +391,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     main{max-width:1180px;padding:0 24px 40px}
     #vAkey:not(.hidden){display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start;grid-auto-flow:row dense}
     #cJwe{grid-row:span 2}
+    #vAkey.msn{grid-auto-rows:4px;row-gap:0;grid-auto-flow:row dense}
+    #vAkey.msn #cOffres{grid-column:auto}
+    #vAkey.msn .offres{flex-direction:column;overflow:visible;scroll-snap-type:none}
+    #vAkey.msn .offre{flex:0 0 auto}
     #lokHome,#cNotif,#cSert{grid-column:1 / -1}#lokHome:empty{display:none}
     #vAkey .card{margin:0}
     #liveHome,#vAkey .hero{grid-column:1 / -1}
@@ -2311,6 +2315,28 @@ function mtvJouer(){
 }
 // v117 : les boutons son et plein écran se cachent après 3 s ; toucher l'image les fait revenir.
 function mtvBoutons(){ var b=document.getElementById('mtvBtns'); if(!b) return; b.classList.remove('cache'); clearTimeout(MTV.tb); MTV.tb=setTimeout(function(){ b.classList.add('cache'); },3000); }
+// v117 : sur ordinateur, l'accueil range les cartes en « mur » (comme Pinterest) : chaque carte prend la hauteur
+// dont elle a besoin et la suivante se place juste dessous, sans grand blanc entre les rangées.
+var MSN={g:null, ro:null, t:0};
+function msnCalcul(){
+  MSN.t=0; var g=MSN.g; if(!g) return;
+  var large=window.matchMedia('(min-width: 900px)').matches;
+  g.classList.toggle('msn',large);
+  Array.prototype.forEach.call(g.children,function(c){
+    if(!large){ c.style.gridRow=''; return; }
+    var h=c.getBoundingClientRect().height;
+    c.style.gridRow=h?'auto / span '+Math.ceil((h+16)/4):'';
+  });
+}
+function msnPlus(){ if(!MSN.t) MSN.t=requestAnimationFrame(msnCalcul); }
+function msnDemarrer(){
+  var g=document.getElementById('vAkey'); if(!g||MSN.g) return; MSN.g=g;
+  if(window.ResizeObserver){ MSN.ro=new ResizeObserver(msnPlus); Array.prototype.forEach.call(g.children,function(c){ MSN.ro.observe(c); }); }
+  new MutationObserver(function(l){ l.forEach(function(m){ Array.prototype.forEach.call(m.addedNodes,function(n){ if(n.nodeType===1&&n.parentNode===g&&MSN.ro) MSN.ro.observe(n); }); }); msnPlus(); })
+    .observe(g,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+  window.addEventListener('resize',msnPlus); msnPlus();
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',msnDemarrer); else msnDemarrer();
 function mtvReprendre(){ var p=MTV.p; if(!p||!p.getPlayerState) return; try{ if(p.getPlayerState()!==1) p.playVideo(); }catch(e){} }
 function mtvSon(){ var p=MTV.p, b=document.getElementById('mtvSon'); if(!p||!p.isMuted) return;
   try{ if(p.isMuted()){ p.unMute(); p.setVolume(100); b.textContent='🔊'; } else { p.mute(); b.textContent='🔇'; } }catch(e){} }
@@ -2366,7 +2392,9 @@ function mtvLecteur(id,off,live){
     if(!MTV.actif||!document.getElementById('mtvJ')) return;
     MTV.p=new YT.Player('mtvJ',{host:'https://www.youtube-nocookie.com', videoId:id,
       playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, start:off, modestbranding:1, iv_load_policy:3},
-      events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){} },
+      events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){}
+          // v118 : ouvert par un lien partagé (sans toucher l'écran), le téléphone peut refuser le son : on lance sans le son et on montre 🔇
+          setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons(); } }catch(x){} },1800); },
         onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
         onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
@@ -2441,7 +2469,9 @@ document.addEventListener('click',function(e){
 function tvSlug(n){ return String(n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\+/g,'-plus').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40); }
 function tvPataje(){
   var c=tvListe()[TVI]; if(!c) return; statEnvoyer('partage');
-  var url=SITE+'#videyo&kanal='+tvSlug(c.nom), txt=AL('📺 M ap gade « '+c.nom+' » gratis sou Masbet. Vin gade l tou :','📺 Je regarde « '+c.nom+' » gratuitement sur Masbet. Viens regarder :');
+  var url=SITE+'tv/'+tvSlug(c.nom),   // v118 : page d'aperçu (image + titre) qui renvoie vers la chaîne ; WhatsApp ignore ce qui suit #
+       txt=AL('📺 M ap gade « '+c.nom+' » gratis sou Masbet. Vin gade l tou :','📺 Je regarde « '+c.nom+' » gratuitement sur Masbet. Viens regarder :');
+  if(c.type==='mtv'&&MTV.titre) txt=AL('📺 Sou Masbet TV kounye a : « '+MTV.titre+' ». Vin gade gratis :','📺 En ce moment sur Masbet TV : « '+MTV.titre+' ». Viens regarder gratuitement :');   // v118 : on dit ce qui passe
   if(window.masbetPataje) return masbetPataje({texte:txt, url:url, titre:c.nom});
   if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
