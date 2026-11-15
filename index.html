@@ -580,6 +580,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvEcran:fullscreen{max-height:none;aspect-ratio:auto;width:100vw;height:100vh;margin:0}
   .tvEcran:-webkit-full-screen{max-height:none;aspect-ratio:auto;width:100vw;height:100vh;margin:0}
   .nw{white-space:nowrap}
+  .liveMtv{margin:0 0 14px;border-radius:14px;overflow:hidden;background:#0b1224}
+  .liveMtv .tvEcran{max-height:none;margin:0}
+  .liveMtv .tvInfo{background:#14213d;padding:9px 12px}
+  .liveMtvTete{margin:0 0 8px}.liveMtvTete .hint{margin-top:4px}
   .tvInfo{color:#e8edf8;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:rgba(11,18,36,.55)}
   .tvLogo{display:flex;justify-content:center;padding:0 0 14px}
   .tvLogo img{width:150px;height:auto;background:rgba(255,255,255,.88);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
@@ -1881,12 +1885,17 @@ function afficherLives(){
   // Onglet Live
   var h='';
   direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'<div>'+btnPataje('patajeLive(LIVES_PAR_CLE[\'d'+i+'\']?LIVES_PAR_CLE[\'d'+i+'\'].titre:\'\')')+'</div></div>'; });
-  if(!direk.length) h+=afficheRepo(avenir[0]);
+  if(!direk.length) h+=liveMtvTete(avenir[0]);   // v120 : rien en direct → Masbet TV joue ici (avant : affiche « pas de live »)
   (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
   fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
   h+=blocReseaux();
   if(l.length) h+='<div class="hint" style="margin-top:6px">'+T('liveDonnees')+'</div>';
+  var garde=document.getElementById('liveMtv'); if(garde) garde.parentNode.removeChild(garde);   // le lecteur survit au rafraîchissement de la liste
   el.innerHTML=h;
+  var place=document.getElementById('liveMtvPlace');
+  if(place){ if(garde) place.parentNode.replaceChild(garde,place); else place.outerHTML='<div id="liveMtv" class="liveMtv"><div class="tvEcran" id="liveEcran"><div class="tvMsg" id="liveMsg"></div></div><div class="tvInfo" id="liveInfo"></div></div>'; }
+  else if(garde&&MTV.ou==='live') mtvArreter();
+  setTimeout(liveMtvMaj,0);
   // Tickets déjà validés sur ce téléphone : ouvrir directement
   l.forEach(function(x,i){ if(x.payant && x.verrouille){ var k=(x.statut==='direk'?'d':'f')+(x.statut==='direk'?direk.indexOf(x):fini.indexOf(x)); var c=lire('masbet_tike_'+x.titre); if(c) ouvrirTike(k, c, true); } });
 }
@@ -1897,6 +1906,19 @@ function appareil(){
   if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); }
   return a;
 }
+// v120 : pas de live en cours → bandeau + Masbet TV dans l'onglet Live (le prochain live reste annoncé)
+function liveMtvTete(x){
+  return '<div class="liveMtvTete"><div><span class="tag f">📡 '+esc(T('pasLive'))+'</span> <b>⭐ Masbet TV</b></div>'+
+    (x?'<div class="hint">'+T('prochainLive')+' : <b>'+esc(x.titre)+'</b>'+(x.quand?' · '+esc(quandLive(x.quand)):'')+(x.payant===false?' · 🆓 '+esc(T('gratis')):' · 🔒 '+esc(T('tikePri')(x.prix))+' — <a href="achte.html#tikes">'+T('achteDavans')+'</a>')+'</div>':'')+
+    '</div><div id="liveMtvPlace"></div>';
+}
+function liveMtvMaj(){
+  var ec=document.getElementById('liveEcran'), vv=document.getElementById('vVideyo');
+  var doit=!!ec&&!!vv&&!vv.classList.contains('hidden')&&TVI<0&&document.visibilityState!=='hidden';
+  if(doit&&!(MTV.actif&&MTV.ou==='live')) mtvJouer('live');
+  else if(!doit&&MTV.actif&&MTV.ou==='live') mtvArreter();
+}
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') setTimeout(liveMtvMaj,300); });
 // Pas de live en cours : affiche Masbet avec le prochain live (ou l'annonce à venir)
 function afficheRepo(x){
   return '<div class="affiche" style="margin-bottom:14px"><div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
@@ -2262,6 +2284,11 @@ function tvArreter(){ mtvArreter(); tvDetruire(); var f=document.getElementById(
 // L'ordre est le même sur tous les téléphones et la position dépend de l'heure : comme une vraie chaîne,
 // on arrive au milieu de l'émission en cours. Logo Masbet en haut à droite de l'image.
 // Les passages programmés depuis la page Admin (grille) passent avant la rotation, à l'heure dite.
+// v120 : Masbet TV joue dans la TV (fenêtre) ou dans l'onglet Live quand rien n'est en direct. MTV.ou dit où.
+var MTV_OU={tv:['tvEcran','tvInfo','tvMsg'], live:['liveEcran','liveInfo','liveMsg']};
+function mtvE(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][0]); }
+function mtvI(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][1])||document.createElement('div'); }
+function mtvMsg(t){ var e=document.getElementById(MTV_OU[MTV.ou||'tv'][2]); if(e) e.textContent=t||''; }
 var MTV={liste:null, prog:[], ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
 function mtvH(ms){ var d=new Date(ms); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
 function mtvCreneau(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(now>=x[0]&&now<x[0]+x[3]*1000&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
@@ -2294,11 +2321,12 @@ function mtvInfo(titre,prog,prochain,suite){
   if(titre) t=(prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+titre;
   if(prochain&&(prochain[0]-now<3600e3||!suite)) t+=(t?'  ·  ':'')+T('mtvApre')+' ('+mtvH(prochain[0])+') : '+prochain[2];
   else if(suite) t+=(t?'  ·  ':'')+T('mtvApre')+' : '+suite;
-  document.getElementById('tvInfo').textContent=t;
+  mtvI().textContent=t;
 }
-function mtvJouer(){
-  MTV.actif=true; document.getElementById('tvVid').style.display='none'; document.getElementById('tvInfo').textContent=''; tvMsg(T('tvCharge'));
-  var ec=document.getElementById('tvEcran');
+function mtvJouer(ou){
+  MTV.ou=ou==='live'?'live':'tv';
+  MTV.actif=true; var tv=document.getElementById('tvVid'); if(tv&&MTV.ou==='tv') tv.style.display='none'; mtvI().textContent=''; mtvMsg(T('tvCharge'));
+  var ec=mtvE();
   if(!document.getElementById('mtvLogo')){ var lg=document.createElement('div'); lg.id='mtvLogo'; lg.className='mtvLogo'; lg.innerHTML='<img src="logo.png" alt="">'; ec.appendChild(lg); }
   // v116 : pas de barre de progression ni de temps (comme une vraie chaîne). Un voile capte les touches ; deux boutons : son et plein écran.
   if(!document.getElementById('mtvBouclier')){
@@ -2310,8 +2338,8 @@ function mtvJouer(){
   mtvBoutons();
   var frais=MTV.liste&&Date.now()-MTV.cache<30*60e3;   // liste et grille relues toutes les 30 minutes
   var pr=frais?Promise.resolve():api('mtv').then(mtvCharger);
-  pr.then(function(){ if(!MTV.actif) return; tvMsg(''); mtvSuivant(); },
-    function(){ if(MTV.actif) tvMsg(T('mtvErr')); });
+  pr.then(function(){ if(!MTV.actif) return; mtvMsg(''); mtvSuivant(); },
+    function(){ if(MTV.actif) mtvMsg(T('mtvErr')); });
 }
 // v117 : les boutons son et plein écran se cachent après 3 s ; toucher l'image les fait revenir.
 function mtvBoutons(){ var b=document.getElementById('mtvBtns'); if(!b) return; b.classList.remove('cache'); clearTimeout(MTV.tb); MTV.tb=setTimeout(function(){ b.classList.add('cache'); },3000); }
@@ -2341,7 +2369,7 @@ function mtvReprendre(){ var p=MTV.p; if(!p||!p.getPlayerState) return; try{ if(
 function mtvSon(){ var p=MTV.p, b=document.getElementById('mtvSon'); if(!p||!p.isMuted) return;
   try{ if(p.isMuted()){ p.unMute(); p.setVolume(100); b.textContent='🔊'; } else { p.mute(); b.textContent='🔇'; } }catch(e){} }
 function mtvPlein(){
-  var ec=document.getElementById('tvEcran'), d=document;
+  var ec=mtvE(), d=document;
   if(d.fullscreenElement||d.webkitFullscreenElement){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }
   var f=ec.requestFullscreen||ec.webkitRequestFullscreen; if(!f) return;
   try{ var r=f.call(ec); if(r&&r.then) r.then(function(){ try{ screen.orientation.lock('landscape').catch(function(){}); }catch(e){} },function(){}); }catch(e){}
@@ -2358,12 +2386,12 @@ function mtvSuivant(){
     MTV.i=p.i; var x=o[p.i]; id=x[0]; titre=x[1]; off=p.off; reste=x[2]-p.off; MTV.cur={i:p.i};
     if(o.length>1) suite=o[(p.i+1)%o.length][1];
   } else {   // rien en rotation : on attend le prochain passage
-    MTV.cur=null; mtvCouper(); document.getElementById('tvInfo').textContent='';
-    if(pro){ tvMsg(T('mtvPwochen')+' '+mtvH(pro[0])+' : '+pro[2]); MTV.t=setTimeout(mtvSuivant,Math.max(2,(pro[0]-now)/1000+0.5)*1000); }
-    else tvMsg(T('mtvErr'));
+    MTV.cur=null; mtvCouper(); mtvI().textContent='';
+    if(pro){ mtvMsg(T('mtvPwochen')+' '+mtvH(pro[0])+' : '+pro[2]); MTV.t=setTimeout(mtvSuivant,Math.max(2,(pro[0]-now)/1000+0.5)*1000); }
+    else mtvMsg(T('mtvErr'));
     return;
   }
-  tvMsg('');
+  mtvMsg('');
   if(pro) reste=Math.min(reste,(pro[0]-now)/1000+0.5);   // un passage programmé coupe la rotation à l'heure dite
   MTV.t=setTimeout(mtvSuivant,Math.max(2,reste)*1000);   // aussi filet de sécurité si le lecteur ne signale pas la fin
   mtvInfo(titre,!!c,pro,suite);
@@ -2374,7 +2402,7 @@ function mtvSuivant(){
 // Habillage entre deux vidéos : logo Masbet ~2 s, pendant que la suivante se charge en dessous.
 function mtvTransition(titre){
   var e=document.getElementById('mtvTrans');
-  if(!e){ e=document.createElement('div'); e.id='mtvTrans'; e.className='mtvTrans'; e.setAttribute('aria-hidden','true'); document.getElementById('tvEcran').appendChild(e); }
+  if(!e){ e=document.createElement('div'); e.id='mtvTrans'; e.className='mtvTrans'; e.setAttribute('aria-hidden','true'); mtvE().appendChild(e); }
   e.innerHTML='<img src="logo.png" alt=""><small>MASBET TV</small><b>'+esc(titre||'')+'</b>'; e.classList.add('on');
   MTV.td=Date.now(); MTV.tj=0; clearTimeout(MTV.tt); MTV.tt=setTimeout(mtvTransFin,6000);   // au plus 6 s, même si le lecteur ne répond pas
 }
@@ -2383,7 +2411,7 @@ function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), M
 function mtvFin(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; mtvSuivant(); }
 function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
 function mtvLecteur(id,off,live){
-  var ec=document.getElementById('tvEcran'), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
+  var ec=mtvE(), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
   var d=document.createElement('div'); d.id='mtvJ'; ec.insertBefore(d,document.getElementById('mtvLogo'));
   var pret=window.YT&&YT.Player?Promise.resolve():new Promise(function(ok,ko){
     var avant=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=function(){ if(avant) try{ avant(); }catch(e){} ok(); };
@@ -2483,7 +2511,7 @@ function tvLienDirect(l){
   var ct=document.getElementById('cTv'); if(ct) ct.scrollIntoView({block:'start'});
   setTimeout(function(){ tvJouer(i); },300);
 }
-function tvFermer(){ var avant=TVI; tvArreter(); TVI=-1; if(avant>=0) try{ afficherTv(); }catch(e){} document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; }
+function tvFermer(){ var avant=TVI; tvArreter(); TVI=-1; if(avant>=0) try{ afficherTv(); }catch(e){} document.getElementById('tvLect').classList.add('hidden'); document.body.style.overflow=''; setTimeout(liveMtvMaj,50); }
 (function(){ var v=document.getElementById('tvVid');
   v.addEventListener('playing',function(){ tvMsg(''); });
   v.addEventListener('waiting',function(){ if(TVI>=0) tvMsg(T('tvCharge')); });
@@ -2665,6 +2693,7 @@ function vue(){
   if(v==='quiz'){ afficherQuiz(); afficherKlas(); if(!RUB) chargerRubriques(); if(!PAK||PAK.memo) chargerPakou(); else if(PECRAN==='tiles'||!PECRAN) afficherPakou(); if(!KON||KON.memo) chargerKonkou(); else if(KECRAN==='info' && !(PRUN===RUN_KON&&PT)) afficherKonkou(); if(!PRO) chargerPro(); else { if(PROECRAN==='tiles') afficherPro(); essayerPassUrl(); } }
   else clearInterval(QTIMER);
   ['Akey','Match','Videyo'].forEach(function(k){ document.getElementById('n'+k).classList.toggle('on',k.toLowerCase()===v); });
+  setTimeout(liveMtvMaj,0);   // v120
   if(v==='videyo'&&/[#&](tv\b|kanal=)/.test(location.hash)){ var ct=document.getElementById('cTv'); setTimeout(function(){ ct.scrollIntoView({block:'start'}); },60); }
   if(/[#&]antren/.test(location.hash)){ var ca=document.getElementById('cAntren'); ca.classList.remove('hidden'); setTimeout(function(){ ca.scrollIntoView({block:'start'}); },60); }
   else if(/[#&]sertifika(?!=)/.test(location.hash)){ var cs=document.getElementById('cSert'); cs.classList.remove('hidden'); chargerCerts(true); setTimeout(function(){ cs.scrollIntoView({block:'start'}); },60); }
