@@ -569,6 +569,11 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   @keyframes mtvPop{0%{transform:scale(.82);opacity:0}45%{transform:scale(1.04);opacity:1}100%{transform:scale(1);opacity:1}}
   @media (prefers-reduced-motion:reduce){ .mtvTrans img{animation:none} .mtvTrans{transition:none} }
   .tvEcran #mtvJ{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .mtvBouclier{position:absolute;inset:0;z-index:2;background:transparent;-webkit-tap-highlight-color:transparent}
+  .mtvBtns{position:absolute;right:8px;bottom:8px;z-index:3;display:flex;gap:8px}
+  .mtvBtns button{width:40px;height:40px;border-radius:50%;border:0;background:rgba(11,18,36,.6);color:#fff;font-size:18px;line-height:40px;padding:0;cursor:pointer}
+  .tvEcran:fullscreen{max-height:none;aspect-ratio:auto;width:100vw;height:100vh;margin:0}
+  .tvEcran:-webkit-full-screen{max-height:none;aspect-ratio:auto;width:100vw;height:100vh;margin:0}
   .nw{white-space:nowrap}
   .tvInfo{color:#e8edf8;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:rgba(11,18,36,.55)}
   .tvLogo{display:flex;justify-content:center;padding:0 0 14px}
@@ -2287,10 +2292,26 @@ function mtvJouer(){
   MTV.actif=true; document.getElementById('tvVid').style.display='none'; document.getElementById('tvInfo').textContent=''; tvMsg(T('tvCharge'));
   var ec=document.getElementById('tvEcran');
   if(!document.getElementById('mtvLogo')){ var lg=document.createElement('div'); lg.id='mtvLogo'; lg.className='mtvLogo'; lg.innerHTML='<img src="logo.png" alt="">'; ec.appendChild(lg); }
+  // v116 : pas de barre de progression ni de temps (comme une vraie chaîne). Un voile capte les touches ; deux boutons : son et plein écran.
+  if(!document.getElementById('mtvBouclier')){
+    var bo=document.createElement('div'); bo.id='mtvBouclier'; bo.className='mtvBouclier'; bo.onclick=mtvReprendre; ec.appendChild(bo);
+    var bt=document.createElement('div'); bt.id='mtvBtns'; bt.className='mtvBtns';
+    bt.innerHTML='<button type="button" id="mtvSon" aria-label="Son">🔊</button><button type="button" aria-label="Plein écran">⛶</button>';
+    bt.firstChild.onclick=mtvSon; bt.lastChild.onclick=mtvPlein; ec.appendChild(bt);
+  }
   var frais=MTV.liste&&Date.now()-MTV.cache<30*60e3;   // liste et grille relues toutes les 30 minutes
   var pr=frais?Promise.resolve():api('mtv').then(mtvCharger);
   pr.then(function(){ if(!MTV.actif) return; tvMsg(''); mtvSuivant(); },
     function(){ if(MTV.actif) tvMsg(T('mtvErr')); });
+}
+function mtvReprendre(){ var p=MTV.p; if(!p||!p.getPlayerState) return; try{ if(p.getPlayerState()!==1) p.playVideo(); }catch(e){} }
+function mtvSon(){ var p=MTV.p, b=document.getElementById('mtvSon'); if(!p||!p.isMuted) return;
+  try{ if(p.isMuted()){ p.unMute(); p.setVolume(100); b.textContent='🔊'; } else { p.mute(); b.textContent='🔇'; } }catch(e){} }
+function mtvPlein(){
+  var ec=document.getElementById('tvEcran'), d=document;
+  if(d.fullscreenElement||d.webkitFullscreenElement){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }
+  var f=ec.requestFullscreen||ec.webkitRequestFullscreen; if(!f) return;
+  try{ var r=f.call(ec); if(r&&r.then) r.then(function(){ try{ screen.orientation.lock('landscape').catch(function(){}); }catch(e){} },function(){}); }catch(e){}
 }
 function mtvSuivant(){
   if(!MTV.actif||!MTV.liste) return; clearTimeout(MTV.t);
@@ -2336,21 +2357,22 @@ function mtvLecteur(id,off,live){
   pret.then(function(){
     if(!MTV.actif||!document.getElementById('mtvJ')) return;
     MTV.p=new YT.Player('mtvJ',{host:'https://www.youtube-nocookie.com', videoId:id,
-      playerVars:live?{autoplay:1, playsinline:1, rel:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, start:off, modestbranding:1, iv_load_policy:3},
-      events:{ onReady:function(e){ try{ e.target.playVideo(); }catch(x){} },
+      playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, start:off, modestbranding:1, iv_load_policy:3},
+      events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){} },
         onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1) mtvTransFin(); },
         onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
     // lecteur YouTube indisponible : fenêtre vidéo simple, la minuterie passe à la suivante
     if(!MTV.actif) return; var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
-    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0'+(live?'':'&start='+off);
+    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0&controls=0&disablekb=1&fs=0'+(live?'':'&start='+off);
     var dd=document.getElementById('mtvJ'); if(dd) dd.replaceWith(f); else ec.insertBefore(f,document.getElementById('mtvLogo'));
   });
 }
 function mtvArreter(){
   MTV.actif=false; clearTimeout(MTV.t);
+  try{ var d=document; if(d.fullscreenElement||d.webkitFullscreenElement) (d.exitFullscreen||d.webkitExitFullscreen).call(d); }catch(e){}
   if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){}
-  MTV.p=null; MTV.cid=''; clearTimeout(MTV.tt); ['mtvJ','mtvLogo','mtvTrans'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
+  MTV.p=null; MTV.cid=''; clearTimeout(MTV.tt); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
 }
 // Retour sur l'application après plus d'une minute : on rejoint l'émission en cours.
 var MTV_CACHE_T=0;
