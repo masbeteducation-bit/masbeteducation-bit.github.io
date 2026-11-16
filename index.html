@@ -2365,6 +2365,8 @@ function msnDemarrer(){
   window.addEventListener('resize',msnPlus); msnPlus();
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',msnDemarrer); else msnDemarrer();
+// v121 : pas de sous-titres automatiques de YouTube sur l'image (YouTube les met parfois selon le téléphone)
+function mtvSansSousTitres(p){ try{ p.unloadModule('captions'); }catch(e){} try{ p.unloadModule('cc'); }catch(e){} }
 function mtvReprendre(){ var p=MTV.p; if(!p||!p.getPlayerState) return; try{ if(p.getPlayerState()!==1) p.playVideo(); }catch(e){} }
 function mtvSon(){ var p=MTV.p, b=document.getElementById('mtvSon'); if(!p||!p.isMuted) return;
   try{ if(p.isMuted()){ p.unMute(); p.setVolume(100); b.textContent='🔊'; } else { p.mute(); b.textContent='🔇'; } }catch(e){} }
@@ -2419,16 +2421,16 @@ function mtvLecteur(id,off,live){
   pret.then(function(){
     if(!MTV.actif||!document.getElementById('mtvJ')) return;
     MTV.p=new YT.Player('mtvJ',{host:'https://www.youtube-nocookie.com', videoId:id,
-      playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, start:off, modestbranding:1, iv_load_policy:3},
+      playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, start:off, modestbranding:1, iv_load_policy:3},
       events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){}
           // v118 : ouvert par un lien partagé (sans toucher l'écran), le téléphone peut refuser le son : on lance sans le son et on montre 🔇
           setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons(); } }catch(x){} },1800); },
-        onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
+        onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); mtvSansSousTitres(e.target); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
         onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
     // lecteur YouTube indisponible : fenêtre vidéo simple, la minuterie passe à la suivante
     if(!MTV.actif) return; var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
-    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0&controls=0&disablekb=1&fs=0'+(live?'':'&start='+off);
+    f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0&controls=0&disablekb=1&fs=0&cc_load_policy=0'+(live?'':'&start='+off);
     var dd=document.getElementById('mtvJ'); if(dd) dd.replaceWith(f); else ec.insertBefore(f,document.getElementById('mtvLogo'));
   });
 }
