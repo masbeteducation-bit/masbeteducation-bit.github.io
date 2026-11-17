@@ -1,10 +1,10 @@
-// Masbet v128 (titre simple) · v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
+// Masbet v129 (sans « gratis ») · v128 (titre simple) · v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
 // WhatsApp et Facebook ne lisent pas ce qui suit « # » dans un lien : ils montraient l'aperçu général de Masbet.
 // Cette petite page donne l'image et le titre de la chaîne, puis envoie la personne vers la chaîne dans l'application.
 // Pour Masbet TV, la description dit ce qui passe en ce moment (même calcul que l'application). Gardée 5 min chez Cloudflare.
 
 const SITE = 'https://masbet.me';
-const IMAGE_TV = SITE + '/photos/og/tv.jpg?v=1';
+const IMAGE_TV = SITE + '/photos/og/tv.jpg?v=2';
 const IMAGE_DEFAUT = SITE + '/photos/og/akey.jpg?v=5';
 
 function esc(s) {
@@ -171,12 +171,12 @@ export async function onRequestGet(ctx) {
   let rep;
   if (slug === 'masbet-tv') {
     const c = await lireMtv(ctx);
-    const desc = c ? 'Kounye a : « ' + coupe(c.titre, 110) + ' ». Videyo ak lives Masbet yo, youn apre lòt, gratis.'
-                   : 'Videyo ak lives Masbet yo, youn apre lòt, tankou yon vrè chèn televizyon. Gratis.';
+    const desc = c ? 'Kounye a : « ' + coupe(c.titre, 110) + ' ». Videyo ak lives Masbet yo, youn apre lòt.'
+                   : 'Videyo ak lives Masbet yo, youn apre lòt, tankou yon vrè chèn televizyon.';
     rep = new Response(page(slug, 'Masbet TV', desc, IMAGE_TV), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
   } else {
     const nom = slug.split('-').map((m) => m ? m[0].toUpperCase() + m.slice(1) : m).join(' ');
-    rep = new Response(page(slug, nom, 'Gade chèn TV yo gratis sou Masbet, aplikasyon Ansavo a.', IMAGE_DEFAUT), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
+    rep = new Response(page(slug, nom, 'Gade chèn TV yo sou Masbet, aplikasyon Ansavo a.', IMAGE_DEFAUT), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
   }
   ctx.waitUntil(cache.put(cle, rep.clone()));
   return rep;

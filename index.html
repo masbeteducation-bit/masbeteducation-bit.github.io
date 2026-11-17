@@ -2777,8 +2777,8 @@ function tvSlug(n){ return String(n).toLowerCase().normalize('NFD').replace(/[\u
 function tvPataje(){
   var c=tvListe()[TVI]; if(!c) return; statEnvoyer('partage');
   var url=SITE+'tv/'+tvSlug(c.nom),   // v118 : page d'aperçu (image + titre) qui renvoie vers la chaîne ; WhatsApp ignore ce qui suit #
-       txt=AL('📺 M ap gade « '+c.nom+' » gratis sou Masbet. Vin gade l tou :','📺 Je regarde « '+c.nom+' » gratuitement sur Masbet. Viens regarder :');
-  if(c.type==='mtv'&&MTV.titre) txt=AL('📺 Sou Masbet TV kounye a : « '+MTV.titre+' ». Vin gade gratis :','📺 En ce moment sur Masbet TV : « '+MTV.titre+' ». Viens regarder gratuitement :');   // v118 : on dit ce qui passe
+       txt=AL('📺 M ap gade « '+c.nom+' » sou Masbet. Gade l sou :','📺 Je regarde « '+c.nom+' » sur Masbet. Regardez-la sur :');
+  if(c.type==='mtv'&&MTV.titre) txt=AL('📺 Sou Masbet TV kounye a : « '+MTV.titre+' ». Gade Masbet TV sou :','📺 En ce moment sur Masbet TV : « '+MTV.titre+' ». Regardez Masbet TV sur :');   // v118 : on dit ce qui passe
   if(window.masbetPataje) return masbetPataje({texte:txt, url:url, titre:c.nom});
   if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
