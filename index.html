@@ -566,7 +566,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvQm button{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;line-height:1.25;text-align:center}
   .tvQm button small{display:block;font-weight:500;opacity:.85;font-size:11.5px}
   .tvQm button.on{background:#fff;color:#14213d;border-color:#fff}
-  .mtvLogo{position:absolute;top:8px;right:8px;z-index:3;width:min(13%,70px);pointer-events:none;opacity:.55;background:rgba(255,255,255,.35);border-radius:6px;padding:2px 4px;box-sizing:border-box}
+  .mtvLogo{position:absolute;top:8px;left:8px;z-index:3;width:min(11%,70px);pointer-events:none;opacity:.55;background:rgba(255,255,255,.35);border-radius:6px;padding:2px 4px;box-sizing:border-box}
   .mtvLogo img{display:block;width:100%;height:auto}
   .mtvTrans{position:absolute;inset:0;z-index:4;background:radial-gradient(circle at 50% 45%,#1d4f91 0%,#0b1224 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .45s ease}
   .mtvTrans.on{opacity:1}
@@ -2542,6 +2542,7 @@ function mtvJouer(ou){
   MTV.actif=true; var tv=document.getElementById('tvVid'); if(tv&&MTV.ou==='tv') tv.style.display='none'; mtvI().textContent=''; mtvMsg(T('tvCharge'));
   var ec=mtvE();
   if(!document.getElementById('mtvLogo')){ var lg=document.createElement('div'); lg.id='mtvLogo'; lg.className='mtvLogo'; lg.innerHTML='<img src="logo.png" alt="">'; ec.appendChild(lg); }
+  setTimeout(mtvLogoPlace,0); setTimeout(mtvLogoPlace,600);   // v128 : logo dans le coin de l'IMAGE
   // v116 : pas de barre de progression ni de temps (comme une vraie chaîne). Un voile capte les touches ; deux boutons : son et plein écran.
   if(!document.getElementById('mtvBouclier')){
     var bo=document.createElement('div'); bo.id='mtvBouclier'; bo.className='mtvBouclier'; bo.onclick=function(){ mtvReprendre(); mtvBoutons(); }; ec.appendChild(bo);
@@ -2584,6 +2585,16 @@ function mtvSansSousTitres(p){ try{ p.unloadModule('captions'); }catch(e){} try{
 function mtvReprendre(){ var p=MTV.p; if(!p||!p.getPlayerState) return; try{ if(p.getPlayerState()!==1) p.playVideo(); }catch(e){} }
 function mtvSon(){ var p=MTV.p, b=document.getElementById('mtvSon'); if(!p||!p.isMuted) return;
   try{ if(p.isMuted()){ p.unMute(); p.setVolume(100); b.textContent='🔊'; } else { p.mute(); b.textContent='🔇'; } }catch(e){} }
+// v128 — Le petit logo pâle se place dans le coin haut-gauche de l'IMAGE 16:9, pas de la zone de lecture :
+// en plein écran sur un téléphone plus allongé, il ne tombe plus dans la bande noire ; à gauche, il ne recouvre plus les logos des vidéos (à droite).
+function mtvLogoPlace(){
+  var lg=document.getElementById('mtvLogo'); if(!lg||!lg.parentNode) return;
+  var ec=lg.parentNode, w=ec.clientWidth, h=ec.clientHeight; if(!w||!h) return;
+  var iw=Math.min(w,h*16/9), ih=Math.min(h,w*9/16), m=Math.round(iw*0.012)+4;
+  lg.style.left=Math.round((w-iw)/2+m)+'px'; lg.style.top=Math.round((h-ih)/2+m)+'px'; lg.style.right='auto';
+  lg.style.width=Math.round(Math.min(iw*0.11,150))+'px';
+}
+['resize','orientationchange','fullscreenchange','webkitfullscreenchange'].forEach(function(ev){ (ev.indexOf('fullscreen')>=0?document:window).addEventListener(ev,function(){ setTimeout(mtvLogoPlace,50); setTimeout(mtvLogoPlace,400); }); });
 function mtvPlein(){
   var ec=mtvE(), d=document;
   if(d.fullscreenElement||d.webkitFullscreenElement){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }

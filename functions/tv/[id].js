@@ -1,4 +1,4 @@
-// Masbet v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
+// Masbet v128 (titre simple) · v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
 // WhatsApp et Facebook ne lisent pas ce qui suit « # » dans un lien : ils montraient l'aperçu général de Masbet.
 // Cette petite page donne l'image et le titre de la chaîne, puis envoie la personne vers la chaîne dans l'application.
 // Pour Masbet TV, la description dit ce qui passe en ce moment (même calcul que l'application). Gardée 5 min chez Cloudflare.
@@ -145,7 +145,7 @@ async function lireMtv(ctx) {
 function page(slug, nom, desc, image) {
   const cible = '/#videyo&kanal=' + slug;
   const url = SITE + '/tv/' + slug;
-  const titre = '📺 ' + nom + ' — gratis sou Masbet';
+  const titre = slug === 'masbet-tv' ? '📺 Gade Masbet TV 24/24' : '📺 Gade ' + nom + ' sou Masbet';   // v128 : titre simple
   return `<!doctype html>
 <html lang="ht"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titre)}</title>
