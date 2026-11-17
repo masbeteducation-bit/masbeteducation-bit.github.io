@@ -923,12 +923,12 @@ Object.assign(TXT.fr,{
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
 // v41.6 — TV gratuite
-Object.assign(TXT.ht,{mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
+Object.assign(TXT.ht,{mtvEkstre:'Ekstrè', mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
   svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done entènèt.', tvTout:'Tout',
   tvHors:'Pa sou antèn kounye a', tvCharge:'Chajman…', tvErr:'Chèn sa a pa disponib kounye a. Eseye pita, oswa chwazi yon lòt chèn.', tvGros:'📶 Gwo forfè',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/èdtan'; }, tvNb:function(n){ return n+' chèn'; }, tvYt:'Si chèn nan pa an dirèk kounye a, YouTube ap di l.',
   tvDonnees:function(g){ return 'Chèn sa a konsome apeprè '+String(g).replace('.',',')+' Go pa èdtan.'; }});
-Object.assign(TXT.fr,{mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
+Object.assign(TXT.fr,{mtvEkstre:'Extrait', mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
   svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme des données internet.', tvTout:'Toutes',
   tvHors:'Hors antenne pour le moment', tvCharge:'Chargement…', tvErr:'Cette chaîne n\'est pas disponible pour le moment. Réessayez plus tard ou choisissez une autre chaîne.', tvGros:'📶 Gros forfait',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/heure'; }, tvNb:function(n){ return n+' chaînes'; }, tvYt:'Si la chaîne n\'est pas en direct en ce moment, YouTube l\'indiquera.',
@@ -2289,7 +2289,92 @@ var MTV_OU={tv:['tvEcran','tvInfo','tvMsg'], live:['liveEcran','liveInfo','liveM
 function mtvE(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][0]); }
 function mtvI(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][1])||document.createElement('div'); }
 function mtvMsg(t){ var e=document.getElementById(MTV_OU[MTV.ou||'tv'][2]); if(e) e.textContent=t||''; }
-var MTV={liste:null, prog:[], ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
+var MTV={liste:null, prog:[], plages:[], memo:{}, ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
+// v122 — Plages horaires de Masbet TV (onglet « Plages TV » du classeur Contenu).
+// Même calcul dans l'application et dans l'aperçu de partage (functions/tv/[id].js) : tout le monde voit la même chose au même moment.
+// d.v = rotation [[id, titre, durée s (déjà sans les 20 s de fin), live 0/1], …]
+// d.g = plages [[jours (bits lundi=1 … dimanche=64), début (min), fin (min), type V/L/T, mode H/C/E, partie D/M/F/H, durée extrait (s)], …],
+//       déjà rangées par priorité (jour précis, puis lundi-vendredi / samedi-dimanche, puis chaque jour ; ensuite l'ordre du tableau).
+var MTVG_FMT = null;
+function mtvgHaiti(ms) {   // date, jour de la semaine (0 = lundi) et minuit à Anse-à-Veau
+  if (!MTVG_FMT) { try { MTVG_FMT = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Port-au-Prince', hourCycle: 'h23', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); } catch (e) { MTVG_FMT = false; } }
+  var y, mo, j, h, mi, s;
+  if (MTVG_FMT) { var p = {}; MTVG_FMT.formatToParts(new Date(ms)).forEach(function (x) { p[x.type] = x.value; }); y = +p.year; mo = +p.month; j = +p.day; h = +p.hour % 24; mi = +p.minute; s = +p.second; }
+  else { var d = new Date(ms - 5 * 3600e3); y = d.getUTCFullYear(); mo = d.getUTCMonth() + 1; j = d.getUTCDate(); h = d.getUTCHours(); mi = d.getUTCMinutes(); s = d.getUTCSeconds(); }
+  var ecart = Date.UTC(y, mo - 1, j, h, mi, s) - Math.floor(ms / 1000) * 1000;
+  var minuit = Date.UTC(y, mo - 1, j) - ecart;
+  return { minuit: minuit, js: (new Date(Date.UTC(y, mo - 1, j)).getUTCDay() + 6) % 7, cle: y + '-' + mo + '-' + j };
+}
+// Passages des plages autour de « now » (veille, jour, lendemain), dans l'ordre de priorité.
+function mtvgPassages(g, now) {
+  var h = mtvgHaiti(now), res = [];
+  for (var dj = -1; dj <= 1; dj++) {
+    var minuit = h.minuit + dj * 864e5, hj = mtvgHaiti(minuit + 12 * 3600e3);   // midi du jour visé : pas d'erreur de date
+    minuit = hj.minuit;
+    g.forEach(function (x, i) {
+      if (!(x[0] & (1 << hj.js))) return;
+      var fin = x[2] > x[1] ? x[2] : x[2] + 1440;
+      res.push({ i: i, x: x, S: minuit + x[1] * 60e3, E: minuit + fin * 60e3, cle: hj.cle + '|' + i + '|' + x.join(',') });
+    });
+  }
+  return res;
+}
+function mtvgSuite(d, pa, hasard) {   // programme complet d'un passage de plage : [[id, titre, longueur s, départ s, extrait 0/1], …]
+  var x = pa.x, type = x[3], mode = x[4], part = x[5], dx = x[6] || 2700, v = d.v;
+  var pool = v.filter(function (y) { return type === 'T' || (type === 'L' ? y[3] : !y[3]); });
+  if (!pool.length) pool = v.slice();
+  if (!pool.length) return [];
+  pool.sort(function (a, b) { return a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0; });
+  var r = hasard('masbet-tv-' + pa.cle), parts = ['D', 'M', 'F'];
+  var items = pool.map(function (y) {
+    if (mode === 'E' && y[2] >= dx + 600) {
+      var p = part === 'H' ? parts[Math.floor(hasard(pa.cle + '|' + y[0])() * 3)] : part;
+      var off = p === 'D' ? 0 : p === 'F' ? y[2] - dx : Math.floor((y[2] - dx) / 2);
+      return [y[0], y[1], dx, off, 1];
+    }
+    return [y[0], y[1], y[2], 0, 0];
+  });
+  function melange(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var k = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[k]; a[k] = t; } return a; }
+  var tot = (pa.E - pa.S) / 1000, t = 0, out = [], tour, n;
+  for (tour = 0; tour < 60 && t < tot; tour++) {   // la liste se répète si la plage est plus longue que toutes les vidéos
+    n = 0; melange(items).forEach(function (y) { if (t + y[2] <= tot) { out.push(y); t += y[2]; n++; } });
+    if (!n) break;
+  }
+  if (t < tot) {   // reste de temps : on le remplit avec de courtes vidéos, comme les intermèdes à la télévision
+    var courtes = melange(v.filter(function (y) { return !y[3]; }).map(function (y) { return [y[0], y[1], y[2], 0, 0]; }));
+    courtes.forEach(function (y) { if (t + y[2] <= tot) { out.push(y); t += y[2]; } });
+  }
+  if (t < tot - 1) { var z = melange(items)[0]; out.push([z[0], z[1], tot - t, z[3], z[4]]); }   // dernier morceau coupé à la fin de la plage
+  return out;
+}
+// Ce qui passe à « now » selon les plages. Renvoie null s'il n'y a pas de plage (rotation normale).
+// prochain = heure (ms) de la prochaine limite de plage, pour couper la rotation au bon moment.
+function mtvgMaintenant(d, now, hasard, memo, saute) {
+  var g = d.g || [], res = { prochain: 0, c: null };
+  if (!g.length || !d.v.length) return res;
+  var ps = mtvgPassages(g, now), act = null;
+  ps.forEach(function (pa) { if (pa.S <= now && now < pa.E && (!act || pa.i < act.i)) act = pa; });
+  ps.forEach(function (pa) {   // prochaine limite : début d'une plage prioritaire, ou fin de la plage en cours
+    if (pa.S > now && (!act || pa.i < act.i) && (!res.prochain || pa.S < res.prochain)) res.prochain = pa.S;
+  });
+  if (act && (!res.prochain || act.E < res.prochain)) res.prochain = act.E;
+  if (!act) return res;
+  memo = memo || {};
+  var s = memo[act.cle] || (memo[act.cle] = mtvgSuite(d, act, hasard));
+  var t = act.S;
+  for (var i = 0; i < s.length; i++) {
+    var y = s[i], f = t + y[2] * 1000;
+    if (now < f) {
+      var k = 0;   // vidéo refusée sur ce téléphone, ou déjà finie : on passe à la suivante
+      while (saute && saute(y, t) && k < s.length) { i++; k++; if (i >= s.length) return res; t = f; y = s[i]; f = t + y[2] * 1000; }
+      var debut = Math.max(t, now);
+      res.c = { id: y[0], titre: y[1], off: y[3] + Math.floor((debut - t) / 1000), fin: f, debut: t, extrait: !!y[4], suite: s[i + 1] ? s[i + 1][1] : '', cle: act.cle + '#' + i };
+      return res;
+    }
+    t = f;
+  }
+  return res;
+}
 function mtvH(ms){ var d=new Date(ms); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
 function mtvCreneau(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(now>=x[0]&&now<x[0]+x[3]*1000&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
 function mtvProchain(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(x[0]>now&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
@@ -2299,6 +2384,8 @@ function mtvCharger(d){
   // v116 : on coupe les 20 dernières secondes des vidéos de plus de 2 min, là où YouTube affiche ses écrans de fin (vignettes, « S'abonner »).
   MTV.liste.forEach(function(x){ if(x[2]>120) x[2]-=20; });
   MTV.prog.forEach(function(x){ if(!x[5]&&x[3]>120) x[3]-=20; });
+  MTV.plages=(d&&Array.isArray(d.g)?d.g:[]).filter(function(x){ return x&&x[0]>0&&x[1]>=0&&x[2]>=0&&/^[VLT]$/.test(x[3]); });   // v122 : plages horaires
+  MTV.memo={};
   MTV.ordre=null; MTV.jour=''; MTV.cache=Date.now();
 }
 function mtvHasard(s){ var h=1779033703^s.length; for(var i=0;i<s.length;i++){ h=Math.imul(h^s.charCodeAt(i),3432918353); h=h<<13|h>>>19; }
@@ -2316,9 +2403,9 @@ function mtvPosition(){
   for(var i=0;i<o.length;i++){ if(t<o[i][2]) return {i:i, off:Math.floor(t)}; t-=o[i][2]; }
   return {i:0, off:0};
 }
-function mtvInfo(titre,prog,prochain,suite){
+function mtvInfo(titre,prog,prochain,suite,extrait){
   var t='', now=Date.now();
-  if(titre) t=(prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+titre;
+  if(titre) t=(prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+(extrait?'✂️ '+T('mtvEkstre')+' · ':'')+titre;
   if(prochain&&(prochain[0]-now<3600e3||!suite)) t+=(t?'  ·  ':'')+T('mtvApre')+' ('+mtvH(prochain[0])+') : '+prochain[2];
   else if(suite) t+=(t?'  ·  ':'')+T('mtvApre')+' : '+suite;
   mtvI().textContent=t;
@@ -2379,9 +2466,14 @@ function mtvPlein(){
 function mtvSuivant(){
   if(!MTV.actif||!MTV.liste) return; clearTimeout(MTV.t);
   if(Date.now()-MTV.cache>30*60e3){ MTV.cache=Date.now(); api('mtv').then(function(d){ mtvCharger(d); },function(){}); }   // grille relue en fond
-  var now=Date.now(), c=mtvCreneau(now), pro=mtvProchain(now), id, off=0, live=false, reste, titre, suite='';
+  var now=Date.now(), c=mtvCreneau(now), pro=mtvProchain(now), id, off=0, live=false, reste, titre, suite='', ext=false, pl={prochain:0,c:null};
+  if(!c&&MTV.plages.length&&MTV.liste.length){   // v122 : plage horaire (vidéos, lives complets ou extraits)
+    pl=mtvgMaintenant({v:MTV.liste,g:MTV.plages},now,mtvHasard,MTV.memo,function(y,t){ return MTV.ko[y[0]]||(MTV.fin&&MTV.fin.id===y[0]&&MTV.fin.t===t); });
+  }
   if(c){   // passage programmé en cours
     id=c[1]; titre=c[2]; live=!!c[5]; off=live?0:c[4]+Math.floor((now-c[0])/1000); reste=(c[0]+c[3]*1000-now)/1000; MTV.cur={k:c[0]+c[1]};
+  } else if(pl.c){   // plage horaire en cours
+    var q=pl.c; id=q.id; titre=q.titre; off=q.off; reste=(q.fin-now)/1000; suite=q.suite; ext=q.extrait; MTV.cur={g:q.id, t:q.debut};
   } else if(MTV.liste.length){   // rotation
     var p=mtvPosition(), o=MTV.ordre, n=0;
     while(MTV.ko[o[p.i][0]]&&n<o.length){ p={i:(p.i+1)%o.length, off:0}; n++; }   // vidéo refusée par YouTube sur ce téléphone : on saute
@@ -2395,8 +2487,9 @@ function mtvSuivant(){
   }
   mtvMsg('');
   if(pro) reste=Math.min(reste,(pro[0]-now)/1000+0.5);   // un passage programmé coupe la rotation à l'heure dite
+  if(!c&&pl.prochain) reste=Math.min(reste,(pl.prochain-now)/1000+0.5);   // v122 : changement de plage à l'heure dite
   MTV.t=setTimeout(mtvSuivant,Math.max(2,reste)*1000);   // aussi filet de sécurité si le lecteur ne signale pas la fin
-  mtvInfo(titre,!!c,pro,suite);
+  mtvInfo(titre,!!c,pro,suite,ext);
   MTV.cid=id+'|'+(c?c[0]:'r'); MTV.titre=titre; mtvTransition(titre);   // v116 : habillage à chaque chargement, il cache le titre et la chaîne YouTube du début
   if(MTV.p&&MTV.p.loadVideoById){ try{ var q={videoId:id}; if(!live) q.startSeconds=off; MTV.p.loadVideoById(q); return; }catch(e){} }
   mtvLecteur(id,off,live);
@@ -2410,7 +2503,7 @@ function mtvTransition(titre){
 }
 // v116 : l'habillage reste 3 s après le début de la lecture, le temps que YouTube retire son bandeau (titre, chaîne).
 function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e) e.classList.remove('on'); }
-function mtvFin(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; mtvSuivant(); }
+function mtvFin(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; if(MTV.cur&&MTV.cur.g) MTV.fin={id:MTV.cur.g, t:MTV.cur.t}; mtvSuivant(); }   // v122 : vidéo finie plus tôt que prévu → la suivante de la plage
 function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
 function mtvLecteur(id,off,live){
   var ec=mtvE(), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
@@ -2426,7 +2519,7 @@ function mtvLecteur(id,off,live){
           // v118 : ouvert par un lien partagé (sans toucher l'écran), le téléphone peut refuser le son : on lance sans le son et on montre 🔇
           setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons(); } }catch(x){} },1800); },
         onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); mtvSansSousTitres(e.target); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
-        onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
+        onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else if(MTV.cur&&MTV.cur.g) MTV.ko[MTV.cur.g]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
     // lecteur YouTube indisponible : fenêtre vidéo simple, la minuterie passe à la suivante
     if(!MTV.actif) return; var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
