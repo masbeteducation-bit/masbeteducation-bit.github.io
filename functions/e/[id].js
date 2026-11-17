@@ -36,7 +36,7 @@ async function lireEdito(ctx, id) {
 }
 
 function page(id, e) {
-  const cible = '/' + (e ? '#edito&id=' + id : '#edito&d=liste');
+  const cible = '/' + (e ? '#edito&id=' + id + '&s=1' : '#edito&d=liste');   // v124 : s=1 = arrivé par un lien partagé (compté dans les données de l'éditorial)
   const url = SITE + '/e/' + id;
   const titre = e ? '📰 ' + coupe(e.titreHt || e.titreFr, 100) : 'Editoryal Masbet';
   const txt = e ? (e.texteHt || e.texteFr || '') : '';   // v112 : format affiche (sans texte) → titre français en description

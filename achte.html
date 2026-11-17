@@ -334,7 +334,16 @@ var demoApi = {
       x.masque=!!c.code&&!ok; if(x.masque) x.code=c.code.substring(0,2)+'••••••'; if(pr.tx&&ok&&ids.indexOf(c.id)<0) x._tx=1; return x; });
     return {commandes:l, txTrouve:txt, idsTx:l.filter(function(x){return x._tx;}).map(function(x){return x.id;})}; }
 };
+// v124 : les forfaits (données publiques, les mêmes pour tous) viennent d'abord de la RÉSERVE CLOUDFLARE /api/infos (0,1–0,3 s) ;
+// Google seulement si elle ne répond pas. Commandes et « Kòd mwen » : toujours le distributeur Google.
+function infosReserve(){
+  var h=location.hostname; if(PORTAIL||!window.fetch||!(h==='masbet.me'||/\.masbet\.me$/.test(h)||/\.pages\.dev$/.test(h)||window.MASBET_RESERVE)) return Promise.reject(new Error('pas de réserve'));
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ ctl.abort(); },6000):null;
+  return fetch('/api/infos',{credentials:'omit',cache:'no-store',signal:ctl?ctl.signal:undefined}).then(function(r){ return r.text(); })
+    .then(function(x){ if(t) clearTimeout(t); var j=JSON.parse(x); if(!j||j.ok!==true||!j.data||!j.data.forfaits) throw new Error('réserve vide'); return j.data; }, function(e){ if(t) clearTimeout(t); throw e; });
+}
 function appelApi(fn,args){
+  if(fn==='getInfosPubliques'&&!appelApi.sansReserve){ return infosReserve().catch(function(){ appelApi.sansReserve=true; var p=appelApi(fn,args); appelApi.sansReserve=false; return p; }); }
   var q;
   if(fn==='getInfosPubliques') q={api:'infos',live:'1'};
   else if(fn==='passerCommande'){ var d=args[0]||{}; q={api:'commander',forfait:d.forfait,methode:d.methode,telephone:d.telephone,transaction:d.transaction,live:'1'}; }

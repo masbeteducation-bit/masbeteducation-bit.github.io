@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
 <meta name="description" content="Masbet, yon sèl aplikasyon pou tout moun : Wi-Fi ak MonCash oswa NatCash, TV ak match an dirèk, lives, quiz, jwèt lespri, kominote, istwa jodi a.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com https://player.castr.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Masbet — Wi-Fi, TV, match, quiz, kominote</title>
 <link rel="canonical" href="https://masbet.me/">
@@ -356,6 +356,9 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   /* Vidéos */
   .vids{display:grid;grid-template-columns:1fr;gap:12px}
   .vid{border-radius:12px;overflow:hidden;background:#000;position:relative;aspect-ratio:16/9}
+  .vid.kouteSon{aspect-ratio:auto;height:120px}
+  .kouteBtn{margin-top:8px;border:1.5px solid #173a8c;background:#fff;color:#173a8c;font-weight:800;border-radius:20px;padding:7px 14px;font-size:14px;cursor:pointer}
+  .mtvExt .mtvBouclier,.mtvExt .mtvBtns{display:none}
   .vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9}
   .vid button{position:absolute;inset:0;border:0;background:transparent;color:#fff;font-size:54px;cursor:pointer}
   .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -585,9 +588,86 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .liveMtv .tvInfo{background:#14213d;padding:9px 12px}
   .liveMtvTete{margin:0 0 8px}.liveMtvTete .hint{margin-top:4px}
   .tvInfo{color:#e8edf8;font-size:13px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));text-align:center;background:rgba(11,18,36,.55)}
+  /* v125 : habillage « broadcast » du lecteur TV : nuit de stade, lumières, nids d'abeille, lignes de vitesse (tout en CSS, aucune image à télécharger) */
+  .tvLect{background:
+    radial-gradient(circle at 20% 18%,rgba(28,82,168,.38) 0%,transparent 50%),
+    radial-gradient(circle at 88% 92%,rgba(212,168,79,.26) 0%,transparent 45%),
+    radial-gradient(ellipse 70% 16% at 50% 13%,rgba(140,180,255,.22),transparent 70%),
+    radial-gradient(circle at 9% 8%,rgba(160,200,255,.18) 0,transparent 40px),
+    radial-gradient(circle at 91% 9%,rgba(160,200,255,.18) 0,transparent 40px),
+    radial-gradient(circle at 27% 17%,rgba(255,255,255,.55) 0 2px,transparent 20px),
+    radial-gradient(circle at 73% 17%,rgba(255,255,255,.55) 0 2px,transparent 20px),
+    radial-gradient(circle at 50% 21%,rgba(255,255,255,.4) 0 2px,transparent 16px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48'%3E%3Cpath d='M14 0l14 8v16l-14 8L0 24V8zM14 32v16' fill='none' stroke='%235b8dff' stroke-opacity='.10' stroke-width='1'/%3E%3C/svg%3E"),
+    linear-gradient(180deg,#0b162c 0%,#071021 50%,#050b18 100%)!important;
+    background-size:auto,auto,auto,auto,auto,auto,auto,auto,28px 48px,auto!important}
+  .tvLect::before{content:'';position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(-25deg,rgba(56,139,253,.05) 0 2px,transparent 2px 18px)}
+  .tvLect>*{position:relative;z-index:1}
+  .tvLect .tvBar{background:linear-gradient(180deg,rgba(4,10,24,.88),rgba(4,10,24,0))}
+  .tvLect .tvBar button{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18)}
+  .tvLect #tvNom{font:italic 800 min(23px,5.6vw)/1.1 'Oswald','Roboto Condensed','Arial Narrow',sans-serif-condensed,'Arial Black',sans-serif;text-transform:uppercase;background:linear-gradient(180deg,#fff 0%,#e6edf8 44%,#8ea2c3 52%,#f5f8fd 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 2px rgba(0,0,0,.55))}   /* v126 : toutes les chaînes ont leur nom en lettres argentées */
+  .tvLect.mtvMode #tvNom{font:italic 900 25px/1.05 'Arial Black',Impact,'Helvetica Neue',sans-serif;text-transform:uppercase;letter-spacing:.01em;
+    background:linear-gradient(180deg,#fff 0%,#e6edf8 44%,#8ea2c3 52%,#f5f8fd 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.55));padding-right:4px}
+  .tvDirek{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;background:#e11d2e;color:#fff;border-radius:6px;padding:6px 9px;font-size:12.5px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;box-shadow:0 2px 10px rgba(225,29,46,.45)}
+  .tvDirek i{width:7px;height:7px;border-radius:50%;background:#fff;animation:tvPouls 1.4s ease-in-out infinite}
+  .tvDirek.h24{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);box-shadow:none;color:#dfe8f7}
+  .tvDirek.h24 i{display:none}
+  @keyframes tvPouls{0%,100%{opacity:1}50%{opacity:.25}}
+  /* v126 : le cadre garde toujours le format 16:9 ; sa taille dépend de la hauteur disponible (téléphone, paysage, ordinateur) */
+  .tvLect{--tvH:calc(100vh - 170px)} .tvLect.mtvMode{--tvH:calc(100vh - 400px)}
+  /* v126 : plein écran = la vidéo seule, sans aucun habillage (fond, cadre doré, filets) */
+  .tvLect .tvEcran:fullscreen{width:100%!important;max-height:none!important;height:100%!important;margin:0!important;outline:none!important;box-shadow:none!important;border-radius:0!important;background:#000!important}
+  .tvLect .tvEcran:-webkit-full-screen{width:100%!important;max-height:none!important;height:100%!important;margin:0!important;outline:none!important;box-shadow:none!important;border-radius:0!important;background:#000!important}
+  .tvLect .tvEcran:fullscreen::before,.tvLect .tvEcran:fullscreen::after{display:none!important}
+  .tvLect .tvEcran:-webkit-full-screen::before,.tvLect .tvEcran:-webkit-full-screen::after{display:none!important}
+  .tvLect .tvEcran{width:min(calc(100% - 28px),calc(var(--tvH) * 16 / 9));max-height:var(--tvH);margin-left:auto!important;margin-right:auto!important}
+  .tvLect.mtvMode .tvFond{width:min(calc(100% - 32px),calc(var(--tvH) * 16 / 9));margin-left:auto;margin-right:auto}   /* le bloc Fondateur suit la largeur de la vidéo (ordinateur) */
+  @media (orientation:landscape) and (max-height:520px){ .tvLect,.tvLect.mtvMode{--tvH:calc(100vh - 120px)} .tvLect .tvEcran::before,.tvLect .tvEcran::after{display:none} }
+  .tvLect .tvEcran{outline:2px solid #d4a84f;outline-offset:0;border-radius:3px;box-shadow:0 0 26px rgba(212,168,79,.28)}
+  .tvLect .tvEcran::before,.tvLect .tvEcran::after{content:'';position:absolute;left:-14px;right:-14px;height:2px;z-index:6;pointer-events:none;
+    background:linear-gradient(90deg,rgba(212,168,79,.25),#d4a84f 30%,#ffe7a8 50%,#d4a84f 70%,rgba(212,168,79,.25));box-shadow:0 0 10px rgba(255,214,120,.55)}
+  .tvLect .tvEcran::before{top:-14px} .tvLect .tvEcran::after{bottom:-14px}
+  .tvLect::after{content:'';position:absolute;inset:0;pointer-events:none;
+    background:
+      linear-gradient(52deg,transparent 0 13%,rgba(56,150,255,.55) 13.1% 13.35%,transparent 13.6%),
+      linear-gradient(52deg,transparent 0 16%,rgba(212,168,79,.45) 16.1% 16.3%,transparent 16.5%),
+      linear-gradient(52deg,transparent 0 84%,rgba(212,168,79,.45) 84.1% 84.3%,transparent 84.5%),
+      linear-gradient(52deg,transparent 0 87%,rgba(56,150,255,.5) 87.1% 87.35%,transparent 87.6%),
+      repeating-radial-gradient(circle at 108% 104%,transparent 0 12px,rgba(140,175,230,.08) 12px 13px);
+    -webkit-mask-image:linear-gradient(90deg,#000 0,transparent 22%,transparent 78%,#000 100%),radial-gradient(circle at 100% 100%,#000 0,transparent 40%);
+    mask-image:linear-gradient(90deg,#000 0,transparent 22%,transparent 78%,#000 100%),radial-gradient(circle at 100% 100%,#000 0,transparent 40%)}
+  /* v126 : ligne « Fondateur » sous la vidéo (Masbet TV seulement) */
+  .tvFond{position:relative;display:flex;align-items:flex-end;gap:10px;margin:12px 16px 18px}
+  /* v126b : partie haute comme la maquette de Masbet (bandeau du titre, grand portrait à filet doré, texte or, projecteurs) */
+  .tvLect .tvBar{background:linear-gradient(180deg,#0f2147 0%,#0a1834 100%)!important;border-bottom:1px solid rgba(150,180,230,.16);box-shadow:0 8px 20px rgba(0,0,0,.35);padding-top:calc(14px + env(safe-area-inset-top));padding-bottom:14px}
+  .tvLect.mtvMode #tvNom{font-family:'Oswald','Roboto Condensed','Arial Narrow',sans-serif-condensed,'Arial Black',sans-serif;font-stretch:condensed;font-weight:800;font-size:min(31px,7.2vw);letter-spacing:.01em;flex:0 1 auto;transform:scaleX(.9);transform-origin:left center;overflow:visible;margin-right:auto}
+  .tvLect>.tvProj{position:absolute;z-index:0;top:calc(84px + env(safe-area-inset-top));right:-6px;width:170px;height:96px;pointer-events:none;opacity:.75;filter:blur(1.4px);
+    background:radial-gradient(circle,rgba(255,255,255,.95) 0 3px,rgba(185,210,255,.45) 4px,transparent 8px) 0 0/21px 19px;
+    -webkit-mask-image:radial-gradient(ellipse at 70% 40%,#000 0,transparent 70%);mask-image:radial-gradient(ellipse at 70% 40%,#000 0,transparent 70%)}
+  .tvLect>.tvProj::after{content:'';position:absolute;inset:-40px -20px -60px -80px;background:radial-gradient(ellipse at 60% 35%,rgba(150,190,255,.28),transparent 65%)}
+  .tvFond::before{content:'';position:absolute;left:-26px;top:-6px;width:96px;height:120px;pointer-events:none;transform:skewX(-34deg);
+    background:repeating-linear-gradient(180deg,rgba(56,150,255,.32) 0 2px,transparent 2px 9px);
+    -webkit-mask-image:linear-gradient(90deg,#000,transparent);mask-image:linear-gradient(90deg,#000,transparent)}
+  /* v126 : les deux lignes épousent la courbe du cercle (le texte contourne le portrait) */
+  .tvFondT{flex:1;min-width:0;text-align:left;padding-bottom:2px}
+  .tvFondT small,.tvFondT b{padding-left:0}   /* décalage de chaque ligne calculé par tvFondCourbe() : même distance au bord du cercle */   /* nom aligné sur le bas du cercle */
+  .tvLect.mtvMode .tvFond{margin-top:auto} .tvLect.mtvMode .tvEcran{margin-top:0;margin-bottom:auto}   /* Fondateur en haut, la vidéo juste dessous */
+  .tvFondA{flex:0 0 auto;width:108px;height:108px;border-radius:50%;padding:2px;background:linear-gradient(135deg,#f7e3a3 0%,#d4a84f 50%,#8a6218 100%);box-shadow:0 0 22px rgba(212,168,79,.45),0 0 0 1px rgba(255,230,170,.15)}
+  .tvFondA img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#0e1d36}
+  .tvFond small,.tvFond b{display:block;font-size:min(18px,4.6vw);font-weight:500;letter-spacing:.03em;white-space:nowrap;color:#e8cf95;line-height:1.3;text-shadow:0 2px 6px rgba(0,0,0,.7),0 0 12px rgba(212,168,79,.18)}
+  @media (orientation:landscape) and (max-height:520px){ .tvFond{display:none!important} }
+  .tvLect .tvInfo{background:linear-gradient(180deg,rgba(10,19,42,.94),rgba(4,9,22,.98));border-top:1px solid rgba(150,180,230,.35);font-size:14px;line-height:1.45}
+  .tvInfo .tvApre{color:#f2c94c} .tvInfo .tvSep{color:#f2c94c;margin:0 6px}
+  @media (prefers-reduced-motion:reduce){ .tvDirek i{animation:none} }
   .tvLogo{display:flex;justify-content:center;padding:0 0 14px}
   .tvLogo img{width:150px;height:auto;background:rgba(255,255,255,.88);border-radius:14px;padding:6px 12px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  .tvLect .tvLogo img{background:linear-gradient(180deg,#fff 0%,#e3e9f3 100%);border:2px solid rgba(220,230,245,.85);box-shadow:0 0 0 4px rgba(12,29,66,.7),0 8px 24px rgba(0,0,0,.5)}
   @media (orientation:landscape) and (max-height:520px){ .tvLogo{display:none} }
+  /* v126 : « MASBET » écrit en or à la place de la plaque du logo */
+  .tvLect .tvLogo{padding-bottom:64px}   /* « MASBET » un peu plus haut */
+  .tvMarque{font-size:19px;font-weight:700;letter-spacing:.32em;padding-left:.32em;color:rgba(226,192,125,.88);text-shadow:0 2px 8px rgba(0,0,0,.6),0 0 14px rgba(212,168,79,.25)}
   /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
   .play a[href="#quiz&defi"],.play #cDefi,.play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
   .mic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em;flex:0 0 auto}.mic.rouge{color:#d62828}
@@ -766,10 +846,12 @@ var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('sp
 <div class="sheet bas hidden" id="reacSheet" role="dialog"></div>
 <div class="sheet hidden" id="notifSheet" role="dialog" aria-modal="true"></div>
 <div class="tvLect hidden" id="tvLect" role="dialog" aria-modal="true">
-  <div class="tvBar"><b id="tvNom"></b><button type="button" onclick="tvQMenu()" aria-label="Qualité" id="tvQ" class="hidden">HD</button><button type="button" onclick="tvPataje()" aria-label="Partager" id="tvPat"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" style="vertical-align:-4px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg></button><button type="button" onclick="tvFermer()" aria-label="Fermer">✕</button></div>
+  <div class="tvProj" aria-hidden="true"></div>
+  <div class="tvBar"><b id="tvNom"></b><span id="tvDirek" class="tvDirek hidden"></span><button type="button" onclick="tvQMenu()" aria-label="Qualité" id="tvQ" class="hidden">HD</button><button type="button" onclick="tvPataje()" aria-label="Partager" id="tvPat"><svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" style="vertical-align:-4px"><path fill="currentColor" d="M18 16.1c-.8 0-1.4.3-2 .8l-7.1-4.2c.1-.2.1-.5.1-.7s0-.5-.1-.7L16 7.2c.5.5 1.2.8 2 .8 1.7 0 3-1.3 3-3s-1.3-3-3-3-3 1.3-3 3c0 .2 0 .5.1.7L8 8.8C7.5 8.3 6.8 8 6 8c-1.7 0-3 1.3-3 3s1.3 3 3 3c.8 0 1.5-.3 2-.8l7.1 4.2c-.1.2-.1.4-.1.6 0 1.6 1.3 2.9 2.9 2.9s2.9-1.3 2.9-2.9-1.2-2.9-2.8-2.9z"/></svg></button><button type="button" onclick="tvFermer()" aria-label="Fermer">✕</button></div>
   <div class="tvQm hidden" id="tvQm"></div>
+  <div class="tvFond hidden" id="tvFond"><span class="tvFondA"><img src="photos/fondateur.jpg" alt="" width="84" height="84"></span><div class="tvFondT"><small id="tvFondR"></small><b>Duckhens Lespérance</b></div></div>
   <div class="tvEcran" id="tvEcran"><video id="tvVid" playsinline controls preload="none"></video><div class="tvMsg" id="tvMsg"></div></div>
-  <div class="tvLogo"><img src="logo.png" alt="Masbet Education" width="560" height="166"></div>
+  <div class="tvLogo"><span class="tvMarque">MASBET</span></div>
   <div class="tvInfo" id="tvInfo"></div>
 </div>
 <div class="hidden" id="certVue" role="dialog" aria-modal="true" aria-label="Certificat"></div>
@@ -923,12 +1005,12 @@ Object.assign(TXT.fr,{
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
 // v41.6 — TV gratuite
-Object.assign(TXT.ht,{mtvEkstre:'Ekstrè', mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
+Object.assign(TXT.ht,{mtvDirek:'An dirèk', koute:'Koute sèlman', kouteImaj:'Gade imaj la', kouteAide:'Son sèlman : konsome anpil mwens done.', mtvEkstre:'Ekstrè', mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
   svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done entènèt.', tvTout:'Tout',
   tvHors:'Pa sou antèn kounye a', tvCharge:'Chajman…', tvErr:'Chèn sa a pa disponib kounye a. Eseye pita, oswa chwazi yon lòt chèn.', tvGros:'📶 Gwo forfè',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/èdtan'; }, tvNb:function(n){ return n+' chèn'; }, tvYt:'Si chèn nan pa an dirèk kounye a, YouTube ap di l.',
   tvDonnees:function(g){ return 'Chèn sa a konsome apeprè '+String(g).replace('.',',')+' Go pa èdtan.'; }});
-Object.assign(TXT.fr,{mtvEkstre:'Extrait', mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
+Object.assign(TXT.fr,{mtvDirek:'En direct', koute:'Écouter seulement', kouteImaj:'Voir l\'image', kouteAide:'Le son seul consomme beaucoup moins de données.', mtvEkstre:'Extrait', mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
   svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme des données internet.', tvTout:'Toutes',
   tvHors:'Hors antenne pour le moment', tvCharge:'Chargement…', tvErr:'Cette chaîne n\'est pas disponible pour le moment. Réessayez plus tard ou choisissez une autre chaîne.', tvGros:'📶 Gros forfait',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/heure'; }, tvNb:function(n){ return n+' chaînes'; }, tvYt:'Si la chaîne n\'est pas en direct en ce moment, YouTube l\'indiquera.',
@@ -995,6 +1077,14 @@ function lotPaquet(f){
       // Pas de réseau : la dernière réponse gardée sur le téléphone, s'il y en a une
       f.forEach(function(x){ var m=memoire(x.a,x.p); if(m){ horsLigne(true); x.res(m); } else x.rej(e); }); });
 }
+// v124 : copies communes à tous gardées par Cloudflare (functions/api/<action>.js) : réponse en 0,1–0,3 s au lieu de 3–5 s chez Google
+var RESERVE_API={mtv:1, mtvdirect:1, matchs:1};
+function reserveApi(a){
+  var h=location.hostname; if(!window.fetch||!(h==='masbet.me'||/\.masbet\.me$/.test(h)||/\.pages\.dev$/.test(h)||window.MASBET_RESERVE)) return Promise.reject(new Error('pas de réserve'));
+  var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ ctl.abort(); },6000):null;
+  return fetch('/api/'+a,{credentials:'omit',cache:'no-store',signal:ctl?ctl.signal:undefined}).then(function(r){ return r.text().then(function(x){ if(t) clearTimeout(t);
+    var j=JSON.parse(x); if(!j||j.ok!==true||!j.data) throw new Error('réserve vide'); return {status:r.status,x:x}; }); }, function(e){ if(t) clearTimeout(t); throw e; });
+}
 function apiSeul(action, params){
   action_courante=action; NB_REQ++;
   if(!CONTENU) return Promise.reject(new Error('config'));
@@ -1005,6 +1095,7 @@ function apiSeul(action, params){
   // v42.13 : l'Accueil a peut-être déjà été demandé au tout début de la page → on reprend cette réponse
   var pre=null; if(action==='accueil'&&!extra&&window.MASBET_PRE&&Date.now()-window.MASBET_PRE.t<25000){ pre=window.MASBET_PRE.p; window.MASBET_PRE=null; }
   else if(action==='accueil'&&!extra&&window.masbetReserve) pre=window.masbetReserve();   // v42.16 : mises à jour (toutes les 2 min) aussi par la réserve
+  else if(RESERVE_API[action]&&!extra) pre=reserveApi(action);   // v124 : Masbet TV, live YouTube et matchs par la réserve Cloudflare (Google seulement si elle ne répond pas)
   return (pre?pre.then(function(o){ return {status:o.status,text:function(){ return Promise.resolve(o.x); }}; },envoi):envoi())
     .then(function(r){ return r.text().then(function(x){
       try{ return JSON.parse(x); }
@@ -1857,7 +1948,15 @@ function lecteurLive(x, auto){
       '<img loading="lazy" src="https://i.ytimg.com/vi/'+esc(x.id)+'/hqdefault.jpg" alt=""><button aria-label="Play" onclick="jouer(\''+jsid(x.id)+'\')">▶</button>')+'</div>';
   if(x.plateforme==='cloudflare'){
     if(!/^https:\/\/customer-[a-z0-9]+\.cloudflarestream\.com\/[A-Za-z0-9._-]+\/iframe$/.test(String(x.lien||''))) return '';
+    // v124 : live Cloudflare GRATUIT dans la liste : il ne démarre qu'au toucher (chaque minute regardée est payée)
+    if(x.payant===false) return '<div class="vid"><button aria-label="Play" data-src="'+esc(x.lien)+'" onclick="jouerCf(this)">▶</button></div>';
     return '<div class="vid"><iframe src="'+esc(x.lien)+'?autoplay=true&preload=true" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>';
+  }
+  if(x.plateforme==='castr'){   // v123 : live gratuit diffusé par Castr (lecteur Castr) ; 🎧 = le son seul, très peu de données
+    if(!/^https:\/\/player\.castr\.com\/[A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+)?$/.test(String(x.lien||''))) return '';
+    var kc='ca'+Math.abs(hash(x.lien));
+    return '<div class="vid"><iframe id="'+kc+'" src="'+esc(x.lien)+'" data-base="'+esc(x.lien)+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div>'+
+      '<button type="button" class="kouteBtn" onclick="kouteSel(\''+kc+'\',this)">🎧 '+T('koute')+'</button><span class="hint"> '+T('kouteAide')+'</span>';
   }
   if(x.plateforme==='facebook'){
     if(!lienFb(x.lien)) return '';
@@ -1866,6 +1965,12 @@ function lecteurLive(x, auto){
       '<a class="hint" href="'+esc(x.lien)+'" target="_blank" rel="noopener">'+T('gadeFb')+' ↗</a>';
   }
   return '';
+}
+function jouerCf(b){ var src=b.getAttribute('data-src'); if(!/^https:\/\/customer-[a-z0-9]+\.cloudflarestream\.com\//.test(src||'')) return;
+  b.parentNode.innerHTML='<iframe src="'+esc(src)+'?autoplay=true&preload=true" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>'; }
+function kouteSel(k,b){   // v123 : bascule image ↔ son seul (mode Audio de Castr)
+  var f=document.getElementById(k); if(!f) return; var base=f.getAttribute('data-base'), son=/onlyAudio=true/.test(f.src);
+  f.src=son?base:base+'?onlyAudio=true'; f.parentNode.classList.toggle('kouteSon',!son); b.textContent=son?'🎧 '+T('koute'):'🎬 '+T('kouteImaj');
 }
 function hash(s){ var h=0; for(var i=0;i<s.length;i++){ h=(h*31+s.charCodeAt(i))|0; } return h; }
 function jouerFb(k){
@@ -1889,7 +1994,7 @@ function afficherLives(){
   (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
   fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
   h+=blocReseaux();
-  if(l.length) h+='<div class="hint" style="margin-top:6px">'+T('liveDonnees')+'</div>';
+  /* v126 : plus d'avis de consommation dans l'onglet Live (comme sur les chaînes) */
   var garde=document.getElementById('liveMtv'); if(garde) garde.parentNode.removeChild(garde);   // le lecteur survit au rafraîchissement de la liste
   el.innerHTML=h;
   var place=document.getElementById('liveMtvPlace');
@@ -1908,10 +2013,29 @@ function appareil(){
 }
 // v120 : pas de live en cours → bandeau + Masbet TV dans l'onglet Live (le prochain live reste annoncé)
 function liveMtvTete(x){
-  return '<div class="liveMtvTete"><div><span class="tag f">📡 '+esc(T('pasLive'))+'</span> <b>⭐ Masbet TV</b></div>'+
+  return '<div class="liveMtvTete"><div>'+mtvTag()+' <b>⭐ Masbet TV</b></div>'+
     (x?'<div class="hint">'+T('prochainLive')+' : <b>'+esc(x.titre)+'</b>'+(x.quand?' · '+esc(quandLive(x.quand)):'')+(x.payant===false?' · 🆓 '+esc(T('gratis')):' · 🔒 '+esc(T('tikePri')(x.prix))+' — <a href="achte.html#tikes">'+T('achteDavans')+'</a>')+'</div>':'')+
     '</div><div id="liveMtvPlace"></div>';
 }
+// v123 : en-tête de Masbet TV dans l'onglet Live : « Pa gen live » ou, si Masbet TV passe un live YouTube détecté, « 🔴 AN DIREK »
+function mtvTag(){ var d=MTV.actif&&MTV.ou==='live'&&MTV.cur&&MTV.cur.d;
+  return '<span id="liveMtvTag" class="tag '+(d?'l':'f')+'">'+(d?'<span class="pastille" style="background:#fff"></span>'+T('anDirek')+' · YouTube':'📡 '+esc(T('pasLive')))+'</span>'; }
+function mtvTagMaj(){ var e=document.getElementById('liveMtvTag'); if(e) e.outerHTML=mtvTag(); tvBadge(); }
+// v125 : pastille de la TV : « ● EN DIRECT » pour un vrai direct (chaînes TV, live dans Masbet TV), « 24/24 » pour la programmation de Masbet TV
+// v126 : chaque ligne du nom commence à la même distance du bord du cercle (escalier qui suit la courbe)
+function tvFondCourbe(){
+  var f=document.getElementById('tvFond'); if(!f||f.classList.contains('hidden')||!f.offsetParent) return;
+  var a=f.querySelector('.tvFondA'), t=f.querySelector('.tvFondT'); if(!a||!t) return;
+  var ra=a.getBoundingClientRect(), R=ra.width/2, cx=ra.left+R, cy=ra.top+ra.height/2, d=12, base=t.getBoundingClientRect().left;
+  [].forEach.call(t.children,function(el){ el.style.marginLeft='0px'; });
+  [].forEach.call(t.children,function(el){ var r=el.getBoundingClientRect(), dy=(r.top+r.height/2)-cy, q=(R+d)*(R+d)-dy*dy;
+    var x=q>0?cx+Math.sqrt(q):cx; el.style.marginLeft=Math.round(x-base)+'px'; });
+}
+window.addEventListener('resize',function(){ requestAnimationFrame(tvFondCourbe); });
+function tvBadge(){ var b=document.getElementById('tvDirek'); if(!b) return; var c=TVI>=0?tvListe()[TVI]:null;
+  if(!c){ b.classList.add('hidden'); return; }
+  var direct=c.type==='mtv'?!!(MTV.ou!=='live'&&MTV.cur&&MTV.cur.d):(c.type==='hls'||c.type==='ytc');
+  b.classList.remove('hidden'); b.classList.toggle('h24',!direct); b.innerHTML=direct?'<i></i>'+esc(T('anDirek')):(c.type==='mtv'?'24/24':''); if(!direct&&c.type!=='mtv') b.classList.add('hidden'); }
 function liveMtvMaj(){
   var ec=document.getElementById('liveEcran'), vv=document.getElementById('vVideyo');
   var doit=!!ec&&!!vv&&!vv.classList.contains('hidden')&&TVI<0&&document.visibilityState!=='hidden';
@@ -2225,7 +2349,7 @@ function afficherTv(){
     if(c.type==='mtv') c.logo='logo.png';
     var aLogo=!!(c.logo&&(/^https:\/\//.test(c.logo)||c.type==='mtv')), ini=esc(tvInitiales(c.nom));
     var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
-    var mes=tvGoMesure(c), sous=c.hors?esc(T('tvHors')):c.type==='mtv'?'':c.type!=='hls'?'YouTube':mes?esc(T('tvGoH')(mes)):c.gros?esc(T('tvGros')):c.go?esc(T('tvGoH')(c.go)):'';
+    var sous=c.hors?esc(T('tvHors')):'';   // v126 : plus d'information de consommation sur les chaînes (une vraie télévision) ; seul « hors ligne » reste
     var cl=c.hors?'hors':(c.gros||(mes&&mes>=1.5))?'gros':'';
     return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+(cl==='gros'&&mes?'📶 ':'')+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
@@ -2238,8 +2362,9 @@ document.addEventListener('click',function(e){
 function tvMsg(s){ document.getElementById('tvMsg').textContent=s||''; }
 function tvJouer(i){
   var c=tvListe()[i]; if(!c) return; tvArreter(); TVI=i; TVSEC=false; TVREC=0; statEnvoyer('tv');
-  document.getElementById('tvNom').textContent=c.nom;
-  document.getElementById('tvInfo').textContent=c.type!=='hls'?T('tvYt'):c.go?T('tvDonnees')(c.go):T('liveDonnees');
+  document.getElementById('tvNom').textContent=c.nom; document.getElementById('tvLect').classList.toggle('mtvMode',c.type==='mtv'); setTimeout(tvBadge,0);
+  document.getElementById('tvFond').classList.toggle('hidden',c.type!=='mtv'); document.getElementById('tvFondR').textContent=AL('Fondatè a','Le Fondateur'); requestAnimationFrame(function(){ requestAnimationFrame(tvFondCourbe); });   // v126
+  document.getElementById('tvInfo').textContent=c.type==='mtv'?'':'📺 '+c.nom;   // v126 : le bandeau montre la chaîne, plus la consommation
   document.getElementById('tvLect').classList.remove('hidden'); document.body.style.overflow='hidden';
   statEnvoyer('vue','tv');
   if(c.type==='mtv'){ mtvJouer(); return; }
@@ -2289,7 +2414,7 @@ var MTV_OU={tv:['tvEcran','tvInfo','tvMsg'], live:['liveEcran','liveInfo','liveM
 function mtvE(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][0]); }
 function mtvI(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][1])||document.createElement('div'); }
 function mtvMsg(t){ var e=document.getElementById(MTV_OU[MTV.ou||'tv'][2]); if(e) e.textContent=t||''; }
-var MTV={liste:null, prog:[], plages:[], memo:{}, ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
+var MTV={yt:null, ytT:0, koD:{}, liste:null, prog:[], plages:[], memo:{}, ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
 // v122 — Plages horaires de Masbet TV (onglet « Plages TV » du classeur Contenu).
 // Même calcul dans l'application et dans l'aperçu de partage (functions/tv/[id].js) : tout le monde voit la même chose au même moment.
 // d.v = rotation [[id, titre, durée s (déjà sans les 20 s de fin), live 0/1], …]
@@ -2405,10 +2530,12 @@ function mtvPosition(){
 }
 function mtvInfo(titre,prog,prochain,suite,extrait){
   var t='', now=Date.now();
-  if(titre) t=(prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+(extrait?'✂️ '+T('mtvEkstre')+' · ':'')+titre;
-  if(prochain&&(prochain[0]-now<3600e3||!suite)) t+=(t?'  ·  ':'')+T('mtvApre')+' ('+mtvH(prochain[0])+') : '+prochain[2];
-  else if(suite) t+=(t?'  ·  ':'')+T('mtvApre')+' : '+suite;
-  mtvI().textContent=t;
+  if(titre) t=esc((prog?'📅 ':'▶ ')+T('mtvKounye')+' : '+(extrait?'✂️ '+T('mtvEkstre')+' · ':'')+titre);
+  var ap='';   // v125 : « Ensuite » en or, séparé par un point
+  if(prochain&&(prochain[0]-now<3600e3||!suite)) ap=T('mtvApre')+' ('+mtvH(prochain[0])+') : '+prochain[2];
+  else if(suite) ap=T('mtvApre')+' : '+suite;
+  if(ap) t+=(t?'<span class="tvSep">•</span>':'')+'<span class="tvApre">'+esc(ap)+'</span>';
+  mtvI().innerHTML=t;
 }
 function mtvJouer(ou){
   MTV.ou=ou==='live'?'live':'tv';
@@ -2425,7 +2552,7 @@ function mtvJouer(ou){
   mtvBoutons();
   var frais=MTV.liste&&Date.now()-MTV.cache<30*60e3;   // liste et grille relues toutes les 30 minutes
   var pr=frais?Promise.resolve():api('mtv').then(mtvCharger);
-  pr.then(function(){ if(!MTV.actif) return; mtvMsg(''); mtvSuivant(); },
+  pr.then(function(){ if(!MTV.actif) return; mtvMsg(''); mtvSuivant(); MTV.ytT=0; mtvVeille(); },
     function(){ if(MTV.actif) mtvMsg(T('mtvErr')); });
 }
 // v117 : les boutons son et plein écran se cachent après 3 s ; toucher l'image les fait revenir.
@@ -2463,9 +2590,55 @@ function mtvPlein(){
   var f=ec.requestFullscreen||ec.webkitRequestFullscreen; if(!f) return;
   try{ var r=f.call(ec); if(r&&r.then) r.then(function(){ try{ screen.orientation.lock('landscape').catch(function(){}); }catch(e){} },function(){}); }catch(e){}
 }
+// v123 — Directs dans Masbet TV. Priorité : 1) live programmé dans la page Admin et passé en direct (Castr ou YouTube, gratuit) ;
+// 2) grille « Programme TV » ; 3) live YouTube détecté tout seul sur @MasbetHT ; 4) plages horaires ; 5) rotation.
+// (Un live payant en direct cache déjà toute la rubrique TV.)
+function mtvDirekAdmin(){
+  var l=(ACC&&ACC.lives)||[];
+  for(var i=0;i<l.length;i++){ var x=l[i]; if(!x||x.statut!=='direk'||x.payant) continue;
+    if(x.plateforme==='castr'&&/^https:\/\/player\.castr\.com\/[A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+)?$/.test(String(x.lien||''))) return {k:'ca|'+x.lien, src:'castr', lien:x.lien, titre:x.titre};
+    if(x.plateforme==='youtube'&&idYt(x.id)) return {k:'yt|'+x.id, src:'yt', id:x.id, titre:x.titre};
+    if(x.plateforme==='cloudflare'&&/^https:\/\/customer-[a-z0-9]+\.cloudflarestream\.com\/[A-Za-z0-9._-]+\/iframe$/.test(String(x.lien||''))) return {k:'cf|'+x.titre, src:'ifr', lien:x.lien+'?autoplay=true', titre:x.titre}; }   // v124 : Cloudflare gratuit
+  return null;
+}
+function mtvDirekChoix(now){
+  var a=mtvDirekAdmin(); if(a&&!(MTV.koD[a.k]>now-300e3)) return a;
+  if(mtvCreneau(now)) return null;
+  var y=MTV.yt; if(y&&!(MTV.koD['yt|'+y[0]]>now-300e3)) return {k:'yt|'+y[0], src:'yt', id:y[0], titre:y[1]};
+  return null;
+}
+function mtvDirekJouer(d){
+  clearTimeout(MTV.t); MTV.cur={d:d.k}; mtvMsg(''); mtvTagMaj();
+  mtvI().textContent='🔴 '+T('mtvDirek')+' : '+d.titre;
+  MTV.t=setTimeout(mtvSuivant,60e3);   // on revérifie chaque minute (fin du direct, changement de programme)
+  if(MTV.cid===d.k&&document.getElementById('mtvJ')) return;   // déjà en cours : on ne recharge pas
+  MTV.cid=d.k; MTV.titre=d.titre; var ec=mtvE();
+  if(d.src!=='yt'){   // lecteur Castr ou Cloudflare (v124) dans un cadre
+    mtvCouper(); ec.classList.add('mtvExt'); mtvTransition(d.titre);
+    var f=document.createElement('iframe'); f.id='mtvJ'; f.src=d.lien; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
+    ec.insertBefore(f,document.getElementById('mtvLogo'));
+    return;
+  }
+  ec.classList.remove('mtvExt'); mtvTransition(d.titre);
+  if(MTV.p&&MTV.p.loadVideoById){ try{ MTV.p.loadVideoById({videoId:d.id}); return; }catch(e){} }
+  mtvLecteur(d.id,0,true);
+}
+function mtvVeille(){   // toutes les minutes : un direct commence ou s'arrête → on bascule tout de suite
+  if(!MTV.actif||!MTV.liste) return;
+  var now=Date.now();
+  if(now-MTV.ytT>120e3){ MTV.ytT=now; api('mtvdirect').then(function(d){
+    var y=d&&Array.isArray(d.yt)&&idYt(d.yt[0])?[d.yt[0],String(d.yt[1]||'')]:null;
+    var chg=JSON.stringify(y)!==JSON.stringify(MTV.yt); MTV.yt=y; if(chg) mtvVeille(); },function(){}); }
+  var d=mtvDirekChoix(now), act=(MTV.cur&&MTV.cur.d)||null;
+  if((d?d.k:null)!==act) mtvSuivant();
+}
+setInterval(mtvVeille,60e3);
 function mtvSuivant(){
   if(!MTV.actif||!MTV.liste) return; clearTimeout(MTV.t);
   if(Date.now()-MTV.cache>30*60e3){ MTV.cache=Date.now(); api('mtv').then(function(d){ mtvCharger(d); },function(){}); }   // grille relue en fond
+  var dk=mtvDirekChoix(Date.now()); if(dk){ mtvDirekJouer(dk); return; }
+  if(MTV.cur&&MTV.cur.d){ MTV.cur=null; mtvTagMaj(); }
+  var ecx=mtvE(); if(ecx&&ecx.classList.contains('mtvExt')){ ecx.classList.remove('mtvExt'); mtvCouper(); MTV.cid=''; }   // fin d'un direct Castr : retour au lecteur YouTube
   var now=Date.now(), c=mtvCreneau(now), pro=mtvProchain(now), id, off=0, live=false, reste, titre, suite='', ext=false, pl={prochain:0,c:null};
   if(!c&&MTV.plages.length&&MTV.liste.length){   // v122 : plage horaire (vidéos, lives complets ou extraits)
     pl=mtvgMaintenant({v:MTV.liste,g:MTV.plages},now,mtvHasard,MTV.memo,function(y,t){ return MTV.ko[y[0]]||(MTV.fin&&MTV.fin.id===y[0]&&MTV.fin.t===t); });
@@ -2503,7 +2676,7 @@ function mtvTransition(titre){
 }
 // v116 : l'habillage reste 3 s après le début de la lecture, le temps que YouTube retire son bandeau (titre, chaîne).
 function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e) e.classList.remove('on'); }
-function mtvFin(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; if(MTV.cur&&MTV.cur.g) MTV.fin={id:MTV.cur.g, t:MTV.cur.t}; mtvSuivant(); }   // v122 : vidéo finie plus tôt que prévu → la suivante de la plage
+function mtvFin(){ if(MTV.cur&&MTV.cur.d) MTV.koD[MTV.cur.d]=Date.now(); if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; if(MTV.cur&&MTV.cur.g) MTV.fin={id:MTV.cur.g, t:MTV.cur.t}; mtvSuivant(); }   // v122 : vidéo finie plus tôt que prévu → la suivante de la plage
 function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
 function mtvLecteur(id,off,live){
   var ec=mtvE(), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
@@ -2519,7 +2692,7 @@ function mtvLecteur(id,off,live){
           // v118 : ouvert par un lien partagé (sans toucher l'écran), le téléphone peut refuser le son : on lance sans le son et on montre 🔇
           setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons(); } }catch(x){} },1800); },
         onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); mtvSansSousTitres(e.target); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
-        onError:function(){ if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else if(MTV.cur&&MTV.cur.g) MTV.ko[MTV.cur.g]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
+        onError:function(){ if(MTV.cur&&MTV.cur.d) MTV.koD[MTV.cur.d]=Date.now(); else if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else if(MTV.cur&&MTV.cur.g) MTV.ko[MTV.cur.g]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
     // lecteur YouTube indisponible : fenêtre vidéo simple, la minuterie passe à la suivante
     if(!MTV.actif) return; var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
@@ -2531,7 +2704,7 @@ function mtvArreter(){
   MTV.actif=false; clearTimeout(MTV.t);
   try{ var d=document; if(d.fullscreenElement||d.webkitFullscreenElement) (d.exitFullscreen||d.webkitExitFullscreen).call(d); }catch(e){}
   if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){}
-  MTV.p=null; MTV.cid=''; clearTimeout(MTV.tt); clearTimeout(MTV.tb); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
+  MTV.p=null; MTV.cid=''; MTV.cur=null; var ex=mtvE(); if(ex) ex.classList.remove('mtvExt'); clearTimeout(MTV.tt); clearTimeout(MTV.tb); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
 }
 // Retour sur l'application après plus d'une minute : on rejoint l'émission en cours.
 var MTV_CACHE_T=0;
@@ -2569,7 +2742,7 @@ function tvQAfficher(n){
   if(!TVH||!TVH.levels||tvNiveaux(TVH.levels).length<2){ bt.classList.add('hidden'); return; }
   var l=TVH.levels[n]||{}, h=l.height||0;
   bt.textContent=h>=720?'HD':h?h+'p':'SD'; bt.classList.remove('hidden');
-  var g=tvGo(l.bitrate); if(g) document.getElementById('tvInfo').textContent=T('tvDonnees')(g);
+  /* v126 : la consommation n'est plus affichée sur la chaîne */
 }
 function tvQMenu(){
   var m=document.getElementById('tvQm'); if(!m.classList.contains('hidden')){ m.classList.add('hidden'); return; }
@@ -2710,7 +2883,7 @@ function editoOuvrir(id){
     api('edito',{id:id}).then(function(d){ if(ED_ID!==id) return; if(d&&d.edito){ ED_CACHE[id]=d.edito; editoOuvrir(id); } else f.innerHTML='<div class="hint" style="padding:30px 0">'+esc(AL('Editoryal sa a pa disponib.','Cet éditorial n\'est pas disponible.'))+'</div>'; },
       function(){ if(ED_ID===id) f.innerHTML='<div class="err">'+T('reseau')+'</div>'; });
     return; }
-  if(p.getAttribute('data-vu')!==id){ p.setAttribute('data-vu',id); statEnvoyer('vue','edito'); }
+  if(p.getAttribute('data-vu')!==id){ p.setAttribute('data-vu',id); statEnvoyer('vue','edito'); edStat('edv',id,ED_LIEN===id?'lien':''); ED_LIEN=''; }
   var autres=L.filter(function(x){ return x.id!==id; }).slice(0,8);
   f.classList.toggle('aff',!e.texteHt&&!e.texteFr);
   f.innerHTML=edLab()+'<div class="edDate">'+esc(edDate(e.publie))+'</div><h1>'+esc(edT(e,'titre'))+'</h1>'+edLangue(e)+
@@ -2718,10 +2891,21 @@ function editoOuvrir(id){
     '<div class="edTexte">'+edParas(edT(e,'texte'))+'</div><div class="edSign">— '+esc(e.signature||'Duckhens Lespérance')+'</div>'+
     '<div class="isActs"><button type="button" class="btn" onclick="editoPataje()">'+esc(AL('Pataje','Partager'))+'</button><a class="btn sec" href="kominote.html'+(/^KS[A-Z0-9]{4,18}$/.test(e.sujet||'')?'#sije='+e.sujet:'')+'">💬 '+esc(AL('Bay opinyon w nan Kominote a','Réagir dans la Communauté'))+edReac(e,true)+'</a></div>'+
     (autres.length?'<div class="edAutres"><h3>'+esc(AL('Lòt editoryal','Autres éditoriaux'))+'</h3>'+autres.map(function(x){ return '<a href="#edito&id='+encodeURIComponent(x.id)+'">'+esc(edT(x,'titre'))+'<span>'+esc(edDate(x.publie))+'</span></a>'; }).join('')+'</div>':'');
-  p.scrollTop=0;
+  p.scrollTop=0; edFinSuivre(id);
+}
+// v124 : données sur l'éditorial (anonymes) : lu, lu jusqu'au bout (la signature est restée visible après 8 s de lecture), partagé, arrivé par un lien
+var ED_LIEN=(function(){ var m=/^#edito&id=([A-Z0-9]{4,20}).*[&]s=1/.exec(location.hash||''); return m?m[1]:''; })(), ED_FIN={t:0,o:null};
+function edStat(ev,id,src){ if(!CONTENU||!id) return; apiPost('stat',{appareil:appareil(),ev:ev,id:id,src:src||''}).catch(function(){}); }
+function edFinSuivre(id){
+  if(ED_FIN.o){ try{ ED_FIN.o.disconnect(); }catch(e){} ED_FIN.o=null; } var s=document.querySelector('#edPage .edSign'); if(!s||!window.IntersectionObserver) return;
+  var debut=Date.now(), fait=false;
+  ED_FIN.o=new IntersectionObserver(function(l){ if(fait||ED_ID!==id) return; if(l.some(function(x){ return x.isIntersecting; })){
+    var reste=Math.max(0,8000-(Date.now()-debut)); clearTimeout(ED_FIN.t);
+    ED_FIN.t=setTimeout(function(){ if(fait||ED_ID!==id) return; fait=true; edStat('edfin',id); try{ ED_FIN.o.disconnect(); }catch(e){} },reste); } },{threshold:0.5});
+  ED_FIN.o.observe(s);
 }
 function editoPataje(){
-  var e=EDITO&&EDITO.dernier&&EDITO.dernier.id===ED_ID?EDITO.dernier:ED_CACHE[ED_ID]; if(!e) return; statEnvoyer('partage');
+  var e=EDITO&&EDITO.dernier&&EDITO.dernier.id===ED_ID?EDITO.dernier:ED_CACHE[ED_ID]; if(!e) return; statEnvoyer('partage'); edStat('edp',e.id);
   var txt='📰 '+AL('Editoryal Masbet','Éditorial Masbet')+' — '+edT(e,'titre'), url=SITE+'e/'+encodeURIComponent(e.id);   // v110 : page d'aperçu (titre + image) qui renvoie vers l'éditorial
   if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:edT(e,'titre')});
   if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
@@ -2752,6 +2936,7 @@ function chargerAccueil(){
       if(ch('videos')) afficherVideos();
       if(ch('lives')) afficherLives();
       if(ch('tv')||ch('lives')) afficherTv();
+      if(ch('lives')&&MTV.actif) setTimeout(mtvVeille,500);   // v123 : un live passe en direct → Masbet TV bascule
     },
     function(){ if(!ACC){ ['offres','meteo','ephem'].forEach(function(id){ document.getElementById(id).innerHTML='<div class="err">'+T('reseau')+'</div>'; }); } });
 }
