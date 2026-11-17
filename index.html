@@ -833,7 +833,7 @@ var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('sp
     </div>
     <div class="card">
       <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span> <span data-t="videyo"></span></h2>
-      <div class="hint" data-t="videyoAide" style="margin-bottom:10px"></div>
+      <!-- v126 : plus d'avis de consommation sur les vidéos -->
       <div class="vids" id="vids"><div class="skel"></div></div>
     </div>
   </section>
@@ -870,7 +870,7 @@ var TXT = {
   ht: {
     slogan:'Wi-Fi, TV, match, lives, quiz, jwèt, kominote, istwa… tout nan yon sèl aplikasyon.', chWifi:'Wi-Fi', chMatch:'Match', chJwet:'Jwèt lespri', chKom:'Kominote', chIstwa:'Istwa jodi a', chLiv:'Liv', chMed:'Meditasyon', heroTitre:'Achte kòd Wi-Fi', heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',
     heroBtn:'Achte kounye a', offres:'Ofri yo', meteo:'Meteyo', ephem:'Jodi a', matchJodi:'Match jodi a', toutMatch:'Wè tout match yo',
-    videyo:'Videyo', videyoAide:'Videyo yo konsome done. Gade yo lè w konekte sou Wi-Fi a.', nAkey:'Akèy', nAchte:'Achte', nMatch:'Match', nVideyo:'Live', nKod:'Kòd mwen',
+    videyo:'Videyo', videyoAide:'', nAkey:'Akèy', nAchte:'Achte', nMatch:'Match', nVideyo:'Live', nKod:'Kòd mwen',
     apropo:'MasbetAirNet, rezo Wi-Fi Ansavo a →', nApropo:'Konsènan nou', quizTitre:'Quiz jodi a', quizJwe:'Jwe kounye a', quizWe:'Wè rezilta ak klasman', quizTxt:'5 kesyon (2 fasil, 2 mwayen, 1 difisil), 20 segonn pou chak (40 segonn pou kalkil difisil yo). Yon sèl chans pa jou !', quizDeja:function(s){ return 'Ou fè '+s+'/5 jodi a. Tounen demen pou yon lòt quiz !'; },
     pseudo:'Non jwè w (ap parèt nan klasman an)', telQuiz:'Telefòn ou (pa obligatwa, pou nou rele w si w genyen)', komanse:'Kòmanse', kesyon:'Kesyon', swivan:'Kesyon swivan', wèRezilta:'Wè rezilta a',
     bon:'Bravo, se sa !', pabon:'Non, se pa sa.', tanFini:'Tan an fini !', repons:'Bon repons lan :', rezilta:'Rezilta ou jodi a', segonn:'s',
@@ -925,7 +925,7 @@ var TXT = {
   fr: {
     slogan:'Wi-Fi, TV, matchs, lives, quiz, jeux, communauté, histoire… tout dans une seule application.', chWifi:'Wi-Fi', chMatch:'Matchs', chJwet:'Jeux d\'esprit', chKom:'Communauté', chIstwa:'Histoire du jour', chLiv:'Livres', chMed:'Méditation', heroTitre:'Acheter un code Wi-Fi', heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',
     heroBtn:'Acheter maintenant', offres:'Offres', meteo:'Météo', ephem:'Aujourd\'hui', matchJodi:'Matchs du jour', toutMatch:'Voir tous les matchs',
-    videyo:'Vidéos', videyoAide:'Les vidéos consomment des données. Regardez-les une fois connecté au Wi-Fi.', nAkey:'Accueil', nAchte:'Acheter', nMatch:'Matchs', nVideyo:'Live', nKod:'Mes codes',
+    videyo:'Vidéos', videyoAide:'', nAkey:'Accueil', nAchte:'Acheter', nMatch:'Matchs', nVideyo:'Live', nKod:'Mes codes',
     apropo:'MasbetAirNet, le réseau Wi-Fi d\'Anse-à-Veau →', nApropo:'À propos', quizTitre:'Quiz du jour', quizJwe:'Jouer maintenant', quizWe:'Voir le résultat et le classement', quizTxt:'5 questions (2 faciles, 2 moyennes, 1 difficile), 20 secondes chacune (40 secondes pour les calculs difficiles). Une seule chance par jour !', quizDeja:function(s){ return 'Vous avez fait '+s+'/5 aujourd\'hui. Revenez demain pour un autre quiz !'; },
     pseudo:'Votre nom de joueur (affiché dans le classement)', telQuiz:'Votre téléphone (facultatif, pour vous contacter si vous gagnez)', komanse:'Commencer', kesyon:'Question', swivan:'Question suivante', wèRezilta:'Voir le résultat',
     bon:'Bravo, c\'est ça !', pabon:'Non, ce n\'est pas ça.', tanFini:'Temps écoulé !', repons:'Bonne réponse :', rezilta:'Votre résultat du jour', segonn:'s',
@@ -1005,13 +1005,13 @@ Object.assign(TXT.fr,{
 Object.assign(TXT.ht,{svcTitre:'Sèvis Masbet', svcPay:'Masbet Pay', svcKom:'Kominote', svcBib:'Bibliyotèk', svcMed:'Meditasyon'});
 Object.assign(TXT.fr,{svcTitre:'Services Masbet', svcPay:'Masbet Pay', svcKom:'Communauté', svcBib:'Bibliothèque', svcMed:'Méditation'});
 // v41.6 — TV gratuite
-Object.assign(TXT.ht,{mtvDirek:'An dirèk', koute:'Koute sèlman', kouteImaj:'Gade imaj la', kouteAide:'Son sèlman : konsome anpil mwens done.', mtvEkstre:'Ekstrè', mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
-  svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk. Li gratis, men li konsome done entènèt.', tvTout:'Tout',
+Object.assign(TXT.ht,{mtvDirek:'An dirèk', koute:'Koute sèlman', kouteImaj:'Gade imaj la', kouteAide:'Son sèlman, san imaj.', mtvEkstre:'Ekstrè', mtvSous:'Videyo Masbet yo, 24/24', mtvKounye:'Kounye a', mtvApre:'Apre sa', mtvPwochen:'Pwochen emisyon a', mtvErr:'Masbet TV pa disponib kounye a. Eseye ankò pita.',
+  svcJwet:'Jwèt lespri', svcTv:'TV', tvTitre:'TV an dirèk', tvAide:'Touche yon chèn pou gade l an dirèk.', tvTout:'Tout',
   tvHors:'Pa sou antèn kounye a', tvCharge:'Chajman…', tvErr:'Chèn sa a pa disponib kounye a. Eseye pita, oswa chwazi yon lòt chèn.', tvGros:'📶 Gwo forfè',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/èdtan'; }, tvNb:function(n){ return n+' chèn'; }, tvYt:'Si chèn nan pa an dirèk kounye a, YouTube ap di l.',
   tvDonnees:function(g){ return 'Chèn sa a konsome apeprè '+String(g).replace('.',',')+' Go pa èdtan.'; }});
-Object.assign(TXT.fr,{mtvDirek:'En direct', koute:'Écouter seulement', kouteImaj:'Voir l\'image', kouteAide:'Le son seul consomme beaucoup moins de données.', mtvEkstre:'Extrait', mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
-  svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct. C\'est gratuit, mais cela consomme des données internet.', tvTout:'Toutes',
+Object.assign(TXT.fr,{mtvDirek:'En direct', koute:'Écouter seulement', kouteImaj:'Voir l\'image', kouteAide:'Le son seul, sans l\'image.', mtvEkstre:'Extrait', mtvSous:'Les vidéos Masbet, 24 h/24', mtvKounye:'En ce moment', mtvApre:'Ensuite', mtvPwochen:'Prochaine émission à', mtvErr:'Masbet TV n\'est pas disponible pour le moment. Réessayez plus tard.',
+  svcJwet:'Jeux d\'esprit', svcTv:'TV', tvTitre:'TV en direct', tvAide:'Touchez une chaîne pour la regarder en direct.', tvTout:'Toutes',
   tvHors:'Hors antenne pour le moment', tvCharge:'Chargement…', tvErr:'Cette chaîne n\'est pas disponible pour le moment. Réessayez plus tard ou choisissez une autre chaîne.', tvGros:'📶 Gros forfait',
   tvGoH:function(g){ return '≈ '+String(g).replace('.',',')+' Go/heure'; }, tvNb:function(n){ return n+' chaînes'; }, tvYt:'Si la chaîne n\'est pas en direct en ce moment, YouTube l\'indiquera.',
   tvDonnees:function(g){ return 'Cette chaîne consomme environ '+String(g).replace('.',',')+' Go par heure.'; }});
@@ -2350,8 +2350,8 @@ function afficherTv(){
     var aLogo=!!(c.logo&&(/^https:\/\//.test(c.logo)||c.type==='mtv')), ini=esc(tvInitiales(c.nom));
     var logo=aLogo?'<img loading="lazy" referrerpolicy="no-referrer" src="'+esc(c.logo)+'" alt="'+ini+'" onerror="var p=this.parentNode;p.classList.remove(\'logo\');p.textContent=this.alt">':ini;
     var sous=c.hors?esc(T('tvHors')):'';   // v126 : plus d'information de consommation sur les chaînes (une vraie télévision) ; seul « hors ligne » reste
-    var cl=c.hors?'hors':(c.gros||(mes&&mes>=1.5))?'gros':'';
-    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+(cl==='gros'&&mes?'📶 ':'')+sous+'</small>':'')+'</span></button>'; };
+    var cl=c.hors?'hors':'';   // v127 : « mes » (consommation mesurée) n'existe plus depuis la v126 — l'appel bloquait l'affichage des chaînes
+    return '<button type="button" class="tvc'+(c.hors?' off':'')+'" data-i="'+i+'"><span class="tvl'+(aLogo?' logo':'')+'" style="background:'+tvCouleur(c.nom)+'">'+logo+'</span><span class="tvn"><b>'+esc(c.nom)+'</b>'+(sous?'<small'+(cl?' class="'+cl+'"':'')+'>'+sous+'</small>':'')+'</span></button>'; };
   var bloc=function(cat){ var x=l.filter(function(c){ return c.cat===cat; }); x=x.filter(function(c){ return !c.hors; }).concat(x.filter(function(c){ return c.hors; })); return '<div class="tvg">'+x.map(tuile).join('')+'</div>'; };
   document.getElementById('tvZone').innerHTML=TVCAT?bloc(TVCAT):cats.map(function(c){ return '<div class="tvcat">'+(TV_CAT_ICO[c]||'📺')+' '+esc(tvCatNom(c))+'</div>'+bloc(c); }).join('');
 }
