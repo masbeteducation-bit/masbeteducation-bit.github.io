@@ -19,6 +19,31 @@
   }
   function b64(s) { return btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
   function deb64(s) { s = s.replace(/-/g, '+').replace(/_/g, '/'); while (s.length % 4) s += '='; return decodeURIComponent(escape(atob(s))); }
+  function installe() {
+    try { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; }
+    catch (e) { return false; }
+  }
+  function avis(lien) {
+    try {
+      document.documentElement.style.visibility = '';
+      var fr = /fr/.test(String((ls() && ls().getItem('masbet_lang')) || ''));
+      var t = fr
+        ? ['Masbet a changé d\'adresse', 'L\'application est maintenant sur masbet.me.', 'Ouvrir Masbet',
+           'Pour retrouver l\'icône : ouvrez masbet.me dans Chrome → menu ⋮ → « Installer l\'application ». Ensuite, supprimez cette ancienne icône.']
+        : ['Masbet chanje adrès', 'Aplikasyon an sou masbet.me kounye a.', 'Louvri Masbet',
+           'Pou w jwenn ikòn nan ankò : louvri masbet.me nan Chrome → meni ⋮ → « Enstale aplikasyon an ». Apre sa, efase ansyen ikòn sa a.'];
+      var d = document.createElement('div');
+      d.setAttribute('style', 'position:fixed;inset:0;z-index:2147483647;background:#14213d;color:#fff;display:flex;flex-direction:column;' +
+        'align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;font:16px/1.45 system-ui,Roboto,sans-serif');
+      var h1 = document.createElement('div'); h1.textContent = t[0]; h1.setAttribute('style', 'font-size:22px;font-weight:700');
+      var p1 = document.createElement('div'); p1.textContent = t[1];
+      var a = document.createElement('a'); a.href = lien; a.textContent = t[2];
+      a.setAttribute('style', 'background:#22c1dc;color:#0b1730;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none;font-size:18px');
+      var p2 = document.createElement('div'); p2.textContent = t[3]; p2.setAttribute('style', 'opacity:.85;font-size:14px;max-width:420px');
+      d.appendChild(h1); d.appendChild(p1); d.appendChild(a); d.appendChild(p2);
+      (document.body || document.documentElement).appendChild(d);
+    } catch (e) { try { document.documentElement.style.visibility = ''; } catch (e2) {} }
+  }
   function play() {
     try { return /[?&]play=1\b/.test(location.search) || /^android-app:\/\//.test(document.referrer || '') || sessionStorage.getItem('masbet_play') === '1'; }
     catch (e) { return /[?&]play=1\b/.test(location.search); }
@@ -32,13 +57,19 @@
       try {
         for (var i = 0; i < s.length; i++) { var k = s.key(i); if (aEmporter(k)) d[k] = s.getItem(k); }
         // Lien trop long : on laisse tomber les plus grosses valeurs (brouillons très longs).
+        // Application installée depuis l'ancienne adresse (icône sur l'écran d'accueil) : Android ouvre masbet.me
+        // à travers un « intent » limité en taille → avec un lien énorme, rien ne s'ouvre (écran bleu vide). Lien court.
+        var max = installe() ? 60000 : 1200000;
         var ks = Object.keys(d).sort(function (a, b) { return d[b].length - d[a].length; });
-        while (ks.length && JSON.stringify(d).length > 1200000) delete d[ks.shift()];
+        while (ks.length && JSON.stringify(d).length > max) delete d[ks.shift()];
       } catch (e) { d = {}; }
     }
     var paquet = Object.keys(d).length ? CLE + b64(JSON.stringify({ v: 1, t: Date.now(), d: d })) + (hash ? '&h=' + encodeURIComponent(hash) : '') : hash;
+    var lien = cible + (paquet ? '#' + paquet : '');
     try { document.documentElement.style.visibility = 'hidden'; } catch (e) {}
-    location.replace(cible + (paquet ? '#' + paquet : ''));
+    // Filet de sécurité : si on est toujours ici après 6 s, on ne laisse pas un écran vide.
+    setTimeout(function () { avis(lien); }, 6000);
+    location.replace(lien);
     return;
   }
 

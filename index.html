@@ -1220,8 +1220,8 @@ function istwaPataje(){
   var x=null; isListeDonnees().forEach(function(y){ if(y.d===IS_D) x=y; }); if(!x) return; statEnvoyer('partage'); var n=isL();
   var txt='📜 '+Number(x.d.slice(3))+' '+isMoisNom(x.d.slice(0,2))+(x.a?' '+x.a:'')+' — '+x.t[n]+'\n'+x.k[n], url=SITE+'istwa/'+x.d;   // page de partage avec image d'aperçu (elle renvoie vers #istwa&d=…)
   if(window.masbetPataje) return masbetPataje({texte:txt,url:url,titre:x.t[n]});
-  if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
-  window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
+  if(navigator.share){ navigator.share(txt?{text:txt,url:url}:{url:url}).catch(function(){}); return; }
+  window.open('https://wa.me/?text='+encodeURIComponent(txt?txt+'\n'+url:url),'_blank','noopener');
 }
 function istwaRoute(){ var m=/^#istwa&d=([0-9]{2}-[0-9]{2}|liste)/.exec(location.hash||''); if(m) istwaOuvrir(m[1]); else if(!document.getElementById('isPage').classList.contains('hidden')){ document.getElementById('isPage').classList.add('hidden'); document.body.style.overflow=''; } }
 window.addEventListener('hashchange',istwaRoute);
@@ -2807,10 +2807,12 @@ document.addEventListener('click',function(e){
 function tvSlug(n){ return String(n).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\+/g,'-plus').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40); }
 function tvPataje(){
   var c=tvListe()[TVI]; if(!c) return; statEnvoyer('partage');
-  var url=SITE+'tv/'+tvSlug(c.nom),   // v118 : page d'aperçu (image + titre) qui renvoie vers la chaîne ; WhatsApp ignore ce qui suit #
+  var url=c.type==='mtv'?SITE+'tv':SITE+'tv/'+tvSlug(c.nom),   // v133 : lien court masbet.me/tv pour Masbet TV
+         // v118 : page d'aperçu (image + titre) qui renvoie vers la chaîne ; WhatsApp ignore ce qui suit #
        txt=AL('📺 M ap gade « '+c.nom+' » sou Masbet. Gade l sou :','📺 Je regarde « '+c.nom+' » sur Masbet. Regardez-la sur :');
-  if(c.type==='mtv'&&MTV.titre) txt=AL('📺 Sou Masbet TV kounye a : « '+MTV.titre+' ». Gade Masbet TV sou :','📺 En ce moment sur Masbet TV : « '+MTV.titre+' ». Regardez Masbet TV sur :');   // v118 : on dit ce qui passe
-  if(window.masbetPataje) return masbetPataje({texte:txt, url:url, titre:c.nom});
+  if(c.type==='mtv') txt='';   // v133 (Masbet) : Masbet TV se partage avec le lien seul, sans texte
+  else if(c.type==='mtv'&&MTV.titre) txt=AL('📺 Sou Masbet TV kounye a : « '+MTV.titre+' ». Gade Masbet TV sou :','📺 En ce moment sur Masbet TV : « '+MTV.titre+' ». Regardez Masbet TV sur :');   // v118 : on dit ce qui passe
+  if(window.masbetPataje) return masbetPataje(txt?{texte:txt, url:url, titre:c.nom}:{url:url});
   if(navigator.share){ navigator.share({text:txt,url:url}).catch(function(){}); return; }
   window.open('https://wa.me/?text='+encodeURIComponent(txt+'\n'+url),'_blank','noopener');
 }

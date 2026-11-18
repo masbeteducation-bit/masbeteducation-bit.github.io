@@ -1,10 +1,10 @@
-// Masbet v129 (sans « gratis ») · v128 (titre simple) · v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
+// Masbet v133 (Masbet TV : image seule, titre « Masbet TV », aucune description) · v129 (sans « gratis ») · v128 (titre simple) · v122 (plages horaires) · v118 — aperçu de partage d'une chaîne TV : https://masbet.me/tv/<chaîne>  (ex. /tv/masbet-tv)
 // WhatsApp et Facebook ne lisent pas ce qui suit « # » dans un lien : ils montraient l'aperçu général de Masbet.
 // Cette petite page donne l'image et le titre de la chaîne, puis envoie la personne vers la chaîne dans l'application.
 // Pour Masbet TV, la description dit ce qui passe en ce moment (même calcul que l'application). Gardée 5 min chez Cloudflare.
 
 const SITE = 'https://masbet.me';
-const IMAGE_TV = SITE + '/photos/og/tv.jpg?v=2';
+const IMAGE_TV = SITE + '/photos/og/masbettv.jpg?v=1';   // v133 : logo MasbetTV fourni par Masbet
 const IMAGE_DEFAUT = SITE + '/photos/og/akey.jpg?v=5';
 
 function esc(s) {
@@ -144,14 +144,14 @@ async function lireMtv(ctx) {
 
 function page(slug, nom, desc, image) {
   const cible = '/#videyo&kanal=' + slug;
-  const url = SITE + '/tv/' + slug;
-  const titre = slug === 'masbet-tv' ? '📺 Gade Masbet TV 24/24' : '📺 Gade ' + nom + ' sou Masbet';   // v128 : titre simple
+  const url = slug === 'masbet-tv' ? SITE + '/tv' : SITE + '/tv/' + slug;   // v133 : adresse courte de Masbet TV
+  const titre = slug === 'masbet-tv' ? 'Masbet TV' : '📺 Gade ' + nom + ' sou Masbet';   // v133 : Masbet TV = nom seul (v128 : titre simple)
   return `<!doctype html>
 <html lang="ht"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(titre)}</title>
-<meta name="description" content="${esc(desc)}">
+${desc ? `<meta name="description" content="${esc(desc)}">` : ''}
 <meta property="og:type" content="video.other"><meta property="og:site_name" content="Masbet"><meta property="og:locale" content="fr_HT">
-<meta property="og:title" content="${esc(titre)}"><meta property="og:description" content="${esc(desc)}">
+<meta property="og:title" content="${esc(titre)}">${desc ? `<meta property="og:description" content="${esc(desc)}">` : ''}
 <meta property="og:url" content="${esc(url)}"><meta property="og:image" content="${esc(image)}">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${esc(nom)}">
 <meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${esc(url)}">
@@ -164,16 +164,14 @@ function page(slug, nom, desc, image) {
 
 export async function onRequestGet(ctx) {
   const slug = String(ctx.params.id || '').toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40) || 'masbet-tv';
-  const cle = new Request(SITE + '/tv/' + slug);
+  const cle = new Request(SITE + '/tv/' + slug + '?v133');   // v133 : nouvel aperçu (ne pas resservir l'ancien gardé 5 min)
   const cache = caches.default;
   const deja = await cache.match(cle);
   if (deja) return deja;
   let rep;
   if (slug === 'masbet-tv') {
-    const c = await lireMtv(ctx);
-    const desc = c ? 'Kounye a : « ' + coupe(c.titre, 110) + ' ». Videyo ak lives Masbet yo, youn apre lòt.'
-                   : 'Videyo ak lives Masbet yo, youn apre lòt, tankou yon vrè chèn televizyon.';
-    rep = new Response(page(slug, 'Masbet TV', desc, IMAGE_TV), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
+    // v133 (demande de Masbet) : l'aperçu ne décrit rien, ni ce qui passe — seulement l'image et le lien.
+    rep = new Response(page(slug, 'Masbet TV', '', IMAGE_TV), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });
   } else {
     const nom = slug.split('-').map((m) => m ? m[0].toUpperCase() + m.slice(1) : m).join(' ');
     rep = new Response(page(slug, nom, 'Gade chèn TV yo sou Masbet, aplikasyon Ansavo a.', IMAGE_DEFAUT), { headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' } });

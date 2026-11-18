@@ -39,7 +39,7 @@
   }
   function fenetre(o) {
     styles(); fermer();
-    var url = o.url || location.href, txt = (o.texte || '') + (url ? '\n' + url : ''), e = encodeURIComponent;
+    var url = o.url || location.href, txt = (o.texte ? o.texte + (url ? '\n' : '') : '') + (url || ''), e = encodeURIComponent;
     var L = [
       ['wa', 'WhatsApp', '#25D366', 'https://wa.me/?text=' + e(txt)],
       ['fb', 'Facebook', '#1877F2', 'https://www.facebook.com/sharer/sharer.php?u=' + e(url)],
