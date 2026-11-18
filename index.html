@@ -2725,7 +2725,17 @@ function mtvTransition(titre){
 function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e){ e.classList.remove('on','tap'); e.onclick=null; var b=e.querySelector('.mtvTap'); if(b) b.remove(); } }
 // v134 — Certains navigateurs (Edge, mode économie…) refusent la lecture automatique, même sans le son : YouTube montre alors
 // son écran d'attente (titre, gros bouton rouge, « Watch on YouTube »). On garde l'habillage Masbet et on demande un toucher.
-function mtvBloque(){ var p=MTV.p; if(!p||!p.getPlayerState) return false; try{ var st=p.getPlayerState(); return st!==1&&st!==3; }catch(e){ return false; } }
+// v136 — Chien de garde : YouTube peut annoncer « en chargement » sans jamais démarrer (lien ouvert depuis WhatsApp, onglet
+// en arrière-plan, économie de batterie). Toutes les 4 s, on regarde si le temps de la vidéo AVANCE ; deux fois immobile → bouton.
+function mtvGarde(){ clearInterval(MTV.wd); MTV.wdT=null; MTV.wdN=0;
+  MTV.wd=setInterval(function(){ var p=MTV.p, e=document.getElementById('mtvTrans');
+    if(!MTV.actif){ clearInterval(MTV.wd); return; }
+    if(document.hidden||!p||!p.getCurrentTime||(e&&e.classList.contains('tap'))){ MTV.wdT=null; MTV.wdN=0; return; }
+    var c; try{ c=p.getCurrentTime(); }catch(x){ return; }
+    if(MTV.wdT!==null&&Math.abs(c-MTV.wdT)<0.3){ if(++MTV.wdN>=2){ MTV.wdN=0; mtvTransition(MTV.titre); mtvToucher(); } } else MTV.wdN=0;
+    MTV.wdT=c; },4000); }
+document.addEventListener('visibilitychange',function(){ if(!document.hidden){ MTV.wdT=null; MTV.wdN=0; if(MTV.actif) mtvReprendre(); } });   // retour sur l'onglet : on relance, le chien de garde juge 8 s après
+function mtvBloque(){ var p=MTV.p; if(!p||!p.getPlayerState) return false; try{ var st=p.getPlayerState(); return st!==1&&!(st===3&&MTV.tj); }catch(e){ return false; } }   // v136 : « en chargement » ne compte que si la vidéo a déjà démarré
 function mtvToucher(){ var e=document.getElementById('mtvTrans'); if(!e||!MTV.actif) return; clearTimeout(MTV.tt);
   if(!e.querySelector('.mtvTap')){ var b=document.createElement('span'); b.className='mtvTap'; b.textContent='▶ '+AL('Touche pou gade','Touchez pour regarder'); e.appendChild(b); }
   e.classList.add('on','tap'); e.setAttribute('aria-hidden','false'); e.setAttribute('role','button');
@@ -2744,6 +2754,7 @@ function mtvLecteur(id,off,live){
     chargerScript('https://www.youtube.com/iframe_api').catch(ko); setTimeout(function(){ ko(new Error('yt')); },10000); });
   pret.then(function(){
     if(!MTV.actif||!document.getElementById('mtvJ')) return;
+    mtvGarde();
     MTV.p=new YT.Player('mtvJ',{host:'https://www.youtube-nocookie.com', videoId:id,
       playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, start:off, modestbranding:1, iv_load_policy:3},
       events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){}
@@ -2760,7 +2771,7 @@ function mtvLecteur(id,off,live){
   });
 }
 function mtvArreter(){
-  MTV.actif=false; clearTimeout(MTV.t);
+  MTV.actif=false; clearTimeout(MTV.t); clearInterval(MTV.wd);
   try{ var d=document; if(d.fullscreenElement||d.webkitFullscreenElement) (d.exitFullscreen||d.webkitExitFullscreen).call(d); }catch(e){}
   if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){}
   MTV.p=null; MTV.cid=''; MTV.cur=null; var ex=mtvE(); if(ex) ex.classList.remove('mtvExt'); clearTimeout(MTV.tt); clearTimeout(MTV.tb); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
