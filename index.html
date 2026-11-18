@@ -570,6 +570,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .mtvLogo img{display:block;width:100%;height:auto}
   .mtvTrans{position:absolute;inset:0;z-index:4;background:radial-gradient(circle at 50% 45%,#1d4f91 0%,#0b1224 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;opacity:0;pointer-events:none;transition:opacity .45s ease}
   .mtvTrans.on{opacity:1}
+  .mtvPseudo{position:fixed!important;inset:0!important;z-index:2147483000!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-height:none!important;min-height:0!important;max-width:none!important;margin:0!important;border:0!important;border-radius:0!important;background:#000!important;aspect-ratio:auto!important}   /* v135 : plein écran iPhone */
+  html.mtvPseudoOn,html.mtvPseudoOn body{overflow:hidden!important}
+  .mtvTrans.tap{pointer-events:auto;cursor:pointer}   /* v134 : lecture automatique refusée (Edge…) → l'habillage reste et devient un bouton */
+  .mtvTrans .mtvTap{margin-top:6px;background:#06b6d4;color:#fff;font-weight:800;font-size:16px;border-radius:999px;padding:10px 22px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
   .mtvTrans img{width:46%;max-width:260px;height:auto;background:rgba(255,255,255,.92);border-radius:12px;padding:6px 12px;box-sizing:border-box;animation:mtvPop 1.6s ease-out both}
   .mtvTrans small{color:#cfe0ff;font-size:12px;font-weight:800;letter-spacing:.16em}
   .mtvTrans b{color:#fff;font-size:15px;max-width:86%;text-align:center;line-height:1.3}
@@ -2629,7 +2633,8 @@ function mtvLogoPlace(){
 function mtvPlein(){
   var ec=mtvE(), d=document;
   if(d.fullscreenElement||d.webkitFullscreenElement){ (d.exitFullscreen||d.webkitExitFullscreen).call(d); return; }
-  var f=ec.requestFullscreen||ec.webkitRequestFullscreen; if(!f) return;
+  var f=ec.requestFullscreen||ec.webkitRequestFullscreen;
+  if(!f||ec.classList.contains('mtvPseudo')){ ec.classList.toggle('mtvPseudo'); document.documentElement.classList.toggle('mtvPseudoOn',ec.classList.contains('mtvPseudo')); setTimeout(mtvLogoPlace,60); return; }   // v135 : iPhone (Safari) n'a pas le plein écran pour un bloc → l'image occupe tout l'écran ; ⛶ de nouveau pour revenir
   try{ var r=f.call(ec); if(r&&r.then) r.then(function(){ try{ screen.orientation.lock('landscape').catch(function(){}); }catch(e){} },function(){}); }catch(e){}
 }
 // v123 — Directs dans Masbet TV. Priorité : 1) live programmé dans la page Admin et passé en direct (Castr ou YouTube, gratuit) ;
@@ -2714,10 +2719,21 @@ function mtvTransition(titre){
   var e=document.getElementById('mtvTrans');
   if(!e){ e=document.createElement('div'); e.id='mtvTrans'; e.className='mtvTrans'; e.setAttribute('aria-hidden','true'); mtvE().appendChild(e); }
   e.innerHTML='<img src="logo.png" alt=""><small>MASBET TV</small><b>'+esc(titre||'')+'</b>'; e.classList.add('on');
-  MTV.td=Date.now(); MTV.tj=0; clearTimeout(MTV.tt); MTV.tt=setTimeout(mtvTransFin,6000);   // au plus 6 s, même si le lecteur ne répond pas
+  MTV.td=Date.now(); MTV.tj=0; clearTimeout(MTV.tt); MTV.tt=setTimeout(function(){ if(mtvBloque()) mtvToucher(); else mtvTransFin(); },6000);   // au plus 6 s ; v134 : si la vidéo n'a pas démarré, on garde l'habillage avec un bouton plutôt que montrer l'écran d'attente de YouTube
 }
 // v116 : l'habillage reste 3 s après le début de la lecture, le temps que YouTube retire son bandeau (titre, chaîne).
-function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e) e.classList.remove('on'); }
+function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e){ e.classList.remove('on','tap'); e.onclick=null; var b=e.querySelector('.mtvTap'); if(b) b.remove(); } }
+// v134 — Certains navigateurs (Edge, mode économie…) refusent la lecture automatique, même sans le son : YouTube montre alors
+// son écran d'attente (titre, gros bouton rouge, « Watch on YouTube »). On garde l'habillage Masbet et on demande un toucher.
+function mtvBloque(){ var p=MTV.p; if(!p||!p.getPlayerState) return false; try{ var st=p.getPlayerState(); return st!==1&&st!==3; }catch(e){ return false; } }
+function mtvToucher(){ var e=document.getElementById('mtvTrans'); if(!e||!MTV.actif) return; clearTimeout(MTV.tt);
+  if(!e.querySelector('.mtvTap')){ var b=document.createElement('span'); b.className='mtvTap'; b.textContent='▶ '+AL('Touche pou gade','Touchez pour regarder'); e.appendChild(b); }
+  e.classList.add('on','tap'); e.setAttribute('aria-hidden','false'); e.setAttribute('role','button');
+  e.onclick=function(){ var p=MTV.p; try{ p.unMute(); p.setVolume(100); p.playVideo(); var s=document.getElementById('mtvSon'); if(s) s.textContent='🔊'; }catch(x){}
+    MTV.td=0; MTV.tj=0; e.setAttribute('aria-hidden','true'); e.removeAttribute('role'); e.classList.remove('tap'); e.onclick=null; var bt=e.querySelector('.mtvTap'); if(bt) bt.remove();   // v135 : le bouton s'efface tout de suite, l'habillage reste jusqu'au début de l'image
+    setTimeout(function(){ var p2=MTV.p; if(p2&&mtvBloque()){ try{ p2.mute(); p2.playVideo(); var s2=document.getElementById('mtvSon'); if(s2) s2.textContent='🔇'; }catch(x){} } },1500);   // v135 : iPhone/Safari peut refuser le son → sans le son (🔇 pour le remettre)
+    setTimeout(function(){ if(mtvBloque()) mtvToucher(); },4000); };   // toujours rien 4 s après : le bouton revient
+}
 function mtvFin(){ if(MTV.cur&&MTV.cur.d) MTV.koD[MTV.cur.d]=Date.now(); if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; if(MTV.cur&&MTV.cur.g) MTV.fin={id:MTV.cur.g, t:MTV.cur.t}; mtvSuivant(); }   // v122 : vidéo finie plus tôt que prévu → la suivante de la plage
 function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
 function mtvLecteur(id,off,live){
@@ -2732,7 +2748,8 @@ function mtvLecteur(id,off,live){
       playerVars:live?{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, modestbranding:1, iv_load_policy:3}:{autoplay:1, playsinline:1, rel:0, controls:0, disablekb:1, fs:0, cc_load_policy:0, start:off, modestbranding:1, iv_load_policy:3},
       events:{ onReady:function(e){ try{ e.target.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent=e.target.isMuted()?'🔇':'🔊'; }catch(x){}
           // v118 : ouvert par un lien partagé (sans toucher l'écran), le téléphone peut refuser le son : on lance sans le son et on montre 🔇
-          setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons(); } }catch(x){} },1800); },
+          setTimeout(function(){ try{ var t=e.target, st=t.getPlayerState(); if(MTV.p===t&&st!==1&&st!==3){ t.mute(); t.playVideo(); var b=document.getElementById('mtvSon'); if(b) b.textContent='🔇'; mtvBoutons();
+            setTimeout(function(){ if(MTV.p===t&&mtvBloque()){ mtvTransition(MTV.titre); mtvToucher(); } },2500); } }catch(x){} },1800); },   // v134 : même sans le son, refusé → bouton
         onStateChange:function(e){ if(e.data===0) mtvFin(); else if(e.data===1){ if(!MTV.tj) MTV.tj=Date.now(); mtvTransFin(); mtvSansSousTitres(e.target); } else if(e.data===2){ mtvTransition(MTV.titre); clearTimeout(MTV.tt); } },   // en pause : l'habillage Masbet cache l'écran YouTube ; toucher l'image relance
         onError:function(){ if(MTV.cur&&MTV.cur.d) MTV.koD[MTV.cur.d]=Date.now(); else if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; else if(MTV.cur&&MTV.cur.g) MTV.ko[MTV.cur.g]=1; else { var x=MTV.ordre&&MTV.ordre[MTV.i]; if(x) MTV.ko[x[0]]=1; } setTimeout(mtvSuivant,1500); } }});
   },function(){
