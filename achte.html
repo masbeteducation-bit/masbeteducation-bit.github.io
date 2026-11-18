@@ -132,6 +132,7 @@ if(PLAY) document.documentElement.classList.add('play');
   /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
   .play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
   .mic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em;flex:0 0 auto}.mic.rouge{color:#d62828}
+.evBan{background:radial-gradient(120% 140% at 50% 0%,#1d3473 0%,#0e1b3a 70%);border-radius:14px;padding:6px 10px;margin:4px 0 8px;text-align:center}.evBan img{width:min(100%,210px);height:auto}
 </style>
 </head>
 <body>
@@ -270,13 +271,13 @@ var TXT = {
 };
 // Masbet Pay : un seul endroit pour payer Wi-Fi, lives, Pass Pro (Espace professionnel) et Masbet Suite
 Object.assign(TXT.ht, { recapTitre:'🧾 W ap peye pou :', soustitre:'Yon sèl kote pou peye : Wi-Fi, tikè live, Pass Pro, Defi Masbet, Masbet Suite — ak MonCash oswa NatCash',
-  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'💼 Pass Pro', prodSuite:'🧰 Masbet Suite',
+  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodEv:'⭐ Evènman espesyal', aideEv:'Tikè pou yon evènman espesyal an direk : se tikè pa li sèlman ki ouvri l. Antre l 15 minit anvan.', tikeEv:'Tikè evènman an', prodPro:'💼 Pass Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Kòd pou konekte sou Wi-Fi Masbet la.', aideLive:'Tikè pou gade yon live peyan nan aplikasyon an.', aidePro:'Pass Pro : tout etap ak tout ribrik pwofesyonèl Quiz la.',
   aideSuite:'Abònman lojisyèl devis Masbet Suite : 2 aparèy (yon telefòn ak yon òdinatè).',
   tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite',
   prodDefi:'🏁 Defi', aideDefi:'Tikè Defi Masbet : 1 tikè = 1 chans pou 10 kesyon difisil. Ganyan semèn nan : Pass Pro gratis 24 è.', tipDefi:'🏁 Tikè Defi', defiUsage:'Antre kòd sa a nan Quiz → Defi Masbet. 1 tikè = 1 chans.', ouvrirDefi:'Jwe Defi a' });
 Object.assign(TXT.fr, { recapTitre:'🧾 Vous payez pour :', soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Pass Pro, Défi Masbet, Masbet Suite — par MonCash ou NatCash',
-  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodPro:'💼 Pass Pro', prodSuite:'🧰 Masbet Suite',
+  prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodEv:'⭐ Événement spécial', aideEv:'Ticket pour un événement spécial en direct : seul son propre ticket l\'ouvre. Entrez-le 15 minutes avant.', tikeEv:'Ticket de l\'événement', prodPro:'💼 Pass Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Code pour se connecter au Wi-Fi Masbet.', aideLive:'Ticket pour regarder un live payant dans l\'application.', aidePro:'Pass Pro : toutes les étapes et toutes les rubriques professionnelles du Quiz.',
   aideSuite:'Abonnement au logiciel de devis Masbet Suite : 2 appareils (un téléphone et un ordinateur).',
   tipSuite:'🧰 Masbet Suite', suiteUsage:'Votre code d\'abonnement. Ouvrez Masbet Suite et entrez-le : il marche sur 2 appareils.', ouvrirSuite:'Ouvrir Masbet Suite',
@@ -318,13 +319,13 @@ var demoApi = {
     forfaits:[{nom:'25 goud',prix:25,volume:'1,2 Go',duree:3,disponible:true},{nom:'50 goud',prix:50,volume:'3 Go',duree:5,disponible:true},
               {nom:'100 goud',prix:100,volume:'7 Go',duree:7,disponible:true},{nom:'150 goud',prix:150,volume:'10 Go',duree:10,disponible:true},
               {nom:'250 goud',prix:250,volume:'18 Go',duree:15,disponible:false},{nom:'500 goud',prix:500,volume:'30 Go',duree:30,disponible:true},
-              {nom:'Tikè live',prix:100,type:'LIVE',disponible:true},{nom:'Pass Pro 7 jou',prix:100,type:'LIVE',disponible:true},{nom:'Tikè Defi Masbet',prix:50,type:'LIVE',disponible:true},
+              {nom:'Tikè live',prix:100,type:'LIVE',disponible:true},{nom:'Evènman — Konsè Ansavo',prix:500,type:'LIVE',disponible:true},{nom:'Pass Pro 7 jou',prix:100,type:'LIVE',disponible:true},{nom:'Tikè Defi Masbet',prix:50,type:'LIVE',disponible:true},
               {nom:'Masbet Suite 1 mwa',prix:1000,type:'LIVE',disponible:true},{nom:'Masbet Suite 1 an',prix:5000,type:'LIVE',disponible:true}],
     moncash:{numero:'3XXX XXXX',nom:'Duckhens Lespérance'}, natcash:{numero:'4XXX XXXX',nom:'Duckhens Lespérance'}, whatsapp:'+509 3699 5259', ssid:'Masbet.AirNet'}; },
   passerCommande: function(d){ if(!/^(\d{8}|\+\d{8,15})$/.test((d.telephone||'').replace(/[^\d+]/g,''))) throw new Error('Numéro de téléphone invalide (8 chiffres).');
     if(!d.transaction || d.transaction.length<4) throw new Error('ID de transaction invalide. Copiez-le tel quel depuis le SMS de confirmation.');
     var id='MA'+Math.random().toString(36).slice(2,7).toUpperCase();
-    var ty=/^(tik|pass|masbet suite|d[eé]fi)/i.test(d.forfait)?'LIVE':'';
+    var ty=/^(tik|pass|masbet suite|d[eé]fi|ev[eè]nman)/i.test(d.forfait)?'LIVE':'';
     if(/^0035/.test(d.transaction)){ demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',note:'',tx:d.transaction,type:ty}); return {id:id,statut:'Validée',code:ty?'TKDEMO2345':'K4M8P2QX',montant:parseInt(d.forfait,10)||100,forfait:d.forfait,type:ty}; }
     demoCmds.unshift({id:id,date:'',forfait:d.forfait,volume:'',duree:'',statut:'En attente',code:'',note:'',t:Date.now(),tx:d.transaction}); return {id:id,statut:'En attente'}; },
   mesCommandes: function(tel, pr){ pr=pr||{}; var ids=pr.ids||[], txt=null;
@@ -458,19 +459,19 @@ function charger(essai){
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
 /** Version Google Play : seulement le Wi-Fi (service physique) ; tickets, Pass Pro, Défi et Suite restent sur le site web. */
 function infosPlay(i){ if(PLAY&&i&&i.forfaits) i.forfaits=i.forfaits.filter(function(f){ return f.type!=='LIVE'; }); return i; }
-function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
-var PRODUIT=PLAY?'wifi':(function(){ var h=location.hash||''; return /[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
+function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estEv(f.nom)?'ev':estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
+var PRODUIT=PLAY?'wifi':(function(){ var h=location.hash||''; return /[#&]ev\b/.test(h)?'ev':/[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
 function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement();
   if(p) setTimeout(function(){ document.getElementById('cPlan').scrollIntoView({behavior:'smooth',block:'start'}); },60); }
-var ICONES={wifi:'📶',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰'};
+var ICONES={wifi:'📶',ev:'⭐',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰'};
 function etapesSuivantes(){ ['cPay','cTx'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('hidden',!FORFAIT); }); }
 function afficherForfaits(){
   var presents={wifi:true}, h='';
   INFOS.forfaits.forEach(function(f){ if(f.type==='LIVE' && f.disponible) presents[produitDe(f)]=true; });
-  var liste=['wifi','live','pro','defi','suite'].filter(function(p){ return presents[p]; });
+  var liste=['wifi','ev','live','pro','defi','suite'].filter(function(p){ return presents[p]; });
   if(liste.length<2) PRODUIT='wifi';                 // un seul produit : directement ses prix
   else if(PRODUIT && !presents[PRODUIT]) PRODUIT='';
-  var noms={wifi:'prodWifi',live:'prodLive',pro:'prodPro',suite:'prodSuite',defi:'prodDefi'}, aides={wifi:'aideWifi',live:'aideLive',pro:'aidePro',suite:'aideSuite',defi:'aideDefi'};
+  var noms={wifi:'prodWifi',ev:'prodEv',live:'prodLive',pro:'prodPro',suite:'prodSuite',defi:'prodDefi'}, aides={wifi:'aideWifi',ev:'aideEv',live:'aideLive',pro:'aidePro',suite:'aideSuite',defi:'aideDefi'};
   var z=document.getElementById('prods');
   if(!PRODUIT){   // 1) choisir ce qu'on achète : aucun prix affiché avant ce choix
     z.className='prods choix';
@@ -481,13 +482,14 @@ function afficherForfaits(){
   z.className='prods'+(liste.length<2?' hidden':'');
   z.innerHTML='<div class="prodOn"><span class="pi">'+ICONES[PRODUIT]+'</span><b>'+esc(T(noms[PRODUIT]).replace(/^\S+\s/,''))+'</b><button class="chg" onclick="choisirProduit(\'\')">'+T('chanje')+'</button></div>';
   document.getElementById('prodAide').textContent=T(aides[PRODUIT]); document.getElementById('cPlan').classList.remove('hidden');
+  if(PRODUIT==='ev') document.getElementById('prodAide').innerHTML='<div class="evBan"><img src="photos/evenements.webp" alt="" width="444" height="289"></div>'+esc(T(aides[PRODUIT]));   // v131
   INFOS.forfaits.forEach(function(f,k){
     if(produitDe(f)!==PRODUIT) return;
     var on=(FORFAIT&&FORFAIT.nom===f.nom?' on':''), dis=(f.disponible?'':'disabled');
     if(f.type==='LIVE'){
       if(!f.disponible) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
       h+='<button class="plan'+on+'" id="p'+k+'" onclick="choisirForfait('+k+')">'+
-        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(f.nom)+'</b></div><div class="d">'+T(PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
+        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(PRODUIT==='ev'?nomEv(f.nom):f.nom)+'</b></div><div class="d">'+T(PRODUIT==='ev'?'tikeEv':PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
       return;
     }
     h+='<button class="plan'+on+'" '+dis+' id="p'+k+'" onclick="choisirForfait('+k+')">'+
@@ -518,7 +520,7 @@ function choisirMethode(m){
 }
 function libelleAchat(f){ if(!f) return ''; var p=produitDe(f);
   if(p==='wifi') return T('prodWifi')+' — '+esc(f.volume)+' · '+esc(f.duree)+' '+T('jours');
-  return T(p==='pro'?'prodPro':p==='suite'?'prodSuite':p==='defi'?'prodDefi':'prodLive')+' — '+esc(f.nom); }
+  return T(p==='ev'?'prodEv':p==='pro'?'prodPro':p==='suite'?'prodSuite':p==='defi'?'prodDefi':'prodLive')+' — '+esc(p==='ev'?nomEv(f.nom):f.nom); }
 function majRecap(){ var r=document.getElementById('recap'); if(!r) return;
   if(!FORFAIT){ r.classList.add('hidden'); return; }
   r.innerHTML=T('recapTitre')+'<br><b>'+libelleAchat(FORFAIT)+'</b> · <b>'+esc(FORFAIT.prix)+' HTG</b>'+(METHODE?' · '+esc(METHODE):'');
@@ -633,6 +635,8 @@ function estSuite(nom){ return /^masbet\s*suite/i.test(String(nom||'')); }
 function usageCode(nom){ return estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':estDefi(nom)?'defiUsage':'tikeUsage'; }
 function estDefi(nom){ return /^t[iì]k[eè]?\s*d[eé]fi|^d[eé]fi/i.test(String(nom||'')); }
 function estPass(nom){ return /^pass\s*pro/i.test(String(nom||'')); }
+function estEv(nom){ return /^ev[eè]nman/i.test(String(nom||'')); }   // v131 : ticket d'un événement spécial
+function nomEv(nom){ return String(nom||'').replace(/^ev[eè]nman\s*[—–-]\s*/i,''); }
 function boutonLive(code, nom){
   if(!window.MASBET_APP && !estSuite(nom) && !estDefi(nom)) return '';
   if(estPass(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#quiz&pro&pass='+encodeURIComponent(code)+'">'+T('ouvrirPass')+'</a>';

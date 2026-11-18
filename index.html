@@ -669,8 +669,10 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
   .tvLect .tvLogo{padding-bottom:64px}   /* « MASBET » un peu plus haut */
   .tvMarque{font-size:19px;font-weight:700;letter-spacing:.32em;padding-left:.32em;color:rgba(226,192,125,.88);text-shadow:0 2px 8px rgba(0,0,0,.6),0 0 14px rgba(212,168,79,.25)}
   /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
-  .play a[href="#quiz&defi"],.play #cDefi,.play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
+  .play a[href="#quiz&defi"],.play #cDefi,.play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#ev"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
   .mic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em;flex:0 0 auto}.mic.rouge{color:#d62828}
+.evBan{background:radial-gradient(120% 140% at 50% 0%,#1d3473 0%,#0e1b3a 70%);border-radius:14px;padding:6px 10px;margin:0 0 8px;text-align:center}.evBan img{width:min(100%,210px);height:auto;display:inline-block;vertical-align:middle}
+.evAff{border-radius:14px;overflow:hidden;background:#0e1b3a;margin:0 0 8px;text-align:center}.evAff img{width:100%;max-height:460px;object-fit:contain;display:block}
 </style>
 </head>
 <body>
@@ -911,7 +913,7 @@ var TXT = {
     konBon:function(b,t){ return b+' bon repons sou '+t; }, konMesiJwe:'Rezilta w anrejistre. Bòn chans !', konRetounen:'Retounen nan Konkou a',
     konSmsTit:'Dènye etap : verifye telefòn ou pa SMS.', konSms:function(n){ return 'Voye mesaj sa a bay '+n+' :'; }, konSmsAide:'Voye l ak telefòn ou te bay la. Yon telefòn pou yon sèl jwè.', konSmsVoye:'Mwen voye l : tcheke ankò', konAncien:'✓ Ou kalifye otomatikman : ou te finalis dènye Konkou a.',
     konJweHome:function(n){ return 'Konkou Masbet : manch '+n+' louvri !'; }, konDemiHome:'Konkou Masbet : demi-final la kòmanse !',
-    lives:'Live Masbet', peyan:'LIVE PEYAN', tikeKod:'Kòd tikè', ouvri:'Ouvri', achteTike:'Achte tikè', tikePri:function(p){ return 'Tikè : '+p+' HTG'; }, gratis:'GRATIS', gratisGade:'Gratis : vin gade l isit la, san tikè.', tikeAide:'Live peyan yo mande yon tikè. Yon tikè louvri yon live peyan, nenpòt ki live. Ou ka achte plizyè davans : chak live sèvi ak yon tikè. Antre kòd la isit la.', tikeMwen:'Tikè ou yo :', pasLive:'Pa gen live kounye a', pwochenAnons:'Pwochen live la ap anonse isit la.', achteDavans:'Achte tikè ou davans', gratisSou:'Lives gratis : swiv Masbet sou', klikeGade:'Klike pou gade', achteYonTike:'Achte yon tikè', mwenGenKod:'Mwen gen yon kòd tikè :', tikeRegle:'1 tikè = 1 live. Chak nouvo live mande yon nouvo tikè. Kòd la mache sou 2 telefòn pou menm live la.', tikeRete:function(n){ return n>0?'Kòd sa a rete '+n+' live.':'Kòd sa a fin itilize ; pwochen live la ap mande yon lòt tikè.'; }, tikeDavans:'Achte tikè ou davans.', tikeOk:'Tikè valab ✓', anDirek:'AN DIREK', gade:'Gade', gadeFb:'Gade sou Facebook', prochainLive:'Pwochen live', aucunLive:'Pa gen live kounye a. Gade pwogram nan anba a.', pwograme:'PWOGRAME', replay:'REPLAY', liveDonnees:'Yon live konsome anpil done.', a:'a',
+    lives:'Live Masbet', peyan:'LIVE PEYAN', tikeKod:'Kòd tikè', ouvri:'Ouvri', achteTike:'Achte tikè', tikePri:function(p){ return 'Tikè : '+p+' HTG'; }, evEsp:'⭐ EVÈNMAN ESPESYAL', evAchte:'Achte tikè evènman an', evRegle:'Evènman espesyal : se tikè pa li sèlman ki ouvri l.', apKomanse:'Ap kòmanse', antreTike:'Antre tikè w kounye a pou w pa rate anyen.', tikeAtann:'Tikè ou bon ✓', liveNan:'Live la kòmanse nan', liveKomanse:'Live la ap kòmanse… li ap louvri poukont li.', gratis:'GRATIS', gratisGade:'Gratis : vin gade l isit la, san tikè.', tikeAide:'Live peyan yo mande yon tikè. Yon tikè louvri yon live peyan, nenpòt ki live. Ou ka achte plizyè davans : chak live sèvi ak yon tikè. Antre kòd la isit la.', tikeMwen:'Tikè ou yo :', pasLive:'Pa gen live kounye a', pwochenAnons:'Pwochen live la ap anonse isit la.', achteDavans:'Achte tikè ou davans', gratisSou:'Lives gratis : swiv Masbet sou', klikeGade:'Klike pou gade', achteYonTike:'Achte yon tikè', mwenGenKod:'Mwen gen yon kòd tikè :', tikeRegle:'1 tikè = 1 live. Chak nouvo live mande yon nouvo tikè. Kòd la mache sou 2 telefòn pou menm live la.', tikeRete:function(n){ return n>0?'Kòd sa a rete '+n+' live.':'Kòd sa a fin itilize ; pwochen live la ap mande yon lòt tikè.'; }, tikeDavans:'Achte tikè ou davans.', tikeOk:'Tikè valab ✓', anDirek:'AN DIREK', gade:'Gade', gadeFb:'Gade sou Facebook', prochainLive:'Pwochen live', aucunLive:'Pa gen live kounye a. Gade pwogram nan anba a.', pwograme:'PWOGRAME', replay:'REPLAY', liveDonnees:'Yon live konsome anpil done.', a:'a',
     installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', iosEtap:'<b>Sou iPhone :</b><br>1. Louvri paj sa a nan <b>Safari</b>.<br>2. Peze bouton <b>Pataje</b> a (kare ak flèch ⬆️ anba ekran an).<br>3. Chwazi <b>« Sur l\'écran d\'accueil »</b> (Add to Home Screen), epi <b>Ajouter</b>.', iosApp:'<b>Ou nan WhatsApp oswa Facebook :</b> peze ⋯ oswa ⬆️ epi chwazi <b>« Ouvrir dans Safari »</b>. Apre sa, swiv etap yo.', aucuneOffre:'Pa gen ofri pou kounye a.',
     meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
     pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Lòt kote nan lemonn jou sa a', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
@@ -966,7 +968,7 @@ var TXT = {
     konBon:function(b,t){ return b+' bonnes réponses sur '+t; }, konMesiJwe:'Résultat enregistré. Bonne chance !', konRetounen:'Retour au Concours',
     konSmsTit:'Dernière étape : vérifiez votre téléphone par SMS.', konSms:function(n){ return 'Envoyez ce message au '+n+' :'; }, konSmsAide:'Envoyez-le depuis le téléphone que vous avez donné. Un téléphone pour un seul joueur.', konSmsVoye:'Je l\'ai envoyé : vérifier', konAncien:'✓ Qualifié d\'office : vous étiez finaliste du dernier Concours.',
     konJweHome:function(n){ return 'Concours Masbet : la manche '+n+' est ouverte !'; }, konDemiHome:'Concours Masbet : la demi-finale commence !',
-    lives:'Lives Masbet', peyan:'LIVE PAYANT', tikeKod:'Code ticket', ouvri:'Ouvrir', achteTike:'Acheter un ticket', tikePri:function(p){ return 'Ticket : '+p+' HTG'; }, gratis:'GRATUIT', gratisGade:'Gratuit : regardez-le ici, sans ticket.', tikeAide:'Les lives payants demandent un ticket. Un ticket ouvre un live payant, n\'importe lequel. Vous pouvez en acheter plusieurs d\'avance : chaque live utilise un ticket. Entrez le code ici.', tikeMwen:'Vos tickets :', pasLive:'Pas de live en ce moment', pwochenAnons:'Le prochain live sera annoncé ici.', achteDavans:'Acheter mon ticket d\'avance', gratisSou:'Lives gratuits : suivez Masbet sur', klikeGade:'Cliquer pour regarder', achteYonTike:'Acheter un ticket', mwenGenKod:'J\'ai un code ticket :', tikeRegle:'1 ticket = 1 live. Chaque nouveau live demande un nouveau ticket. Le code marche sur 2 téléphones pour ce même live.', tikeRete:function(n){ return n>0?'Ce code ouvre encore '+n+' live'+(n>1?'s':'')+'.':'Ce code est épuisé ; le prochain live demandera un autre ticket.'; }, tikeDavans:'Achetez votre ticket à l\'avance.', tikeOk:'Ticket valide ✓', anDirek:'EN DIRECT', gade:'Regarder', gadeFb:'Regarder sur Facebook', prochainLive:'Prochain live', aucunLive:'Pas de live en ce moment. Voir le programme ci-dessous.', pwograme:'PROGRAMMÉ', replay:'REDIFFUSION', liveDonnees:'Un live consomme beaucoup de données.', a:'à',
+    lives:'Lives Masbet', peyan:'LIVE PAYANT', tikeKod:'Code ticket', ouvri:'Ouvrir', achteTike:'Acheter un ticket', tikePri:function(p){ return 'Ticket : '+p+' HTG'; }, evEsp:'⭐ ÉVÉNEMENT SPÉCIAL', evAchte:'Acheter le ticket de l\'événement', evRegle:'Événement spécial : seul son propre ticket l\'ouvre.', apKomanse:'Commence bientôt', antreTike:'Entrez votre ticket maintenant pour ne rien manquer.', tikeAtann:'Votre ticket est bon ✓', liveNan:'Le live commence dans', liveKomanse:'Le live commence… il va s\'ouvrir tout seul.', gratis:'GRATUIT', gratisGade:'Gratuit : regardez-le ici, sans ticket.', tikeAide:'Les lives payants demandent un ticket. Un ticket ouvre un live payant, n\'importe lequel. Vous pouvez en acheter plusieurs d\'avance : chaque live utilise un ticket. Entrez le code ici.', tikeMwen:'Vos tickets :', pasLive:'Pas de live en ce moment', pwochenAnons:'Le prochain live sera annoncé ici.', achteDavans:'Acheter mon ticket d\'avance', gratisSou:'Lives gratuits : suivez Masbet sur', klikeGade:'Cliquer pour regarder', achteYonTike:'Acheter un ticket', mwenGenKod:'J\'ai un code ticket :', tikeRegle:'1 ticket = 1 live. Chaque nouveau live demande un nouveau ticket. Le code marche sur 2 téléphones pour ce même live.', tikeRete:function(n){ return n>0?'Ce code ouvre encore '+n+' live'+(n>1?'s':'')+'.':'Ce code est épuisé ; le prochain live demandera un autre ticket.'; }, tikeDavans:'Achetez votre ticket à l\'avance.', tikeOk:'Ticket valide ✓', anDirek:'EN DIRECT', gade:'Regarder', gadeFb:'Regarder sur Facebook', prochainLive:'Prochain live', aucunLive:'Pas de live en ce moment. Voir le programme ci-dessous.', pwograme:'PROGRAMMÉ', replay:'REDIFFUSION', liveDonnees:'Un live consomme beaucoup de données.', a:'à',
     installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', iosEtap:'<b>Sur iPhone :</b><br>1. Ouvrez cette page dans <b>Safari</b>.<br>2. Touchez le bouton <b>Partager</b> (carré avec flèche ⬆️ en bas de l\'écran).<br>3. Choisissez <b>« Sur l\'écran d\'accueil »</b>, puis <b>Ajouter</b>.', iosApp:'<b>Vous êtes dans WhatsApp ou Facebook :</b> touchez ⋯ ou ⬆️ et choisissez <b>« Ouvrir dans Safari »</b>. Suivez ensuite les étapes.', aucuneOffre:'Aucune offre pour le moment.',
     meteoIndispo:'Météo indisponible pour le moment.', ressenti:'Ressenti', humidite:'Humidité', vent:'Vent', lever:'Lever du soleil', coucher:'Coucher du soleil',
     pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ailleurs dans le monde ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
@@ -1989,9 +1991,12 @@ function afficherLives(){
   document.getElementById('nVideyo').classList.toggle('live', direk.length>0);
   // Onglet Live
   var h='';
-  direk.forEach(function(x,i){ h+='<div class="liveitem"><span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'<div>'+btnPataje('patajeLive(LIVES_PAR_CLE[\'d'+i+'\']?LIVES_PAR_CLE[\'d'+i+'\'].titre:\'\')')+'</div></div>'; });
-  if(!direk.length) h+=liveMtvTete(avenir[0]);   // v120 : rien en direct → Masbet TV joue ici (avant : affiche « pas de live »)
-  (direk.length?avenir:avenir.slice(1)).forEach(function(x){ h+='<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="achte.html#tikes" style="font-weight:700;color:#173a8c">'+T('achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
+  window.LIVE_FEN=l.filter(fenetreLive).map(function(x){ return x.titre; }).join('|');
+  var ouvr=avenir.filter(fenetreLive); avenir=avenir.filter(function(x){ return !fenetreLive(x); });   // v131 : 15 min avant → case du ticket
+  direk.forEach(function(x,i){ h+='<div class="liveitem">'+visuelLive(x)+'<span class="tag l"><span class="pastille" style="background:#fff"></span>'+T('anDirek')+'</span>'+(x.payant?' <span class="tag p">🔒 '+T('peyan')+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+tagEv(x)+blocLecteur(x,'d'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'<div>'+btnPataje('patajeLive(LIVES_PAR_CLE[\'d'+i+'\']?LIVES_PAR_CLE[\'d'+i+'\'].titre:\'\')')+'</div></div>'; });
+  ouvr.forEach(function(x,i){ h+='<div class="liveitem">'+visuelLive(x)+'<span class="tag p">⏳ '+esc(T('apKomanse'))+'</span> <span class="tag p">🔒 '+T('peyan')+'</span>'+tagEv(x)+'<div class="hint" style="margin:6px 0 2px;font-weight:700"><span class="tkDecompte" data-t="'+esc(x.quand)+'">'+esc(T('liveNan'))+' '+decompte(Date.parse(x.quand)-Date.now())+'</span> · '+esc(T('antreTike'))+'</div>'+blocLecteur(x,'a'+i)+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+'</div>'; });
+  if(!direk.length&&!ouvr.length) h+=liveMtvTete(avenir[0]);   // v120 : rien en direct → Masbet TV joue ici (avant : affiche « pas de live »)
+  (direk.length||ouvr.length?avenir:avenir.slice(1)).forEach(function(x){ h+=visuelLive(x)+'<div class="avenir"><div class="q">'+(x.quand?esc(quandLive(x.quand)).replace(' · ','<br>'):T('pwograme'))+'</div><div><span class="tag p">'+T('pwograme')+'</span>'+(x.payant?' <span class="tag p pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+'<div class="vidt" style="margin:0">'+esc(x.titre)+'</div>'+(x.texte?'<div class="vidd">'+esc(x.texte)+'</div>':'')+(x.payant?'<a class="hint" href="'+lienAchat(x)+'" style="font-weight:700;color:#173a8c">'+T(x.special?'evAchte':'achteTike')+' →</a> <span class="hint">'+T('tikeDavans')+'</span>':'')+'</div></div>'; });
   fini.forEach(function(x,i){ h+='<div class="liveitem" style="margin-top:14px"><span class="tag f">'+T('replay')+(x.quand?' · '+esc(quandLive(x.quand)):'')+'</span>'+(x.payant?' <span class="tag p">🔒</span>':' <span class="tag g">🆓 '+T('gratis')+'</span>')+blocLecteur(x,'f'+i)+(x.verrouille?'':'<div class="vidt">'+esc(x.titre)+'</div>')+'</div>'; });
   h+=blocReseaux();
   /* v126 : plus d'avis de consommation dans l'onglet Live (comme sur les chaînes) */
@@ -2002,9 +2007,30 @@ function afficherLives(){
   else if(garde&&MTV.ou==='live') mtvArreter();
   setTimeout(liveMtvMaj,0);
   // Tickets déjà validés sur ce téléphone : ouvrir directement
-  l.forEach(function(x,i){ if(x.payant && x.verrouille){ var k=(x.statut==='direk'?'d':'f')+(x.statut==='direk'?direk.indexOf(x):fini.indexOf(x)); var c=lire('masbet_tike_'+x.titre); if(c) ouvrirTike(k, c, true); } });
+  l.forEach(function(x,i){ if(x.payant && x.verrouille){ var k=x.statut==='direk'?'d'+direk.indexOf(x):x.statut==='fini'?'f'+fini.indexOf(x):ouvr.indexOf(x)>=0?'a'+ouvr.indexOf(x):''; if(!k) return; var c=lire('masbet_tike_'+x.titre); if(c) ouvrirTike(k, c, true); } });
 }
 // ---------- Lives payants ----------
+// v131 : ticket accepté 15 min avant l'heure prévue ; événement spécial = prix et ticket propres
+var LIVE_AVANCE=15*60e3;
+function fenetreLive(x){ return !!(x&&x.payant&&x.verrouille&&x.statut==='pwograme'&&x.quand&&Date.now()>=Date.parse(x.quand)-LIVE_AVANCE); }
+function lienAchat(x){ return x&&x.special?'achte.html#ev':'achte.html#tikes'; }
+function banEv(x){ return x&&x.special?'<div class="evBan"><img src="photos/evenements.webp" alt="'+esc(T('evEsp'))+'" width="444" height="289" loading="lazy"></div>':''; }
+function okImg(u){ return /^https:\/\/lh3\.googleusercontent\.com\/d\/[A-Za-z0-9_-]+=w\d+$/.test(String(u||'')); }
+function visuelLive(x){ return x&&okImg(x.affiche)?'<div class="evAff"><img src="'+esc(x.affiche)+'" alt="" loading="lazy"></div>':banEv(x); }   // v131 : affiche de l'événement, sinon bannière « Événements spéciaux »
+function fondAff(x){ return x&&okImg(x.affiche)?' style="background-image:linear-gradient(rgba(10,20,45,.62),rgba(10,20,45,.82)),url(\''+x.affiche+'\');background-size:cover;background-position:center"':''; }
+function tagEv(x){ return x&&x.special?' <span class="tag p" style="background:#c9a227;color:#14213d">'+esc(T('evEsp'))+'</span>':''; }
+function decompte(ms){ ms=Math.max(0,ms); var s=Math.floor(ms/1000), m=Math.floor(s/60), r=s%60; return m+':'+(r<10?'0':'')+r; }
+function liveMinuteur(){
+  // 1) un live payant entre dans sa fenêtre de 15 min → l'onglet Live affiche la case du ticket
+  var l=ACC&&ACC.lives||[], sig=l.filter(fenetreLive).map(function(x){ return x.titre; }).join('|');
+  if(sig!==(window.LIVE_FEN||'')){ window.LIVE_FEN=sig; if(ACC) afficherLives(); }
+  // 2) comptes à rebours
+  var att=document.querySelectorAll('.tkDecompte'), proche=false;
+  [].forEach.call(att,function(e){ var t=Date.parse(e.getAttribute('data-t')||''), r=t-Date.now(); if(r<=30e3) proche=true; e.textContent=r>0?T('liveNan')+' '+decompte(r):T('liveKomanse'); });
+  // 3) ticket accepté et heure atteinte : on regarde souvent si le live est passé en direct
+  if(proche&&!document.hidden&&Date.now()-(window.LIVE_POLL||0)>20e3){ window.LIVE_POLL=Date.now(); chargerAccueil(); }
+}
+setInterval(liveMinuteur,1000);
 var LIVES_PAR_CLE={}, TIKE_URL=(function(){ var m=/[#&]tike=([A-Za-z0-9-]+)/.exec(location.hash||''); return m?m[1]:''; })();
 function appareil(){
   var a=lire('masbet_appareil');
@@ -2014,7 +2040,7 @@ function appareil(){
 // v120 : pas de live en cours → bandeau + Masbet TV dans l'onglet Live (le prochain live reste annoncé)
 function liveMtvTete(x){
   return '<div class="liveMtvTete"><div>'+mtvTag()+' <b>⭐ Masbet TV</b></div>'+
-    (x?'<div class="hint">'+T('prochainLive')+' : <b>'+esc(x.titre)+'</b>'+(x.quand?' · '+esc(quandLive(x.quand)):'')+(x.payant===false?' · 🆓 '+esc(T('gratis')):' · 🔒 '+esc(T('tikePri')(x.prix))+' — <a href="achte.html#tikes">'+T('achteDavans')+'</a>')+'</div>':'')+
+    (x?'<div class="hint">'+T('prochainLive')+' : <b>'+esc(x.titre)+'</b>'+(x.quand?' · '+esc(quandLive(x.quand)):'')+(x.payant===false?' · 🆓 '+esc(T('gratis')):' · 🔒 '+esc(T('tikePri')(x.prix))+(x.special?' · '+esc(T('evEsp')):'')+' — <a href="'+lienAchat(x)+'">'+T('achteDavans')+'</a>')+'</div>':'')+
     '</div><div id="liveMtvPlace"></div>';
 }
 // v123 : en-tête de Masbet TV dans l'onglet Live : « Pa gen live » ou, si Masbet TV passe un live YouTube détecté, « 🔴 AN DIREK »
@@ -2051,7 +2077,7 @@ function afficheRepo(x){
       (x.quand?'<span class="afpr" style="margin-right:6px">📅 '+esc(quandLive(x.quand))+'</span>':'')+(x.payant===false?'<span class="afpr">🆓 '+esc(T('gratis'))+'</span><div style="font-size:13px;color:#dfe4f2;margin-top:6px">'+esc(T('gratisGade'))+'</div>':'<span class="afpr pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span>')
       :'<div style="font-size:15px;color:#dfe4f2;text-shadow:0 1px 4px rgba(0,0,0,.4)">'+T('pwochenAnons')+'</div>')+'</div></div>'+
     // ticket à l'avance seulement quand un live est annoncé (sinon on ne sait pas pour quel live on paie)
-    (x&&x.payant!==false?'<div class="afchoix"><a class="btn" href="achte.html#tikes">💳 '+T('achteDavans')+'</a><div style="font-size:12.5px;color:#c9d1e6">'+T('tikeRegle')+'</div></div>':'')+'</div>';
+    (x&&x.payant!==false?'<div class="afchoix"><a class="btn" href="'+lienAchat(x)+'">💳 '+T(x.special?'evAchte':'achteDavans')+(x.special?' · '+esc(String(x.prix))+' HTG':'')+'</a><div style="font-size:12.5px;color:#c9d1e6">'+T('tikeRegle')+'</div></div>':'')+'</div>';
 }
 // Lives gratuits : pages publiques de Masbet (Config RESEAUX_MASBET)
 function blocReseaux(){
@@ -2063,12 +2089,12 @@ function blocLecteur(x,k){
   if(!x.payant) return lecteurLive(x,false);
   if(!x.verrouille) return '';
   var ouvert=!!TIKE_URL;
-  return '<div id="lk-'+k+'"><div class="affiche'+(ouvert?' ouvert':'')+'">'+
+  return '<div id="lk-'+k+'"><div class="affiche'+(ouvert?' ouvert':'')+'"'+fondAff(x)+'>'+
     '<div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div>'+
       '<div class="afmil"><button class="afplay" aria-label="'+esc(T('klikeGade'))+'" onclick="choixTike(\''+k+'\')">▶</button><div class="aflbl">'+T('klikeGade')+'</div></div>'+
       '<div><div class="aft">'+esc(x.titre)+'</div><span class="afpr pxn">🔒 '+esc(T('tikePri')(x.prix))+'</span></div></div>'+
     '<div class="afchoix'+(ouvert?'':' hidden')+'" id="ch-'+k+'">'+
-      '<a class="btn" href="achte.html#tikes">💳 '+T('achteYonTike')+' · '+esc(String(x.prix))+' HTG</a>'+
+      '<a class="btn" href="'+lienAchat(x)+'">💳 '+T(x.special?'evAchte':'achteYonTike')+' · '+esc(String(x.prix))+' HTG</a>'+(x.special?'<div style="font-size:12.5px;color:#f3d77a;font-weight:700">'+esc(T('evRegle'))+'</div>':'')+
       '<div style="font-size:14px;font-weight:700">'+T('mwenGenKod')+'</div>'+
       '<div class="row"><input id="tk-'+k+'" placeholder="'+T('tikeKod')+'" autocapitalize="characters" value="'+esc(TIKE_URL)+'"><button onclick="ouvrirTike(\''+k+'\')">'+T('ouvri')+'</button></div>'+
       puceTikets(k)+'<div class="e" id="te-'+k+'"></div><div style="font-size:12.5px;color:#c9d1e6;margin-top:8px">'+T('tikeRegle')+'</div></div>'+
@@ -2095,9 +2121,14 @@ function ouvrirTike(k, code, silencieux){
   api('tike',{code:code, appareil:appareil(), live:x.titre}).then(function(d){
     ecrire('masbet_tike_'+x.titre, code); if(d.admin) ecrire('masbet_admin', code); if(!silencieux){ noterTike(String(code).toUpperCase().replace(/[^A-Z0-9]/g,''), d.restants); setTimeout(majPuces,0); }
     var box=document.getElementById('lk-'+k); if(!box) return;
+    if(d.attente){   // v131 : ticket bon, le live n'a pas commencé : écran d'attente, ouverture automatique au direct
+      box.innerHTML='<div class="affiche ouvert tkAttente"'+fondAff(x)+'><div class="afh"><div class="aflogo"><img src="logo.png" alt="Masbet"></div><div><div style="color:#9ff0c0;font-weight:800">⏳ '+esc(T('tikeAtann'))+'</div><div class="aft">'+esc(x.titre)+'</div><div style="font-weight:800;color:#fff;margin-top:6px"><span class="tkDecompte" data-t="'+esc(d.debut||x.quand||'')+'">'+esc(T('liveNan'))+' '+decompte(Date.parse(d.debut||x.quand||'')-Date.now())+'</span></div>'+
+        (!silencieux&&d.restants!==null&&d.restants!==undefined?'<div style="font-size:12.5px;color:#dfe4f2">'+esc(T('tikeRete')(d.restants))+'</div>':'')+'</div></div></div>';
+      return;
+    }
     box.innerHTML='<div class="vidt" style="margin:6px 0 2px">'+esc(x.titre)+'</div><div class="hint" style="color:var(--ok);font-weight:700;margin-bottom:4px">'+T('tikeOk')+(!silencieux&&d.restants!==null&&d.restants!==undefined?' · '+esc(T('tikeRete')(d.restants)):'')+'</div>'+lecteurLive({plateforme:d.plateforme,id:d.id,lien:d.lien},false);
   }, function(e){
-    if(silencieux){ if(lire('masbet_tike_'+x.titre)===code && /pa mache|2 telefòn|lòt live|deja sèvi/.test(e.message||'')){ try{ localStorage.removeItem('masbet_tike_'+x.titre); }catch(_){} } return; }
+    if(silencieux){ if(lire('masbet_tike_'+x.titre)===code && /pa mache|2 telefòn|lòt live|deja sèvi|evènman espesyal/.test(e.message||'')){ try{ localStorage.removeItem('masbet_tike_'+x.titre); }catch(_){} } return; }
     var m=(e&&e.message)||''; if(err) err.textContent=(!m||/fetch|abort|network|config/i.test(m))?T('reseau'):m;
   });
 }
