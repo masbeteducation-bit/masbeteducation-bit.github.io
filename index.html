@@ -2722,7 +2722,7 @@ function mtvTransition(titre){
   MTV.td=Date.now(); MTV.tj=0; clearTimeout(MTV.tt); MTV.tt=setTimeout(function(){ mtvVerif6(0); },6000);   // au plus 6 s ; v134 : si la vidéo n'a pas démarré, on garde l'habillage avec un bouton plutôt que montrer l'écran d'attente de YouTube
 }
 // v116 : l'habillage reste 3 s après le début de la lecture, le temps que YouTube retire son bandeau (titre, chaîne).
-function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?3200-(n-MTV.tj):0); clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e){ e.classList.remove('on','tap'); e.onclick=null; var b=e.querySelector('.mtvTap'); if(b) b.remove(); } }
+function mtvTransFin(){ var n=Date.now(), reste=Math.max(2200-(n-(MTV.td||0)), MTV.tj?5000-(n-MTV.tj):0);   /* v138 : YouTube montre titre et logo 4 à 5 s au début de chaque vidéo (après un toucher et entre deux vidéos) → habillage 5 s après le début */ clearTimeout(MTV.tt); if(reste>0){ MTV.tt=setTimeout(mtvTransFin,reste); return; } var e=document.getElementById('mtvTrans'); if(e){ e.classList.remove('on','tap'); e.onclick=null; var b=e.querySelector('.mtvTap'); if(b) b.remove(); } MTV.tapT=0; }
 // v134 — Certains navigateurs (Edge, mode économie…) refusent la lecture automatique, même sans le son : YouTube montre alors
 // son écran d'attente (titre, gros bouton rouge, « Watch on YouTube »). On garde l'habillage Masbet et on demande un toucher.
 // v136 — Chien de garde : YouTube peut annoncer « en chargement » sans jamais démarrer (lien ouvert depuis WhatsApp, onglet
@@ -2745,7 +2745,7 @@ function mtvToucher(){ var e=document.getElementById('mtvTrans'); if(!e||!MTV.ac
   if(!e.querySelector('.mtvTap')){ var b=document.createElement('span'); b.className='mtvTap'; b.textContent='▶ '+AL('Touche pou gade','Touchez pour regarder'); e.appendChild(b); }
   e.classList.add('on','tap'); e.setAttribute('aria-hidden','false'); e.setAttribute('role','button');
   e.onclick=function(){ var p=MTV.p; if(!mtvPret(p)){ try{ location.reload(); }catch(x){} return; } try{ p.unMute(); p.setVolume(100); p.playVideo(); var s=document.getElementById('mtvSon'); if(s) s.textContent='🔊'; }catch(x){}
-    MTV.td=0; MTV.tj=0; e.setAttribute('aria-hidden','true'); e.removeAttribute('role'); e.classList.remove('tap'); e.onclick=null; var bt=e.querySelector('.mtvTap'); if(bt) bt.remove();   // v135 : le bouton s'efface tout de suite, l'habillage reste jusqu'au début de l'image
+    MTV.td=0; MTV.tj=0; MTV.tapT=Date.now(); e.setAttribute('aria-hidden','true'); e.removeAttribute('role'); e.classList.remove('tap'); e.onclick=null; var bt=e.querySelector('.mtvTap'); if(bt) bt.remove();   // v135 : le bouton s'efface tout de suite, l'habillage reste jusqu'au début de l'image
     setTimeout(function(){ var p2=MTV.p; if(p2&&mtvBloque()){ try{ p2.mute(); p2.playVideo(); var s2=document.getElementById('mtvSon'); if(s2) s2.textContent='🔇'; }catch(x){} } },1500);   // v135 : iPhone/Safari peut refuser le son → sans le son (🔇 pour le remettre)
     setTimeout(function(){ if(mtvBloque()) mtvToucher(); },4000); };   // toujours rien 4 s après : le bouton revient
 }
