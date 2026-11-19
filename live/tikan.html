@@ -206,12 +206,15 @@ function scene(){ var d=document.importNode(document.getElementById('tpl').conte
 if(AFF){
   document.documentElement.classList.add('aff'); document.body.classList.add('aff');
   var w=document.createElement('div'); w.className='mise'; var sc=scene(); w.appendChild(sc); document.getElementById('racine').appendChild(w);
-  function ajuste(){ var k=Math.min(innerWidth/1920,innerHeight/1080); w.style.transform='scale('+k+')'; w.style.left=((innerWidth-1920*k)/2)+'px'; w.style.top=((innerHeight-1080*k)/2)+'px'; }
+  // v142 : le calque Web de Prism se redimensionne en gardant ses proportions. La scène 16:9 prend toute la LARGEUR de la page,
+  // collée en HAUT : quand le calque a la largeur de l'image, la scène tombe pile sur l'image (le bas de la page peut dépasser, il est vide).
+  function ajuste(){ var r=innerWidth/innerHeight, k= r<=16/9? innerWidth/1920 : innerHeight/1080;
+    w.style.transform='scale('+k+')'; w.style.left=(r<=16/9? 0 : (innerWidth-1920*k)/2)+'px'; w.style.top='0px'; }
   ajuste(); addEventListener('resize',ajuste); peindre(sc); setInterval(function(){ peindre(sc); },1000);
   if(Q.get('mire')==='1'){ // v142 : mire de réglage pour Prism (bords de la page en rouge, de la scène en jaune)
     var mi=document.createElement('div'); mi.style.cssText='position:fixed;inset:0;border:8px solid #ff2d2d;box-sizing:border-box;pointer-events:none;z-index:9;display:flex;align-items:center;justify-content:center';
-    var lb=document.createElement('div'); lb.style.cssText='background:#ff2d2d;color:#fff;font:700 28px/1.3 Arial,sans-serif;padding:10px 18px;border-radius:10px;text-align:center';
-    mi.appendChild(lb); document.body.appendChild(mi); sc.style.outline='10px dashed #ffd400'; sc.style.outlineOffset='-10px';
+    var lb=document.createElement('div'); lb.style.cssText='position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#ffd400;color:#0b1633;font:700 44px/1.3 Arial,sans-serif;padding:14px 26px;border-radius:12px;text-align:center;white-space:nowrap;z-index:9';
+    sc.appendChild(lb); document.body.appendChild(mi); sc.style.outline='10px dashed #ffd400'; sc.style.outlineOffset='-10px';
     function info(){ lb.textContent='MIRE · page '+innerWidth+' × '+innerHeight+' · ×'+(window.devicePixelRatio||1); } info(); addEventListener('resize',info);
   }
   (function boucle(){ lireServeur(function(){ peindre(sc); setTimeout(boucle, document.hidden? 10000 : 2000); }); })();
