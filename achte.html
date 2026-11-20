@@ -128,7 +128,7 @@ if(PLAY) document.documentElement.classList.add('play');
   footer{text-align:center;color:var(--muted);font-size:13px;margin-top:20px}
   .demo{background:#fff3df;color:var(--wait);text-align:center;font-size:13px;padding:6px}
 .recap{margin:14px 0 2px;padding:10px 12px;border-radius:12px;background:#f1f5ff;border:1.5px solid #c9d6f5;font-size:15px;line-height:1.35}.recap b{font-size:16px}
-.tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-rek{background:#e7f8fb;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}.tip-defi{background:#e7f8fb;color:#8a5a00}
+.tip{display:inline-block;font-size:12.5px;font-weight:800;border-radius:999px;padding:3px 10px;margin:6px 0 4px}.tip-wifi{background:#e8f0fe;color:#173a8c}.tip-ekip,.tip-spons,.tip-final{background:#fff4d6;color:#8a5a00}.tip-rek{background:#e7f8fb;color:#8a5a00}.tip-live{background:#fdecea;color:#a3221b}.tip-pass{background:#e8f6ee;color:#1d6b3a}.tip-suite{background:#efe9fb;color:#4b2a8f}.tip-defi{background:#e7f8fb;color:#8a5a00}
   /* Version Google Play : pas d'achat de contenu numérique dans l'application (règles de paiement Google Play) */
   .play a[href^="achte.html#pro"],.play a[href^="achte.html#tikes"],.play a[href^="achte.html#defi"],.play a[href^="achte.html#suite"],.play .pxn{display:none!important}
   .mic{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.22em;flex:0 0 auto}.mic.rouge{color:#d62828}
@@ -275,12 +275,18 @@ Object.assign(TXT.ht, { recapTitre:'🧾 W ap peye pou :', soustitre:'Yon sèl k
   aideWifi:'Kòd pou konekte sou Wi-Fi Masbet la.', aideLive:'Tikè pou gade yon live peyan nan aplikasyon an.', aidePro:'Pass Pro : tout etap ak tout ribrik pwofesyonèl Quiz la.',
   aideSuite:'Abònman lojisyèl devis Masbet Suite : 2 aparèy (yon telefòn ak yon òdinatè).',
   tipSuite:'🧰 Masbet Suite', suiteUsage:'Kòd abònman ou. Louvri Masbet Suite epi antre l : li mache sou 2 aparèy.', ouvrirSuite:'Louvri Masbet Suite',
+  prodSpons:'🤝 Sponsò Tikan', aideSpons:'Sipòte chanpyona Tikan Ansavo : non w ap parèt nan live match yo (san montan an).', tikeSpons:'Kòd sponsò', tipSpons:'🤝 Sponsò', sponsUsage:'Antre kòd sa a sou masbet.me/tikan/sponsor epi ekri non pou n afiche.', ouvrirSpons:'Afiche non m kounye a',
+  prodFinal:'🎫 Plas match Tikan', aideFinal:'Rezève plas ou : swa match 100 HTG (koupon Wi-Fi 25 goud), gran final 500 HTG (koupon 50 goud). Tikè ak QR.', tikeFinal:'Kòd rezèvasyon', tipFinal:'🎫 Plas', finalUsage:'Antre kòd sa a sou masbet.me/tikan/plas pou resevwa tikè w ak koupon Wi-Fi a.', ouvrirFinal:'Resevwa tikè m kounye a',
+  prodEkip:'🏆 Enskripsyon ekip', aideEkip:'Frè enskripsyon yon ekip nan chanpyona Tikan Ansavo : 10 000 HTG yon sèl kou, oswa 5 000 + 5 000.', tikeEkip:'Kòd enskripsyon ekip', tipEkip:'🏆 Enskripsyon ekip', ekipUsage:'Antre kòd sa a sou paj enskripsyon an pou konfime ekip ou (masbet.me/tikan/enskripsyon).', ouvrirEkip:'Enskri ekip la kounye a',
   prodDefi:'🏁 Defi', aideDefi:'Tikè Defi Masbet : 1 tikè = 1 chans pou 10 kesyon difisil. Ganyan semèn nan : Pass Pro gratis 24 è.', tipDefi:'🏁 Tikè Defi', defiUsage:'Antre kòd sa a nan Quiz → Defi Masbet. 1 tikè = 1 chans.', ouvrirDefi:'Jwe Defi a' });
 Object.assign(TXT.fr, { recapTitre:'🧾 Vous payez pour :', soustitre:'Un seul endroit pour payer : Wi-Fi, tickets live, Pass Pro, Défi Masbet, Masbet Suite — par MonCash ou NatCash',
   prodWifi:'📶 Wi-Fi', prodLive:'🎟️ Live', prodEv:'⭐ Événement spécial', aideEv:'Ticket pour un événement spécial en direct : seul son propre ticket l\'ouvre. Entrez-le 15 minutes avant.', tikeEv:'Ticket de l\'événement', prodPro:'💼 Pass Pro', prodSuite:'🧰 Masbet Suite',
   aideWifi:'Code pour se connecter au Wi-Fi Masbet.', aideLive:'Ticket pour regarder un live payant dans l\'application.', aidePro:'Pass Pro : toutes les étapes et toutes les rubriques professionnelles du Quiz.',
   aideSuite:'Abonnement au logiciel de devis Masbet Suite : 2 appareils (un téléphone et un ordinateur).',
   tipSuite:'🧰 Masbet Suite', suiteUsage:'Votre code d\'abonnement. Ouvrez Masbet Suite et entrez-le : il marche sur 2 appareils.', ouvrirSuite:'Ouvrir Masbet Suite',
+  prodSpons:'🤝 Sponsor Tikan', aideSpons:'Soutenir le championnat Tikan Ansavo : votre nom s\'affiche dans les lives des matchs (sans le montant).', tikeSpons:'Code sponsor', tipSpons:'🤝 Sponsor', sponsUsage:'Entrez ce code sur masbet.me/tikan/sponsor et écrivez le nom à afficher.', ouvrirSpons:'Afficher mon nom maintenant',
+  prodFinal:'🎫 Place match Tikan', aideFinal:'Réservez votre place : soirée de matchs 100 HTG (coupon Wi-Fi 25 gourdes), grande finale 500 HTG (coupon 50 gourdes). Billet avec QR.', tikeFinal:'Code de réservation', tipFinal:'🎫 Place', finalUsage:'Entrez ce code sur masbet.me/tikan/plas pour recevoir votre billet et le coupon Wi-Fi.', ouvrirFinal:'Recevoir mon billet maintenant',
+  prodEkip:'🏆 Inscription d\'équipe', aideEkip:'Frais d\'inscription d\'une équipe au championnat Tikan Ansavo : 10 000 HTG en une fois, ou 5 000 + 5 000.', tikeEkip:'Code d\'inscription', tipEkip:'🏆 Inscription d\'équipe', ekipUsage:'Entrez ce code sur la page d\'inscription pour confirmer votre équipe (masbet.me/tikan/enskripsyon).', ouvrirEkip:'Inscrire l\'équipe maintenant',
   prodDefi:'🏁 Défi', aideDefi:'Ticket Défi Masbet : 1 ticket = 1 chance pour 10 questions difficiles. Le gagnant de la semaine : Pass Pro gratuit 24 heures.', tipDefi:'🏁 Ticket Défi', defiUsage:'Entrez ce code dans Quiz → Défi Masbet. 1 ticket = 1 chance.', ouvrirDefi:'Jouer au Défi' });
 // Messages d'erreur du serveur (en français) traduits en créole
 var ERREURS_HT = [
@@ -459,19 +465,19 @@ function charger(essai){
 // Produit d'un forfait : Wi-Fi, ou (Type LIVE) Pass Pro, Masbet Suite, ticket live — d'après le nom du forfait
 /** Version Google Play : seulement le Wi-Fi (service physique) ; tickets, Pass Pro, Défi et Suite restent sur le site web. */
 function infosPlay(i){ if(PLAY&&i&&i.forfaits) i.forfaits=i.forfaits.filter(function(f){ return f.type!=='LIVE'; }); return i; }
-function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estEv(f.nom)?'ev':estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
-var PRODUIT=PLAY?'wifi':(function(){ var h=location.hash||''; return /[#&]ev\b/.test(h)?'ev':/[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
+function produitDe(f){ if(!f || f.type!=='LIVE') return 'wifi'; return estEkip(f.nom)?'ekip':estSpons(f.nom)?'spons':estFinal(f.nom)?'final':estEv(f.nom)?'ev':estPass(f.nom)?'pro':estSuite(f.nom)?'suite':estDefi(f.nom)?'defi':'live'; }
+var PRODUIT=PLAY?'wifi':(function(){ var h=location.hash||''; return /[#&]ev\b/.test(h)?'ev':/[#&]tikes\b/.test(h)?'live':/[#&]pro\b/.test(h)?'pro':/[#&]suite\b/.test(h)?'suite':/[#&]defi\b/.test(h)?'defi':/[#&]ekip\b/.test(h)?'ekip':/[#&]spons\b/.test(h)?'spons':/[#&](final|plas)\b/.test(h)?'final':/[#&]wifi\b/.test(h)||PORTAIL?'wifi':''; })();   // '' = on choisit d'abord le produit
 function choisirProduit(p){ PRODUIT=p; if(FORFAIT && produitDe(FORFAIT)!==p) FORFAIT=null; afficherForfaits(); majPaiement();
   if(p) setTimeout(function(){ document.getElementById('cPlan').scrollIntoView({behavior:'smooth',block:'start'}); },60); }
-var ICONES={wifi:'📶',ev:'⭐',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰'};
+var ICONES={wifi:'📶',ev:'⭐',live:'🎟️',pro:'🎓',defi:'🏁',suite:'🧰',ekip:'🏆',spons:'🤝',final:'🎫'};
 function etapesSuivantes(){ ['cPay','cTx'].forEach(function(id){ var e=document.getElementById(id); if(e) e.classList.toggle('hidden',!FORFAIT); }); }
 function afficherForfaits(){
   var presents={wifi:true}, h='';
-  INFOS.forfaits.forEach(function(f){ if(f.type==='LIVE' && f.disponible) presents[produitDe(f)]=true; });
-  var liste=['wifi','ev','live','pro','defi','suite'].filter(function(p){ return presents[p]; });
+  INFOS.forfaits.forEach(function(f){ if(f.type==='LIVE' && f.disponible && ekipVisible(f)) presents[produitDe(f)]=true; });
+  var liste=['wifi','ev','final','ekip','spons','live','pro','defi','suite'].filter(function(p){ return presents[p]; });
   if(liste.length<2) PRODUIT='wifi';                 // un seul produit : directement ses prix
   else if(PRODUIT && !presents[PRODUIT]) PRODUIT='';
-  var noms={wifi:'prodWifi',ev:'prodEv',live:'prodLive',pro:'prodPro',suite:'prodSuite',defi:'prodDefi'}, aides={wifi:'aideWifi',ev:'aideEv',live:'aideLive',pro:'aidePro',suite:'aideSuite',defi:'aideDefi'};
+  var noms={wifi:'prodWifi',ev:'prodEv',live:'prodLive',pro:'prodPro',suite:'prodSuite',defi:'prodDefi',ekip:'prodEkip',spons:'prodSpons',final:'prodFinal'}, aides={wifi:'aideWifi',ev:'aideEv',live:'aideLive',pro:'aidePro',suite:'aideSuite',defi:'aideDefi',ekip:'aideEkip',spons:'aideSpons',final:'aideFinal'};
   var z=document.getElementById('prods');
   if(!PRODUIT){   // 1) choisir ce qu'on achète : aucun prix affiché avant ce choix
     z.className='prods choix';
@@ -487,9 +493,9 @@ function afficherForfaits(){
     if(produitDe(f)!==PRODUIT) return;
     var on=(FORFAIT&&FORFAIT.nom===f.nom?' on':''), dis=(f.disponible?'':'disabled');
     if(f.type==='LIVE'){
-      if(!f.disponible) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
+      if(!f.disponible || !ekipVisible(f)) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
       h+='<button class="plan'+on+'" id="p'+k+'" onclick="choisirForfait('+k+')">'+
-        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(PRODUIT==='ev'?nomEv(f.nom):f.nom)+'</b></div><div class="d">'+T(PRODUIT==='ev'?'tikeEv':PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
+        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(PRODUIT==='ev'?nomEv(f.nom):f.nom)+'</b></div><div class="d">'+T(PRODUIT==='ev'?'tikeEv':PRODUIT==='ekip'?'tikeEkip':PRODUIT==='spons'?'tikeSpons':PRODUIT==='final'?'tikeFinal':PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
       return;
     }
     h+='<button class="plan'+on+'" '+dis+' id="p'+k+'" onclick="choisirForfait('+k+')">'+
@@ -520,7 +526,7 @@ function choisirMethode(m){
 }
 function libelleAchat(f){ if(!f) return ''; var p=produitDe(f);
   if(p==='wifi') return T('prodWifi')+' — '+esc(f.volume)+' · '+esc(f.duree)+' '+T('jours');
-  return T(p==='ev'?'prodEv':p==='pro'?'prodPro':p==='suite'?'prodSuite':p==='defi'?'prodDefi':'prodLive')+' — '+esc(p==='ev'?nomEv(f.nom):f.nom); }
+  return T(p==='ev'?'prodEv':p==='ekip'?'prodEkip':p==='spons'?'prodSpons':p==='final'?'prodFinal':p==='pro'?'prodPro':p==='suite'?'prodSuite':p==='defi'?'prodDefi':'prodLive')+' — '+esc(p==='ev'?nomEv(f.nom):f.nom); }
 function majRecap(){ var r=document.getElementById('recap'); if(!r) return;
   if(!FORFAIT){ r.classList.add('hidden'); return; }
   r.innerHTML=T('recapTitre')+'<br><b>'+libelleAchat(FORFAIT)+'</b> · <b>'+esc(FORFAIT.prix)+' HTG</b>'+(METHODE?' · '+esc(METHODE):'');
@@ -630,14 +636,31 @@ function retourner(code){
 }
 function konekte(code){ retourner(String(code)); }
 // Ticket live : dans l'application, bouton qui ouvre l'onglet Live avec le code déjà rempli
-function typeCode(c){ return c.type==='LIVE' ? (estPass(c.forfait)?'Pass':estSuite(c.forfait)?'Suite':estDefi(c.forfait)?'Defi':'Live') : (c.type==='RECOMPENSE'?'Rek':'Wifi'); }
+function typeCode(c){ return c.type==='LIVE' ? (estEkip(c.forfait)?'Ekip':estSpons(c.forfait)?'Spons':estFinal(c.forfait)?'Final':estPass(c.forfait)?'Pass':estSuite(c.forfait)?'Suite':estDefi(c.forfait)?'Defi':'Live') : (c.type==='RECOMPENSE'?'Rek':'Wifi'); }
 function estSuite(nom){ return /^masbet\s*suite/i.test(String(nom||'')); }
-function usageCode(nom){ return estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':estDefi(nom)?'defiUsage':'tikeUsage'; }
+function usageCode(nom){ return estEkip(nom)?'ekipUsage':estSpons(nom)?'sponsUsage':estFinal(nom)?'finalUsage':estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':estDefi(nom)?'defiUsage':'tikeUsage'; }
 function estDefi(nom){ return /^t[iì]k[eè]?\s*d[eé]fi|^d[eé]fi/i.test(String(nom||'')); }
 function estPass(nom){ return /^pass\s*pro/i.test(String(nom||'')); }
+function estSpons(nom){ return /^spons/i.test(String(nom||'')); }   // v147 : sponsor du championnat (nom dans le cadre live)
+function estFinal(nom){ return /^plas\s+(final|match)/i.test(String(nom||'')); }   // v147 : place d'une soirée de matchs ou de la finale + coupon Wi-Fi
+function estEkip(nom){ return /^enskripsyon/i.test(String(nom||'')); }   // v147 : frais d'inscription d'une équipe (Tikan)
+// v147 : la vente des codes d'inscription suit l'état de l'inscription (projet Contenu) : 10 000 tant qu'il reste des places ; 5 000 aussi pour le 2e versement, jusqu'à l'acceptation
+var TKN_PUB=null;
+function ekipVisible(f){
+  if(!f || !estEkip(f.nom) || !TKN_PUB) return true;   // état inconnu : le serveur vérifie de toute façon
+  if(/5\s*000/.test(f.nom)) return !!TKN_PUB.vesmanOuvert || (TKN_PUB.ouvert && TKN_PUB.plas>0);   // 2e versement : jusqu'à l'acceptation
+  return !!TKN_PUB.ouvert && TKN_PUB.plas>0;
+}
+(function(){ var C=window.MASBET_CONTENU; if(!C || PLAY || PORTAIL || !window.fetch) return;
+  fetch(C+'?api=tkn&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); })
+    .then(function(j){ if(j && j.ok && j.data){ TKN_PUB=j.data; if(INFOS){ if(FORFAIT && !ekipVisible(FORFAIT)) FORFAIT=null; afficherForfaits(); } } }).catch(function(){});
+})();
 function estEv(nom){ return /^ev[eè]nman/i.test(String(nom||'')); }   // v131 : ticket d'un événement spécial
 function nomEv(nom){ return String(nom||'').replace(/^ev[eè]nman\s*[—–-]\s*/i,''); }
 function boutonLive(code, nom){
+  if(estSpons(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="/tikan/sponsor?kod='+encodeURIComponent(code)+'">'+T('ouvrirSpons')+'</a>';
+  if(estFinal(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="/tikan/plas?kod='+encodeURIComponent(code)+'">'+T('ouvrirFinal')+'</a>';
+  if(estEkip(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="/tikan/enskripsyon?kod='+encodeURIComponent(code)+'">'+T('ouvrirEkip')+'</a>';   // v147
   if(!window.MASBET_APP && !estSuite(nom) && !estDefi(nom)) return '';
   if(estPass(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="index.html#quiz&pro&pass='+encodeURIComponent(code)+'">'+T('ouvrirPass')+'</a>';
   if(estSuite(nom)) return '<a class="btn" style="margin-top:10px;text-decoration:none;text-align:center" href="suite.html#kod='+encodeURIComponent(code)+'">'+T('ouvrirSuite')+'</a>';

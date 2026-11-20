@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<title>Plas — Tikan Ansavo 6</title>
+<meta name="description" content="Rezève plas ou pou match Tikan Ansavo 6 (100 HTG) oswa gran final la (500 HTG) : tikè ak QR ak yon koupon Wi-Fi MasbetAirNet.">
+<meta property="og:title" content="Tikan Ansavo 6 — rezève plas ou">
+<meta property="og:description" content="Match : 100 HTG + Wi-Fi 25 goud · Final : 500 HTG + Wi-Fi 50 goud · MonCash oswa NatCash">
+<meta property="og:image" content="https://masbet.me/photos/parapli-teren.jpg">
+<meta name="theme-color" content="#14213d">
+<link rel="icon" href="/icon-192.png">
+<style>
+:root{--navy:#14213d;--or:#fca311;--cyan:#06B6D4;--bg:#eef1f7;--carte:#fff;--fg:#14213d;--doux:#5d6782;--ligne:#dfe4ee;--ok:#1d8a4e;--err:#c0392b;--wait:#b76e00;--champ:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1424;--carte:#141e33;--fg:#e6ecf7;--doux:#9aa7c2;--ligne:#26324d;--champ:#0f182b}}
+:root[data-theme="dark"]{--bg:#0d1424;--carte:#141e33;--fg:#e6ecf7;--doux:#9aa7c2;--ligne:#26324d;--champ:#0f182b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{background:linear-gradient(135deg,#14213d 0%,#1c2f58 100%);color:#fff;padding:14px 16px 18px}
+.top{display:flex;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.top img{width:38px;height:38px;border-radius:9px;background:#fff}
+.top .t{flex:1;min-width:0}.top .t small{display:block;color:#ffd77a;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.top .t b{display:block;font-size:19px;line-height:1.2}
+.lang{border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:8px;padding:5px 9px;font-weight:700;font-size:13px}
+main{max-width:640px;margin:0 auto;padding:12px 16px 48px}
+.carte{background:var(--carte);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
+h2{font-size:17px;margin:0 0 8px}h3{font-size:15px;margin:16px 0 6px}
+.doux{color:var(--doux);font-size:13.5px}
+.etat{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-block;font-size:12px;font-weight:800;border-radius:99px;padding:3px 10px}
+.p-ok{background:#e3f6ec;color:var(--ok)}.p-no{background:#fdecea;color:var(--err)}
+.barre{height:10px;background:var(--ligne);border-radius:99px;overflow:hidden;margin:10px 0 4px}.barre i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),#38d6ee)}
+.chif{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.chif div{background:var(--bg);border-radius:12px;padding:8px;text-align:center}.chif b{display:block;font-size:20px}.chif span{font-size:12px;color:var(--doux)}
+.onglets{display:flex;gap:6px;overflow-x:auto;margin:4px 0 12px;padding-bottom:2px;scrollbar-width:none}
+.onglets::-webkit-scrollbar{display:none}
+.onglets button{flex:0 0 auto;border:0;border-radius:99px;padding:9px 14px;background:var(--carte);color:var(--doux);font-weight:800;font-size:14px;box-shadow:0 1px 2px rgba(20,33,61,.08)}
+.onglets button.on{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .onglets button.on{background:var(--cyan);color:#06121f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .onglets button.on{background:var(--cyan);color:#06121f}}
+.cache{display:none!important}
+label{display:block;font-weight:700;font-size:13.5px;margin:12px 0 5px}
+input,select{width:100%;padding:11px 12px;border:1.5px solid var(--ligne);border-radius:11px;font:inherit;font-size:16px;background:var(--champ);color:var(--fg)}
+input:focus,select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.kat button{border:2px solid var(--ligne);background:var(--champ);color:var(--fg);border-radius:12px;padding:10px;font:inherit;font-weight:800;text-align:left}
+.kat button small{display:block;font-weight:600;color:var(--doux);font-size:12.5px}
+.kat button.on{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+.jwe{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(0,.7fr) 58px;gap:6px;align-items:center;margin-bottom:6px}
+.jwe span{font-size:12px;font-weight:800;color:var(--doux);text-align:center}
+.jwe input{padding:9px 8px;font-size:15px}
+.jwe.ob span{color:var(--cyan)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font:inherit;font-weight:800;font-size:16px;background:var(--or);color:var(--navy);text-align:center;text-decoration:none;margin-top:14px}
+.btn.sec{background:var(--bg);color:var(--fg);border:1.5px solid var(--ligne)}
+.btn:disabled{opacity:.55}
+.kod{display:flex;gap:8px}.kod input{text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800;letter-spacing:.06em}
+.kod button{flex:0 0 auto;border:0;border-radius:11px;padding:0 14px;background:var(--navy);color:#fff;font-weight:800}
+.msg{padding:10px 12px;border-radius:11px;margin-top:10px;font-size:14.5px}
+.msg.ok{background:#e3f6ec;color:#11683a}.msg.err{background:#fdecea;color:#a42c20}.msg.info{background:#e6f8fb;color:#0e6475}
+.logoz{display:flex;align-items:center;gap:10px}
+.logoz .v{width:56px;height:56px;border-radius:12px;border:1.5px dashed var(--ligne);background:var(--champ) center/contain no-repeat;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--doux)}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px}.chk input{width:20px;height:20px;flex:0 0 20px;margin-top:2px}
+.regles{margin:0;padding-left:18px;font-size:14px}.regles li{margin:3px 0}
+details summary{cursor:pointer;font-weight:800}
+.ek{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--ligne)}
+.ek:first-child{border-top:0}
+.ek .ini{width:36px;height:36px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--doux);flex:0 0 36px}
+.ek .nm{flex:1;min-width:0}.ek .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ek .nm small{color:var(--doux)}
+.st{font-size:11.5px;font-weight:800;border-radius:99px;padding:3px 9px;white-space:nowrap}
+.st-AVANS{background:#fff3df;color:var(--wait)}.st-PEYE{background:#e3f6ec;color:var(--ok)}.st-AKSEPTE{background:var(--ok);color:#fff}
+.st-PA{background:#fdecea;color:var(--err)}.st-RANB{background:var(--bg);color:var(--doux)}.st-FI{background:#f3e8ff;color:#7b2cbf}
+.recu{border:2px solid var(--cyan);border-radius:14px;padding:14px;text-align:center}
+.recu .n{font-family:ui-monospace,Menlo,monospace;font-size:28px;font-weight:900;letter-spacing:.04em}
+footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30px}
+.demo{background:#fff3df;color:#8a5a00;text-align:center;font-size:13px;padding:6px}
+.tik{display:block;width:100%;max-width:420px;margin:6px auto 0;border-radius:14px;box-shadow:0 4px 18px rgba(20,33,61,.25)}
+.kodw{font-family:ui-monospace,Menlo,monospace;font-size:24px;font-weight:900;letter-spacing:.08em;margin:6px 0;color:var(--fg)}
+.verdict{font-size:24px;font-weight:900;text-align:center;padding:16px;border-radius:14px}.verdict.ok{background:#1d8a4e;color:#fff}.verdict.ko{background:#c0392b;color:#fff}.verdict.wa{background:#b76e00;color:#fff}
+</style>
+</head>
+<body>
+<div id="demo" class="demo cache"></div>
+<header><div class="top"><img src="/logo.png" alt="" width="38" height="38"><div class="t"><small>LAPCSSSA · Tikan Ansavo 6</small><b id="tTitre"></b></div>
+  <button class="lang" id="bLang" onclick="langue(LANG==='ht'?'fr':'ht')">FR</button></div></header>
+<main>
+  <!-- Vérification d'un billet (QR) -->
+  <section class="carte cache" id="vVerif"><h2 data-t="vTitre"></h2><div id="vRes" class="doux">⏳</div>
+    <div id="vAdm" class="cache"><label for="aKod" data-t="lAdm"></label><input id="aKod" type="password" autocomplete="off">
+      <button class="btn" id="bAntre" onclick="antre()" data-t="bAntre"></button><div id="aMsg"></div></div></section>
+
+  <section class="carte" id="vInfo">
+    <h2 data-t="iTitre"></h2>
+    <div class="doux" id="iTxt"></div>
+    <div id="iEvs"></div>
+    <div class="chif" id="iChif"><div><b>500</b><span>HTG</span></div><div><b>🎁</b><span data-t="iBonus"></span></div><div><b>🎫</b><span data-t="iBiye"></span></div></div>
+    <a class="btn" href="/achte.html#final" data-t="bPeye"></a>
+  </section>
+
+  <section class="carte" id="vForm">
+    <h2 data-t="fTitre"></h2>
+    <label for="kod" data-t="lKod"></label><input id="kod" maxlength="12" placeholder="PL… / FN…" autocomplete="off" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800">
+    <label for="non" data-t="lNon"></label><input id="non" maxlength="60" autocomplete="name">
+    <label for="tel" data-t="lTel"></label><input id="tel" inputmode="tel" maxlength="16" placeholder="3X XX XX XX">
+    <button class="btn" id="bOk" onclick="rezeve()" data-t="bOk"></button>
+    <div class="doux" style="margin-top:8px" data-t="aDeja"></div>
+    <div id="fMsg"></div>
+  </section>
+
+  <section id="vTikes"></section>
+</main>
+<footer>LAPCSSSA · WhatsApp +509 3886-7953 · +509 3553-3817<br>Masbet Education · masbet.me</footer>
+<canvas id="cv" width="1080" height="1500" class="cache"></canvas>
+<script src="/config.js"></script>
+<script>
+/* QR code minimal (octets, correction M, versions 1-10) — écrit pour Masbet, sans bibliothèque externe */
+function qrMatrice(texte){
+  var oct=unescape(encodeURIComponent(texte)).split('').map(function(c){ return c.charCodeAt(0); });
+  var T=[null,[26,10,[[1,16]]],[44,16,[[1,28]]],[70,26,[[1,44]]],[100,18,[[2,32]]],[134,24,[[2,43]]],[172,16,[[4,27]]],[196,18,[[4,31]]],[242,22,[[2,38],[2,39]]],[292,22,[[3,36],[2,37]]],[346,26,[[4,43],[1,44]]]];
+  var AL=[null,[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50]];
+  var v=1,cap; for(;v<=10;v++){ cap=T[v][2].reduce(function(s,b){ return s+b[0]*b[1]; },0); if(4+8+8*oct.length<=cap*8) break; }
+  if(v>10) throw new Error('texte trop long');
+  var bits=[]; function ajoute(val,n){ for(var i=n-1;i>=0;i--) bits.push((val>>>i)&1); }
+  ajoute(4,4); ajoute(oct.length,8); oct.forEach(function(b){ ajoute(b,8); });
+  ajoute(0,Math.min(4,cap*8-bits.length)); while(bits.length%8) bits.push(0);
+  var data=[]; for(var i=0;i<bits.length;i+=8){ var b=0; for(var j=0;j<8;j++) b=(b<<1)|bits[i+j]; data.push(b); }
+  for(var p=0;data.length<cap;p++) data.push(p%2?0x11:0xEC);
+  function mul(x,y){ var z=0; for(var i=7;i>=0;i--){ z=(z<<1)^((z>>>7)*0x11D); z^=((y>>>i)&1)*x; } return z&255; }
+  var deg=T[v][1], div=[]; for(var i=0;i<deg;i++) div.push(0); div[deg-1]=1; var root=1;
+  for(var i=0;i<deg;i++){ for(var j=0;j<deg;j++){ div[j]=mul(div[j],root); if(j+1<deg) div[j]^=div[j+1]; } root=mul(root,2); }
+  function reste(d){ var r=div.map(function(){ return 0; }); d.forEach(function(b){ var f=b^r.shift(); r.push(0); div.forEach(function(c,i){ r[i]^=mul(c,f); }); }); return r; }
+  var blocs=[], k=0; T[v][2].forEach(function(g){ for(var n=0;n<g[0];n++){ var d=data.slice(k,k+g[1]); k+=g[1]; blocs.push({d:d,e:reste(d)}); } });
+  var fin=[], mx=Math.max.apply(null,blocs.map(function(b){ return b.d.length; }));
+  for(var i=0;i<mx;i++) blocs.forEach(function(b){ if(i<b.d.length) fin.push(b.d[i]); });
+  for(var i=0;i<deg;i++) blocs.forEach(function(b){ fin.push(b.e[i]); });
+  var N=v*4+17, M=[], F=[]; for(var y=0;y<N;y++){ M.push([]); F.push([]); for(var x=0;x<N;x++){ M[y].push(false); F[y].push(false); } }
+  function fx(x,y,d){ M[y][x]=!!d; F[y][x]=true; }
+  for(var i=0;i<N;i++){ fx(6,i,i%2===0); fx(i,6,i%2===0); }
+  [[3,3],[N-4,3],[3,N-4]].forEach(function(c){ for(var dy=-4;dy<=4;dy++) for(var dx=-4;dx<=4;dx++){ var xx=c[0]+dx, yy=c[1]+dy; if(xx<0||yy<0||xx>=N||yy>=N) continue; var di=Math.max(Math.abs(dx),Math.abs(dy)); fx(xx,yy,di!==2&&di!==4); } });
+  var a=AL[v]; for(var i=0;i<a.length;i++) for(var j=0;j<a.length;j++){ if((i===0&&j===0)||(i===0&&j===a.length-1)||(i===a.length-1&&j===0)) continue;
+    for(var dy=-2;dy<=2;dy++) for(var dx=-2;dx<=2;dx++) fx(a[i]+dx,a[j]+dy,Math.max(Math.abs(dx),Math.abs(dy))!==1); }
+  var MASQUE=2;
+  function format(){ var d=(0<<3)|MASQUE, r=d; for(var i=0;i<10;i++) r=(r<<1)^((r>>>9)*0x537); var b=((d<<10)|r)^0x5412, g=function(i){ return (b>>>i)&1; };
+    for(var i=0;i<=5;i++) fx(8,i,g(i)); fx(8,7,g(6)); fx(8,8,g(7)); fx(7,8,g(8)); for(var i=9;i<15;i++) fx(14-i,8,g(i));
+    for(var i=0;i<8;i++) fx(N-1-i,8,g(i)); for(var i=8;i<15;i++) fx(8,N-15+i,g(i)); fx(8,N-8,1); }
+  format();
+  if(v>=7){ var r=v; for(var i=0;i<12;i++) r=(r<<1)^((r>>>11)*0x1F25); var vb=(v<<12)|r;
+    for(var i=0;i<18;i++){ var bt=(vb>>>i)&1, aa=N-11+i%3, bb=Math.floor(i/3); fx(aa,bb,bt); fx(bb,aa,bt); } }
+  var i=0; for(var droite=N-1;droite>=1;droite-=2){ if(droite===6) droite=5;
+    for(var vert=0;vert<N;vert++) for(var j=0;j<2;j++){ var x=droite-j, haut=((droite+1)&2)===0, y=haut?N-1-vert:vert;
+      if(!F[y][x] && i<fin.length*8){ M[y][x]=((fin[i>>>3]>>>(7-(i&7)))&1)===1; i++; } } }
+  for(var y=0;y<N;y++) for(var x=0;x<N;x++) if(!F[y][x] && x%3===0) M[y][x]=!M[y][x];   // masque 2 : x % 3 == 0
+  return M;
+}
+
+// =====================================================================
+// Places Tikan Ansavo 6 : soirées de matchs (100 HTG, code PL…) et finale (500 HTG, code FN…) payées sur Masbet Pay
+// → billet téléchargeable avec QR (vérifiable à l'entrée) + coupon Wi-Fi MasbetAirNet imprimé sur le billet.
+// La même page sert masbet.me/tikan/plas et masbet.me/tikan/final. Projet Contenu, fichier Tikan.gs.
+// =====================================================================
+var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', FINALE=/final/.test(location.pathname), EVS=[];
+var TXT={
+ ht:{titre:'Plas pou gran final la',titreP:'Plas pou match yo',iTitreP:'🎫 Rezève plas ou pou match yo',iTxtP:'Chak swa match : <b>100 HTG</b> ak yon <b>koupon Wi-Fi MasbetAirNet 25 goud</b> sou tikè a. Gran final la : <b>500 HTG</b> ak yon koupon 50 goud. Tikè a gen yon kòd QR yo verifye nan eskalye gradin nan.',evVen:'Swa ki ap vini yo',evPa:'Poko gen plas an vant. Tounen pita.',iTitre:'🏆 Gran final Tikan Ansavo 6',iTxt:'<b>Samdi 9 janvye 2027</b>, sou pon, ri Larivyè. Rezève plas ou pou <b>500 HTG</b> : ou resevwa yon <b>tikè</b> pou w telechaje (ak yon kòd QR yo verifye nan eskalye gradin nan), ak yon <b>koupon Wi-Fi MasbetAirNet 50 goud</b> bonis sou tikè a.',
+  iBonus:'Wi-Fi 50 goud bonis',iBiye:'Tikè ak QR',bPeye:'💳 Peye 500 HTG (MonCash / NatCash)',
+  fTitre:'Mwen gen kòd la : resevwa tikè m',lKod:'Kòd rezèvasyon an (PL… oswa FN…), sou paj « Achte » lè w fin peye',lNon:'Non ak siyati (k ap antre ak tikè a)',lTel:'Telefòn ou',bOk:'Resevwa tikè m',
+  aDeja:'Ou pèdi tikè w ? Antre menm kòd la ak menm telefòn nan : tikè a ap tounen.',
+  tikTitre:'Tikè mwen',plas:'Plas',bTel:'⬇️ Telechaje tikè a',aImg:'Si bouton an pa mache : peze imaj la lontan epi « Anrejistre imaj la ».',
+  bonis:function(k,f){ return '🎁 <b>Kòd Wi-Fi bonis ou</b> ('+esc(f||'50 goud')+') : <div class="kodw">'+esc(k)+'</div>Konekte sou <b>Masbet_AirNet</b> epi antre kòd sa a. <i>Kòd la sou tikè a tou : pa pataje imaj tikè a ak lòt moun.</i>'; },
+  okRez:'Plas ou rezève ✓',dejaRez:'Men tikè ou ✓',
+  vTitre:'Verifikasyon tikè',valab:'✅ TIKÈ VALAB',paValab:'❌ TIKÈ SA A PA VALAB',dejaAntre:function(t,n){ return '⚠️ Tikè sa a deja eskane jodi a a <b>'+esc(t)+'</b>. Mande moun nan non li : se dwe <b>'+esc(n||'')+'</b>. Si non an pa koresponn, li pa ka monte.'; },
+  lAdm:'Kòd administratè (eskalye gradin nan)',bAntre:'✔ Make l monte sou gradin nan',antreOk:'Li ka monte ✓ — bon match !',
+  chKod:'Antre kòd rezèvasyon an (li kòmanse ak PL oswa FN).',erreurReseau:'Pa gen rezo. Eseye ankò.',envoi:'Ap voye…',paJodi:function(e){ return '⚠️ Tikè sa a se pou <b>'+esc(e.lib)+'</b> ('+esc(e.dat)+'), pa pou jodi a.'; },
+  tImg:{t1:'GRAN FINAL',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',dat:'Samdi 9 janvye 2027 · sou pon',plas:'PLAS',non:'NON',verif:'Verifye tikè a : eskane QR la',pri:'500 HTG',wifi:'🎁 KOUPON WI-FI MASBETAIRNET',wifiAide:'Konekte sou Masbet_AirNet epi antre kòd la'}},
+ fr:{titre:'Place pour la grande finale',titreP:'Places pour les matchs',iTitreP:'🎫 Réservez votre place pour les matchs',iTxtP:'Chaque soirée de matchs : <b>100 HTG</b> avec un <b>coupon Wi-Fi MasbetAirNet de 25 gourdes</b> sur le billet. La grande finale : <b>500 HTG</b> avec un coupon de 50 gourdes. Le billet porte un QR code vérifié à l\'escalier du gradin.',evVen:'Prochaines soirées',evPa:'Pas encore de places en vente. Revenez plus tard.',iTitre:'🏆 Grande finale Tikan Ansavo 6',iTxt:'<b>Samedi 9 janvier 2027</b>, sou pon, rue de la Rivière. Réservez votre place pour <b>500 HTG</b> : vous recevez un <b>billet</b> à télécharger (avec un QR code vérifié à l\'escalier du gradin) avec un <b>coupon Wi-Fi MasbetAirNet de 50 gourdes</b> offert sur le billet.',
+  iBonus:'Wi-Fi 50 gourdes offert',iBiye:'Billet avec QR',bPeye:'💳 Payer 500 HTG (MonCash / NatCash)',
+  fTitre:'J\'ai le code : recevoir mon billet',lKod:'Code de réservation (PL… ou FN…), reçu sur la page « Achte » après le paiement',lNon:'Nom et prénom (de la personne qui entre)',lTel:'Votre téléphone',bOk:'Recevoir mon billet',
+  aDeja:'Billet perdu ? Entrez le même code et le même téléphone : le billet revient.',
+  tikTitre:'Mon billet',plas:'Place',bTel:'⬇️ Télécharger le billet',aImg:'Si le bouton ne marche pas : appuyez longtemps sur l\'image puis « Enregistrer l\'image ».',
+  bonis:function(k,f){ return '🎁 <b>Votre code Wi-Fi offert</b> ('+esc(f||'50 gourdes')+') : <div class="kodw">'+esc(k)+'</div>Connectez-vous à <b>Masbet_AirNet</b> et entrez ce code. <i>Le code est aussi sur le billet : ne partagez pas l\'image du billet.</i>'; },
+  okRez:'Place réservée ✓',dejaRez:'Voici votre billet ✓',
+  vTitre:'Vérification du billet',valab:'✅ BILLET VALABLE',paValab:'❌ CE BILLET N\'EST PAS VALABLE',dejaAntre:function(t,n){ return '⚠️ Billet déjà scanné aujourd\'hui à <b>'+esc(t)+'</b>. Demandez le nom : ce doit être <b>'+esc(n||'')+'</b>. Si le nom ne correspond pas, la personne ne monte pas.'; },
+  lAdm:'Code administrateur (escalier du gradin)',bAntre:'✔ Marquer : peut monter au gradin',antreOk:'Peut monter ✓ — bon match !',
+  chKod:'Entrez le code de réservation (il commence par PL ou FN).',erreurReseau:'Pas de réseau. Réessayez.',envoi:'Envoi…',paJodi:function(e){ return '⚠️ Ce billet est pour <b>'+esc(e.lib)+'</b> ('+esc(e.dat)+'), pas pour aujourd\'hui.'; },
+  tImg:{t1:'GRANDE FINALE',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',dat:'Samedi 9 janvier 2027 · sou pon',plas:'PLACE',non:'NOM',verif:'Vérifier le billet : scannez le QR',pri:'500 HTG',wifi:'🎁 COUPON WI-FI MASBETAIRNET',wifiAide:'Connectez-vous à Masbet_AirNet et entrez le code'}}
+};
+function T(k){ return TXT[LANG][k]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function msg(id,t,c){ $(id).innerHTML=t?'<div class="msg '+(c||'info')+'">'+t+'</div>':''; }
+function appareil(){ var a=lire('masbet_appareil'); if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); } return a; }
+function errTxt(e){ var m=String(e&&e.message||e||''); return (!m||/NetworkError|Failed to fetch|network|Load failed/i.test(m))?T('erreurReseau'):m; }
+function lireApi(q){ if(DEMO) return demo(q); q._=Date.now(); var u=CONTENU+'?'+Object.keys(q).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(q[k]); }).join('&');
+  return fetch(u,{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; }); }
+function poster(c){ if(DEMO) return demo(c); return fetch(CONTENU,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)})
+  .then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; }); }
+
+// ---------- Billets gardés sur ce téléphone ----------
+function mesTikes(){ try{ var a=JSON.parse(lire('masbet_fn_tikes')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function garderTike(t){ var a=mesTikes().filter(function(x){ return x.n!==t.n; }); a.unshift({n:t.n,non:t.non,j:t.j,bonus:t.bonus,forfait:t.forfait,ev:t.ev||null}); ecrire('masbet_fn_tikes',JSON.stringify(a.slice(0,10))); }
+function lienVerif(j){ return 'https://masbet.me/tikan/plas?b='+j; }
+
+// ---------- Image du billet (canvas 1080×1500) ----------
+var LOGO=new Image(); LOGO.src='/logo.png';
+function imageTike(t){
+  // v147 : une soirée peut avoir 2 ou 3 matchs → un match par ligne sous la date ; le reste du billet descend d'autant
+  var ev=t.ev||{kind:'final',prix:500}, fin=ev.kind!=='match', cv=$('cv'), W=1080, I=T('tImg');
+  var lignes=(!fin && ev.lib)? String(ev.lib).split(/\s*·\s*/).filter(Boolean).slice(0,4) : [];
+  var D=lignes.length? lignes.length*44-10 : 0;            // décalage vertical dû aux lignes des matchs
+  var H=(t.bonus?1840:1500)+D; cv.width=W; cv.height=H; var c=cv.getContext('2d');
+  var g=c.createLinearGradient(0,0,W,H); g.addColorStop(0,'#14213d'); g.addColorStop(1,'#1d3366'); c.fillStyle=g; c.fillRect(0,0,W,H);
+  c.fillStyle='#fca311'; c.fillRect(0,0,W,16); c.fillRect(0,H-16,W,16);
+  if(LOGO.complete&&LOGO.naturalWidth){ c.save(); c.beginPath(); c.arc(W/2,150,78,0,7); c.fillStyle='#fff'; c.fill(); c.clip(); c.drawImage(LOGO,W/2-70,80,140,140); c.restore(); }
+  c.textAlign='center'; c.fillStyle='#ffd77a'; c.font='800 46px system-ui,Arial,sans-serif'; c.fillText(fin?I.t1:I.t1m,W/2,300);
+  c.fillStyle='#fff'; c.font='900 92px system-ui,Arial Black,sans-serif'; c.fillText(I.t2,W/2,400);
+  c.fillStyle='#c9d3ea'; c.font='600 38px system-ui,Arial,sans-serif'; c.fillText(fin?I.dat:(ev.dat||'')+' · '+I.souPon,W/2,462);
+  lignes.forEach(function(l,k){ c.fillStyle='#ffd77a'; var f=34; c.font='700 '+f+'px system-ui,Arial,sans-serif';
+    while(f>20 && c.measureText('⚽ '+l).width>W-140){ f-=2; c.font='700 '+f+'px system-ui,Arial,sans-serif'; }
+    c.fillText((lignes.length>1?'⚽ ':'')+l,W/2,510+k*44); });
+  // zone blanche
+  var x0=90, y0=520+D, w=W-180, h=860; c.fillStyle='#fff'; arrondi(c,x0,y0,w,h,36); c.fill();
+  c.fillStyle='#5d6782'; c.font='700 30px system-ui,Arial,sans-serif'; c.fillText(I.plas,W/2,590+D);
+  c.fillStyle='#14213d'; c.font='900 120px ui-monospace,Menlo,Consolas,monospace'; c.fillText(t.n,W/2,705+D);
+  c.fillStyle='#5d6782'; c.font='700 30px system-ui,Arial,sans-serif'; c.fillText(I.non,W/2,775+D);
+  c.fillStyle='#14213d'; var fs=t.non.length>22?46:58; c.font='800 '+fs+'px system-ui,Arial,sans-serif'; c.fillText(t.non,W/2,840+D);
+  var M=qrMatrice(lienVerif(t.j)), N=M.length, q=440, m=q/(N+8), qx=W/2-q/2, qy=880+D;
+  c.fillStyle='#fff'; c.fillRect(qx,qy,q,q); c.fillStyle='#000';
+  for(var y=0;y<N;y++) for(var x=0;x<N;x++) if(M[y][x]) c.fillRect(Math.floor(qx+(x+4)*m),Math.floor(qy+(y+4)*m),Math.ceil(m),Math.ceil(m));
+  c.fillStyle='#5d6782'; c.font='600 28px system-ui,Arial,sans-serif'; c.fillText(I.verif,W/2,1350+D);
+  c.fillStyle='#ffd77a'; c.font='800 40px system-ui,Arial,sans-serif'; c.fillText((ev.prix||500)+' HTG · LAPCSSSA · masbet.me',W/2,1450+D);
+  if(t.bonus){   // v147 : coupon Wi-Fi MasbetAirNet en bas du billet, séparé par un pointillé
+    c.strokeStyle='#ffd77a'; c.lineWidth=4; c.setLineDash([18,14]); c.beginPath(); c.moveTo(40,1500+D); c.lineTo(W-40,1500+D); c.stroke(); c.setLineDash([]);
+    c.fillStyle='#fff'; arrondi(c,90,1540+D,W-180,240,30); c.fill();
+    c.fillStyle='#14213d'; c.font='800 34px system-ui,Arial,sans-serif'; c.fillText(I.wifi+' · '+(t.forfait||(fin?'50 goud':'25 goud')).toUpperCase(),W/2,1600+D);
+    c.font='900 78px ui-monospace,Menlo,Consolas,monospace'; c.fillText(t.bonus,W/2,1690+D);
+    c.fillStyle='#5d6782'; c.font='600 28px system-ui,Arial,sans-serif'; c.fillText(I.wifiAide,W/2,1745+D);
+  }
+  return cv.toDataURL('image/png');
+}
+function arrondi(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function afficherTikes(entete){
+  var a=mesTikes(); if(!a.length){ $('vTikes').innerHTML=''; return; }
+  $('vTikes').innerHTML=a.map(function(t,i){ var src=imageTike(t);
+    return '<div class="carte">'+(i===0&&entete?'<div class="msg ok" style="margin:0 0 10px">'+entete+'</div>':'')+'<h2>'+T('tikTitre')+' · '+esc(t.n)+'</h2>'+
+      (t.ev&&t.ev.dat?'<div class="doux" style="margin-bottom:6px">'+esc(t.ev.lib)+' · '+esc(t.ev.dat)+'</div>':'')+'<img class="tik" src="'+src+'" alt="'+esc(T('tikTitre')+' '+t.n)+'">'+
+      '<a class="btn" download="Tike-Tikan-'+esc(t.n)+'.png" href="'+src+'">'+T('bTel')+'</a><div class="doux" style="margin-top:6px">'+T('aImg')+'</div>'+
+      (t.bonus?'<div class="msg info" style="margin-top:12px">'+T('bonis')(t.bonus,t.forfait)+'</div>':'')+'</div>'; }).join('');
+}
+function rezeve(){
+  var k=String($('kod').value||'').toUpperCase().replace(/[^A-Z0-9]/g,''); $('kod').value=k;
+  if(!/^(FN|PL)[A-Z0-9]{8}$/.test(k)) return msg('fMsg',T('chKod'),'err');
+  var b=$('bOk'); b.disabled=true; b.textContent=T('envoi'); msg('fMsg','');
+  poster({api:'tkn_fn',kod:k,non:$('non').value,tel:$('tel').value,appareil:appareil()}).then(function(r){
+    garderTike(r); $('kod').value=''; afficherTikes(r.deja?T('dejaRez'):T('okRez'));
+    setTimeout(function(){ $('vTikes').scrollIntoView({behavior:'smooth',block:'start'}); },150);
+  }).catch(function(e){ msg('fMsg',esc(errTxt(e)),'err'); }).then(function(){ b.disabled=false; b.textContent=T('bOk'); });
+}
+// ---------- Vérification à l'entrée : masbet.me/tikan/final?b=<jeton> ----------
+var JET=(/[?&]b=([A-Za-z0-9]{12})\b/.exec(location.search)||[])[1]||'';
+function verifier(){
+  $('vVerif').classList.remove('cache'); $('vInfo').classList.add('cache'); $('vForm').classList.add('cache');
+  lireApi({api:'tkn_fnv',b:JET,appareil:appareil()}).then(function(r){
+    if(!r.valab){ $('vRes').innerHTML='<div class="verdict ko">'+T('paValab')+'</div>'; return; }
+    var ok=!r.antre&&r.jodi;
+    $('vRes').innerHTML='<div class="verdict '+(ok?'ok':'wa')+'">'+T('valab')+'</div><div class="recu" style="margin-top:10px"><div class="doux">'+T('plas')+'</div><div class="n">'+esc(r.n)+'</div><b style="font-size:18px">'+esc(r.non)+'</b>'+
+      (r.ev?'<div class="doux" style="margin-top:6px">'+esc(r.ev.lib)+' · '+esc(r.ev.dat)+'</div>':'')+'</div>'+
+      (r.antre?'<div class="msg err">'+T('dejaAntre')(r.antre,r.non)+'</div>':'')+(!r.jodi&&r.ev?'<div class="msg err">'+T('paJodi')(r.ev)+'</div>':'');
+    if(ok) $('vAdm').classList.remove('cache');
+  }).catch(function(e){ $('vRes').innerHTML='<div class="msg err">'+esc(errTxt(e))+'</div>'; });
+}
+function antre(){
+  var k=$('aKod').value.trim(); if(!k) return; try{ sessionStorage.setItem('masbet_fn_adm',k); }catch(e){}
+  var b=$('bAntre'); b.disabled=true;
+  poster({api:'tkn_fnantre',b:JET,code:k,appareil:appareil()}).then(function(r){
+    if(r.deja){ msg('aMsg',T('dejaAntre')(r.deja,r.non),'err'); } else { msg('aMsg',T('antreOk'),'ok'); $('bAntre').classList.add('cache'); }
+  }).catch(function(e){ msg('aMsg',esc(errTxt(e)),'err'); }).then(function(){ b.disabled=false; });
+}
+// ---------- Langue ----------
+function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG; $('bLang').textContent=LANG==='ht'?'FR':'KR';
+  document.querySelectorAll('[data-t]').forEach(function(el){ var v=T(el.getAttribute('data-t')); if(typeof v==='string') el.textContent=v; });
+  $('tTitre').textContent=FINALE?T('titre'):T('titreP'); $('iTxt').innerHTML=FINALE?T('iTxt'):T('iTxtP'); document.title=(FINALE?T('titre'):T('titreP'))+' — Tikan Ansavo 6';
+  document.querySelector('#vInfo h2').textContent=FINALE?T('iTitre'):T('iTitreP'); $('iChif').classList.toggle('cache',!FINALE); afficherEvs();
+  if(JET) verifier(); else afficherTikes(''); }
+(function(){ var l=lire('masbet_lang'); try{ var a=sessionStorage.getItem('masbet_fn_adm'); if(a) $('aKod').value=a; }catch(e){} langue(l==='fr'?'fr':'ht'); })();
+(function(){ var m=/[?&]kod=([A-Za-z0-9]+)/.exec(location.search); if(m){ $('kod').value=m[1].toUpperCase(); try{ history.replaceState(null,'',location.pathname); }catch(e){} setTimeout(function(){ $('non').focus(); },300); } })();
+LOGO.onload=function(){ if(!JET) afficherTikes(''); };
+
+// ---------- Démonstration (sans config.js) ----------
+function demo(q){ $('demo').classList.remove('cache'); $('demo').textContent='Mode démonstration : codes d\'essai PLDEMO2026 (match), FNDEMO2026 (finale), code admin DEMO.';
+  var D=window.DFN=window.DFN||{l:[]};
+  return new Promise(function(ok,ko){ setTimeout(function(){ try{
+    if(q.api==='tkn_fn' && q.kod==='PLDEMO2026'){ if(String(q.non||'').trim().length<2) throw new Error('Ekri non ak siyati ou.');
+      return ok({n:'M1219-001',non:String(q.non).trim(),j:'DEMOJETON234',bonus:'MAQ7R2ZK',forfait:'25 goud',ev:{lib:window.DEMO3?'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto · Baconnois FC – Orouck United':'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'}}); }
+    if(q.api==='tkn_fn'){ if(q.kod!=='FNDEMO2026') throw new Error('Kòd rezèvasyon an pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak FN).');
+      if(String(q.non||'').trim().length<2) throw new Error('Ekri non ak siyati ou.'); if(String(q.tel||'').replace(/\D/g,'').length<8) throw new Error('Ekri nimewo telefòn ou (8 chif).');
+      var x=D.l[0]; if(x) return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',deja:true,ev:{lib:'Gran final',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}});
+      x={n:'F-001',non:String(q.non).trim(),j:'DEMOJETON999'}; D.l.push(x); return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',ev:{lib:'Gran final',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}}); }
+    if(q.api==='tkn_ev') return ok({ev:[{id:'J20261219',lib:'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',jou:'2026-12-19',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'},{id:'FINAL',lib:'Gran final',jou:'2027-01-09',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}]});
+    if(q.api==='tkn_fnv') return ok(q.b==='DEMOJETON234'?{valab:true,n:'M1219-001',non:'Jan Pyè',antre:D.antre||'',jodi:true,ev:{lib:'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'}}:{valab:false});
+    if(q.api==='tkn_fnantre'){ if(q.code!=='DEMO') throw new Error('Kòd administratè a pa bon.'); if(D.antre) return ok({n:'F-001',non:'Jan Pyè',deja:D.antre}); D.antre='09/01/2027 17:42'; return ok({n:'F-001',non:'Jan Pyè',ok:true}); }
+    throw new Error('Action inconnue.'); }catch(e){ ko(e); } },300); }); }
+
+// ---------- Soirées à venir (page /tikan/plas) ----------
+function afficherEvs(){ var z=$('iEvs'); if(!z) return; if(FINALE){ z.innerHTML=''; return; }
+  z.innerHTML='<h3>'+T('evVen')+'</h3>'+(EVS.length?EVS.map(function(e){ return '<div class="ek"><span class="ini">'+(e.kind==='final'?'🏆':'⚽')+'</span><span class="nm"><b>'+esc(e.dat)+'</b><small>'+esc(e.lib)+'</small></span><span class="st st-PEYE">'+esc(e.prix)+' HTG</span></div>'; }).join(''):'<div class="doux">'+T('evPa')+'</div>'); }
+if(!FINALE && !JET) lireApi({api:'tkn_ev'}).then(function(r){ EVS=r.ev||[]; afficherEvs(); }).catch(function(){});
+</script>
+</body>
+</html>

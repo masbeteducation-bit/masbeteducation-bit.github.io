@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<title>Enskripsyon ekip — Tikan Ansavo 6</title>
+<meta name="description" content="Enskri ekip ou nan chanpyona Tikan Ansavo 6 (LAPCSSSA) : peye ak MonCash oswa NatCash, epi swiv estati ekip la.">
+<meta property="og:title" content="Enskripsyon ekip — Tikan Ansavo 6">
+<meta property="og:description" content="Enskri ekip ou an liy : 10 000 HTG oswa 5 000 + 5 000, ak MonCash oswa NatCash.">
+<meta property="og:image" content="https://masbet.me/photos/parapli-teren.jpg">
+<meta name="theme-color" content="#14213d">
+<link rel="icon" href="/icon-192.png">
+<style>
+:root{--navy:#14213d;--or:#fca311;--cyan:#06B6D4;--bg:#eef1f7;--carte:#fff;--fg:#14213d;--doux:#5d6782;--ligne:#dfe4ee;--ok:#1d8a4e;--err:#c0392b;--wait:#b76e00;--champ:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1424;--carte:#141e33;--fg:#e6ecf7;--doux:#9aa7c2;--ligne:#26324d;--champ:#0f182b}}
+:root[data-theme="dark"]{--bg:#0d1424;--carte:#141e33;--fg:#e6ecf7;--doux:#9aa7c2;--ligne:#26324d;--champ:#0f182b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+header{background:linear-gradient(135deg,#14213d 0%,#1c2f58 100%);color:#fff;padding:14px 16px 18px}
+.top{display:flex;align-items:center;gap:10px;max-width:640px;margin:0 auto}
+.top img{width:38px;height:38px;border-radius:9px;background:#fff}
+.top .t{flex:1;min-width:0}.top .t small{display:block;color:#ffd77a;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.top .t b{display:block;font-size:19px;line-height:1.2}
+.lang{border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:8px;padding:5px 9px;font-weight:700;font-size:13px}
+main{max-width:640px;margin:0 auto;padding:12px 16px 48px}
+.carte{background:var(--carte);border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(20,33,61,.08)}
+h2{font-size:17px;margin:0 0 8px}h3{font-size:15px;margin:16px 0 6px}
+.doux{color:var(--doux);font-size:13.5px}
+.etat{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pill{display:inline-block;font-size:12px;font-weight:800;border-radius:99px;padding:3px 10px}
+.p-ok{background:#e3f6ec;color:var(--ok)}.p-no{background:#fdecea;color:var(--err)}
+.barre{height:10px;background:var(--ligne);border-radius:99px;overflow:hidden;margin:10px 0 4px}.barre i{display:block;height:100%;background:linear-gradient(90deg,var(--cyan),#38d6ee)}
+.chif{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.chif div{background:var(--bg);border-radius:12px;padding:8px;text-align:center}.chif b{display:block;font-size:20px}.chif span{font-size:12px;color:var(--doux)}
+.onglets{display:flex;gap:6px;overflow-x:auto;margin:4px 0 12px;padding-bottom:2px;scrollbar-width:none}
+.onglets::-webkit-scrollbar{display:none}
+.onglets button{flex:0 0 auto;border:0;border-radius:99px;padding:9px 14px;background:var(--carte);color:var(--doux);font-weight:800;font-size:14px;box-shadow:0 1px 2px rgba(20,33,61,.08)}
+.onglets button.on{background:var(--navy);color:#fff}
+:root[data-theme="dark"] .onglets button.on{background:var(--cyan);color:#06121f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .onglets button.on{background:var(--cyan);color:#06121f}}
+.cache{display:none!important}
+label{display:block;font-weight:700;font-size:13.5px;margin:12px 0 5px}
+input,select{width:100%;padding:11px 12px;border:1.5px solid var(--ligne);border-radius:11px;font:inherit;font-size:16px;background:var(--champ);color:var(--fg)}
+input:focus,select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kat{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.kat button{border:2px solid var(--ligne);background:var(--champ);color:var(--fg);border-radius:12px;padding:10px;font:inherit;font-weight:800;text-align:left}
+.kat button small{display:block;font-weight:600;color:var(--doux);font-size:12.5px}
+.kat button.on{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+.jwe{display:grid;grid-template-columns:22px minmax(0,1fr) minmax(0,.7fr) 58px;gap:6px;align-items:center;margin-bottom:6px}
+.jwe span{font-size:12px;font-weight:800;color:var(--doux);text-align:center}
+.jwe input{padding:9px 8px;font-size:15px}
+.jwe.ob span{color:var(--cyan)}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:13px;font:inherit;font-weight:800;font-size:16px;background:var(--or);color:var(--navy);text-align:center;text-decoration:none;margin-top:14px}
+.btn.sec{background:var(--bg);color:var(--fg);border:1.5px solid var(--ligne)}
+.btn:disabled{opacity:.55}
+.kod{display:flex;gap:8px}.kod input{text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800;letter-spacing:.06em}
+.kod button{flex:0 0 auto;border:0;border-radius:11px;padding:0 14px;background:var(--navy);color:#fff;font-weight:800}
+.msg{padding:10px 12px;border-radius:11px;margin-top:10px;font-size:14.5px}
+.msg.ok{background:#e3f6ec;color:#11683a}.msg.err{background:#fdecea;color:#a42c20}.msg.info{background:#e6f8fb;color:#0e6475}
+.logoz{display:flex;align-items:center;gap:10px}
+.logoz .v{width:56px;height:56px;border-radius:12px;border:1.5px dashed var(--ligne);background:var(--champ) center/contain no-repeat;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--doux)}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:14px}.chk input{width:20px;height:20px;flex:0 0 20px;margin-top:2px}
+.regles{margin:0;padding-left:18px;font-size:14px}.regles li{margin:3px 0}
+details summary{cursor:pointer;font-weight:800}
+.ek{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--ligne)}
+.ek:first-child{border-top:0}
+.ek .ini{width:36px;height:36px;border-radius:9px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--doux);flex:0 0 36px}
+.ek .nm{flex:1;min-width:0}.ek .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ek .nm small{color:var(--doux)}
+.st{font-size:11.5px;font-weight:800;border-radius:99px;padding:3px 9px;white-space:nowrap}
+.st-AVANS{background:#fff3df;color:var(--wait)}.st-PEYE{background:#e3f6ec;color:var(--ok)}.st-AKSEPTE{background:var(--ok);color:#fff}
+.st-PA{background:#fdecea;color:var(--err)}.st-RANB{background:var(--bg);color:var(--doux)}.st-FI{background:#f3e8ff;color:#7b2cbf}
+.recu{border:2px solid var(--cyan);border-radius:14px;padding:14px;text-align:center}
+.recu .n{font-family:ui-monospace,Menlo,monospace;font-size:28px;font-weight:900;letter-spacing:.04em}
+footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30px}
+.demo{background:#fff3df;color:#8a5a00;text-align:center;font-size:13px;padding:6px}
+</style>
+</head>
+<body>
+<div id="demo" class="demo cache"></div>
+<header><div class="top"><img src="/logo.png" alt="" width="38" height="38"><div class="t"><small>LAPCSSSA · 6<sup>e</sup> edisyon</small><b id="tTitre">Enskripsyon ekip — Tikan Ansavo</b></div>
+  <button class="lang" id="bLang" onclick="langue(LANG==='ht'?'fr':'ht')">FR</button></div></header>
+<main>
+  <section class="carte" id="cEtat"><div class="doux">⏳</div></section>
+
+  <div class="onglets" id="ong"></div>
+
+  <!-- 1. Enskri -->
+  <section class="carte" id="vEnskri">
+    <h2 data-t="fTitre"></h2>
+    <div id="fFerme"></div>
+    <div id="fForm">
+      <label data-t="lKat"></label>
+      <div class="kat"><button type="button" id="kG" onclick="kat('G')"></button><button type="button" id="kF" onclick="kat('F')"></button></div>
+      <h3 data-t="hEkip"></h3>
+      <label for="ekip" data-t="lEkip"></label><input id="ekip" maxlength="40" autocomplete="off">
+      <label for="zon" data-t="lZon"></label><input id="zon" maxlength="40">
+      <div class="duo"><div><label for="m1" data-t="lM1"></label><input id="m1" maxlength="30"></div><div><label for="m2" data-t="lM2"></label><input id="m2" maxlength="30"></div></div>
+      <h3 data-t="hResp"></h3>
+      <div class="duo"><div><label for="dir" data-t="lDir"></label><input id="dir" maxlength="60" autocomplete="name"></div><div><label for="tdir" data-t="lTel"></label><input id="tdir" inputmode="tel" maxlength="16" placeholder="3X XX XX XX"></div></div>
+      <div class="duo"><div><label for="kap" data-t="lKap"></label><input id="kap" maxlength="60"></div><div><label for="tkap" data-t="lTel"></label><input id="tkap" inputmode="tel" maxlength="16" placeholder="4X XX XX XX"></div></div>
+      <h3 data-t="hJwe"></h3><div class="doux" data-t="aJwe"></div>
+      <div class="jwe" style="margin-top:8px"><span>#</span><span style="text-align:left" data-t="cNon"></span><span style="text-align:left" data-t="cTi"></span><span data-t="cNm"></span></div>
+      <div id="jwe"></div>
+      <h3 data-t="hLogo"></h3>
+      <div class="logoz"><div class="v" id="lgV">🛡️</div><div style="flex:1"><button type="button" class="btn sec" style="margin:0;padding:10px" onclick="document.getElementById('lgF').click()" data-t="bLogo"></button>
+        <div class="doux" style="margin-top:4px" data-t="aLogo"></div></div></div>
+      <input type="file" id="lgF" accept="image/*" class="cache">
+      <div id="zPeye">
+        <h3 data-t="hPeye"></h3>
+        <div class="doux" id="aPeye"></div>
+        <a class="btn sec" id="bAchte" href="/achte.html#ekip" data-t="bAchte" style="margin-top:10px"></a>
+        <label for="kod" data-t="lKod"></label>
+        <div class="kod"><input id="kod" maxlength="12" placeholder="EK…" autocomplete="off" spellcheck="false"><button type="button" onclick="verifKod()" data-t="bVerif"></button></div>
+        <div id="kMsg"></div>
+      </div>
+      <label class="chk"><input type="checkbox" id="pwo"><span data-t="lPwo"></span></label>
+      <button class="btn" id="bVoye" onclick="voye()" data-t="bVoye"></button>
+      <div id="fMsg"></div>
+      <div class="doux" style="margin-top:8px" data-t="aBrouyon"></div>
+    </div>
+  </section>
+
+  <!-- 2. Ekip mwen -->
+  <section class="carte cache" id="vMwen">
+    <h2 data-t="mTitre"></h2>
+    <div id="mList"></div>
+    <label for="mN" data-t="lAjN"></label>
+    <div class="kod"><input id="mN" maxlength="8" placeholder="T6G-07"><button type="button" onclick="ajouterN()" data-t="bAj"></button></div>
+  </section>
+
+  <!-- 3. 2e vèsman -->
+  <section class="carte cache" id="vVesman">
+    <h2 data-t="vTitre"></h2>
+    <div class="doux" data-t="aVesman"></div>
+    <div id="vFerme"></div>
+    <div id="vForm">
+      <a class="btn sec" href="/achte.html#ekip" data-t="bAchte5" style="margin-top:10px"></a>
+      <label for="vN" data-t="lN"></label><input id="vN" maxlength="8" placeholder="T6G-07" autocomplete="off">
+      <label for="vKod" data-t="lKod5"></label><input id="vKod" maxlength="12" placeholder="EK…" autocomplete="off" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800">
+      <button class="btn" id="bVes" onclick="vesman()" data-t="bVes"></button>
+      <div id="vMsg"></div>
+    </div>
+  </section>
+
+  <!-- 4. Ekip yo -->
+  <section class="carte cache" id="vEkip"><h2 data-t="eTitre"></h2><div id="eList"></div></section>
+
+
+  <section class="carte">
+    <details><summary data-t="rTitre"></summary><ul class="regles" id="regles" style="margin-top:8px"></ul></details>
+  </section>
+</main>
+<footer>LAPCSSSA · WhatsApp +509 3886-7953 · +509 3553-3817<br>Masbet Education · masbet.me</footer>
+
+<script src="/config.js"></script>
+<script>
+// =====================================================================
+// Inscription en ligne des équipes — Tikan Ansavo 6 (projet Contenu, fichier Tikan.gs)
+// Paiement : page /achte.html (forfaits « Enskripsyon ekip … ») → code EK… → ce formulaire.
+// =====================================================================
+var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', ETAT=null, KAT='G', LOGO='', VUE='enskri';
+var TXT={
+ ht:{fTitre:'Enskri yon ekip',lKat:'Kategori',kG:'Ekip gason',kGs:'10 000 HTG (oswa 5 000 + 5 000)',kF:'Ekip fi',kFs:'Gratis · komite a valide l',
+  hEkip:'1. Ekip la',lEkip:'Non ekip la',lZon:'Katye oswa zòn',lM1:'Mayo prensipal (koulè)',lM2:'Mayo rezèv',
+  hResp:'2. Responsab yo',lDir:'Dirijan : non ak siyati',lKap:'Kapitèn : non ak siyati',lTel:'Telefòn / WhatsApp',
+  hJwe:'3. Jwè yo',aJwe:'Omwen 4 jwè pou enskri (9 pou pi plis). Ou ka konplete lis la jiska 9 pita, ak komite a.',cNon:'Non ak siyati',cTi:'Ti non',cNm:'N° mayo',
+  hLogo:'4. Logo ekip la (si w genyen)',bLogo:'Chwazi yon imaj',aLogo:'Yon imaj kare pi bon. Komite a ap mete l nan kad live la.',
+  hPeye:'5. Peman',aPeye:function(e){ return 'Peye <b>10 000 HTG</b> yon sèl kou, oswa <b>5 000 HTG</b> kounye a epi 5 000 pita, ak MonCash oswa NatCash sou paj « Achte ». Lè peman an konfime, w ap resevwa yon <b>kòd EK…</b> : antre l la a. Fòm ou a rete sou telefòn nan pandan w ap peye.'; },
+  bAchte:'💳 Peye frè enskripsyon an (MonCash / NatCash)',lKod:'Kòd peman an (EK…)',bVerif:'Verifye',
+  lPwo:'Mwen li epi mwen aksepte pwotokòl chanpyona a (règ jwèt, disiplin, frè enskripsyon, ranbousman).',bVoye:'Voye enskripsyon an',
+  aBrouyon:'💾 Sa w ekri rete sou telefòn sa a, menm si w fèmen paj la.',
+  mTitre:'Ekip mwen',lAjN:'Ou gen nimewo yon ekip ? Ajoute l pou swiv li',bAj:'Ajoute',mVid:'Pa gen ekip sou telefòn sa a ankò.',
+  vTitre:'2e vèsman (5 000 HTG)',aVesman:'Pou ekip ki te peye 5 000 HTG sèlman : achte yon kòd « 5 000 » sou paj « Achte », epi antre l la a ak nimewo ekip la. Lè l konfime, w ap jwenn lyen kalandriye a ak lyen live yo.',
+  bAchte5:'💳 Peye 2e vèsman an (5 000 HTG)',lN:'Nimewo ekip la (egzanp T6G-07)',lKod5:'Kòd peman 5 000 la (EK…)',bVes:'Konfime 2e vèsman an',
+  eTitre:'Ekip ki enskri',eG:'Ekip gason',eF:'Ekip fi',eVid:'Poko gen ekip ki enskri.',
+  lLive:'📺 Gade match yo an dirèk sou Masbet',lMatch:'⚽ Kalandriye ak rezilta : onglet Match',aLyen:'Dat match yo, gwoup yo ak rezilta yo nan onglet Match aplikasyon Masbet la. Match yo pase an dirèk sou Masbet.',
+  rTitre:'📜 Règ enskripsyon an',
+  ong:{enskri:'✍️ Enskri',mwen:'⭐ Ekip mwen',vesman:'💳 2e vèsman',ekip:'📋 Ekip yo'},
+  louvri:'LOUVRI',ferme:'FÈMEN',jiska:'jiska',plas:'plas rete',enskri:'ekip gason enskri',peyeNet:'peye tout',fi:'ekip fi',
+  fermeTxt:function(e){ return e.akseteLe?'Enskripsyon yo fèmen. Komite a fin chwazi ekip yo.':e.plas<=0&&e.ouvert?'Pa gen plas ankò : '+e.max+' ekip deja enskri.':'Enskripsyon yo fèmen.'; },
+  st:{'AVANS':'5 000 peye','PEYE NÈT':'Peye tout','AKSEPTE':'Aksepte','PA AKSEPTE':'Pa aksepte · ranbousman','RANBOURSE':'Ranbouse','FI — ANNATANN':'Ap tann komite a'},
+  okEnskri:function(r){ return 'Ekip <b>'+esc(r.ekip)+'</b> enskri ! Kenbe nimewo sa a :'; },
+  rete:function(m){ return 'Rete <b>'+nb(m)+' HTG</b> pou peye (2e vèsman). Lyen kalandriye a ak lyen live yo ap parèt la a lè l konfime.'; },
+  netOk:'Tout enskripsyon an peye ✓. Plas ou depann de lòd peman konplè yo (premye ki peye tout yo pase anvan).',
+  fiOk:'Komite a ap gade enskripsyon an epi l ap rele dirijan an.',
+  okVes:function(r){ return '2e vèsman an konfime ✓ — ekip <b>'+esc(r.ekip)+'</b> peye tout ('+nb(r.peye)+' HTG).'; },
+  kodOk:function(k){ return k.utilise?'⚠️ Kòd sa a deja sèvi.':'✓ Kòd valab : '+nb(k.montant)+' HTG'+(k.montant<10000?' (1 vèsman)':' (tout)')+'.'; },
+  erreurReseau:'Pa gen rezo. Eseye ankò.',chJwe:'Ekri omwen 4 jwè (non ak siyati).',chPwo:'Koche kare pwotokòl la anvan.',chKod:'Antre kòd peman an (EK…) : ou jwenn li sou paj « Achte » lè w fin peye.',
+  envoi:'Ap voye…',
+  regles:function(e){ return ['Enskripsyon an louvri jiska <b>'+esc(e.fenTexte)+'</b> (lè Ayiti).','Ekip gason : <b>10 000 HTG</b>, yon sèl kou oswa an 2 vèsman (5 000 + 5 000). Ekip fi : gratis.','Jiska <b>'+e.max+'</b> ekip gason ka enskri. Se <b>16 oswa 24</b> ekip ki ap jwe : <b>premye ki peye tout</b> enskripsyon an yo.','2e vèsman an posib jiskaske komite a chwazi ekip yo.','Ekip ki pa pase yo ap resevwa <b>tout lajan yo ranbouse</b>.','Apre sa, gen yon <b>tiraj</b> pou gwoup 4 ekip yo. Kalandriye a ak rezilta yo nan onglet Match aplikasyon Masbet la.','4 jwè pou kòmanse, 9 pou pi plis. Yon jwè ki jwe pou yon ekip pa ka jwe pou yon lòt.']; }
+ },
+ fr:{fTitre:'Inscrire une équipe',lKat:'Catégorie',kG:'Équipe masculine',kGs:'10 000 HTG (ou 5 000 + 5 000)',kF:'Équipe féminine',kFs:'Gratuit · validée par le comité',
+  hEkip:'1. L\'équipe',lEkip:'Nom de l\'équipe',lZon:'Quartier ou localité',lM1:'Maillot principal (couleur)',lM2:'Maillot de réserve',
+  hResp:'2. Les responsables',lDir:'Dirigeant : nom et prénom',lKap:'Capitaine : nom et prénom',lTel:'Téléphone / WhatsApp',
+  hJwe:'3. Les joueurs',aJwe:'Au moins 4 joueurs pour s\'inscrire (9 au maximum). La liste se complète jusqu\'à 9 plus tard, avec le comité.',cNon:'Nom et prénom',cTi:'Surnom',cNm:'N° maillot',
+  hLogo:'4. Logo de l\'équipe (facultatif)',bLogo:'Choisir une image',aLogo:'De préférence une image carrée. Le comité la met dans le cadre du live.',
+  hPeye:'5. Paiement',aPeye:function(e){ return 'Payez <b>10 000 HTG</b> en une fois, ou <b>5 000 HTG</b> maintenant et 5 000 plus tard, par MonCash ou NatCash sur la page « Achte ». Une fois le paiement confirmé, vous recevez un <b>code EK…</b> : entrez-le ici. Votre formulaire reste sur le téléphone pendant le paiement.'; },
+  bAchte:'💳 Payer les frais d\'inscription (MonCash / NatCash)',lKod:'Code de paiement (EK…)',bVerif:'Vérifier',
+  lPwo:'J\'ai lu et j\'accepte le protocole du championnat (règles de jeu, discipline, frais d\'inscription, remboursement).',bVoye:'Envoyer l\'inscription',
+  aBrouyon:'💾 Ce que vous écrivez reste sur ce téléphone, même si vous fermez la page.',
+  mTitre:'Mes équipes',lAjN:'Vous avez le numéro d\'une équipe ? Ajoutez-le pour la suivre',bAj:'Ajouter',mVid:'Aucune équipe sur ce téléphone pour l\'instant.',
+  vTitre:'2e versement (5 000 HTG)',aVesman:'Pour les équipes qui ont payé 5 000 HTG seulement : achetez un code « 5 000 » sur la page « Achte », puis entrez-le ici avec le numéro de l\'équipe. Une fois confirmé, vous recevez les liens du calendrier et des lives.',
+  bAchte5:'💳 Payer le 2e versement (5 000 HTG)',lN:'Numéro de l\'équipe (exemple T6G-07)',lKod5:'Code de paiement de 5 000 (EK…)',bVes:'Confirmer le 2e versement',
+  eTitre:'Équipes inscrites',eG:'Équipes masculines',eF:'Équipes féminines',eVid:'Aucune équipe inscrite pour l\'instant.',
+  lLive:'📺 Regarder les matchs en direct sur Masbet',lMatch:'⚽ Calendrier et résultats : onglet Match',aLyen:'Dates des matchs, groupes et résultats dans l\'onglet Match de l\'application Masbet. Les matchs passent en direct sur Masbet.',
+  rTitre:'📜 Règles de l\'inscription',
+  ong:{enskri:'✍️ S\'inscrire',mwen:'⭐ Mes équipes',vesman:'💳 2e versement',ekip:'📋 Équipes'},
+  louvri:'OUVERTE',ferme:'FERMÉE',jiska:'jusqu\'au',plas:'places restantes',enskri:'équipes masculines inscrites',peyeNet:'tout payé',fi:'équipes féminines',
+  fermeTxt:function(e){ return e.akseteLe?'Les inscriptions sont fermées. Le comité a choisi les équipes.':e.plas<=0&&e.ouvert?'Plus de place : '+e.max+' équipes déjà inscrites.':'Les inscriptions sont fermées.'; },
+  st:{'AVANS':'5 000 payés','PEYE NÈT':'Tout payé','AKSEPTE':'Acceptée','PA AKSEPTE':'Non retenue · remboursement','RANBOURSE':'Remboursée','FI — ANNATANN':'En attente du comité'},
+  okEnskri:function(r){ return 'Équipe <b>'+esc(r.ekip)+'</b> inscrite ! Gardez ce numéro :'; },
+  rete:function(m){ return 'Reste <b>'+nb(m)+' HTG</b> à payer (2e versement). Les liens du calendrier et des lives s\'afficheront ici une fois confirmé.'; },
+  netOk:'Inscription entièrement payée ✓. Votre place dépend de l\'ordre des paiements complets (les premiers qui ont tout payé passent d\'abord).',
+  fiOk:'Le comité examine l\'inscription et appellera le dirigeant.',
+  okVes:function(r){ return '2e versement confirmé ✓ — l\'équipe <b>'+esc(r.ekip)+'</b> a tout payé ('+nb(r.peye)+' HTG).'; },
+  kodOk:function(k){ return k.utilise?'⚠️ Ce code a déjà servi.':'✓ Code valable : '+nb(k.montant)+' HTG'+(k.montant<10000?' (un versement)':' (tout)')+'.'; },
+  erreurReseau:'Pas de réseau. Réessayez.',chJwe:'Écrivez au moins 4 joueurs (nom et prénom).',chPwo:'Cochez d\'abord la case du protocole.',chKod:'Entrez le code de paiement (EK…) : vous le recevez sur la page « Achte » après avoir payé.',
+  envoi:'Envoi…',
+  regles:function(e){ return ['Inscriptions ouvertes jusqu\'au <b>'+esc(e.fenTexte)+'</b> (heure d\'Haïti).','Équipe masculine : <b>10 000 HTG</b>, en une fois ou en 2 versements (5 000 + 5 000). Équipe féminine : gratuit.','Jusqu\'à <b>'+e.max+'</b> équipes masculines peuvent s\'inscrire. <b>16 ou 24</b> équipes jouent : les <b>premières qui ont payé la totalité</b>.','Le 2e versement reste possible jusqu\'au choix des équipes par le comité.','Les équipes non retenues sont <b>remboursées intégralement</b>.','Ensuite, <b>tirage au sort</b> des groupes de 4. Calendrier et résultats dans l\'onglet Match de l\'application Masbet.','4 joueurs pour commencer, 9 au maximum. Un joueur qui a joué pour une équipe ne peut plus jouer pour une autre.']; }
+ }
+};
+// Erreurs du serveur en français (page Admin) : rares ici ; les messages publics sont déjà en créole.
+function T(k){ return TXT[LANG][k]; }
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function nb(n){ return Number(n||0).toLocaleString('fr-FR').replace(/ /g,' '); }
+function lire(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function msg(id,t,c){ $(id).innerHTML=t?'<div class="msg '+(c||'info')+'">'+t+'</div>':''; }
+function appareil(){ var a=lire('masbet_appareil');
+  if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); } return a; }
+function errTxt(e){ var m=String(e&&e.message||e||''); return (!m||/NetworkError|Failed to fetch|network|Load failed/i.test(m))?T('erreurReseau'):m; }
+
+// ---------- Serveur (projet Contenu) ----------
+function lireApi(q){
+  if(DEMO) return demo(q);
+  q._=Date.now(); var u=CONTENU+'?'+Object.keys(q).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(q[k]); }).join('&');
+  return fetch(u,{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; });
+}
+function poster(c){
+  if(DEMO) return demo(c);
+  return fetch(CONTENU,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)})
+    .then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; });
+}
+
+// ---------- Mes équipes (sur ce téléphone) ----------
+function mesN(){ try{ var a=JSON.parse(lire('masbet_tkn_mwen')||'[]'); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function ajouterMien(n){ n=String(n||'').toUpperCase(); var a=mesN(); if(n && a.indexOf(n)<0){ a.unshift(n); ecrire('masbet_tkn_mwen',JSON.stringify(a.slice(0,10))); } }
+function ajouterN(){ var n=$('mN').value.toUpperCase().replace(/[^A-Z0-9-]/g,''); if(!/^T6[GF]-\d{1,3}$/.test(n)) return; ajouterMien(n); $('mN').value=''; afficherMwen(); }
+
+// ---------- Affichage ----------
+function stB(st){ var c={'AVANS':'AVANS','PEYE NÈT':'PEYE','AKSEPTE':'AKSEPTE','PA AKSEPTE':'PA','RANBOURSE':'RANB','FI — ANNATANN':'FI'}[st]||'RANB'; return '<span class="st st-'+c+'">'+esc(T('st')[st]||st)+'</span>'; }
+function ini(n){ return esc(String(n||'?').replace(/[^A-Za-zÀ-ÿ0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(function(x){ return x.charAt(0); }).join('').toUpperCase()||'?'); }
+function afficherEtat(){
+  var e=ETAT; if(!e) return;
+  var pc=Math.min(100,Math.round(100*e.inscrites/Math.max(1,e.max)));
+  $('cEtat').innerHTML='<div class="etat"><b style="font-size:16px">'+esc(e.edisyon)+'</b><span class="pill '+(e.ouvert?'p-ok':'p-no')+'">'+(e.ouvert?T('louvri'):T('ferme'))+'</span></div>'+
+    (e.ouvert?'<div class="doux">'+T('jiska')+' '+esc(e.fenTexte)+'</div>':'')+
+    '<div class="barre"><i style="width:'+pc+'%"></i></div><div class="doux"><b>'+e.inscrites+' / '+e.max+'</b> '+T('enskri')+(e.ouvert?' · <b>'+e.plas+'</b> '+T('plas'):'')+'</div>'+
+    '<div class="chif"><div><b>'+e.inscrites+'</b><span>'+T('enskri')+'</span></div><div><b>'+e.peyeNet+'</b><span>'+T('peyeNet')+'</span></div><div><b>'+e.fi+'</b><span>'+T('fi')+'</span></div></div>';
+  $('regles').innerHTML=T('regles')(e).map(function(x){ return '<li>'+x+'</li>'; }).join('');
+  var ferme=!e.ouvert || (KAT==='G' && e.plas<=0);
+  $('fFerme').innerHTML=ferme?'<div class="msg err">'+T('fermeTxt')(e)+'</div>':'';
+  $('fForm').classList.toggle('cache', !e.ouvert || (KAT==='G' && e.plas<=0 && false));
+  if(e.ouvert && KAT==='G' && e.plas<=0){ $('bVoye').disabled=true; } else $('bVoye').disabled=false;
+  $('aPeye').innerHTML=T('aPeye')(e);
+  $('vFerme').innerHTML=e.vesmanOuvert?'':'<div class="msg err">'+T('fermeTxt')(e)+'</div>';
+  $('vForm').classList.toggle('cache', !e.vesmanOuvert);
+  onglets(); afficherEkip(); afficherMwen();
+}
+function onglets(){
+  var o=T('ong'), l=['enskri','mwen'];
+  if(ETAT && ETAT.vesmanOuvert) l.push('vesman');
+  l.push('ekip');
+  if(l.indexOf(VUE)<0) VUE='enskri';
+  $('ong').innerHTML=l.map(function(k){ return '<button class="'+(VUE===k?'on':'')+'" onclick="vue(\''+k+'\')">'+o[k]+'</button>'; }).join('');
+}
+function vue(v){ VUE=v; var m={enskri:'vEnskri',mwen:'vMwen',vesman:'vVesman',ekip:'vEkip'};
+  Object.keys(m).forEach(function(k){ $(m[k]).classList.toggle('cache',k!==v); }); onglets(); }
+function afficherEkip(){
+  var L=(ETAT&&ETAT.ekip||[]).filter(function(x){ return x.st!=='ANILE'; });
+  var bloc=function(k,t){ var l=L.filter(function(x){ return x.kat===k; }); if(!l.length) return '';
+    return '<h3>'+t+' ('+l.length+')</h3>'+l.map(function(x){ return '<div class="ek"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>'; }).join(''); };
+  $('eList').innerHTML=L.length?bloc('G',T('eG'))+bloc('F',T('eF')):'<div class="doux">'+T('eVid')+'</div>';
+}
+function lyen(){ return '<div class="doux" style="margin-top:10px">'+T('aLyen')+'</div><a class="btn" href="/#videyo">'+T('lLive')+'</a><a class="btn sec" href="/#match">'+T('lMatch')+'</a>'; }
+function afficherMwen(){
+  var a=mesN(), L=ETAT&&ETAT.ekip||[];
+  if(!a.length){ $('mList').innerHTML='<div class="doux">'+T('mVid')+'</div>'; return; }
+  $('mList').innerHTML=a.map(function(n){
+    var x=L.filter(function(e){ return e.n===n; })[0];
+    if(!x) return '<div class="ek"><span class="ini">?</span><span class="nm"><b>'+esc(n)+'</b><small>…</small></span></div>';
+    var h='<div class="recu" style="margin-bottom:10px;text-align:left"><div class="ek" style="border:0;padding:0"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>';
+    var net=x.kat==='F'?x.st==='AKSEPTE':(x.st==='PEYE NÈT'||x.st==='AKSEPTE');
+    if(x.st==='AVANS') h+='<div class="msg info">'+T('rete')(10000-x.peye)+'</div>'+(ETAT.vesmanOuvert?'<button class="btn" onclick="$(\'vN\').value=\''+esc(x.n)+'\';vue(\'vesman\')">'+T('bVes')+'</button>':'');
+    else if(net) h+=lyen();   // v147 : tout payé → liens Masbet (lives et onglet Match), pas de calendrier sur cette page
+    return h+'</div>';
+  }).join('');
+}
+
+// ---------- Formulaire ----------
+var CHAMPS=['ekip','zon','m1','m2','dir','tdir','kap','tkap','kod'];
+function construireJwe(){
+  var h=''; for(var i=0;i<9;i++) h+='<div class="jwe'+(i<4?' ob':'')+'"><span>'+(i+1)+'</span><input id="jn'+i+'" maxlength="60" autocomplete="off"><input id="jt'+i+'" maxlength="30" autocomplete="off"><input id="jm'+i+'" maxlength="2" inputmode="numeric" autocomplete="off"></div>';
+  $('jwe').innerHTML=h;
+}
+function kat(k){ KAT=k; $('kG').classList.toggle('on',k==='G'); $('kF').classList.toggle('on',k==='F'); $('zPeye').classList.toggle('cache',k==='F'); garder(); afficherEtat(); }
+function brouyon(){ var b={kat:KAT,logo:LOGO,j:[]}; CHAMPS.forEach(function(c){ b[c]=$(c).value; });
+  for(var i=0;i<9;i++) b.j.push([$('jn'+i).value,$('jt'+i).value,$('jm'+i).value]); return b; }
+function garder(){ var b=brouyon(); try{ ecrire('masbet_tkn_brouyon',JSON.stringify(b)); }catch(e){ b.logo=''; ecrire('masbet_tkn_brouyon',JSON.stringify(b)); } }
+function restaurer(){ var b=null; try{ b=JSON.parse(lire('masbet_tkn_brouyon')||'null'); }catch(e){}
+  if(!b) return; CHAMPS.forEach(function(c){ if(b[c]!=null) $(c).value=b[c]; });
+  (b.j||[]).forEach(function(r,i){ if(i<9){ $('jn'+i).value=r[0]||''; $('jt'+i).value=r[1]||''; $('jm'+i).value=r[2]||''; } });
+  if(b.logo){ LOGO=b.logo; montrerLogo(); } KAT=b.kat==='F'?'F':'G'; }
+function montrerLogo(){ var v=$('lgV'); v.style.backgroundImage=LOGO?'url('+LOGO+')':''; v.textContent=LOGO?'':'🛡️'; }
+function reduire(f,cb){ var url=URL.createObjectURL(f), im=new Image();
+  im.onload=function(){ var tailles=[128,112,96,80,64], q=[0.86,0.72,0.58], best='';
+    for(var i=0;i<tailles.length&&!best;i++){ var S=tailles[i], cv=document.createElement('canvas'); cv.width=S; cv.height=S;
+      var k=Math.min(S/im.width,S/im.height), w=im.width*k, h=im.height*k; cv.getContext('2d').drawImage(im,(S-w)/2,(S-h)/2,w,h);
+      for(var j=0;j<q.length;j++){ var d=cv.toDataURL('image/webp',q[j]); if(d.indexOf('data:image/webp')!==0) d=cv.toDataURL('image/png'); if(d.length<=8500){ best=d; break; } } }
+    URL.revokeObjectURL(url); cb(best); };
+  im.onerror=function(){ URL.revokeObjectURL(url); cb(''); }; im.src=url; }
+function normKod(v){ return String(v||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,10); }
+function verifKod(){ var k=normKod($('kod').value); $('kod').value=k; if(!k) return msg('kMsg',T('chKod'),'err');
+  msg('kMsg','…','info');
+  lireApi({api:'tkn_kod',kod:k,appareil:appareil()}).then(function(r){ msg('kMsg',T('kodOk')(r),r.utilise?'err':'ok'); }).catch(function(e){ msg('kMsg',esc(errTxt(e)),'err'); }); }
+function voye(){
+  msg('fMsg','');
+  var b=brouyon(), jwe=b.j.map(function(r){ return {non:r[0].trim(),ti:r[1].trim(),nm:r[2].replace(/\D/g,'')}; }).filter(function(j){ return j.non; });
+  if(jwe.length<4) return msg('fMsg',T('chJwe'),'err');
+  if(KAT==='G' && !normKod(b.kod)) return msg('fMsg',T('chKod'),'err');
+  if(!$('pwo').checked) return msg('fMsg',T('chPwo'),'err');
+  var bt=$('bVoye'); bt.disabled=true; bt.textContent=T('envoi');
+  poster({api:'tkn_enskri',appareil:appareil(),kat:KAT,ekip:b.ekip,zon:b.zon,m1:b.m1,m2:b.m2,dir:b.dir,tdir:b.tdir,kap:b.kap,tkap:b.tkap,jwe:jwe,kod:KAT==='G'?normKod(b.kod):'',logo:LOGO})
+    .then(function(r){
+      ajouterMien(r.n);
+      try{ localStorage.removeItem('masbet_tkn_brouyon'); }catch(e){}
+      $('fMsg').innerHTML='<div class="recu" style="margin-top:12px"><div>'+T('okEnskri')(r)+'</div><div class="n">'+esc(r.n)+'</div>'+stB(r.st)+
+        '<div class="msg '+(r.rete?'info':'ok')+'" style="text-align:left">'+(r.kat==='F'?T('fiOk'):r.rete?T('rete')(r.rete):T('netOk'))+'</div>'+(r.kat==='G'&&!r.rete?lyen():'')+'</div>';
+      $('fMsg').scrollIntoView({behavior:'smooth',block:'center'});
+      CHAMPS.forEach(function(c){ $(c).value=''; }); for(var i=0;i<9;i++){ $('jn'+i).value=''; $('jt'+i).value=''; $('jm'+i).value=''; } LOGO=''; montrerLogo(); $('pwo').checked=false; msg('kMsg','');
+      charger();
+    }).catch(function(e){ msg('fMsg',esc(errTxt(e)),'err'); })
+    .then(function(){ bt.disabled=false; bt.textContent=T('bVoye'); });
+}
+function vesman(){
+  var n=$('vN').value.toUpperCase().replace(/[^A-Z0-9-]/g,''), k=normKod($('vKod').value); $('vKod').value=k;
+  if(!n||!k) return msg('vMsg',T('chKod'),'err');
+  var bt=$('bVes'); bt.disabled=true; bt.textContent=T('envoi');
+  poster({api:'tkn_peye',appareil:appareil(),n:n,kod:k}).then(function(r){ ajouterMien(r.n); msg('vMsg',T('okVes')(r),'ok'); $('vMsg').innerHTML+=lyen(); $('vKod').value=''; charger(); })
+    .catch(function(e){ msg('vMsg',esc(errTxt(e)),'err'); }).then(function(){ bt.disabled=false; bt.textContent=T('bVes'); });
+}
+
+// ---------- Langue ----------
+function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG; $('bLang').textContent=LANG==='ht'?'FR':'KR';
+  document.querySelectorAll('[data-t]').forEach(function(el){ var v=T(el.getAttribute('data-t')); if(typeof v==='string') el.textContent=v; });
+  $('tTitre').textContent=LANG==='ht'?'Enskripsyon ekip — Tikan Ansavo':'Inscription des équipes — Tikan Ansavo';
+  $('kG').innerHTML=esc(T('kG'))+'<small>'+esc(T('kGs'))+'</small>'; $('kF').innerHTML=esc(T('kF'))+'<small>'+esc(T('kFs'))+'</small>';
+  document.querySelectorAll('.jwe.ob input:first-of-type').forEach(function(x){ x.placeholder=LANG==='ht'?'obligatwa':'obligatoire'; });
+  afficherEtat(); }
+
+// ---------- Chargement (et mise à jour toutes les 60 s : le calendrier apparaît tout seul) ----------
+function charger(){ return lireApi({api:'tkn'}).then(function(e){ ETAT=e; afficherEtat(); })
+  .catch(function(e){ if(!ETAT) $('cEtat').innerHTML='<div class="msg err">'+esc(errTxt(e))+'</div><button class="btn sec" onclick="charger()">↻</button>'; }); }
+construireJwe();
+restaurer();
+(function(){ var l=lire('masbet_lang'); langue(l==='fr'?'fr':'ht'); })();
+kat(KAT);
+document.addEventListener('input',function(ev){ if(ev.target && ev.target.closest && ev.target.closest('#fForm') && ev.target.id!=='lgF') garder(); });
+$('lgF').onchange=function(){ var f=this.files&&this.files[0]; if(!f) return; reduire(f,function(d){ LOGO=d||''; montrerLogo(); garder(); }); };
+// Retour de la page Achte : ?kod=EK… (code d'inscription tout juste payé)
+(function(){ var m=/[?&]kod=([A-Za-z0-9]+)/.exec(location.search); if(!m) return; var k=normKod(m[1]);
+  try{ history.replaceState(null,'',location.pathname); }catch(e){}
+  var av=null; lireApi({api:'tkn_kod',kod:k,appareil:appareil()}).then(function(r){
+    if(r.montant===5000 && ETAT){ av=(ETAT.ekip||[]).filter(function(e){ return e.st==='AVANS' && mesN().indexOf(e.n)>=0; })[0]; }
+    if(av && !r.utilise){ $('vN').value=av.n; $('vKod').value=k; vue('vesman'); msg('vMsg',T('kodOk')(r),'ok'); }
+    else { $('kod').value=k; garder(); vue('enskri'); msg('kMsg',T('kodOk')(r),r.utilise?'err':'ok'); setTimeout(function(){ $('kod').scrollIntoView({behavior:'smooth',block:'center'}); },300); }
+  }).catch(function(){ $('kod').value=k; garder(); }); })();
+charger();
+setInterval(function(){ if(!document.hidden) charger(); },60000);
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) charger(); });
+
+// ---------- Mode démonstration (page ouverte sans le fichier config.js) ----------
+function demo(q){
+  $('demo').classList.remove('cache'); $('demo').textContent='Mode démonstration : rien n\'est envoyé. Codes d\'essai : EKDEMO1000 (10 000), EKDEMO0500 (5 000).';
+  var D=window.DEMOD; if(!D){ D=window.DEMOD={edisyon:'Tikan Ansavo 6',ouvert:true,fen:0,fenTexte:'13/12/2026 23:59',max:32,inscrites:0,plas:32,peyeNet:0,fi:0,maxFi:4,aksepte:0,akseteLe:0,tiraj:0,fre:10000,vesman:5000,vesmanOuvert:true,kal:null,ekip:[]};
+    ['Lakou Ansavo','Pòt Wouj','Ti Rivyè','Baconnois FC','Arnaud Stars','Orouck United','Sou Pon'].forEach(function(n,i){ D.ekip.push({n:'T6G-0'+(i+1),ekip:n,zon:['Ansavo','Arnaud','Baconnois','Petite-Rivière'][i%4],kat:'G',peye:i%3===2?5000:10000,st:i%3===2?'AVANS':'PEYE NÈT',gwoup:'',logo:false,net:''}); });
+    D.ekip.push({n:'T6F-01',ekip:'Fanm Vanyan',zon:'Ansavo',kat:'F',peye:0,st:'FI — ANNATANN',gwoup:'',logo:false,net:''}); }
+  var recalc=function(){ var h=D.ekip.filter(function(e){ return e.kat==='G'&&['AVANS','PEYE NÈT','AKSEPTE'].indexOf(e.st)>=0; }); D.inscrites=h.length; D.plas=D.max-h.length; D.peyeNet=h.filter(function(e){ return e.peye>=10000; }).length; D.fi=D.ekip.filter(function(e){ return e.kat==='F'; }).length; };
+  return new Promise(function(ok,ko){ setTimeout(function(){ try{
+    recalc();
+    if(q.api==='tkn') return ok(JSON.parse(JSON.stringify(D)));
+    if(q.api==='tkn_kod'){ var m=q.kod==='EKDEMO1000'?10000:q.kod==='EKDEMO0500'?5000:0; if(!m) throw new Error('Kòd sa a pa egziste. Tcheke l byen (li kòmanse ak EK).'); return ok({kod:q.kod,montant:m,utilise:false}); }
+    if(q.api==='tkn_enskri'){ var fi=q.kat==='F', m2=fi?0:(q.kod==='EKDEMO1000'?10000:q.kod==='EKDEMO0500'?5000:0);
+      if(!fi&&!m2) throw new Error('Kòd peman an pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak EK).');
+      if(!q.ekip) throw new Error('Ekri non ekip la.'); if(!q.tdir||!q.dir) throw new Error('Non ak telefòn dirijan an obligatwa (8 chif).');
+      var n=(fi?'T6F-0':'T6G-0')+(D.ekip.filter(function(e){ return e.kat===(fi?'F':'G'); }).length+1);
+      var st=fi?'FI — ANNATANN':m2>=10000?'PEYE NÈT':'AVANS'; D.ekip.push({n:n,ekip:q.ekip,zon:q.zon,kat:fi?'F':'G',peye:m2,st:st,gwoup:'',logo:!!q.logo,net:''});
+      return ok({n:n,ekip:q.ekip,kat:fi?'F':'G',peye:m2,st:st,rete:fi?0:10000-m2}); }
+    if(q.api==='tkn_peye'){ var e=D.ekip.filter(function(x){ return x.n===q.n; })[0]; if(!e) throw new Error('Nimewo ekip sa a pa egziste (egzanp : T6G-07).');
+      if(q.kod!=='EKDEMO0500') throw new Error('Kòd peman an pa bon (li kòmanse ak EK).'); e.peye=10000; e.st='PEYE NÈT';
+      return ok({n:e.n,ekip:e.ekip,peye:10000,st:e.st,rete:0}); }
+    throw new Error('Action inconnue.');
+  }catch(err){ ko(err); } },350); });
+}
+</script>
+</body>
+</html>

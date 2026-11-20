@@ -198,6 +198,12 @@ function lireServeur(cb){
 }
 
 function el(sc,r){ return sc.querySelector('[data-r="'+r+'"]'); }
+/* v147 : sponsors payés en ligne (masbet.me/tikan/sponsor), relus toutes les minutes ; masqués par l'admin = absents */
+var SPON=[];
+function lireSponsors(){ if(!CONTENU||!window.fetch) return;
+  fetch(CONTENU+'?api=tkn_sponsor&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); })
+   .then(function(j){ if(j&&j.ok&&j.data&&Array.isArray(j.data.non)) SPON=j.data.non.map(function(x){ return String(x).slice(0,40); }); }).catch(function(){}); }
+lireSponsors(); setInterval(lireSponsors,60000);
 /* v143 : logos des équipes, gardés sur le serveur par NOM d'équipe (ils reviennent quand on retape le nom) */
 var LOGOS={}, LV=0, ENVOL={};
 function cleNom(n){ return String(n||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'').slice(0,40); }
@@ -249,6 +255,7 @@ function peindre(sc){
   var tab=el(sc,'tab'); tab.style.display= S.p==='tb'||(S.p==='fn'&&(S.ta||S.tb))? '':'none'; tab.textContent='TAB '+S.ta+'–'+S.tb;
   // partenaires
   var L=S.pa.split('|').map(function(x){return x.trim();}).filter(Boolean), pa=el(sc,'pa');
+  if(SPON.length){ var vu={}; L.forEach(function(x){ vu[cleNom(x)]=1; }); SPON.forEach(function(x){ if(!vu[cleNom(x)]){ vu[cleNom(x)]=1; L.push(x); } }); }   // v147 : sponsors payés en ligne, après les noms écrits à la main
   // annonce du but
   var maint=Date.now(), bu=el(sc,'but');
   if(S.gs&&S.gs!==BUT.gs){ BUT.gs=S.gs; BUT.debut= (maint/1000-S.gs)<12? maint : 0; }   // cadre (re)chargé plus tard : pas d'annonce périmée
@@ -334,7 +341,7 @@ R.innerHTML='<div class="reg">'+
    '<div class="lig" id="zpau" style="margin-top:8px"><button type="button" id="pau" style="flex:1"></button></div>'+
    '<div class="lig" style="margin-top:10px"><span style="flex:1">Durée d’une mi-temps</span><div class="pas"><button type="button" data-s="mi" data-d="-1">−</button><b id="vmi"></b><button type="button" data-s="mi" data-d="1">+</button></div></div></div>'+
   '<div class="c"><h2>Écran plein cadre</h2><div class="choix" id="ekr"></div><p class="note">Pour l’attente avant le match, la pause et la fin. Le tableau de score se cache pendant ces écrans.</p></div>'+
-  '<div class="c"><h2>Partenaires (bandeau du bas)</h2><textarea id="pa" placeholder="Un nom par ligne"></textarea><p class="note">Les noms défilent toutes les 8 secondes. Laissez vide pour masquer le bandeau.</p></div>'+
+  '<div class="c"><h2>Partenaires (bandeau du bas)</h2><textarea id="pa" placeholder="Un nom par ligne"></textarea><p class="note">Les noms défilent toutes les 8 secondes. Les sponsors qui paient en ligne (masbet.me/tikan/sponsor) s\u2019ajoutent tout seuls après ces noms.</p></div>'+
  '</div></div>';
 
 var ap=document.getElementById('ap'), sc=scene(), w=document.createElement('div'); w.className='mise'; w.appendChild(sc); ap.appendChild(w);
