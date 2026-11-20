@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ht">
+<html lang="ht" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>Plas — Tikan Ansavo 6</title>
@@ -162,7 +163,7 @@ function qrMatrice(texte){
 var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', FINALE=/final/.test(location.pathname), EVS=[];
 var TXT={
  ht:{titre:'Plas pou gran final la',titreP:'Plas pou match yo',iTitreP:'🎫 Rezève plas ou pou match yo',iTxtP:'Chak swa match : <b>100 HTG</b> ak yon <b>koupon Wi-Fi MasbetAirNet 25 goud</b> sou tikè a. Gran final la : <b>500 HTG</b> ak yon koupon 50 goud. Tikè a gen yon kòd QR yo verifye nan eskalye gradin nan.',evVen:'Swa ki ap vini yo',evPa:'Poko gen plas an vant. Tounen pita.',iTitre:'🏆 Gran final Tikan Ansavo 6',iTxt:'<b>Samdi 9 janvye 2027</b>, sou pon, ri Larivyè. Rezève plas ou pou <b>500 HTG</b> : ou resevwa yon <b>tikè</b> pou w telechaje (ak yon kòd QR yo verifye nan eskalye gradin nan), ak yon <b>koupon Wi-Fi MasbetAirNet 50 goud</b> bonis sou tikè a.',
-  iBonus:'Wi-Fi 50 goud bonis',iBiye:'Tikè ak QR',bPeye:'💳 Peye 500 HTG (MonCash / NatCash)',
+  iBonus:'Wi-Fi 50 goud bonis',iBiye:'Tikè ak QR',bPeye:'💳 Peye 500 HTG (MonCash / NatCash)',bPeyeP:'💳 Peye plas ou (MonCash / NatCash)',
   fTitre:'Mwen gen kòd la : resevwa tikè m',lKod:'Kòd rezèvasyon an (PL… oswa FN…), sou paj « Achte » lè w fin peye',lNon:'Non ak siyati (k ap antre ak tikè a)',lTel:'Telefòn ou',bOk:'Resevwa tikè m',
   aDeja:'Ou pèdi tikè w ? Antre menm kòd la ak menm telefòn nan : tikè a ap tounen.',
   tikTitre:'Tikè mwen',plas:'Plas',bTel:'⬇️ Telechaje tikè a',aImg:'Si bouton an pa mache : peze imaj la lontan epi « Anrejistre imaj la ».',
@@ -173,7 +174,7 @@ var TXT={
   chKod:'Antre kòd rezèvasyon an (li kòmanse ak PL oswa FN).',erreurReseau:'Pa gen rezo. Eseye ankò.',envoi:'Ap voye…',paJodi:function(e){ return '⚠️ Tikè sa a se pou <b>'+esc(e.lib)+'</b> ('+esc(e.dat)+'), pa pou jodi a.'; },
   tImg:{t1:'GRAN FINAL',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',dat:'Samdi 9 janvye 2027 · sou pon',plas:'PLAS',non:'NON',verif:'Verifye tikè a : eskane QR la',pri:'500 HTG',wifi:'🎁 KOUPON WI-FI MASBETAIRNET',wifiAide:'Konekte sou Masbet_AirNet epi antre kòd la'}},
  fr:{titre:'Place pour la grande finale',titreP:'Places pour les matchs',iTitreP:'🎫 Réservez votre place pour les matchs',iTxtP:'Chaque soirée de matchs : <b>100 HTG</b> avec un <b>coupon Wi-Fi MasbetAirNet de 25 gourdes</b> sur le billet. La grande finale : <b>500 HTG</b> avec un coupon de 50 gourdes. Le billet porte un QR code vérifié à l\'escalier du gradin.',evVen:'Prochaines soirées',evPa:'Pas encore de places en vente. Revenez plus tard.',iTitre:'🏆 Grande finale Tikan Ansavo 6',iTxt:'<b>Samedi 9 janvier 2027</b>, sou pon, rue de la Rivière. Réservez votre place pour <b>500 HTG</b> : vous recevez un <b>billet</b> à télécharger (avec un QR code vérifié à l\'escalier du gradin) avec un <b>coupon Wi-Fi MasbetAirNet de 50 gourdes</b> offert sur le billet.',
-  iBonus:'Wi-Fi 50 gourdes offert',iBiye:'Billet avec QR',bPeye:'💳 Payer 500 HTG (MonCash / NatCash)',
+  iBonus:'Wi-Fi 50 gourdes offert',iBiye:'Billet avec QR',bPeye:'💳 Payer 500 HTG (MonCash / NatCash)',bPeyeP:'💳 Payer ma place (MonCash / NatCash)',
   fTitre:'J\'ai le code : recevoir mon billet',lKod:'Code de réservation (PL… ou FN…), reçu sur la page « Achte » après le paiement',lNon:'Nom et prénom (de la personne qui entre)',lTel:'Votre téléphone',bOk:'Recevoir mon billet',
   aDeja:'Billet perdu ? Entrez le même code et le même téléphone : le billet revient.',
   tikTitre:'Mon billet',plas:'Place',bTel:'⬇️ Télécharger le billet',aImg:'Si le bouton ne marche pas : appuyez longtemps sur l\'image puis « Enregistrer l\'image ».',
@@ -281,7 +282,7 @@ function antre(){
 function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG; $('bLang').textContent=LANG==='ht'?'FR':'KR';
   document.querySelectorAll('[data-t]').forEach(function(el){ var v=T(el.getAttribute('data-t')); if(typeof v==='string') el.textContent=v; });
   $('tTitre').textContent=FINALE?T('titre'):T('titreP'); $('iTxt').innerHTML=FINALE?T('iTxt'):T('iTxtP'); document.title=(FINALE?T('titre'):T('titreP'))+' — Tikan Ansavo 6';
-  document.querySelector('#vInfo h2').textContent=FINALE?T('iTitre'):T('iTitreP'); $('iChif').classList.toggle('cache',!FINALE); afficherEvs();
+  document.querySelector('#vInfo h2').textContent=FINALE?T('iTitre'):T('iTitreP'); document.querySelector('#vInfo .btn').textContent=FINALE?T('bPeye'):T('bPeyeP'); $('iChif').classList.toggle('cache',!FINALE); afficherEvs();
   if(JET) verifier(); else afficherTikes(''); }
 (function(){ var l=lire('masbet_lang'); try{ var a=sessionStorage.getItem('masbet_fn_adm'); if(a) $('aKod').value=a; }catch(e){} langue(l==='fr'?'fr':'ht'); })();
 (function(){ var m=/[?&]kod=([A-Za-z0-9]+)/.exec(location.search); if(m){ $('kod').value=m[1].toUpperCase(); try{ history.replaceState(null,'',location.pathname); }catch(e){} setTimeout(function(){ $('non').focus(); },300); } })();
