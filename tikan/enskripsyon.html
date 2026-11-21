@@ -80,6 +80,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 .tel509:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
 .tel509 span{display:flex;align-items:center;padding:0 6px;background:var(--bg);color:var(--doux);font-weight:800;font-size:13px;border-right:1.5px solid var(--ligne);white-space:nowrap}
 .tel509 input{border:0;border-radius:0;box-shadow:none!important;min-width:0;padding-left:8px;padding-right:6px;letter-spacing:-.2px}
+#sig::placeholder{font-weight:400;text-transform:none;opacity:.7}
 </style>
 </head>
 <body>
@@ -100,7 +101,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
       <div class="kat"><button type="button" id="kG" onclick="kat('G')"></button><button type="button" id="kF" onclick="kat('F')"></button></div>
       <h3 data-t="hEkip"></h3>
       <div class="duo" style="grid-template-columns:1fr 120px"><div><label for="ekip" data-t="lEkip"></label><input id="ekip" maxlength="40" autocomplete="off"></div>
-        <div><label for="sig" data-t="lSig"></label><input id="sig" maxlength="5" autocomplete="off" placeholder="LAK" style="text-transform:uppercase;font-weight:800"></div></div>
+        <div><label for="sig" data-t="lSig"></label><input id="sig" maxlength="5" autocomplete="off" placeholder="ex. LAK" style="text-transform:uppercase;font-weight:800"></div></div>
       <label for="zon" data-t="lZon"></label><input id="zon" maxlength="40">
       <div class="duo"><div><label for="m1" data-t="lM1"></label><input id="m1" maxlength="30"></div><div><label for="m2" data-t="lM2"></label><input id="m2" maxlength="30"></div></div>
       <h3 data-t="hResp"></h3>
