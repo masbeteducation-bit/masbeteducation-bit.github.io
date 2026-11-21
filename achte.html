@@ -495,7 +495,7 @@ function afficherForfaits(){
     if(f.type==='LIVE'){
       if(!f.disponible || !ekipVisible(f)) return;   // épuisé ou pas encore en vente : on ne l'affiche pas
       h+='<button class="plan'+on+'" id="p'+k+'" onclick="choisirForfait('+k+')">'+
-        '<div class="p">'+esc(f.prix)+' <small>HTG</small></div><div class="d"><b>'+esc(PRODUIT==='ev'?nomEv(f.nom):f.nom)+'</b></div><div class="d">'+T(PRODUIT==='ev'?'tikeEv':PRODUIT==='ekip'?'tikeEkip':PRODUIT==='spons'?'tikeSpons':PRODUIT==='final'?'tikeFinal':PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
+        '<div class="p">'+esc(prixTxt(f.prix))+' <small>HTG</small></div><div class="d"><b>'+esc(PRODUIT==='ev'?nomEv(f.nom):nomCourt(f.nom))+'</b></div><div class="d">'+T(PRODUIT==='ev'?'tikeEv':PRODUIT==='ekip'?'tikeEkip':PRODUIT==='spons'?'tikeSpons':PRODUIT==='final'?'tikeFinal':PRODUIT==='pro'?'prodPro':PRODUIT==='suite'?'prodSuite':PRODUIT==='defi'?'prodDefi':'tike')+'</div></button>';
       return;
     }
     h+='<button class="plan'+on+'" '+dis+' id="p'+k+'" onclick="choisirForfait('+k+')">'+
@@ -641,6 +641,14 @@ function estSuite(nom){ return /^masbet\s*suite/i.test(String(nom||'')); }
 function usageCode(nom){ return estEkip(nom)?'ekipUsage':estSpons(nom)?'sponsUsage':estFinal(nom)?'finalUsage':estPass(nom)?'passUsage':estSuite(nom)?'suiteUsage':estDefi(nom)?'defiUsage':'tikeUsage'; }
 function estDefi(nom){ return /^t[iì]k[eè]?\s*d[eé]fi|^d[eé]fi/i.test(String(nom||'')); }
 function estPass(nom){ return /^pass\s*pro/i.test(String(nom||'')); }
+function prixTxt(p){ var n=Number(p); return n>=1000? String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ') : String(p); }   // v148 : 10 000 au lieu de 10000
+/** v148 : nom court des produits Tikan (le titre du produit le dit déjà) : « 5 000 (1 vèsman) », « Swa 19/12 », « Gran final » */
+function nomCourt(nom){ var s=String(nom||'');
+  if(/^enskripsyon/i.test(s)) return /10\s*000/.test(s)? (LANG==='fr'?'Tout en une fois':'Tout yon sèl kou') : (LANG==='fr'?'Un versement sur deux':'Yon vèsman sou de');
+  if(/^spons/i.test(s)) return 'Sponsò';
+  var m=/^plas\s+match.*?(\d{2}\/\d{2})/i.exec(s); if(m) return (LANG==='fr'?'Soirée du ':'Swa ')+m[1];
+  if(/^plas\s+final/i.test(s)) return LANG==='fr'?'Grande finale (9/01)':'Gran final (9/01)';
+  return s; }
 function estSpons(nom){ return /^spons/i.test(String(nom||'')); }   // v147 : sponsor du championnat (nom dans le cadre live)
 function estFinal(nom){ return /^plas\s+(final|match)/i.test(String(nom||'')); }   // v147 : place d'une soirée de matchs ou de la finale + coupon Wi-Fi
 function estEkip(nom){ return /^enskripsyon/i.test(String(nom||'')); }   // v147 : frais d'inscription d'une équipe (Tikan)
