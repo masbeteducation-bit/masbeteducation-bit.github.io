@@ -76,6 +76,10 @@ details summary{cursor:pointer;font-weight:800}
 .recu .n{font-family:ui-monospace,Menlo,monospace;font-size:28px;font-weight:900;letter-spacing:.04em}
 footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30px}
 .demo{background:#fff3df;color:#8a5a00;text-align:center;font-size:13px;padding:6px}
+.tel509{display:flex;align-items:stretch;border:1.5px solid var(--ligne);border-radius:11px;background:var(--champ);overflow:hidden}
+.tel509:focus-within{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(6,182,212,.18)}
+.tel509 span{display:flex;align-items:center;padding:0 6px;background:var(--bg);color:var(--doux);font-weight:800;font-size:13px;border-right:1.5px solid var(--ligne);white-space:nowrap}
+.tel509 input{border:0;border-radius:0;box-shadow:none!important;min-width:0;padding-left:8px;padding-right:6px;letter-spacing:-.2px}
 </style>
 </head>
 <body>
@@ -95,12 +99,13 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
       <label data-t="lKat"></label>
       <div class="kat"><button type="button" id="kG" onclick="kat('G')"></button><button type="button" id="kF" onclick="kat('F')"></button></div>
       <h3 data-t="hEkip"></h3>
-      <label for="ekip" data-t="lEkip"></label><input id="ekip" maxlength="40" autocomplete="off">
+      <div class="duo" style="grid-template-columns:1fr 120px"><div><label for="ekip" data-t="lEkip"></label><input id="ekip" maxlength="40" autocomplete="off"></div>
+        <div><label for="sig" data-t="lSig"></label><input id="sig" maxlength="5" autocomplete="off" placeholder="LAK" style="text-transform:uppercase;font-weight:800"></div></div>
       <label for="zon" data-t="lZon"></label><input id="zon" maxlength="40">
       <div class="duo"><div><label for="m1" data-t="lM1"></label><input id="m1" maxlength="30"></div><div><label for="m2" data-t="lM2"></label><input id="m2" maxlength="30"></div></div>
       <h3 data-t="hResp"></h3>
-      <div class="duo"><div><label for="dir" data-t="lDir"></label><input id="dir" maxlength="60" autocomplete="name"></div><div><label for="tdir" data-t="lTel"></label><input id="tdir" inputmode="tel" maxlength="16" placeholder="3X XX XX XX"></div></div>
-      <div class="duo"><div><label for="kap" data-t="lKap"></label><input id="kap" maxlength="60"></div><div><label for="tkap" data-t="lTel"></label><input id="tkap" inputmode="tel" maxlength="16" placeholder="4X XX XX XX"></div></div>
+      <div class="duo"><div><label for="dir" data-t="lDir"></label><input id="dir" maxlength="60" autocomplete="name"></div><div><label for="tdir" data-t="lTel"></label><div class="tel509"><span>(+509)</span><input id="tdir" inputmode="numeric" maxlength="11" placeholder="3X XX XX XX" autocomplete="tel-national"></div></div></div>
+      <div class="duo"><div><label for="kap" data-t="lKap"></label><input id="kap" maxlength="60"></div><div><label for="tkap" data-t="lTel"></label><div class="tel509"><span>(+509)</span><input id="tkap" inputmode="numeric" maxlength="11" placeholder="4X XX XX XX" autocomplete="tel-national"></div></div></div>
       <h3 data-t="hJwe"></h3><div class="doux" data-t="aJwe"></div>
       <div class="jwe" style="margin-top:8px"><span>#</span><span style="text-align:left" data-t="cNon"></span><span style="text-align:left" data-t="cTi"></span><span data-t="cNm"></span></div>
       <div id="jwe"></div>
@@ -138,7 +143,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
     <div id="vFerme"></div>
     <div id="vForm">
       <a class="btn sec" href="/achte.html#ekip" data-t="bAchte5" style="margin-top:10px"></a>
-      <label for="vN" data-t="lN"></label><input id="vN" maxlength="8" placeholder="T6G-07" autocomplete="off">
+      <label for="vN" data-t="lN"></label><input id="vN" maxlength="40" placeholder="Lakou Ansavo / LAK / T6G-07" autocomplete="off">
       <label for="vKod" data-t="lKod5"></label><input id="vKod" maxlength="12" placeholder="EK…" autocomplete="off" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800">
       <button class="btn" id="bVes" onclick="vesman()" data-t="bVes"></button>
       <div id="vMsg"></div>
@@ -164,7 +169,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', ETAT=null, KAT='G', LOGO='', VUE='enskri';
 var TXT={
  ht:{fTitre:'Enskri yon ekip',lKat:'Kategori',kG:'Ekip gason',kGs:'10 000 HTG (oswa 5 000 + 5 000)',kF:'Ekip fi',kFs:'Gratis · komite a valide l',
-  hEkip:'1. Ekip la',lEkip:'Non ekip la',lZon:'Katye oswa zòn',lM1:'Mayo prensipal (koulè)',lM2:'Mayo rezèv',
+  hEkip:'1. Ekip la',lEkip:'Non ekip la',lSig:'Abreviyasyon',lZon:'Katye oswa zòn',lM1:'Mayo prensipal (koulè)',lM2:'Mayo rezèv',
   hResp:'2. Responsab yo',lDir:'Dirijan : non ak siyati',lKap:'Kapitèn : non ak siyati',lTel:'Telefòn / WhatsApp',
   hJwe:'3. Jwè yo',aJwe:'Omwen 4 jwè pou enskri (9 pou pi plis). Ou ka konplete lis la jiska 9 pita, ak komite a.',cNon:'Non ak siyati',cTi:'Ti non',cNm:'N° mayo',
   hLogo:'4. Logo ekip la (si w genyen)',bLogo:'Chwazi yon imaj',aLogo:'Yon imaj kare pi bon. Komite a ap mete l nan kad live la.',
@@ -174,7 +179,7 @@ var TXT={
   aBrouyon:'💾 Sa w ekri rete sou telefòn sa a, menm si w fèmen paj la.',
   mTitre:'Ekip mwen',lAjN:'Ou gen nimewo yon ekip ? Ajoute l pou swiv li',bAj:'Ajoute',mVid:'Pa gen ekip sou telefòn sa a ankò.',
   vTitre:'2e vèsman (5 000 HTG)',aVesman:'Pou ekip ki te peye 5 000 HTG sèlman : achte yon kòd « 5 000 » sou paj « Achte », epi antre l la a ak nimewo ekip la. Lè l konfime, w ap jwenn lyen kalandriye a ak lyen live yo.',
-  bAchte5:'💳 Peye 2e vèsman an (5 000 HTG)',lN:'Nimewo ekip la (egzanp T6G-07)',lKod5:'Kòd peman 5 000 la (EK…)',bVes:'Konfime 2e vèsman an',
+  bAchte5:'💳 Peye 2e vèsman an (5 000 HTG)',lN:'Non ekip la, abreviyasyon li oswa nimewo li',lKod5:'Kòd peman 5 000 la (EK…)',bVes:'Konfime 2e vèsman an',
   eTitre:'Ekip ki enskri',eG:'Ekip gason',eF:'Ekip fi',eVid:'Poko gen ekip ki enskri.',
   lLive:'📺 Gade match yo an dirèk sou Masbet',lMatch:'⚽ Kalandriye ak rezilta : onglet Match',aLyen:'Dat match yo, gwoup yo ak rezilta yo nan onglet Match aplikasyon Masbet la. Match yo pase an dirèk sou Masbet.',
   rTitre:'📜 Règ enskripsyon an',
@@ -193,7 +198,7 @@ var TXT={
   regles:function(e){ return ['Enskripsyon an louvri jiska <b>'+esc(e.fenTexte)+'</b> (lè Ayiti).','Ekip gason : <b>10 000 HTG</b>, yon sèl kou oswa an 2 vèsman (5 000 + 5 000). Ekip fi : gratis.','Jiska <b>'+e.max+'</b> ekip gason ka enskri. Se <b>16 oswa 24</b> ekip ki ap jwe : <b>premye ki peye tout</b> enskripsyon an yo.','2e vèsman an posib jiskaske komite a chwazi ekip yo.','Ekip ki pa pase yo ap resevwa <b>tout lajan yo ranbouse</b>.','Apre sa, gen yon <b>tiraj</b> pou gwoup 4 ekip yo. Kalandriye a ak rezilta yo nan onglet Match aplikasyon Masbet la.','4 jwè pou kòmanse, 9 pou pi plis. Yon jwè ki jwe pou yon ekip pa ka jwe pou yon lòt.']; }
  },
  fr:{fTitre:'Inscrire une équipe',lKat:'Catégorie',kG:'Équipe masculine',kGs:'10 000 HTG (ou 5 000 + 5 000)',kF:'Équipe féminine',kFs:'Gratuit · validée par le comité',
-  hEkip:'1. L\'équipe',lEkip:'Nom de l\'équipe',lZon:'Quartier ou localité',lM1:'Maillot principal (couleur)',lM2:'Maillot de réserve',
+  hEkip:'1. L\'équipe',lEkip:'Nom de l\'équipe',lSig:'Abréviation',lZon:'Quartier ou localité',lM1:'Maillot principal (couleur)',lM2:'Maillot de réserve',
   hResp:'2. Les responsables',lDir:'Dirigeant : nom et prénom',lKap:'Capitaine : nom et prénom',lTel:'Téléphone / WhatsApp',
   hJwe:'3. Les joueurs',aJwe:'Au moins 4 joueurs pour s\'inscrire (9 au maximum). La liste se complète jusqu\'à 9 plus tard, avec le comité.',cNon:'Nom et prénom',cTi:'Surnom',cNm:'N° maillot',
   hLogo:'4. Logo de l\'équipe (facultatif)',bLogo:'Choisir une image',aLogo:'De préférence une image carrée. Le comité la met dans le cadre du live.',
@@ -203,7 +208,7 @@ var TXT={
   aBrouyon:'💾 Ce que vous écrivez reste sur ce téléphone, même si vous fermez la page.',
   mTitre:'Mes équipes',lAjN:'Vous avez le numéro d\'une équipe ? Ajoutez-le pour la suivre',bAj:'Ajouter',mVid:'Aucune équipe sur ce téléphone pour l\'instant.',
   vTitre:'2e versement (5 000 HTG)',aVesman:'Pour les équipes qui ont payé 5 000 HTG seulement : achetez un code « 5 000 » sur la page « Achte », puis entrez-le ici avec le numéro de l\'équipe. Une fois confirmé, vous recevez les liens du calendrier et des lives.',
-  bAchte5:'💳 Payer le 2e versement (5 000 HTG)',lN:'Numéro de l\'équipe (exemple T6G-07)',lKod5:'Code de paiement de 5 000 (EK…)',bVes:'Confirmer le 2e versement',
+  bAchte5:'💳 Payer le 2e versement (5 000 HTG)',lN:'Nom de l\'équipe, son abréviation ou son numéro',lKod5:'Code de paiement de 5 000 (EK…)',bVes:'Confirmer le 2e versement',
   eTitre:'Équipes inscrites',eG:'Équipes masculines',eF:'Équipes féminines',eVid:'Aucune équipe inscrite pour l\'instant.',
   lLive:'📺 Regarder les matchs en direct sur Masbet',lMatch:'⚽ Calendrier et résultats : onglet Match',aLyen:'Dates des matchs, groupes et résultats dans l\'onglet Match de l\'application Masbet. Les matchs passent en direct sur Masbet.',
   rTitre:'📜 Règles de l\'inscription',
@@ -283,7 +288,7 @@ function vue(v){ VUE=v; var m={enskri:'vEnskri',mwen:'vMwen',vesman:'vVesman',ek
 function afficherEkip(){
   var L=(ETAT&&ETAT.ekip||[]).filter(function(x){ return x.st!=='ANILE'; });
   var bloc=function(k,t){ var l=L.filter(function(x){ return x.kat===k; }); if(!l.length) return '';
-    return '<h3>'+t+' ('+l.length+')</h3>'+l.map(function(x){ return '<div class="ek"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>'; }).join(''); };
+    return '<h3>'+t+' ('+l.length+')</h3>'+l.map(function(x){ return '<div class="ek"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.sig?' ('+esc(x.sig)+')':'')+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>'; }).join(''); };
   $('eList').innerHTML=L.length?bloc('G',T('eG'))+bloc('F',T('eF')):'<div class="doux">'+T('eVid')+'</div>';
 }
 function lyen(){ return '<div class="doux" style="margin-top:10px">'+T('aLyen')+'</div><a class="btn" href="/#videyo">'+T('lLive')+'</a><a class="btn sec" href="/#match">'+T('lMatch')+'</a>'; }
@@ -293,7 +298,7 @@ function afficherMwen(){
   $('mList').innerHTML=a.map(function(n){
     var x=L.filter(function(e){ return e.n===n; })[0];
     if(!x) return '<div class="ek"><span class="ini">?</span><span class="nm"><b>'+esc(n)+'</b><small>…</small></span></div>';
-    var h='<div class="recu" style="margin-bottom:10px;text-align:left"><div class="ek" style="border:0;padding:0"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>';
+    var h='<div class="recu" style="margin-bottom:10px;text-align:left"><div class="ek" style="border:0;padding:0"><span class="ini">'+ini(x.ekip)+'</span><span class="nm"><b>'+esc(x.ekip)+(x.sig?' ('+esc(x.sig)+')':'')+(x.gwoup?' · '+esc(x.gwoup):'')+'</b><small>'+esc(x.n)+' · '+esc(x.zon)+'</small></span>'+stB(x.st)+'</div>';
     var net=x.kat==='F'?x.st==='AKSEPTE':(x.st==='PEYE NÈT'||x.st==='AKSEPTE');
     if(x.st==='AVANS') h+='<div class="msg info">'+T('rete')(10000-x.peye)+'</div>'+(ETAT.vesmanOuvert?'<button class="btn" onclick="$(\'vN\').value=\''+esc(x.n)+'\';vue(\'vesman\')">'+T('bVes')+'</button>':'');
     else if(net) h+=lyen();   // v147 : tout payé → liens Masbet (lives et onglet Match), pas de calendrier sur cette page
@@ -302,7 +307,7 @@ function afficherMwen(){
 }
 
 // ---------- Formulaire ----------
-var CHAMPS=['ekip','zon','m1','m2','dir','tdir','kap','tkap','kod'];
+var CHAMPS=['ekip','sig','zon','m1','m2','dir','tdir','kap','tkap','kod'];
 function construireJwe(){
   var h=''; for(var i=0;i<9;i++) h+='<div class="jwe'+(i<4?' ob':'')+'"><span>'+(i+1)+'</span><input id="jn'+i+'" maxlength="60" autocomplete="off"><input id="jt'+i+'" maxlength="30" autocomplete="off"><input id="jm'+i+'" maxlength="2" inputmode="numeric" autocomplete="off"></div>';
   $('jwe').innerHTML=h;
@@ -334,7 +339,7 @@ function voye(){
   if(KAT==='G' && !normKod(b.kod)) return msg('fMsg',T('chKod'),'err');
   if(!$('pwo').checked) return msg('fMsg',T('chPwo'),'err');
   var bt=$('bVoye'); bt.disabled=true; bt.textContent=T('envoi');
-  poster({api:'tkn_enskri',appareil:appareil(),kat:KAT,ekip:b.ekip,zon:b.zon,m1:b.m1,m2:b.m2,dir:b.dir,tdir:b.tdir,kap:b.kap,tkap:b.tkap,jwe:jwe,kod:KAT==='G'?normKod(b.kod):'',logo:LOGO})
+  poster({api:'tkn_enskri',appareil:appareil(),kat:KAT,ekip:b.ekip,sig:b.sig,zon:b.zon,m1:b.m1,m2:b.m2,dir:b.dir,tdir:b.tdir,kap:b.kap,tkap:b.tkap,jwe:jwe,kod:KAT==='G'?normKod(b.kod):'',logo:LOGO})
     .then(function(r){
       ajouterMien(r.n);
       try{ localStorage.removeItem('masbet_tkn_brouyon'); }catch(e){}
@@ -347,7 +352,7 @@ function voye(){
     .then(function(){ bt.disabled=false; bt.textContent=T('bVoye'); });
 }
 function vesman(){
-  var n=$('vN').value.toUpperCase().replace(/[^A-Z0-9-]/g,''), k=normKod($('vKod').value); $('vKod').value=k;
+  var n=$('vN').value.trim(), k=normKod($('vKod').value); $('vKod').value=k;
   if(!n||!k) return msg('vMsg',T('chKod'),'err');
   var bt=$('bVes'); bt.disabled=true; bt.textContent=T('envoi');
   poster({api:'tkn_peye',appareil:appareil(),n:n,kod:k}).then(function(r){ ajouterMien(r.n); msg('vMsg',T('okVes')(r),'ok'); $('vMsg').innerHTML+=lyen(); $('vKod').value=''; charger(); })
@@ -398,14 +403,21 @@ function demo(q){
       if(!fi&&!m2) throw new Error('Kòd peman an pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak EK).');
       if(!q.ekip) throw new Error('Ekri non ekip la.'); if(!q.tdir||!q.dir) throw new Error('Non ak telefòn dirijan an obligatwa (8 chif).');
       var n=(fi?'T6F-0':'T6G-0')+(D.ekip.filter(function(e){ return e.kat===(fi?'F':'G'); }).length+1);
-      var st=fi?'FI — ANNATANN':m2>=10000?'PEYE NÈT':'AVANS'; D.ekip.push({n:n,ekip:q.ekip,zon:q.zon,kat:fi?'F':'G',peye:m2,st:st,gwoup:'',logo:!!q.logo,net:''});
+      var st=fi?'FI — ANNATANN':m2>=10000?'PEYE NÈT':'AVANS'; D.ekip.push({n:n,ekip:q.ekip,sig:String(q.sig||'').toUpperCase(),zon:q.zon,kat:fi?'F':'G',peye:m2,st:st,gwoup:'',logo:!!q.logo,net:''});
       return ok({n:n,ekip:q.ekip,kat:fi?'F':'G',peye:m2,st:st,rete:fi?0:10000-m2}); }
-    if(q.api==='tkn_peye'){ var e=D.ekip.filter(function(x){ return x.n===q.n; })[0]; if(!e) throw new Error('Nimewo ekip sa a pa egziste (egzanp : T6G-07).');
+    if(q.api==='tkn_peye'){ var qq=String(q.n||'').toUpperCase(); var e=D.ekip.filter(function(x){ return x.n===qq||String(x.ekip).toUpperCase()===qq||(x.sig&&x.sig===qq); })[0]; if(!e) throw new Error('Nimewo ekip sa a pa egziste (egzanp : T6G-07).');
       if(q.kod!=='EKDEMO0500') throw new Error('Kòd peman an pa bon (li kòmanse ak EK).'); e.peye=10000; e.st='PEYE NÈT';
       return ok({n:e.n,ekip:e.ekip,peye:10000,st:e.st,rete:0}); }
     throw new Error('Action inconnue.');
   }catch(err){ ko(err); } },350); });
 }
+
+// v148 : téléphone d'Haïti avec (+509) fixe dans la case, 8 chiffres groupés 2 par 2
+function telHaiti(el){ var r=el.value, d=r.replace(/\D/g,'');
+  if(/^\s*\(?\+/.test(r)){ if('509'.indexOf(d)===0){ el.value='+'+d; return; } if(d.indexOf('509')===0) d=d.slice(3); }   // « +509… » tapé quand même : on l'enlève
+  else if(d.length>8&&d.indexOf('509')===0) d=d.slice(3); d=d.slice(0,8);
+  var f=d.replace(/^(\d{2})(\d{0,2})(\d{0,2})(\d{0,2}).*$/,function(_,a,b,c,e){ return [a,b,c,e].filter(Boolean).join(' '); }); if(el.value!==f) el.value=f; }
+document.querySelectorAll('.tel509 input').forEach(function(el){ el.addEventListener('input',function(){ telHaiti(el); }); telHaiti(el); });
 </script>
 </body>
 </html>
