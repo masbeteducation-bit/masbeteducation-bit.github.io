@@ -81,6 +81,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 .tel509 span{display:flex;align-items:center;padding:0 6px;background:var(--bg);color:var(--doux);font-weight:800;font-size:13px;border-right:1.5px solid var(--ligne);white-space:nowrap}
 .tel509 input{border:0;border-radius:0;box-shadow:none!important;min-width:0;padding-left:8px;padding-right:6px;letter-spacing:-.2px}
 #sig::placeholder{font-weight:400;text-transform:none;opacity:.7}
+.total{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.total div{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}.total b{font-size:30px}.total span{color:var(--doux);font-size:14px}
 </style>
 </head>
 <body>
@@ -185,7 +186,7 @@ var TXT={
   lLive:'📺 Gade match yo an dirèk sou Masbet',lMatch:'⚽ Kalandriye ak rezilta : onglet Match',aLyen:'Dat match yo, gwoup yo ak rezilta yo nan onglet Match aplikasyon Masbet la. Match yo pase an dirèk sou Masbet.',
   rTitre:'📜 Règ enskripsyon an',
   ong:{enskri:'✍️ Enskri',mwen:'⭐ Ekip mwen',vesman:'💳 2e vèsman',ekip:'📋 Ekip yo'},
-  louvri:'LOUVRI',ferme:'FÈMEN',jiska:'jiska',plas:'plas rete',enskri:'ekip gason enskri',peyeNet:'peye tout',fi:'ekip fi',
+  louvri:'LOUVRI',ekipG:'ekip gason enskri',ekipF:'ekip fi enskri',ferme:'FÈMEN',jiska:'jiska',plas:'plas rete',enskri:'ekip gason enskri',peyeNet:'peye tout',fi:'ekip fi',
   fermeTxt:function(e){ return e.akseteLe?'Enskripsyon yo fèmen. Komite a fin chwazi ekip yo.':e.plas<=0&&e.ouvert?'Pa gen plas ankò : '+e.max+' ekip deja enskri.':'Enskripsyon yo fèmen.'; },
   st:{'AVANS':'5 000 peye','PEYE NÈT':'Peye tout','AKSEPTE':'Aksepte','PA AKSEPTE':'Pa aksepte · ranbousman','RANBOURSE':'Ranbouse','FI — ANNATANN':'Ap tann komite a'},
   okEnskri:function(r){ return 'Ekip <b>'+esc(r.ekip)+'</b> enskri ! Kenbe nimewo sa a :'; },
@@ -196,7 +197,7 @@ var TXT={
   kodOk:function(k){ return k.utilise?'⚠️ Kòd sa a deja sèvi.':'✓ Kòd valab : '+nb(k.montant)+' HTG'+(k.montant<10000?' (1 vèsman)':' (tout)')+'.'; },
   erreurReseau:'Pa gen rezo. Eseye ankò.',chJwe:'Ekri omwen 4 jwè (non ak siyati).',chPwo:'Koche kare pwotokòl la anvan.',chKod:'Antre kòd peman an (EK…) : ou jwenn li sou paj « Achte » lè w fin peye.',
   envoi:'Ap voye…',
-  regles:function(e){ return ['Enskripsyon an louvri jiska <b>'+esc(e.fenTexte)+'</b> (lè Ayiti).','Ekip gason : <b>10 000 HTG</b>, yon sèl kou oswa an 2 vèsman (5 000 + 5 000). Ekip fi : gratis.','Jiska <b>'+e.max+'</b> ekip gason ka enskri. Se <b>16 oswa 24</b> ekip ki ap jwe : <b>premye ki peye tout</b> enskripsyon an yo.','2e vèsman an posib jiskaske komite a chwazi ekip yo.','Ekip ki pa pase yo ap resevwa <b>tout lajan yo ranbouse</b>.','Apre sa, gen yon <b>tiraj</b> pou gwoup 4 ekip yo. Kalandriye a ak rezilta yo nan onglet Match aplikasyon Masbet la.','4 jwè pou kòmanse, 9 pou pi plis. Yon jwè ki jwe pou yon ekip pa ka jwe pou yon lòt.']; }
+  regles:function(e){ return ['Enskripsyon an louvri jiska <b>'+esc(e.fenTexte)+'</b> (lè Ayiti).','Ekip gason : <b>10 000 HTG</b>, yon sèl kou oswa an 2 vèsman (5 000 + 5 000). Ekip fi : gratis.','Se <b>16 oswa 24</b> ekip gason ki ap jwe : <b>premye ki peye tout</b> enskripsyon an yo.','2e vèsman an posib jiskaske komite a chwazi ekip yo.','Ekip ki pa pase yo ap resevwa <b>tout lajan yo ranbouse</b>.','Apre sa, gen yon <b>tiraj</b> pou gwoup 4 ekip yo. Kalandriye a ak rezilta yo nan onglet Match aplikasyon Masbet la.','4 jwè pou kòmanse, 9 pou pi plis. Yon jwè ki jwe pou yon ekip pa ka jwe pou yon lòt.']; }
  },
  fr:{fTitre:'Inscrire une équipe',lKat:'Catégorie',kG:'Équipe masculine',kGs:'10 000 HTG (ou 5 000 + 5 000)',kF:'Équipe féminine',kFs:'Gratuit · validée par le comité',
   hEkip:'1. L\'équipe',lEkip:'Nom de l\'équipe',lSig:'Abréviation',lZon:'Quartier ou localité',lM1:'Maillot principal (couleur)',lM2:'Maillot de réserve',
@@ -214,7 +215,7 @@ var TXT={
   lLive:'📺 Regarder les matchs en direct sur Masbet',lMatch:'⚽ Calendrier et résultats : onglet Match',aLyen:'Dates des matchs, groupes et résultats dans l\'onglet Match de l\'application Masbet. Les matchs passent en direct sur Masbet.',
   rTitre:'📜 Règles de l\'inscription',
   ong:{enskri:'✍️ S\'inscrire',mwen:'⭐ Mes équipes',vesman:'💳 2e versement',ekip:'📋 Équipes'},
-  louvri:'OUVERTE',ferme:'FERMÉE',jiska:'jusqu\'au',plas:'places restantes',enskri:'équipes masculines inscrites',peyeNet:'tout payé',fi:'équipes féminines',
+  louvri:'OUVERTE',ekipG:'équipes masculines inscrites',ekipF:'équipes féminines inscrites',ferme:'FERMÉE',jiska:'jusqu\'au',plas:'places restantes',enskri:'équipes masculines inscrites',peyeNet:'tout payé',fi:'équipes féminines',
   fermeTxt:function(e){ return e.akseteLe?'Les inscriptions sont fermées. Le comité a choisi les équipes.':e.plas<=0&&e.ouvert?'Plus de place : '+e.max+' équipes déjà inscrites.':'Les inscriptions sont fermées.'; },
   st:{'AVANS':'5 000 payés','PEYE NÈT':'Tout payé','AKSEPTE':'Acceptée','PA AKSEPTE':'Non retenue · remboursement','RANBOURSE':'Remboursée','FI — ANNATANN':'En attente du comité'},
   okEnskri:function(r){ return 'Équipe <b>'+esc(r.ekip)+'</b> inscrite ! Gardez ce numéro :'; },
@@ -225,7 +226,7 @@ var TXT={
   kodOk:function(k){ return k.utilise?'⚠️ Ce code a déjà servi.':'✓ Code valable : '+nb(k.montant)+' HTG'+(k.montant<10000?' (un versement)':' (tout)')+'.'; },
   erreurReseau:'Pas de réseau. Réessayez.',chJwe:'Écrivez au moins 4 joueurs (nom et prénom).',chPwo:'Cochez d\'abord la case du protocole.',chKod:'Entrez le code de paiement (EK…) : vous le recevez sur la page « Achte » après avoir payé.',
   envoi:'Envoi…',
-  regles:function(e){ return ['Inscriptions ouvertes jusqu\'au <b>'+esc(e.fenTexte)+'</b> (heure d\'Haïti).','Équipe masculine : <b>10 000 HTG</b>, en une fois ou en 2 versements (5 000 + 5 000). Équipe féminine : gratuit.','Jusqu\'à <b>'+e.max+'</b> équipes masculines peuvent s\'inscrire. <b>16 ou 24</b> équipes jouent : les <b>premières qui ont payé la totalité</b>.','Le 2e versement reste possible jusqu\'au choix des équipes par le comité.','Les équipes non retenues sont <b>remboursées intégralement</b>.','Ensuite, <b>tirage au sort</b> des groupes de 4. Calendrier et résultats dans l\'onglet Match de l\'application Masbet.','4 joueurs pour commencer, 9 au maximum. Un joueur qui a joué pour une équipe ne peut plus jouer pour une autre.']; }
+  regles:function(e){ return ['Inscriptions ouvertes jusqu\'au <b>'+esc(e.fenTexte)+'</b> (heure d\'Haïti).','Équipe masculine : <b>10 000 HTG</b>, en une fois ou en 2 versements (5 000 + 5 000). Équipe féminine : gratuit.','<b>16 ou 24</b> équipes masculines jouent : les <b>premières qui ont payé la totalité</b>.','Le 2e versement reste possible jusqu\'au choix des équipes par le comité.','Les équipes non retenues sont <b>remboursées intégralement</b>.','Ensuite, <b>tirage au sort</b> des groupes de 4. Calendrier et résultats dans l\'onglet Match de l\'application Masbet.','4 joueurs pour commencer, 9 au maximum. Un joueur qui a joué pour une équipe ne peut plus jouer pour une autre.']; }
  }
 };
 // Erreurs du serveur en français (page Admin) : rares ici ; les messages publics sont déjà en créole.
@@ -262,11 +263,9 @@ function stB(st){ var c={'AVANS':'AVANS','PEYE NÈT':'PEYE','AKSEPTE':'AKSEPTE',
 function ini(n){ return esc(String(n||'?').replace(/[^A-Za-zÀ-ÿ0-9 ]/g,'').split(/\s+/).filter(Boolean).slice(0,2).map(function(x){ return x.charAt(0); }).join('').toUpperCase()||'?'); }
 function afficherEtat(){
   var e=ETAT; if(!e) return;
-  var pc=Math.min(100,Math.round(100*e.inscrites/Math.max(1,e.max)));
   $('cEtat').innerHTML='<div class="etat"><b style="font-size:16px">'+esc(e.edisyon)+'</b><span class="pill '+(e.ouvert?'p-ok':'p-no')+'">'+(e.ouvert?T('louvri'):T('ferme'))+'</span></div>'+
     (e.ouvert?'<div class="doux">'+T('jiska')+' '+esc(e.fenTexte)+'</div>':'')+
-    '<div class="barre"><i style="width:'+pc+'%"></i></div><div class="doux"><b>'+e.inscrites+' / '+e.max+'</b> '+T('enskri')+(e.ouvert?' · <b>'+e.plas+'</b> '+T('plas'):'')+'</div>'+
-    '<div class="chif"><div><b>'+e.inscrites+'</b><span>'+T('enskri')+'</span></div><div><b>'+e.peyeNet+'</b><span>'+T('peyeNet')+'</span></div><div><b>'+e.fi+'</b><span>'+T('fi')+'</span></div></div>';
+    '<div class="total"><div><b>'+e.inscrites+'</b><span>'+T('ekipG')+'</span></div><div><b>'+e.fi+'</b><span>'+T('ekipF')+'</span></div></div>';   // v149 : seulement le nombre d'équipes inscrites, gason et fi séparés
   $('regles').innerHTML=T('regles')(e).map(function(x){ return '<li>'+x+'</li>'; }).join('');
   var ferme=!e.ouvert || (KAT==='G' && e.plas<=0);
   $('fFerme').innerHTML=ferme?'<div class="msg err">'+T('fermeTxt')(e)+'</div>':'';
