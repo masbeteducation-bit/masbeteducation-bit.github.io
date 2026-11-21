@@ -84,7 +84,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 .btn.wa{background:#25D366;color:#06301a}
 .wab{border:1.5px solid #25D366;border-radius:12px;padding:10px 12px;margin-top:10px}.wab .duo{margin-top:6px}
 .lienp{color:inherit;font-weight:800;text-decoration:underline}
-.total{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.total div{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}.total b{font-size:30px}.total span{color:var(--doux);font-size:14px}
+.total{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.total div{display:flex;align-items:baseline;gap:8px}.total span{line-height:1.25}.total b{font-size:30px}.total span{color:var(--doux);font-size:14px}
 </style>
 </head>
 <body>
@@ -181,7 +181,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 // =====================================================================
 var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', ETAT=null, KAT='G', LOGO='', VUE='enskri';
 var TXT={
- ht:{fTitre:'Enskri yon ekip',lKat:'Kategori',kG:'Ekip gason',kGs:'10 000 HTG (oswa 5 000 + 5 000)',kF:'Ekip fi',kFs:'Gratis · komite a valide l',
+ ht:{fTitre:'Enskri yon ekip',lKat:'Kategori',kG:'Ekip gason',kGs:'10 000 HTG (oswa 5 000 + 5 000)',kF:'Ekip fi',kFs:'Gratis · komite a valide l',
   hEkip:'1. Ekip la',lEkip:'Non ekip la',lSig:'Abreviyasyon',lZon:'Katye oswa zòn',lM1:'Mayo prensipal (koulè)',lM2:'Mayo rezèv',
   hResp:'2. Responsab yo',lDir:'Dirijan : non ak siyati',lKap:'Kapitèn : non ak siyati',lTel:'Telefòn / WhatsApp',
   hJwe:'3. Jwè yo',aJwe:'Omwen 4 jwè pou enskri (9 pou pi plis). Ou ka konplete lis la jiska 9 pita, ak komite a.',cNon:'Non ak siyati',cTi:'Ti non',cNm:'N° mayo',
@@ -216,7 +216,7 @@ var TXT={
   envoi:'Ap voye…',
   regles:function(e){ return ['Enskripsyon an louvri jiska <b>'+esc(e.fenTexte)+'</b> (lè Ayiti).','Ekip gason : <b>10 000 HTG</b>, yon sèl kou oswa an 2 vèsman (5 000 + 5 000). Ekip fi : gratis.','Se <b>16 oswa 24</b> ekip gason ki ap jwe : <b>premye ki peye tout</b> enskripsyon an yo.','Depi <b>premye vèsman an</b> (5 000), ekip la jwenn lyen <b>gwoup WhatsApp</b> ekip yo.','2e vèsman an posib jiskaske komite a chwazi ekip yo.','Ekip ki pa pase yo ap resevwa <b>tout lajan yo ranbouse</b>.','Apre sa, gen yon <b>tiraj</b> pou gwoup 4 ekip yo. Kalandriye a ak rezilta yo nan onglet Match aplikasyon Masbet la.','4 jwè pou kòmanse, 9 pou pi plis. Yon jwè ki jwe pou yon ekip pa ka jwe pou yon lòt.']; }
  },
- fr:{fTitre:'Inscrire une équipe',lKat:'Catégorie',kG:'Équipe masculine',kGs:'10 000 HTG (ou 5 000 + 5 000)',kF:'Équipe féminine',kFs:'Gratuit · validée par le comité',
+ fr:{fTitre:'Inscrire une équipe',lKat:'Catégorie',kG:'Équipe masculine',kGs:'10 000 HTG (ou 5 000 + 5 000)',kF:'Équipe féminine',kFs:'Gratuit · validée par le comité',
   hEkip:'1. L\'équipe',lEkip:'Nom de l\'équipe',lSig:'Abréviation',lZon:'Quartier ou localité',lM1:'Maillot principal (couleur)',lM2:'Maillot de réserve',
   hResp:'2. Les responsables',lDir:'Dirigeant : nom et prénom',lKap:'Capitaine : nom et prénom',lTel:'Téléphone / WhatsApp',
   hJwe:'3. Les joueurs',aJwe:'Au moins 4 joueurs pour s\'inscrire (9 au maximum). La liste se complète jusqu\'à 9 plus tard, avec le comité.',cNon:'Nom et prénom',cTi:'Surnom',cNm:'N° maillot',
