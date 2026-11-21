@@ -647,7 +647,7 @@ function nomCourt(nom){ var s=String(nom||'');
   if(/^enskripsyon/i.test(s)) return /10\s*000/.test(s)? (LANG==='fr'?'Tout en une fois':'Tout yon sèl kou') : (LANG==='fr'?'Un versement sur deux':'Yon vèsman sou de');
   if(/^spons/i.test(s)) return 'Sponsò';
   var m=/^plas\s+match.*?(\d{2}\/\d{2})/i.exec(s); if(m) return (LANG==='fr'?'Soirée du ':'Swa ')+m[1];
-  if(/^plas\s+final/i.test(s)) return LANG==='fr'?'Grande finale (9/01)':'Gran final (9/01)';
+  if(/^plas\s+final/i.test(s)){ var fj=(typeof TKN_PUB!=='undefined'&&TKN_PUB&&TKN_PUB.finJou)||'', dm=fj?' ('+fj.slice(8,10)+'/'+fj.slice(5,7)+')':''; return (LANG==='fr'?'Grande finale':'Gran final')+dm; }   // v153 : date du championnat
   return s; }
 function estSpons(nom){ return /^spons/i.test(String(nom||'')); }   // v147 : sponsor du championnat (nom dans le cadre live)
 function estFinal(nom){ return /^plas\s+(final|match)/i.test(String(nom||'')); }   // v147 : place d'une soirée de matchs ou de la finale + coupon Wi-Fi

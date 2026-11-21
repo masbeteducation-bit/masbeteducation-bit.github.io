@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>Pwotokòl chanpyona — Tikan Ansavo 6</title>
 <meta name="description" content="Pwotokòl chanpyona Tikan Ansavo 6 (LAPCSSSA) : enskripsyon, règ jwèt, disiplin, pri. Li an kreyòl oswa an franse, epi telechaje PDF la.">
 <meta property="og:title" content="Pwotokòl chanpyona — Tikan Ansavo 6">
@@ -54,6 +54,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 <main>
   <section class="carte">
     <p class="sous" id="sous"></p>
+    <div class="sous cache" id="chj" style="margin-top:8px;padding:8px 10px;border-radius:10px;background:#fff3cd;color:#6b4e00"></div>
     <div class="acts"><a class="btn" id="bPdf" download></a><a class="btn sec" id="bEnskri" href="/tikan/enskripsyon"></a></div>
     <div class="som" id="som"></div>
   </section>
@@ -167,8 +168,15 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
   </section>
 </main>
 <footer>LAPCSSSA · WhatsApp +509 3886-7953 · +509 3553-3817<br>Masbet Education · masbet.me</footer>
+<script src="/config.js"></script>
 <script>
-var LANG='ht';
+var LANG='ht', DJ=null;   // v153 : dates enregistrées dans l'Admin (📅 Dates du championnat)
+function datC(j,fr){ var m=String(j||'').match(/^(\d{4})-(\d{2})-(\d{2})$/); if(!m) return ''; var M=fr?['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm']; return (+m[3])+(fr&&+m[3]===1?'er':'')+' '+M[+m[2]-1]+' '+m[1]; }
+function majDates(){ if(!DJ) return; var fr=LANG==='fr', o=datC(DJ.ouvJou,fr), f=datC(DJ.finJou,fr); if(!o||!f) return;
+  document.getElementById('sous').textContent=(fr?'Tikan Ansavo · 6e édition · ':'Tikan Ansavo · 6yèm edisyon · ')+o+' – '+f;
+  var diff=DJ.ouvJou!=='2026-12-19'||DJ.finJou!=='2027-01-09', z=document.getElementById('chj'); z.classList.toggle('cache',!diff);
+  if(diff) z.textContent=fr?'⚠ Le comité a modifié le calendrier : le championnat se joue du '+o+' au '+f+'. Ces dates remplacent celles écrites dans le protocole.':'⚠ Komite a chanje kalandriye a : chanpyona a ap jwe soti '+o+' rive '+f+'. Dat sa yo ranplase sa ki ekri nan pwotokòl la.'; }
+(function(){ var C=window.MASBET_CONTENU; if(!C) return; fetch(C+'?api=tkn&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){ if(j&&j.ok&&j.data){ DJ=j.data; majDates(); } }).catch(function(){}); })();
 var TX={ht:{titre:'Pwotokòl chanpyona a',sous:'Tikan Ansavo · 6yèm edisyon · 19 desanm 2026 – 9 janvye 2027',pdf:'⬇️ Telechaje PDF la',enskri:'✍️ Enskri yon ekip',
   f:'/tikan/Pwotokol_Tikan_Ansavo_6_KR.pdf'},
  fr:{titre:'Protocole du championnat',sous:'Tikan Ansavo · 6e édition · 19 décembre 2026 – 9 janvier 2027',pdf:'⬇️ Télécharger le PDF',enskri:'✍️ Inscrire une équipe',
@@ -183,7 +191,7 @@ function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); var t=T
   $('d-ht').classList.toggle('cache',LANG!=='ht'); $('d-fr').classList.toggle('cache',LANG!=='fr');
   var d=$('d-'+LANG), h=d.querySelectorAll('h2'), s='';
   for(var i=0;i<h.length;i++){ h[i].id='a'+(i+1); var m=h[i].textContent.match(/^\S+ (\d+)/); s+='<a href="#a'+(i+1)+'" title="'+h[i].textContent.replace(/"/g,'&quot;')+'">'+(m?(LANG==='ht'?'Atik ':'Art. ')+m[1]:h[i].textContent)+'</a>'; }
-  $('som').innerHTML=s; }
+  $('som').innerHTML=s; majDates(); }
 (function(){ var q=/[?&]lang=(fr|ht)/.exec(location.search); langue(q?q[1]:(lire('masbet_lang')==='fr'?'fr':'ht')); })();
 </script>
 </body>

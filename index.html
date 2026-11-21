@@ -2270,6 +2270,7 @@ function lokButs(c,m){
     return o.map(function(k){ var x=g[k], mins=x.m.filter(Boolean), nb=x.m.length; return esc(x.n)+(mins.length?' '+esc(mins.join(', ')):'')+(nb>1&&!mins.length?' ×'+nb:'')+(x.t==='pen'?' ('+AL('penalti','pén.')+')':x.t==='csc'?' ('+AL('kont kan','csc')+')':''); }).join(', '); };
   return '<div class="buts">'+(b.d.length?'<div>'+bdg(c,m.d)+' ⚽ '+f(b.d)+'</div>':'')+(b.e.length?'<div>'+bdg(c,m.e)+' ⚽ '+f(b.e)+'</div>':'')+'</div>';
 }
+function lokTkLien(){ return '<a class="btn" style="display:block;text-align:center;text-decoration:none;margin:8px 0 4px;font-size:15px;padding:11px" href="/tikan/chanpyona'+(LANG==='fr'?'?lang=fr':'')+'">📊 '+AL('Klasman, estatistik, faz final','Classement, statistiques, phase finale')+' ›</a>'; }
 function afficherLokal(){
   var card=document.getElementById('cLok'); if(!card) return;
   var chs=(LOKD&&LOKD.championnats)||[];   // déjà triés par ordre d'affichage (page Admin)
@@ -2285,6 +2286,7 @@ function afficherLokal(){
   document.getElementById('lkPalm').innerHTML=p?'<div class="palm">'+(p.champion?'<div>🏆 '+AL('Chanpyon','Champion')+' : <b>'+esc(p.champion)+'</b></div>':'')+
     (p.joueur?'<div>⭐ '+AL('Pi bon jwè','Meilleur joueur')+' : <b>'+esc(p.joueur)+'</b></div>':'')+
     (p.buteur?'<div>⚽ '+AL('Pi bon buteur','Meilleur buteur')+' : <b>'+esc(p.buteur)+'</b>'+(p.buts!=null?' ('+esc(p.buts)+' '+AL('gòl','buts')+')':'')+'</div>':'')+'</div>':'';
+  if(c&&c.tk) document.getElementById('lkPalm').innerHTML+=lokTkLien();   // v153 : page complète du championnat Tikan
   var tabs=[['match',AL('Match','Matchs')]], ko=[], kl=[];
   if(c){
     ko=c.matchs.filter(function(m){ return m.ko; });
@@ -2313,7 +2315,7 @@ function afficherLokal(){
       var dj=x.matchs.filter(function(m){ return jourLocal(m.t)===LOKJ; }); if(!dj.length) return; n+=dj.length;
       var ph=[]; dj.forEach(function(m){ if(ph.indexOf(m.phase)<0) ph.push(m.phase); });
       h+='<div class="lkbloc">'+(tout?'<button class="lkcomp" onclick="lokChoix('+chs.indexOf(x)+')"><span class="ic">'+ico(x)+'</span><span><b>'+esc(x.nom)+'</b><small>'+esc(ph.filter(Boolean).join(' · ')||x.saison||'')+'</small></span><span class="go">›</span></button>':'')+
-        ph.map(function(q){ return (!tout&&q?'<div class="lkph">'+esc(q)+'</div>':'')+dj.filter(function(m){ return m.phase===q; }).map(function(m){ return lokLigne(x,m); }).join(''); }).join('')+'</div>';
+        ph.map(function(q){ return (!tout&&q?'<div class="lkph">'+esc(q)+'</div>':'')+dj.filter(function(m){ return m.phase===q; }).map(function(m){ return lokLigne(x,m); }).join(''); }).join('')+(tout&&x.tk?lokTkLien():'')+'</div>';
     });
     if(!n){
       var av=jours.filter(function(j){ return j<LOKJ; }).pop(), ap=jours.filter(function(j){ return j>LOKJ; })[0];

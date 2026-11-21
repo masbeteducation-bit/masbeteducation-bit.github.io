@@ -164,9 +164,14 @@ function qrMatrice(texte){
 // → billet téléchargeable avec QR (vérifiable à l'entrée) + coupon Wi-Fi MasbetAirNet imprimé sur le billet.
 // La même page sert masbet.me/tikan/plas et masbet.me/tikan/final. Projet Contenu, fichier Tikan.gs.
 // =====================================================================
-var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', FINALE=/final/.test(location.pathname), EVS=[];
+var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', FINALE=/final/.test(location.pathname), EVS=[], FINJ='';
+// v153 : date de la finale = celle enregistrée dans l'Admin (📅 Dates du championnat), jamais écrite en dur
+function datTxt(j){ var m=String(j||'').match(/^(\d{4})-(\d{2})-(\d{2})$/); if(!m) return ''; var d=new Date(+m[1],m[2]-1,+m[3]);
+  var J=LANG==='fr'?['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi']:['Dimanch','Lendi','Madi','Mèkredi','Jedi','Vandredi','Samdi'];
+  var M=LANG==='fr'?['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre']:['janvye','fevriye','mas','avril','me','jen','jiyè','out','septanm','oktòb','novanm','desanm'];
+  return J[d.getDay()]+' '+(+m[3])+' '+M[+m[2]-1]+' '+m[1]; }
 var TXT={
- ht:{titre:'Plas pou gran final la',titreP:'Plas pou match yo',iTitreP:'🎫 Rezève plas ou pou match yo',iTxtP:'Chak swa match : <b>100 HTG</b> ak yon <b>koupon Wi-Fi MasbetAirNet 25 goud</b> sou tikè a. Gran final la : <b>500 HTG</b> ak yon koupon 50 goud. Tikè a gen yon kòd QR yo verifye nan eskalye gradin nan.',evVen:'Swa ki ap vini yo',evPa:'Poko gen plas an vant. Tounen pita.',iTitre:'🏆 Gran final Tikan Ansavo 6',iTxt:'<b>Samdi 9 janvye 2027</b>, sou pon, ri Larivyè. Rezève plas ou pou <b>500 HTG</b> : ou resevwa yon <b>tikè</b> pou w telechaje (ak yon kòd QR yo verifye nan eskalye gradin nan), ak yon <b>koupon Wi-Fi MasbetAirNet 50 goud</b> bonis sou tikè a.',
+ ht:{titre:'Plas pou gran final la',titreP:'Plas pou match yo',iTitreP:'🎫 Rezève plas ou pou match yo',iTxtP:'Chak swa match : <b>100 HTG</b> ak yon <b>koupon Wi-Fi MasbetAirNet 25 goud</b> sou tikè a. Gran final la : <b>500 HTG</b> ak yon koupon 50 goud. Tikè a gen yon kòd QR yo verifye nan eskalye gradin nan.',evVen:'Swa ki ap vini yo',evPa:'Poko gen plas an vant. Tounen pita.',iTitre:'🏆 Gran final Tikan Ansavo 6',iTxt:'<b>{F}</b>, sou pon, ri Larivyè. Rezève plas ou pou <b>500 HTG</b> : ou resevwa yon <b>tikè</b> pou w telechaje (ak yon kòd QR yo verifye nan eskalye gradin nan), ak yon <b>koupon Wi-Fi MasbetAirNet 50 goud</b> bonis sou tikè a.',
   iBonus:'Wi-Fi 50 goud bonis',iBiye:'Tikè ak QR',bPeye:'💳 Peye 500 HTG (MonCash / NatCash)',bPeyeP:'💳 Peye plas ou (MonCash / NatCash)',
   fTitre:'Mwen gen kòd la : resevwa tikè m',lKod:'Kòd rezèvasyon an (PL… oswa FN…), sou paj « Achte » lè w fin peye',lNon:'Non ak siyati (k ap antre ak tikè a)',lTel:'Telefòn ou',bOk:'Resevwa tikè m',
   aDeja:'Ou pèdi tikè w ? Antre menm kòd la ak menm telefòn nan : tikè a ap tounen.',
@@ -176,8 +181,8 @@ var TXT={
   vTitre:'Verifikasyon tikè',valab:'✅ TIKÈ VALAB',paValab:'❌ TIKÈ SA A PA VALAB',dejaAntre:function(t,n){ return '⚠️ Tikè sa a deja eskane jodi a a <b>'+esc(t)+'</b>. Mande moun nan non li : se dwe <b>'+esc(n||'')+'</b>. Si non an pa koresponn, li pa ka monte.'; },
   lAdm:'Kòd eskalye a (GRD-…) — li rete sou telefòn ou',bAntre:'✔ Make l monte sou gradin nan',antreOk:'Li ka monte ✓ — bon match !',
   chKod:'Antre kòd rezèvasyon an (li kòmanse ak PL oswa FN).',erreurReseau:'Pa gen rezo. Eseye ankò.',envoi:'Ap voye…',paJodi:function(e){ return '⚠️ Tikè sa a se pou <b>'+esc(e.lib)+'</b> ('+esc(e.dat)+'), pa pou jodi a.'; },
-  tImg:{t1:'GRAN FINAL',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',dat:'Samdi 9 janvye 2027 · sou pon',plas:'PLAS',non:'NON',verif:'Verifye tikè a : eskane QR la',pri:'500 HTG',wifi:'🎁 KOUPON WI-FI MASBETAIRNET',wifiAide:'Konekte sou Masbet_AirNet epi antre kòd la'}},
- fr:{titre:'Place pour la grande finale',titreP:'Places pour les matchs',iTitreP:'🎫 Réservez votre place pour les matchs',iTxtP:'Chaque soirée de matchs : <b>100 HTG</b> avec un <b>coupon Wi-Fi MasbetAirNet de 25 gourdes</b> sur le billet. La grande finale : <b>500 HTG</b> avec un coupon de 50 gourdes. Le billet porte un QR code vérifié à l\'escalier du gradin.',evVen:'Prochaines soirées',evPa:'Pas encore de places en vente. Revenez plus tard.',iTitre:'🏆 Grande finale Tikan Ansavo 6',iTxt:'<b>Samedi 9 janvier 2027</b>, sou pon, rue de la Rivière. Réservez votre place pour <b>500 HTG</b> : vous recevez un <b>billet</b> à télécharger (avec un QR code vérifié à l\'escalier du gradin) avec un <b>coupon Wi-Fi MasbetAirNet de 50 gourdes</b> offert sur le billet.',
+  tImg:{t1:'GRAN FINAL',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',plas:'PLAS',non:'NON',verif:'Verifye tikè a : eskane QR la',pri:'500 HTG',wifi:'🎁 KOUPON WI-FI MASBETAIRNET',wifiAide:'Konekte sou Masbet_AirNet epi antre kòd la'}},
+ fr:{titre:'Place pour la grande finale',titreP:'Places pour les matchs',iTitreP:'🎫 Réservez votre place pour les matchs',iTxtP:'Chaque soirée de matchs : <b>100 HTG</b> avec un <b>coupon Wi-Fi MasbetAirNet de 25 gourdes</b> sur le billet. La grande finale : <b>500 HTG</b> avec un coupon de 50 gourdes. Le billet porte un QR code vérifié à l\'escalier du gradin.',evVen:'Prochaines soirées',evPa:'Pas encore de places en vente. Revenez plus tard.',iTitre:'🏆 Grande finale Tikan Ansavo 6',iTxt:'<b>{F}</b>, sou pon, rue de la Rivière. Réservez votre place pour <b>500 HTG</b> : vous recevez un <b>billet</b> à télécharger (avec un QR code vérifié à l\'escalier du gradin) avec un <b>coupon Wi-Fi MasbetAirNet de 50 gourdes</b> offert sur le billet.',
   iBonus:'Wi-Fi 50 gourdes offert',iBiye:'Billet avec QR',bPeye:'💳 Payer 500 HTG (MonCash / NatCash)',bPeyeP:'💳 Payer ma place (MonCash / NatCash)',
   fTitre:'J\'ai le code : recevoir mon billet',lKod:'Code de réservation (PL… ou FN…), reçu sur la page « Achte » après le paiement',lNon:'Nom et prénom (de la personne qui entre)',lTel:'Votre téléphone',bOk:'Recevoir mon billet',
   aDeja:'Billet perdu ? Entrez le même code et le même téléphone : le billet revient.',
@@ -187,7 +192,7 @@ var TXT={
   vTitre:'Vérification du billet',valab:'✅ BILLET VALABLE',paValab:'❌ CE BILLET N\'EST PAS VALABLE',dejaAntre:function(t,n){ return '⚠️ Billet déjà scanné aujourd\'hui à <b>'+esc(t)+'</b>. Demandez le nom : ce doit être <b>'+esc(n||'')+'</b>. Si le nom ne correspond pas, la personne ne monte pas.'; },
   lAdm:'Code d\'escalier (GRD-…) — il reste sur votre téléphone',bAntre:'✔ Marquer : peut monter au gradin',antreOk:'Peut monter ✓ — bon match !',
   chKod:'Entrez le code de réservation (il commence par PL ou FN).',erreurReseau:'Pas de réseau. Réessayez.',envoi:'Envoi…',paJodi:function(e){ return '⚠️ Ce billet est pour <b>'+esc(e.lib)+'</b> ('+esc(e.dat)+'), pas pour aujourd\'hui.'; },
-  tImg:{t1:'GRANDE FINALE',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',dat:'Samedi 9 janvier 2027 · sou pon',plas:'PLACE',non:'NOM',verif:'Vérifier le billet : scannez le QR',pri:'500 HTG',wifi:'🎁 COUPON WI-FI MASBETAIRNET',wifiAide:'Connectez-vous à Masbet_AirNet et entrez le code'}}
+  tImg:{t1:'GRANDE FINALE',t1m:'MATCH',t2:'TIKAN ANSAVO 6',souPon:'sou pon',plas:'PLACE',non:'NOM',verif:'Vérifier le billet : scannez le QR',pri:'500 HTG',wifi:'🎁 COUPON WI-FI MASBETAIRNET',wifiAide:'Connectez-vous à Masbet_AirNet et entrez le code'}}
 };
 function T(k){ return TXT[LANG][k]; }
 function $(id){ return document.getElementById(id); }
@@ -220,7 +225,7 @@ function imageTike(t){
   if(LOGO.complete&&LOGO.naturalWidth){ c.save(); c.beginPath(); c.arc(W/2,150,78,0,7); c.fillStyle='#fff'; c.fill(); c.clip(); c.drawImage(LOGO,W/2-70,80,140,140); c.restore(); }
   c.textAlign='center'; c.fillStyle='#ffd77a'; c.font='800 46px system-ui,Arial,sans-serif'; c.fillText(fin?I.t1:I.t1m,W/2,300);
   c.fillStyle='#fff'; c.font='900 92px system-ui,Arial Black,sans-serif'; c.fillText(I.t2,W/2,400);
-  c.fillStyle='#c9d3ea'; c.font='600 38px system-ui,Arial,sans-serif'; c.fillText(fin?I.dat:(ev.dat||'')+' · '+I.souPon,W/2,462);
+  c.fillStyle='#c9d3ea'; c.font='600 38px system-ui,Arial,sans-serif'; c.fillText(fin?(datTxt(ev.jou||FINJ)||'')+' · '+I.souPon:(ev.dat||'')+' · '+I.souPon,W/2,462);
   lignes.forEach(function(l,k){ c.fillStyle='#ffd77a'; var f=34; c.font='700 '+f+'px system-ui,Arial,sans-serif';
     while(f>20 && c.measureText('⚽ '+l).width>W-140){ f-=2; c.font='700 '+f+'px system-ui,Arial,sans-serif'; }
     c.fillText((lignes.length>1?'⚽ ':'')+l,W/2,510+k*44); });
@@ -287,7 +292,7 @@ function antre(){
 // ---------- Langue ----------
 function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG; $('bLang').textContent=LANG==='ht'?'FR':'KR';
   document.querySelectorAll('[data-t]').forEach(function(el){ var v=T(el.getAttribute('data-t')); if(typeof v==='string') el.textContent=v; });
-  $('tTitre').textContent=FINALE?T('titre'):T('titreP'); $('iTxt').innerHTML=FINALE?T('iTxt'):T('iTxtP'); document.title=(FINALE?T('titre'):T('titreP'))+' — Tikan Ansavo 6';
+  $('tTitre').textContent=FINALE?T('titre'):T('titreP'); $('iTxt').innerHTML=FINALE?T('iTxt').replace('{F}',esc(datTxt(FINJ))||'…'):T('iTxtP'); document.title=(FINALE?T('titre'):T('titreP'))+' — Tikan Ansavo 6';
   document.querySelector('#vInfo h2').textContent=FINALE?T('iTitre'):T('iTitreP'); document.querySelector('#vInfo .btn').textContent=FINALE?T('bPeye'):T('bPeyeP'); $('iChif').classList.toggle('cache',!FINALE); afficherEvs();
   if(JET) verifier(); else afficherTikes(''); }
 (function(){ var l=lire('masbet_lang'); try{ var a=lire('masbet_grd')||sessionStorage.getItem('masbet_fn_adm'); if(a) $('aKod').value=a; }catch(e){} langue(l==='fr'?'fr':'ht'); })();
@@ -302,8 +307,9 @@ function demo(q){ $('demo').classList.remove('cache'); $('demo').textContent='Mo
       return ok({n:'M1219-001',non:String(q.non).trim(),j:'DEMOJETON234',bonus:'MAQ7R2ZK',forfait:'25 goud',ev:{lib:window.DEMO3?'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto · Baconnois FC – Orouck United':'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'}}); }
     if(q.api==='tkn_fn'){ if(q.kod!=='FNDEMO2026') throw new Error('Kòd rezèvasyon an pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak FN).');
       if(String(q.non||'').trim().length<2) throw new Error('Ekri non ak siyati ou.'); if(String(q.tel||'').replace(/\D/g,'').length<8) throw new Error('Ekri nimewo telefòn ou (8 chif).');
-      var x=D.l[0]; if(x) return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',deja:true,ev:{lib:'Gran final',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}});
-      x={n:'F-001',non:String(q.non).trim(),j:'DEMOJETON999'}; D.l.push(x); return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',ev:{lib:'Gran final',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}}); }
+      var x=D.l[0]; if(x) return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',deja:true,ev:{lib:'Gran final',jou:'2027-01-09',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}});
+      x={n:'F-001',non:String(q.non).trim(),j:'DEMOJETON999'}; D.l.push(x); return ok({n:x.n,non:x.non,j:x.j,bonus:'MAXW3K9P',forfait:'50 goud',ev:{lib:'Gran final',jou:'2027-01-09',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}}); }
+    if(q.api==='tkn') return ok({finJou:'2027-01-09',ouvJou:'2026-12-19'});
     if(q.api==='tkn_ev') return ok({ev:[{id:'J20261219',lib:'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',jou:'2026-12-19',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'},{id:'FINAL',lib:'Gran final',jou:'2027-01-09',dat:'Samdi 9 janvye 2027',prix:500,kind:'final'}]});
     if(q.api==='tkn_fnv') return ok(q.b==='DEMOJETON234'?{valab:true,n:'M1219-001',non:'Jan Pyè',antre:D.antre||'',jodi:true,ev:{lib:'Lakou Ansavo – Pòt Wouj · Ti Rivyè – Raboto',dat:'Samdi 19 desanm 2026',prix:100,kind:'match'}}:{valab:false});
     if(q.api==='tkn_fnantre'){ if(q.code!=='DEMO' && !/^GRD-?DEMO$/i.test(q.code)) throw new Error('Kòd eskalye a pa bon oswa li pa valab ankò (yon nouvo kòd te kreye). Mande nouvo kòd la.'); if(D.antre) return ok({n:'F-001',non:'Jan Pyè',deja:D.antre}); D.antre='09/01/2027 17:42'; return ok({n:'F-001',non:'Jan Pyè',ok:true}); }
@@ -312,6 +318,7 @@ function demo(q){ $('demo').classList.remove('cache'); $('demo').textContent='Mo
 // ---------- Soirées à venir (page /tikan/plas) ----------
 function afficherEvs(){ var z=$('iEvs'); if(!z) return; if(FINALE){ z.innerHTML=''; return; }
   z.innerHTML='<h3>'+T('evVen')+'</h3>'+(EVS.length?EVS.map(function(e){ return '<div class="ek"><span class="ini">'+(e.kind==='final'?'🏆':'⚽')+'</span><span class="nm"><b>'+esc(e.dat)+'</b><small>'+esc(e.lib)+'</small></span><span class="st st-PEYE">'+esc(e.prix)+' HTG</span></div>'; }).join(''):'<div class="doux">'+T('evPa')+'</div>'); }
+lireApi({api:'tkn'}).then(function(r){ if(r&&r.finJou){ FINJ=r.finJou; if(FINALE) $('iTxt').innerHTML=T('iTxt').replace('{F}',esc(datTxt(FINJ))); } }).catch(function(){});
 if(!FINALE && !JET) lireApi({api:'tkn_ev'}).then(function(r){ EVS=r.ev||[]; afficherEvs(); }).catch(function(){});
 
 // v148 : téléphone d'Haïti avec (+509) fixe dans la case, 8 chiffres groupés 2 par 2
