@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#14213d">
 <meta name="author" content="Duckhens Lespérance — Masbet Education">
 <meta name="description" content="Masbet, yon sèl aplikasyon pou tout moun : Wi-Fi ak MonCash oswa NatCash, TV ak match an dirèk, lives, quiz, jwèt lespri, kominote, istwa jodi a.">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com https://player.castr.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com/firebasejs/ https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; worker-src 'self' blob:; media-src 'self' blob: https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https: https://script.google.com https://script.googleusercontent.com https://firebaseinstallations.googleapis.com https://fcmregistrations.googleapis.com https://fcm.googleapis.com; frame-src https://www.youtube-nocookie.com https://www.facebook.com https://*.cloudflarestream.com https://player.castr.com https://player.mediadelivery.net https://iframe.mediadelivery.net; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Masbet — Wi-Fi, TV, match, quiz, kominote</title>
 <link rel="canonical" href="https://masbet.me/">
@@ -2542,10 +2542,10 @@ function mtvCreneau(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i];
 function mtvProchain(now){ for(var i=0;i<MTV.prog.length;i++){ var x=MTV.prog[i]; if(x[0]>now&&!MTV.fini[x[0]+x[1]]) return x; } return null; }
 function mtvCharger(d){
   MTV.liste=(d&&Array.isArray(d.v)?d.v:[]).filter(function(x){ return x&&/^[A-Za-z0-9_-]{11}$/.test(x[0])&&x[2]>0; });
-  MTV.prog=(d&&Array.isArray(d.p)?d.p:[]).filter(function(x){ return x&&x[0]>0&&/^[A-Za-z0-9_-]{11}$/.test(x[1])&&x[3]>0; });
+  MTV.prog=(d&&Array.isArray(d.p)?d.p:[]).filter(function(x){ return x&&x[0]>0&&(/^[A-Za-z0-9_-]{11}$/.test(x[1])||mtvBn(x[1]))&&x[3]>0; });   // v155 : vidéos Bunny dans la grille
   // v116 : on coupe les 20 dernières secondes des vidéos de plus de 2 min, là où YouTube affiche ses écrans de fin (vignettes, « S'abonner »).
   MTV.liste.forEach(function(x){ if(x[2]>120) x[2]-=20; });
-  MTV.prog.forEach(function(x){ if(!x[5]&&x[3]>120) x[3]-=20; });
+  MTV.prog.forEach(function(x){ if(!x[5]&&x[3]>120&&!mtvBn(x[1])) x[3]-=20; });   // v155 : Bunny n'a pas d'écran de fin YouTube
   MTV.plages=(d&&Array.isArray(d.g)?d.g:[]).filter(function(x){ return x&&x[0]>0&&x[1]>=0&&x[2]>=0&&/^[VLT]$/.test(x[3]); });   // v122 : plages horaires
   MTV.memo={};
   MTV.ordre=null; MTV.jour=''; MTV.cache=Date.now();
@@ -2687,7 +2687,7 @@ function mtvSuivant(){
   if(Date.now()-MTV.cache>30*60e3){ MTV.cache=Date.now(); api('mtv').then(function(d){ mtvCharger(d); },function(){}); }   // grille relue en fond
   var dk=mtvDirekChoix(Date.now()); if(dk){ mtvDirekJouer(dk); return; }
   if(MTV.cur&&MTV.cur.d){ MTV.cur=null; mtvTagMaj(); }
-  var ecx=mtvE(); if(ecx&&ecx.classList.contains('mtvExt')){ ecx.classList.remove('mtvExt'); mtvCouper(); MTV.cid=''; }   // fin d'un direct Castr : retour au lecteur YouTube
+  var ecx=mtvE(); if(ecx&&ecx.classList.contains('mtvExt')&&!MTV.bn){ ecx.classList.remove('mtvExt'); mtvCouper(); MTV.cid=''; }   // (v155 : une vidéo Bunny est gérée plus bas, pour ne pas la recharger)   // fin d'un direct Castr : retour au lecteur YouTube
   var now=Date.now(), c=mtvCreneau(now), pro=mtvProchain(now), id, off=0, live=false, reste, titre, suite='', ext=false, pl={prochain:0,c:null};
   if(!c&&MTV.plages.length&&MTV.liste.length){   // v122 : plage horaire (vidéos, lives complets ou extraits)
     pl=mtvgMaintenant({v:MTV.liste,g:MTV.plages},now,mtvHasard,MTV.memo,function(y,t){ return MTV.ko[y[0]]||(MTV.fin&&MTV.fin.id===y[0]&&MTV.fin.t===t); });
@@ -2702,7 +2702,7 @@ function mtvSuivant(){
     MTV.i=p.i; var x=o[p.i]; id=x[0]; titre=x[1]; off=p.off; reste=x[2]-p.off; MTV.cur={i:p.i};
     if(o.length>1) suite=o[(p.i+1)%o.length][1];
   } else {   // rien en rotation : on attend le prochain passage
-    MTV.cur=null; mtvCouper(); mtvI().textContent='';
+    MTV.cur=null; mtvCouper(); if(ecx) ecx.classList.remove('mtvExt'); MTV.cid=''; mtvI().textContent='';
     if(pro){ mtvMsg(T('mtvPwochen')+' '+mtvH(pro[0])+' : '+pro[2]); MTV.t=setTimeout(mtvSuivant,Math.max(2,(pro[0]-now)/1000+0.5)*1000); }
     else mtvMsg(T('mtvErr'));
     return;
@@ -2712,7 +2712,12 @@ function mtvSuivant(){
   if(!c&&pl.prochain) reste=Math.min(reste,(pl.prochain-now)/1000+0.5);   // v122 : changement de plage à l'heure dite
   MTV.t=setTimeout(mtvSuivant,Math.max(2,reste)*1000);   // aussi filet de sécurité si le lecteur ne signale pas la fin
   mtvInfo(titre,!!c,pro,suite,ext);
-  MTV.cid=id+'|'+(c?c[0]:'r'); MTV.titre=titre; mtvTransition(titre);   // v116 : habillage à chaque chargement, il cache le titre et la chaîne YouTube du début
+  var ncid=id+'|'+(c?c[0]:'r'), bn=mtvBn(id);
+  if(bn){   // v155 : vidéo Masbet hébergée sur Bunny Stream (lecteur Bunny dans le cadre)
+    if(MTV.cid===ncid&&MTV.bn&&document.getElementById('mtvJ')===MTV.bn.f) return;   // déjà en cours : on ne recharge pas
+    MTV.cid=ncid; MTV.titre=titre; mtvTransition(titre); mtvBunnyJouer(bn,off); return; }
+  if(ecx&&ecx.classList.contains('mtvExt')){ ecx.classList.remove('mtvExt'); mtvCouper(); }   // fin d'une vidéo Bunny : retour au lecteur YouTube
+  MTV.cid=ncid; MTV.titre=titre; mtvTransition(titre);   // v116 : habillage à chaque chargement, il cache le titre et la chaîne YouTube du début
   if(MTV.p&&MTV.p.loadVideoById){ try{ var q={videoId:id}; if(!live) q.startSeconds=off; MTV.p.loadVideoById(q); return; }catch(e){} }
   mtvLecteur(id,off,live);
 }
@@ -2739,7 +2744,8 @@ function mtvGarde(){ clearInterval(MTV.wd); MTV.wdT=null; MTV.wdN=0;
 document.addEventListener('visibilitychange',function(){ if(!document.hidden){ MTV.wdT=null; MTV.wdN=0; if(MTV.actif) mtvReprendre(); } });   // retour sur l'onglet : on relance, le chien de garde juge 8 s après
 // v137 — lecteur YouTube pas encore prêt (connexion lente) : on garde l'habillage et on revérifie toutes les 3 s ; après ~20 s, bouton.
 function mtvPret(p){ return !!(p&&typeof p.getPlayerState==='function'); }
-function mtvVerif6(n){ if(!MTV.actif) return; var e=document.getElementById('mtvTrans'); if(e&&e.classList.contains('tap')) return;
+function mtvVerif6(n){ if(!MTV.actif) return; var ex=mtvE(); if(ex&&ex.classList.contains('mtvExt')){ mtvTransFin(); return; }   // v155 : lecteur Bunny / Castr / Cloudflare : pas de lecteur YouTube à attendre (avant : bouton puis rechargement de la page)
+  var e=document.getElementById('mtvTrans'); if(e&&e.classList.contains('tap')) return;
   if(!mtvPret(MTV.p)){ if(n<5){ clearTimeout(MTV.tt); MTV.tt=setTimeout(function(){ mtvVerif6(n+1); },3000); } else mtvToucher(); return; }
   if(mtvBloque()) mtvToucher(); else mtvTransFin(); }
 function mtvBloque(){ var p=MTV.p; if(!p||!p.getPlayerState) return false; try{ var st=p.getPlayerState(); return st!==1&&!(st===3&&MTV.tj); }catch(e){ return false; } }   // v136 : « en chargement » ne compte que si la vidéo a déjà démarré
@@ -2752,9 +2758,31 @@ function mtvToucher(){ var e=document.getElementById('mtvTrans'); if(!e||!MTV.ac
     setTimeout(function(){ if(mtvBloque()) mtvToucher(); },4000); };   // toujours rien 4 s après : le bouton revient
 }
 function mtvFin(){ if(MTV.cur&&MTV.cur.d) MTV.koD[MTV.cur.d]=Date.now(); if(MTV.cur&&MTV.cur.k) MTV.fini[MTV.cur.k]=1; if(MTV.cur&&MTV.cur.g) MTV.fin={id:MTV.cur.g, t:MTV.cur.t}; mtvSuivant(); }   // v122 : vidéo finie plus tôt que prévu → la suivante de la plage
-function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; var j=document.getElementById('mtvJ'); if(j) j.remove(); }
+function mtvCouper(){ if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){} MTV.p=null; MTV.bn=null; clearTimeout(MTV.bnT); var j=document.getElementById('mtvJ'); if(j) j.remove(); }
+// v155 — Bunny Stream : « bn:<bibliothèque>/<GUID> ». Lecteur Bunny (player.mediadelivery.net) dans le cadre, piloté par Player.js :
+// à « ready » on se place au bon moment et on lance ; « ended » → suite de la grille ; pas de « ready » en 25 s (domaine refusé,
+// réseau) → on passe à la rotation YouTube pour le reste du créneau.
+function mtvBn(id){ var m=/^bn:(\d{3,9})\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/.exec(String(id||'')); return m?{lib:m[1],g:m[2]}:null; }
+function mtvBunnyJouer(b,off){
+  var ec=mtvE(); mtvCouper(); ec.classList.add('mtvExt');
+  var f=document.createElement('iframe'); f.id='mtvJ'; f.allow='accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen=true;
+  f.referrerPolicy='strict-origin-when-cross-origin'; f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+  f.src='https://player.mediadelivery.net/embed/'+b.lib+'/'+b.g+'?autoplay=true&preload=true&playsinline=true&rememberPosition=false'+(off>0?'&t='+Math.floor(off):'');
+  ec.insertBefore(f,document.getElementById('mtvLogo'));
+  var k=MTV.cur&&MTV.cur.k; MTV.bn={f:f, off:off, pret:false};
+  clearTimeout(MTV.bnT); MTV.bnT=setTimeout(function(){ if(MTV.actif&&MTV.bn&&MTV.bn.f===f&&!MTV.bn.pret){ if(k) MTV.fini[k]=1; mtvSuivant(); } },25000);
+}
+function mtvBnEnvoi(m,v){ var b=MTV.bn; if(!b||!b.f.contentWindow) return; try{ b.f.contentWindow.postMessage(JSON.stringify({context:'player.js', version:'0.0.11', method:m, value:v, listener:'mtv'+m}),'https://player.mediadelivery.net'); }catch(x){} }
+window.addEventListener('message',function(e){
+  var b=MTV.bn; if(!b||e.source!==b.f.contentWindow||!/^https:\/\/(player|iframe)\.mediadelivery\.net$/.test(e.origin)) return;
+  var d=e.data; if(typeof d==='string'){ try{ d=JSON.parse(d); }catch(x){ return; } }
+  if(!d||d.context!=='player.js') return;
+  if(d.event==='ready'&&!b.pret){ b.pret=true; clearTimeout(MTV.bnT); mtvBnEnvoi('addEventListener','ended'); mtvBnEnvoi('addEventListener','error'); if(b.off>5) mtvBnEnvoi('setCurrentTime',b.off); mtvBnEnvoi('play'); }
+  else if(d.event==='ended') mtvFin();
+  else if(d.event==='error'&&!b.muet){ b.muet=true; mtvBnEnvoi('mute'); mtvBnEnvoi('play'); }   // lecture automatique refusée avec le son : sans le son (le bouton son de Bunny le remet)
+});
 function mtvLecteur(id,off,live){
-  var ec=mtvE(), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null;
+  var ec=mtvE(), vieux=document.getElementById('mtvJ'); if(vieux) vieux.remove(); MTV.p=null; MTV.bn=null; clearTimeout(MTV.bnT);
   var d=document.createElement('div'); d.id='mtvJ'; ec.insertBefore(d,document.getElementById('mtvLogo'));
   var pret=window.YT&&YT.Player?Promise.resolve():new Promise(function(ok,ko){
     var avant=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=function(){ if(avant) try{ avant(); }catch(e){} ok(); };
@@ -2782,7 +2810,7 @@ function mtvArreter(){
   MTV.actif=false; clearTimeout(MTV.t); clearInterval(MTV.wd);
   try{ var d=document; if(d.fullscreenElement||d.webkitFullscreenElement) (d.exitFullscreen||d.webkitExitFullscreen).call(d); }catch(e){}
   if(MTV.p&&MTV.p.destroy) try{ MTV.p.destroy(); }catch(e){}
-  MTV.p=null; MTV.cid=''; MTV.cur=null; var ex=mtvE(); if(ex) ex.classList.remove('mtvExt'); clearTimeout(MTV.tt); clearTimeout(MTV.tb); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
+  MTV.p=null; MTV.bn=null; clearTimeout(MTV.bnT); MTV.cid=''; MTV.cur=null; var ex=mtvE(); if(ex) ex.classList.remove('mtvExt'); clearTimeout(MTV.tt); clearTimeout(MTV.tb); ['mtvJ','mtvLogo','mtvTrans','mtvBouclier','mtvBtns'].forEach(function(k){ var e=document.getElementById(k); if(e) e.remove(); });
 }
 // Retour sur l'application après plus d'une minute : on rejoint l'émission en cours.
 var MTV_CACHE_T=0;

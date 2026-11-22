@@ -82,7 +82,7 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
 <script>
 var CONTENU=window.MASBET_CONTENU||'', DEMO=!CONTENU, LANG='ht', C=null, VUE='klas', DT=0, DJ=null;   // DJ : dates enregistrées dans l'Admin
 var TX={
- ht:{tabs:{klas:'📊 Klasman',res:'⚽ Rezilta',pro:'📅 Pwochen match',fin:'🏆 Faz final',sta:'📈 Estatistik'},charge:'Chajman…',erreur:'Pa ka chaje done yo. Tcheke koneksyon an epi eseye ankò.',
+ ht:{tabs:{klas:'📊 Klasman',res:'⚽ Rezilta',pro:'📅 Pwochen match',fin:'🏆 Faz final',sta:'📈 Estatistik'},charge:'Chajman…',erreur:'Pa ka chaje done yo. Tcheke koneksyon an epi eseye ankò.',reesse:'Eseye ankò',apre:'Klasman, rezilta ak estatistik yo ap parèt isit la apre tiraj la ak premye match yo.',
   pa:'Chanpyona a poko kòmanse : kalandriye a ap parèt isit la.',gr:'Gwoup',fanm:'Tounwa fanm',eq:'Ekip',maj:function(h){ return 'Mete ajou a '+h+' · chak minit'; },
   leg:'J jwe · G genyen · N nil · P pèdi · BP gòl bay · BK gòl pran · +/- diferans',q:'2 premye nan chak gwoup yo ale nan ka-de-final.',tir:'fòk gen tiraj osò',
   dep:{face:'fas-a-fas',kart:'mwens kat',atk:'atak, diferans, defans',dif:'diferans',def:'defans'},poko:'Poko gen match jwe.',pokoPro:'Pa gen lòt match pwograme.',
@@ -90,7 +90,7 @@ var TX={
   kf:'Ka-de-final',pr:'1e',dz:'2yèm',tab:'penal',kpi:['match jwe','gòl','gòl pa match'],but:'Meyè butè',jwe:'Jwè',gol:'Gòl',pen:'pen.',kont:'Gòl kont pwòp kan pa konte.',
   eqs:'Ekip yo',atk:'Pi bon atak',def:'Pi bon defans',fp:'Fair-play (mwens kat)',rek:'Rekò',gv:'Pi gwo viktwa',pg:'Match ki gen plis gòl',kat:'Kat',j:'jòn',r:'wouj',
   jou:['dimanch','lendi','madi','mèkredi','jedi','vandredi','samdi'],app:'⚽ Match yo sou Masbet',pwo:'📖 Pwotokòl la',direk:'AN DIRÈK',fini:'Fini',ranv:'Ranvwaye',vid:'—'},
- fr:{tabs:{klas:'📊 Classement',res:'⚽ Résultats',pro:'📅 Prochains matchs',fin:'🏆 Phase finale',sta:'📈 Statistiques'},charge:'Chargement…',erreur:'Impossible de charger les données. Vérifiez la connexion et réessayez.',
+ fr:{tabs:{klas:'📊 Classement',res:'⚽ Résultats',pro:'📅 Prochains matchs',fin:'🏆 Phase finale',sta:'📈 Statistiques'},charge:'Chargement…',erreur:'Impossible de charger les données. Vérifiez la connexion et réessayez.',reesse:'Réessayer',apre:'Classement, résultats et statistiques apparaîtront ici après le tirage et les premiers matchs.',
   pa:'Le championnat n\'a pas encore commencé : le calendrier apparaîtra ici.',gr:'Groupe',fanm:'Tournoi féminin',eq:'Équipe',maj:function(h){ return 'Mis à jour à '+h+' · chaque minute'; },
   leg:'J joués · G gagnés · N nuls · P perdus · BP buts pour · BC buts contre · +/- différence',q:'Les 2 premiers de chaque groupe vont en quarts de finale.',tir:'tirage au sort nécessaire',
   dep:{face:'face-à-face',kart:'moins de cartons',atk:'attaque, différence, défense',dif:'différence',def:'défense'},poko:'Aucun match joué pour l\'instant.',pokoPro:'Aucun autre match programmé.',
@@ -114,12 +114,13 @@ function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); documen
 function onglet(v){ VUE=v; try{ history.replaceState(null,'','#'+v); }catch(e){} afficher(); window.scrollTo(0,0); }
 
 function charger(){
-  var p=DEMO?Promise.resolve(demo()):fetch(CONTENU+'?api=lokal&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(''); return j.data; });
+  var p=DEMO?Promise.resolve(demo()):Promise.race([fetch(CONTENU+'?api=lokal&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(''); return j.data; }),
+    new Promise(function(_,ko){ setTimeout(function(){ ko(new Error('délai')); },25000); })]);
   p.then(function(d){
     var L=(d&&d.championnats)||[], q=/[?&]c=([A-Za-z0-9]+)/.exec(location.search);
     C=L.filter(function(x){ return q?x.id===q[1]:x.tk; })[0]||L.filter(function(x){ return /tikan/i.test(x.nom); })[0]||null;
     DT=Date.now(); afficher();
-  }).catch(function(){ if(!C) $('zone').innerHTML='<div class="carte vide">'+esc(T('erreur'))+'</div>'; });
+  }).catch(function(){ if(!C) $('zone').innerHTML='<div class="carte vide">'+esc(T('erreur'))+'<br><br><button class="btn" style="border:0;font:inherit;font-weight:800" onclick="charger()">'+esc(T('reesse'))+'</button></div>'; });
 }
 
 function ligneMatch(m){
@@ -200,7 +201,10 @@ function vSta(){
 function afficher(){
   var tabs=['klas','res','pro','fin','sta'];
   $('tabs').innerHTML=tabs.map(function(t){ return '<button class="'+(t===VUE?'on':'')+'" onclick="onglet(\''+t+'\')">'+T('tabs')[t]+'</button>'; }).join('');
-  if(!C){ return; }
+  if(!C){   // v154 : pas encore de championnat Tikan dans ⚽ Matchs (avant le tirage) → message au lieu de « Chargement… » sans fin
+    if(DT){ $('tNom').textContent='Tikan Ansavo 6'; $('maj').textContent=DJ&&DJ.ouvJou?jourTxt(DJ.ouvJou)+' → '+(LANG==='fr'?'finale ':'final ')+jourTxt(DJ.finJou):'';
+      $('zone').innerHTML='<div class="carte vide">'+esc(T('pa'))+'<br><span class="doux">'+esc(T('apre'))+'</span></div>'; }
+    return; }
   $('tNom').textContent=C.nom; document.title=C.nom+' — '+T('tabs')[VUE].replace(/^\S+\s/,'');
   $('maj').textContent=(DJ&&DJ.ouvJou?jourTxt(DJ.ouvJou)+' → '+(LANG==='fr'?'finale ':'final ')+jourTxt(DJ.finJou)+' · ':'')+(DT?T('maj')(heure(new Date(DT).toISOString())):'');
   $('zone').innerHTML=VUE==='res'?vRes():VUE==='pro'?vPro():VUE==='fin'?vFin():VUE==='sta'?vSta():vKlas();
