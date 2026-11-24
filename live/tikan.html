@@ -91,7 +91,7 @@ body.aff,html.aff{background:transparent!important;overflow:hidden}
 .ofL{position:relative;z-index:2;width:184px;flex:none;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#ffffff,#e9edf6);
   clip-path:polygon(18% 0,100% 0,100% 82%,82% 100%,0 100%,0 18%);margin-right:-26px}
 .ofL::after{content:"";position:absolute;inset:0;border:5px solid var(--or);clip-path:inherit;pointer-events:none}
-.ofL img{width:136px;height:136px;object-fit:contain}
+.ofL img{max-width:152px;max-height:124px;width:auto;height:auto;object-fit:contain}   /* v157 : logos larges gardent leur forme */
 .ofL b{width:122px;height:122px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--marine);color:var(--or);font:400 54px/1 var(--fa)}
 .ofC{position:relative;display:flex;flex-direction:column;justify-content:center;gap:8px;background:linear-gradient(100deg,var(--marine) 0%,var(--marine2) 100%);
   padding:0 52px 0 58px;min-width:760px;clip-path:polygon(0 0,100% 0,calc(100% - 34px) 100%,0 100%)}
@@ -438,9 +438,14 @@ function maj(envoi){
 var QUI='a';
 function vignettes(){ [['a','na','tla','rla'],['b','nb','tlb','rlb']].forEach(function(t){ var lg=logoDe(S[t[1]]), b=$(t[2]);
   b.style.backgroundImage= lg? 'url('+lg+')':''; b.textContent= lg? '':'+ logo'; b.className='logoT'+(lg?' a':''); $(t[3]).style.display= lg? '':'none'; }); }
-function reduire(fichier,cb){
+function reduire(fichier,cb,large){
   var url=URL.createObjectURL(fichier), im=new Image();
   im.onload=function(){ var tailles=[128,112,96,80,64], q=[0.86,0.72,0.58], meilleur='';
+    if(large){   // v157 : logo de partenaire officiel — on garde sa forme (pas de carré avec des bords vides), jusqu'à 240 × 150
+      [[240,150],[208,130],[176,110],[144,90],[112,70]].some(function(T){ var k=Math.min(T[0]/im.width,T[1]/im.height,1), cv=document.createElement('canvas');
+        cv.width=Math.max(1,Math.round(im.width*k)); cv.height=Math.max(1,Math.round(im.height*k)); cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
+        for(var j=0;j<q.length;j++){ var d=cv.toDataURL('image/webp',q[j]); if(d.indexOf('data:image/webp')!==0) d=cv.toDataURL('image/png'); if(d.length<=8500){ meilleur=d; return true; } } return false; });
+      URL.revokeObjectURL(url); cb(meilleur); return; }
     for(var i=0;i<tailles.length&&!meilleur;i++){ var T=tailles[i], cv=document.createElement('canvas'); cv.width=T; cv.height=T;
       var k=Math.min(T/im.width,T/im.height), w=im.width*k, h=im.height*k, cx=cv.getContext('2d'); cx.drawImage(im,(T-w)/2,(T-h)/2,w,h);
       for(var j=0;j<q.length;j++){ var d=cv.toDataURL('image/webp',q[j]); if(d.indexOf('data:image/webp')!==0) d=cv.toDataURL('image/png'); if(d.length<=8500){ meilleur=d; break; } } }
@@ -457,7 +462,7 @@ function envoyerLogo(nom,data,noteId){ var NT=noteId||'lgnote', aff=String(nom).
 $('tla').onclick=function(){ QUI='a'; OFQUI=''; $('fic').value=''; $('fic').click(); };
 $('tlb').onclick=function(){ QUI='b'; OFQUI=''; $('fic').value=''; $('fic').click(); };
 $('fic').onchange=function(){ var f=this.files&&this.files[0]; if(!f) return; var nom= QUI==='a'?S.na:S.nb;
-  if(OFQUI){ var on=OFQUI; OFQUI=''; reduire(f,function(d){ if(!d){ $('ofnote').textContent='⚠ Image illisible ou trop lourde.'; return; } envoyerLogo('sp '+on,d,'ofnote'); }); return; }
+  if(OFQUI){ var on=OFQUI; OFQUI=''; reduire(f,function(d){ if(!d){ $('ofnote').textContent='⚠ Image illisible ou trop lourde.'; return; } envoyerLogo('sp '+on,d,'ofnote'); },true); return; }
   reduire(f,function(d){ if(!d){ $('lgnote').textContent='⚠ Image illisible ou trop lourde.'; return; } envoyerLogo(nom,d); }); };
 $('rla').onclick=function(){ envoyerLogo(S.na,''); };
 $('rlb').onclick=function(){ envoyerLogo(S.nb,''); };
