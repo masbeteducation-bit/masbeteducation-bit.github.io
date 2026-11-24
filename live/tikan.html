@@ -218,7 +218,7 @@ var Q=new URLSearchParams(location.search), AFF=Q.get('v')==='1';
 var PER={av:'Avan match',m1:'1ye mi-tan',mt:'Mi-tan',m2:'2yèm mi-tan',tb:'Tire o but',fn:'Fen match'};
 var EKR={'':'Aucun (match)',av:'Avant le match',mt:'Mi-temps',fn:'Fin du match'};
 var EKTXT={av:'Match la ap kòmanse talè',mt:'Mi-tan',fn:'Fen match'};
-var D={na:'Ekip A',nb:'Ekip B',ca:'#d21034',cb:'#1a3fd1',sa:0,sb:0,ta:0,tb:0,p:'av',t:0,mi:25,e:'',pa:'',sp:'tk',ti:'Tikan Ansavo 6',st:'6e edisyon · LAPCSSSA',fa:0,fb:0,z:0,gt:'',gs:0,lv:0,of:'',oq:3,om:0};
+var D={na:'Ekip A',nb:'Ekip B',ca:'#d21034',cb:'#1a3fd1',sa:0,sb:0,ta:0,tb:0,p:'av',t:0,mi:25,e:'',pa:'',sp:'tk',ti:'Tikan Ansavo 6',st:'6e edisyon · LAPCSSSA',fa:0,fb:0,z:0,gt:'',gs:0,lv:0,of:'',oq:3,om:0,ofr:0};
 var S={};
 for(var k in D){ var x=Q.get(k); S[k]= x===null? D[k] : (typeof D[k]==='number'? (parseInt(x,10)||0) : x); }
 // v141 : l'état du match vit sur le serveur Masbet (Contenu) ; le cadre de Prism le relit toutes les 2 s.
@@ -272,7 +272,7 @@ function chrono(){
 /* v156 — partenaires officiels : « nom~slogan~contact|… » (6 au plus). Chacun 10 s dans le grand bandeau ;
    le bloc passe toutes les oq minutes (calé sur l'horloge, le même moment pour tous les cadres), ou tout de suite avec « Montrer maintenant » (om). */
 var DUR_OF=10000;
-function officiels(){ return String(S.of||'').split('|').map(function(x){ var t=x.split('~'); return {n:(t[0]||'').trim(), s:(t[1]||'').trim(), c:(t[2]||'').trim()}; }).filter(function(x){ return x.n; }).slice(0,6); }
+function officiels(){ return String(S.of||'').split('|').map(function(x){ var t=x.split('~'); return {n:(t[0]||'').trim(), s:(t[1]||'').trim(), c:(t[2]||'').trim()}; }).filter(function(x){ return x.n; }).slice(0,7); }   /* v161 : 7 au plus */
 function logoOf(n){ return logoDe('sp '+n); }
 function ofMaintenant(L,maint){
   if(!L.length) return -1; var bloc=L.length*DUR_OF;
@@ -403,7 +403,7 @@ R.innerHTML='<div class="reg">'+
    '<div class="lig" style="margin-top:8px"><button type="button" id="ofa" style="flex:1">+ Ajouter un partenaire officiel</button></div>'+
    '<div class="lig"><span style="flex:1">Passage du bandeau</span><select id="oq"><option value="2">toutes les 2 min</option><option value="3">toutes les 3 min</option><option value="5">toutes les 5 min</option><option value="10">toutes les 10 min</option><option value="0">seulement à la main</option></select></div>'+
    '<div class="lig"><button type="button" class="p" id="ofm" style="flex:1">▶ Montrer maintenant</button></div>'+
-   '<p class="note" id="ofnote">Chaque partenaire officiel passe 10 secondes, seul, avec son logo, son slogan et son contact (facultatifs). Le but et la mi-temps passent devant. 6 au plus. Logo carré de préférence (PNG transparent idéal).</p></div>'+
+   '<p class="note" id="ofnote">Chaque partenaire officiel passe 10 secondes, seul, avec son logo, son slogan et son contact (facultatifs). Le but et la mi-temps passent devant. 7 au plus. Logo carré de préférence (PNG transparent idéal).</p></div>'+
  '</div></div>';
 
 var ap=document.getElementById('ap'), sc=scene(), w=document.createElement('div'); w.className='mise'; w.appendChild(sc); ap.appendChild(w);
@@ -498,12 +498,12 @@ function ofListe(){ var z=$('ofl'), L=officiels(); z.innerHTML='';
     r.querySelector('.logoT').onclick=function(){ var n=ofNet(r.querySelector('[data-of="n"]').value); if(!n){ $('ofnote').textContent='Écrivez d’abord le nom du partenaire.'; return; } OFQUI=n; $('fic').value=''; $('fic').click(); };
     z.appendChild(r); });
   ofVignettes(); }
-function ofEcrire(l){ S.of=l.map(function(o){ return [ofNet(o.n),ofNet(o.s),ofNet(o.c)].join('~'); }).filter(function(x){ return !/^~/.test(x); }).join('|').slice(0,700); }
+function ofEcrire(l){ S.ofr=(S.ofr||0)+1;   /* v160 : version de la liste (la page Admin peut aussi la changer) */ S.of=l.map(function(o){ return [ofNet(o.n),ofNet(o.s),ofNet(o.c)].join('~'); }).filter(function(x){ return !/^~/.test(x); }).join('|').slice(0,1000); }
 function ofLire(){ var l=[]; document.querySelectorAll('#ofl .ofRow').forEach(function(r){ l.push({n:r.querySelector('[data-of="n"]').value, s:r.querySelector('[data-of="s"]').value, c:r.querySelector('[data-of="c"]').value}); });
   var vide=l.filter(function(o){ return !ofNet(o.n); }).length; ofEcrire(l); if(!vide) maj(); else { peindre(sc); } }
 function ofVignettes(){ document.querySelectorAll('#ofl .ofRow').forEach(function(r){ var n=ofNet(r.querySelector('[data-of="n"]').value), b=r.querySelector('.logoT'), lg=n?logoOf(n):'';
   b.style.backgroundImage= lg? 'url('+lg+')':''; b.textContent= lg? '':'+ logo'; b.className='logoT'+(lg?' a':''); }); }
-$('ofa').onclick=function(){ var l=officiels(); if(l.length>=6){ $('ofnote').textContent='6 partenaires officiels au plus.'; return; }
+$('ofa').onclick=function(){ var l=officiels(); if(l.length>=7){ $('ofnote').textContent='7 partenaires officiels au plus.'; return; }
   var z=$('ofl'); if(!l.length) z.innerHTML=''; var r=document.createElement('div'); r.className='ofRow';
   r.innerHTML='<button type="button" class="logoT">+ logo</button><div><input type="text" maxlength="40" data-of="n" placeholder="Nom du partenaire"><input type="text" maxlength="60" data-of="s" placeholder="Slogan (facultatif)"><input type="text" maxlength="30" data-of="c" placeholder="Contact : téléphone, site… (facultatif)"></div><button type="button" class="x" aria-label="Retirer">✕</button>';
   z.appendChild(r); r.querySelectorAll('input').forEach(function(inp){ inp.addEventListener('input',function(){ ofLire(); }); });
@@ -530,7 +530,7 @@ function envoyer(){
   if(!JET){ cnx(true); etatEnvoi('cle'); return; }
   enCours=true; sale=false; etatEnvoi('att');
   poster({api:'tablo_set',jeton:JET,etat:JSON.stringify(S)}).then(function(j){ enCours=false;
-    if(j&&j.ok){ REV=j.data.rev||REV; if(j.data.jeton) garderJ(j.data.jeton); if(sale) envoyer(); else etatEnvoi('ok'); }
+    if(j&&j.ok){ REV=j.data.rev||REV; if(j.data.jeton) garderJ(j.data.jeton); if(j.data.ofr!==undefined){ S.of=String(j.data.of||''); S.ofr=Number(j.data.ofr)||0; ofMajSiLibre(); }   /* v160 : liste plus récente sur le serveur (Admin) */ if(sale) envoyer(); else etatEnvoi('ok'); }
     else if(j&&/jeton/.test(j.erreur||'')){ JET=''; sale=true; cnx(true); etatEnvoi('cle'); }
     else { sale=true; etatEnvoi('err',j&&j.erreur); setTimeout(envoyer,3000); }
   }).catch(function(){ enCours=false; sale=true; etatEnvoi('err'); setTimeout(envoyer,3000); });
@@ -548,6 +548,13 @@ $('cop').onclick=function(){ var t=$('lien').value, e=$('etat');
 $('oq').value=String(S.oq); ofListe(); maj(false); setInterval(function(){ peindre(sc); },1000);
 if(!CONTENU) etatEnvoi('hors'); else if(!JET){ cnx(true); etatEnvoi('cle'); } else etatEnvoi('att');
 lireServeur(function(ok,nv){ if(nv){ remplir(); maj(false); } if(ok&&JET) etatEnvoi('ok'); });
+/* v160 : un sponsor coché « ⭐ Partenaire officiel » dans la page Admin arrive ici en 15 s (seulement la liste des officiels) */
+var OFATT=false;
+function ofMajSiLibre(){ var a=document.activeElement; if(a&&$('ofl').contains(a)){ OFATT=true; return; } OFATT=false; ofListe(); peindre(sc); }
+setInterval(function(){ if(OFATT) ofMajSiLibre(); if(!CONTENU||!window.fetch||sale||enCours||document.hidden) return;
+  fetch(CONTENU+'?api=tablo&rev='+REV+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){
+    if(!j||!j.ok||!j.data||!j.data.etat||sale||enCours) return; var e=j.data.etat; REV=j.data.rev||REV;
+    if(Number(e.ofr||0)>Number(S.ofr||0)){ S.of=String(e.of||''); S.ofr=Number(e.ofr)||0; ofMajSiLibre(); } }).catch(function(){}); },15000);
 })();
 </script>
 </body>

@@ -91,6 +91,13 @@ footer{text-align:center;color:var(--doux);font-size:12.5px;padding:8px 16px 30p
     <label for="kod" data-t="lKod"></label><input id="kod" maxlength="12" placeholder="SP…" autocomplete="off" spellcheck="false" style="text-transform:uppercase;font-family:ui-monospace,Menlo,monospace;font-weight:800">
     <label for="non" data-t="lNon"></label><input id="non" maxlength="40" autocomplete="organization">
     <div class="doux" style="margin-top:6px" data-t="aNon"></div>
+    <div id="zGwo" class="cache" style="margin-top:14px;padding:12px;border:2px solid var(--or);border-radius:14px">
+      <b data-t="gTitre"></b><div class="doux" style="margin-top:4px" data-t="gTxt"></div>
+      <label for="slo" data-t="lSlo"></label><input id="slo" maxlength="60">
+      <label for="kon" data-t="lKon"></label><input id="kon" maxlength="30" inputmode="text">
+      <label data-t="lLogo"></label><div class="logoz"><button type="button" class="v" id="bLogo" onclick="$('fic').click()">+</button><span class="doux" id="lgTxt" data-t="aLogo"></span></div>
+      <input type="file" id="fic" accept="image/png,image/jpeg,image/webp" class="cache">
+    </div>
     <button class="btn" id="bOk" onclick="voye()" data-t="bOk"></button><div id="fMsg"></div></section>
 </main>
 <footer>LAPCSSSA · WhatsApp +509 3886-7953 · +509 3553-3817<br>Masbet Education · masbet.me</footer>
@@ -102,11 +109,19 @@ var TXT={
  ht:{titre:'Vin sponsò chanpyona a',iTitre:'🤝 Sipòte Tikan Ansavo 6',iTxt:'Chwazi yon montan, peye ak <b>MonCash oswa NatCash</b> sou paj « Achte », epi ekri non ou vle nou afiche. <b>Non an ap parèt otomatikman</b> nan bann « AVÈK SIPÒ » pandan tout live match yo sou Masbet. Nou pa afiche montan an.',
   bPeye:'💳 Peye kounye a (MonCash / NatCash)',fTitre:'Mwen gen kòd la : afiche non m',lKod:'Kòd sponsò a (SP…), sou paj « Achte » lè w fin peye',lNon:'Non pou n afiche (ou menm, biznis ou, fanmi w…)',
   aNon:'40 karaktè pou pi plis. Pa mete lyen ni nimewo.',bOk:'Afiche non m',ok:function(n){ return 'Mèsi anpil ! <b>'+esc(n)+'</b> ap parèt nan live match yo nan yon minit. 🙏'; },
-  chKod:'Antre kòd sponsò a (li kòmanse ak SP).',erreurReseau:'Pa gen rezo. Eseye ankò.',envoi:'Ap voye…'},
+  chKod:'Antre kòd sponsò a (li kòmanse ak SP).',erreurReseau:'Pa gen rezo. Eseye ankò.',envoi:'Ap voye…',
+  gTitre:'⭐ Patnè ofisyèl (50 000 HTG oswa plis)',gTxt:'Ou gen dwa a gwo bann pa w la nan live yo : logo w, non w, slogan w ak kontak ou, 10 segonn chak 3 minit. Ou ka ekri yo yon sèl fwa sèlman : tcheke byen anvan w voye.',
+  lSlo:'Slogan (60 karaktè pou pi plis)',lKon:'Kontak : telefòn oswa sit (opsyonèl)',lLogo:'Logo (opsyonèl)',aLogo:'Touche + pou chwazi logo a. Pi bon : PNG transparan.',lgOk:'✓ Logo pare',lgKo:'Imaj sa a pa ka itilize. Eseye yon lòt.',
+  okOf:function(n){ return 'Mèsi anpil ! <b>'+esc(n)+'</b> se kounye a yon <b>patnè ofisyèl</b> : gwo bann ou an ap pase nan live yo. 🙏'; },
+  plen:'Non ou ap parèt nan live yo. Lis patnè ofisyèl yo plen kounye a : komite a ap kontakte w.'},
  fr:{titre:'Devenir sponsor du championnat',iTitre:'🤝 Soutenir Tikan Ansavo 6',iTxt:'Choisissez un montant, payez par <b>MonCash ou NatCash</b> sur la page « Achte », puis écrivez le nom à afficher. <b>Le nom s\'affiche automatiquement</b> dans le bandeau « AVÈK SIPÒ » pendant tous les lives des matchs sur Masbet. Le montant n\'est pas affiché.',
   bPeye:'💳 Payer maintenant (MonCash / NatCash)',fTitre:'J\'ai le code : afficher mon nom',lKod:'Code sponsor (SP…), reçu sur la page « Achte » après le paiement',lNon:'Nom à afficher (vous, votre entreprise, votre famille…)',
   aNon:'40 caractères au maximum. Pas de lien ni de numéro.',bOk:'Afficher mon nom',ok:function(n){ return 'Merci beaucoup ! <b>'+esc(n)+'</b> apparaîtra dans les lives des matchs d\'ici une minute. 🙏'; },
-  chKod:'Entrez le code sponsor (il commence par SP).',erreurReseau:'Pas de réseau. Réessayez.',envoi:'Envoi…'}
+  chKod:'Entrez le code sponsor (il commence par SP).',erreurReseau:'Pas de réseau. Réessayez.',envoi:'Envoi…',
+  gTitre:'⭐ Partenaire officiel (50 000 HTG ou plus)',gTxt:'Vous avez droit à votre grand bandeau dans les lives : votre logo, votre nom, votre slogan et votre contact, 10 secondes toutes les 3 minutes. Vous ne pouvez les écrire qu\'une seule fois : vérifiez bien avant d\'envoyer.',
+  lSlo:'Slogan (60 caractères au maximum)',lKon:'Contact : téléphone ou site (facultatif)',lLogo:'Logo (facultatif)',aLogo:'Touchez + pour choisir le logo. Idéal : PNG transparent.',lgOk:'✓ Logo prêt',lgKo:'Cette image ne peut pas être utilisée. Essayez-en une autre.',
+  okOf:function(n){ return 'Merci beaucoup ! <b>'+esc(n)+'</b> est maintenant <b>partenaire officiel</b> : votre grand bandeau passe dans les lives. 🙏'; },
+  plen:'Votre nom apparaîtra dans les lives. La liste des partenaires officiels est pleine pour le moment : le comité vous contactera.'}
 };
 function T(k){ return TXT[LANG][k]; }
 function $(id){ return document.getElementById(id); }
@@ -116,14 +131,42 @@ function ecrire(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 function msg(id,t,c){ $(id).innerHTML=t?'<div class="msg '+(c||'info')+'">'+t+'</div>':''; }
 function appareil(){ var a=lire('masbet_appareil'); if(!a){ var al='abcdefghijkmnpqrstuvwxyz23456789'; a='A'; for(var i=0;i<19;i++) a+=al.charAt(Math.floor(Math.random()*al.length)); ecrire('masbet_appareil',a); } return a; }
 function errTxt(e){ var m=String(e&&e.message||e||''); return (!m||/NetworkError|Failed to fetch|network|Load failed/i.test(m))?T('erreurReseau'):m; }
-function poster(c){ if(DEMO) return new Promise(function(ok,ko){ $('demo').classList.remove('cache'); $('demo').textContent='Mode démonstration : code d\'essai SPDEMO2026.';
-    setTimeout(function(){ if(c.kod!=='SPDEMO2026') return ko(new Error('Kòd sponsò a pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak SP).')); if(String(c.non||'').trim().length<2) return ko(new Error('Ekri non pou n afiche a (2 lèt omwen).')); ok({non:String(c.non).trim(),montant:5000}); },300); });
+function poster(c){ if(DEMO) return new Promise(function(ok,ko){ $('demo').classList.remove('cache'); $('demo').textContent='Mode démonstration : codes d\'essai SPDEMO2026 (5 000) et SPGWO50000 (50 000).';
+    setTimeout(function(){ if(false) return ko(new Error('Kòd sponsò a pa bon. Ou jwenn li sou paj « Achte » lè w fin peye (li kòmanse ak SP).')); if(c.kod!=='SPDEMO2026'&&c.kod!=='SPGWO50000') return ko(new Error('Kòd sponsò a pa bon.')); if(String(c.non||'').trim().length<2) return ko(new Error('Ekri non pou n afiche a (2 lèt omwen).')); ok({non:String(c.non).trim(),montant:c.kod==='SPGWO50000'?50000:5000,ofisyel:c.kod==='SPGWO50000'}); },300); });
   return fetch(CONTENU,{method:'POST',credentials:'omit',cache:'no-store',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(c)})
    .then(function(r){ return r.json(); }).then(function(j){ if(!j||!j.ok) throw new Error(j&&j.erreur||''); return j.data; }); }
+/* v162 : code de 50 000 HTG et plus → slogan, contact, logo (réduit dans le téléphone, marges unies retirées, ≤ 8,5 Ko) */
+var GWO=false, LOGO='';
+function verifKod(){ var k=String($('kod').value||'').toUpperCase().replace(/[^A-Z0-9]/g,''); if(!/^SP[A-Z0-9]{8}$/.test(k)){ gwo(false); return; }
+  if(DEMO){ gwo(k==='SPGWO50000'); return; }
+  fetch(CONTENU+'?api=tkn_spkod&kod='+encodeURIComponent(k)+'&appareil='+appareil()+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); })
+   .then(function(j){ gwo(!!(j&&j.ok&&j.data&&!j.data.utilise&&(j.data.gwo||j.data.montant>=50000))); }).catch(function(){}); }
+function gwo(v){ GWO=v; $('zGwo').classList.toggle('cache',!v); }
+$('kod').addEventListener('input',function(){ if(String(this.value).replace(/[^A-Za-z0-9]/g,'').length>=10) verifKod(); else gwo(false); });
+$('kod').addEventListener('blur',verifKod);
+function rogner(im){ var W=im.naturalWidth||im.width, H=im.naturalHeight||im.height, t={x:0,y:0,w:W,h:H};
+  try{ var k=Math.min(1,400/Math.max(W,H)), w=Math.max(1,Math.round(W*k)), h=Math.max(1,Math.round(H*k)), cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+    var cx=cv.getContext('2d'); cx.drawImage(im,0,0,w,h); var d=cx.getImageData(0,0,w,h).data;
+    function px(x,y){ var i=(y*w+x)*4; return [d[i],d[i+1],d[i+2],d[i+3]]; }
+    var co=[px(0,0),px(w-1,0),px(0,h-1),px(w-1,h-1)], f=co[0];
+    if(!co.every(function(c){ return Math.abs(c[0]-f[0])+Math.abs(c[1]-f[1])+Math.abs(c[2]-f[2])+Math.abs(c[3]-f[3])<60; })) return t;
+    var x0=w,y0=h,x1=-1,y1=-1;
+    for(var y=0;y<h;y++) for(var x=0;x<w;x++){ var i=(y*w+x)*4, a=d[i+3]; var e=(a<16&&f[3]<16)?0:Math.abs(d[i]-f[0])+Math.abs(d[i+1]-f[1])+Math.abs(d[i+2]-f[2])+Math.abs(a-f[3]);
+      if(e>90){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; } }
+    if(x1<0) return t; var m=Math.round(Math.max(x1-x0,y1-y0)*0.04); x0=Math.max(0,x0-m); y0=Math.max(0,y0-m); x1=Math.min(w-1,x1+m); y1=Math.min(h-1,y1+m);
+    if((x1-x0+1)*(y1-y0+1)>0.92*w*h) return t; return {x:x0/k,y:y0/k,w:(x1-x0+1)/k,h:(y1-y0+1)/k};
+  }catch(e){ return t; } }
+$('fic').onchange=function(){ var f=this.files&&this.files[0]; if(!f) return; if(f.size>15e6){ $('lgTxt').textContent=T('lgKo'); return; } var im=new Image(), fr=new FileReader();   /* la CSP de la page refuse blob: → lecture en data: */
+  im.onload=function(){ var bx=rogner(im), best=''; [[240,150],[208,130],[176,110],[144,90],[112,70]].some(function(T2){ var k=Math.min(T2[0]/bx.w,T2[1]/bx.h,1), cv=document.createElement('canvas');
+      cv.width=Math.max(1,Math.round(bx.w*k)); cv.height=Math.max(1,Math.round(bx.h*k)); cv.getContext('2d').drawImage(im,bx.x,bx.y,bx.w,bx.h,0,0,cv.width,cv.height);
+      return [0.86,0.72,0.58].some(function(q){ var d=cv.toDataURL('image/webp',q); if(d.indexOf('data:image/webp')!==0) d=cv.toDataURL('image/png'); if(d.length<=8500){ best=d; return true; } return false; }); });
+    LOGO=best; var b=$('bLogo'); b.style.backgroundImage=best?'url('+best+')':''; b.textContent=best?'':'+'; $('lgTxt').textContent=best?T('lgOk'):T('lgKo'); };
+  im.onerror=function(){ LOGO=''; $('lgTxt').textContent=T('lgKo'); }; fr.onload=function(){ im.src=fr.result; }; fr.onerror=im.onerror; fr.readAsDataURL(f); };
 function voye(){ var k=String($('kod').value||'').toUpperCase().replace(/[^A-Z0-9]/g,''); $('kod').value=k;
   if(!/^SP[A-Z0-9]{8}$/.test(k)) return msg('fMsg',T('chKod'),'err');
   var b=$('bOk'); b.disabled=true; b.textContent=T('envoi');
-  poster({api:'tkn_spon',kod:k,non:$('non').value,appareil:appareil()}).then(function(r){ msg('fMsg',T('ok')(r.non),'ok'); $('kod').value=''; })
+  var c={api:'tkn_spon',kod:k,non:$('non').value,appareil:appareil()}; if(GWO){ c.slogan=$('slo').value; c.kontak=$('kon').value; if(LOGO) c.logo=LOGO; }
+  poster(c).then(function(r){ msg('fMsg', r.ofisyel? T('okOf')(r.non) : (r.plen? T('ok')(r.non)+'<br>'+T('plen') : T('ok')(r.non)),'ok'); $('kod').value=''; gwo(false); LOGO=''; $('slo').value=''; $('kon').value=''; $('bLogo').style.backgroundImage=''; $('bLogo').textContent='+'; $('lgTxt').textContent=T('aLogo'); })
    .catch(function(e){ msg('fMsg',esc(errTxt(e)),'err'); }).then(function(){ b.disabled=false; b.textContent=T('bOk'); }); }
 function langue(l){ LANG=l==='fr'?'fr':'ht'; ecrire('masbet_lang',LANG); document.documentElement.lang=LANG; $('bLang').textContent=LANG==='ht'?'FR':'KR';
   document.querySelectorAll('[data-t]').forEach(function(el){ var v=T(el.getAttribute('data-t')); if(typeof v==='string') el.textContent=v; });
