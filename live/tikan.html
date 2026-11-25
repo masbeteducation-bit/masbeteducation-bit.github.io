@@ -218,7 +218,7 @@ var Q=new URLSearchParams(location.search), AFF=Q.get('v')==='1';
 var PER={av:'Avan match',m1:'1ye mi-tan',mt:'Mi-tan',m2:'2yèm mi-tan',tb:'Tire o but',fn:'Fen match'};
 var EKR={'':'Aucun (match)',av:'Avant le match',mt:'Mi-temps',fn:'Fin du match'};
 var EKTXT={av:'Match la ap kòmanse talè',mt:'Mi-tan',fn:'Fen match'};
-var D={na:'Ekip A',nb:'Ekip B',ca:'#d21034',cb:'#1a3fd1',sa:0,sb:0,ta:0,tb:0,p:'av',t:0,mi:25,e:'',pa:'',sp:'tk',ti:'Tikan Ansavo 6',st:'6e edisyon · LAPCSSSA',fa:0,fb:0,z:0,gt:'',gs:0,lv:0,of:'',oq:3,om:0,ofr:0};
+var D={na:'Ekip A',nb:'Ekip B',ca:'#d21034',cb:'#1a3fd1',sa:0,sb:0,ta:0,tb:0,p:'av',t:0,mi:25,e:'',pa:'',sp:'tk',ti:'Tikan Ansavo 6',st:'6e edisyon · LAPCSSSA',fa:0,fb:0,z:0,gt:'',gs:0,lv:0,of:'',oq:3,om:0,ofr:0,tc:0};
 var S={};
 for(var k in D){ var x=Q.get(k); S[k]= x===null? D[k] : (typeof D[k]==='number'? (parseInt(x,10)||0) : x); }
 // v141 : l'état du match vit sur le serveur Masbet (Contenu) ; le cadre de Prism le relit toutes les 2 s.
@@ -334,7 +334,7 @@ function peindre(sc){
   if(L.length){ var i=Math.floor(Date.now()/8000)%L.length, sp=el(sc,'pan'); if(sp.textContent!==L[i]){ sp.classList.add('cache'); setTimeout(function(){ sp.textContent=L[i]; sp.classList.remove('cache'); }, sp.textContent?500:0); } }
   // écran plein cadre
   var ek=el(sc,'ek'); ek.style.display= S.e? 'flex':'none';
-  el(sc,'sb').style.display= S.e||(S.p==='mt'&&!(MT.debut&&Date.now()-MT.debut<DUR_MT))? 'none':''; el(sc,'hd').style.display= S.e? 'none':'';
+  el(sc,'sb').style.display= S.e||S.tc||(S.p==='mt'&&!(MT.debut&&Date.now()-MT.debut<DUR_MT))? 'none':''; el(sc,'hd').style.display= S.e? 'none':'';
   if(S.e){
     el(sc,'ena').textContent=S.na; el(sc,'enb').textContent=S.nb; el(sc,'eca').style.background=S.ca; el(sc,'ecb').style.background=S.cb;
     var m=el(sc,'em'); if(S.e==='av'){ m.textContent='VS'; m.className='m v'; } else { m.textContent=S.sa+' – '+S.sb+((S.ta||S.tb)&&S.e==='fn'?'  ('+S.ta+'–'+S.tb+' TAB)':''); m.className='m'; }
@@ -396,6 +396,8 @@ R.innerHTML='<div class="reg">'+
   '<div class="c"><h2>Période et chrono</h2><div class="choix" id="per"></div>'+
    '<p class="note">Appuyez sur « 1re mi-temps » ou « 2e mi-temps » au coup de sifflet : le chrono démarre à ce moment. Au-delà de la durée, il affiche le temps additionnel (+1, +2…). « Mi-temps » affiche le score en bas 12 secondes, puis cache le tableau du haut jusqu’à la 2e mi-temps.</p>'+
    '<div class="lig" id="zpau" style="margin-top:8px"><button type="button" id="pau" style="flex:1"></button></div>'+
+   '<div class="lig" style="margin-top:10px"><span style="flex:1;font-weight:700">Tableau de score (en haut)</span></div><div class="choix" id="tcz"></div>'+
+   '<p class="note">« Caché » : avant le match ou après la fin, sans écran plein cadre. AN DIRÈK et le logo restent. Le tableau revient tout seul quand vous appuyez sur « 1re mi-temps » ou « 2e mi-temps ».</p>'+
    '<div class="lig" style="margin-top:10px"><span style="flex:1">Durée d’une mi-temps</span><div class="pas"><button type="button" data-s="mi" data-d="-1">−</button><b id="vmi"></b><button type="button" data-s="mi" data-d="1">+</button></div></div></div>'+
   '<div class="c"><h2>Écran plein cadre</h2><div class="choix" id="ekr"></div><p class="note">Pour l’attente avant le match, la pause et la fin. Le tableau de score se cache pendant ces écrans.</p></div>'+
   '<div class="c"><h2>Partenaires (bandeau du bas)</h2><textarea id="pa" placeholder="Un nom par ligne"></textarea><p class="note">Les noms défilent toutes les 8 secondes. Les sponsors qui paient en ligne (masbet.me/tikan/sponsor) s\u2019ajoutent tout seuls après ces noms. Un partenaire officiel ne défile pas ici : il a son grand bandeau.</p></div>'+
@@ -427,11 +429,12 @@ function maj(envoi){
   $('la').textContent=S.na; $('lb').textContent=S.nb; $('lta').textContent=S.na; $('ltb').textContent=S.nb;
   $('vsa').textContent=S.sa; $('vsb').textContent=S.sb; $('vta').textContent=S.ta; $('vtb').textContent=S.tb; $('vmi').textContent=S.mi+' min';
   $('ztab').style.display= S.p==='tb'||S.p==='fn'? '':'none';
-  boutons('per',PERFR,'p',function(v){ S.p=v; S.t=(v==='m1'||v==='m2'||v==='mt')? Math.floor(Date.now()/1000):0;   /* v145 : t de la mi-temps = moment de l'annonce */ S.z=0; if(v==='m2'){ S.fa=0; S.fb=0; } maj(); });
+  boutons('per',PERFR,'p',function(v){ S.p=v; if(v==='m1'||v==='m2') S.tc=0;   /* v165 : le tableau revient au coup de sifflet */ S.t=(v==='m1'||v==='m2'||v==='mt')? Math.floor(Date.now()/1000):0;   /* v145 : t de la mi-temps = moment de l'annonce */ S.z=0; if(v==='m2'){ S.fa=0; S.fb=0; } maj(); });
   boutons('spo',{tk:'Tikan',fs:'Futsal'},'sp',function(v){ if(S.sp!==v){ S.sp=v; S.mi= v==='fs'?20:25; } maj(); });
   $('zfot').style.display= S.sp==='fs'? '':'none'; $('lfa').textContent=S.na; $('lfb').textContent=S.nb; $('vfa').textContent=S.fa; $('vfb').textContent=S.fb;
   $('zpau').style.display= (S.p==='m1'||S.p==='m2')&&S.t? '':'none'; $('pau').textContent= S.z? '▶ Reprendre le chrono':'⏸ Arrêter le chrono';
   boutons('ekr',EKR,'e',function(v){ S.e=v; maj(); });
+  var tz=$('tcz'); tz.innerHTML=''; [[0,'👁 Affiché'],[1,'🙈 Caché']].forEach(function(o){ var b=document.createElement('button'); b.type='button'; b.textContent=o[1]; b.className= (S.tc?1:0)===o[0]? 'on':''; b.onclick=function(){ S.tc=o[0]; maj(); }; tz.appendChild(b); });   // v165
   $('lien').value=lien(); ajusteAp(); peindre(sc);
   if(envoi!==false) planifier();
 }
