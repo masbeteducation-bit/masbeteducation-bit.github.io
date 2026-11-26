@@ -879,7 +879,7 @@ var b=document.getElementById('bKont');if(b&&k){var s=document.createElement('sp
       <div class="lktabs" id="lkTabs"></div>
       <div id="lkZone"></div>
     </div>
-    <div class="card">
+    <div class="card" id="cMatchs">
       <h2><span class="hI"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5l3.8 2.8-1.5 4.4H9.7l-1.5-4.4z"/><path d="M12 3v4.5M20.6 9.6l-4.8.7M17.3 19.4l-3-4.7M6.7 19.4l3-4.7M3.4 9.6l4.8.7"/></svg></span> <span data-t="matchJodi"></span><small id="matchMaj"></small><button class="bellBtn" id="bNotif" onclick="notifOuvrir()">🔕</button></h2>
       <div id="matchs"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
     </div>
@@ -986,7 +986,7 @@ var TXT = {
     installTxt:'Mete MasbetAirNet sou ekran telefòn ou.', installBtn:'Enstale', iosEtap:'<b>Sou iPhone :</b><br>1. Louvri paj sa a nan <b>Safari</b>.<br>2. Peze bouton <b>Pataje</b> a (kare ak flèch ⬆️ anba ekran an).<br>3. Chwazi <b>« Sur l\'écran d\'accueil »</b> (Add to Home Screen), epi <b>Ajouter</b>.', iosApp:'<b>Ou nan WhatsApp oswa Facebook :</b> peze ⋯ oswa ⬆️ epi chwazi <b>« Ouvrir dans Safari »</b>. Apre sa, swiv etap yo.', aucuneOffre:'Pa gen ofri pou kounye a.',
     meteoIndispo:'Meteyo a pa disponib kounye a.', ressenti:'Ou santi', humidite:'Imidite', vent:'Van', lever:'Solèy leve', coucher:'Solèy kouche',
     pluie:'lapli', auj:'Jodi a', dem:'Demen', aHaiti:'Ayiti', ceJour:'Lòt kote nan lemonn jou sa a', fr:'(an fransè)', rienEphem:'Pa gen anyen pou jou sa a.',
-    aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Ribrik match la poko aktive.', direct:'AN DIREK', mt:'MT', fini:'Fini',
+    aucunMatch:'Pa gen match nan konpetisyon nou swiv yo jodi a.', footOff:'Ribrik match la poko aktive.', footPann:'Rezilta match entènasyonal yo pa disponib pou kounye a. Y ap tounen talè.', direct:'AN DIREK', mt:'MT', fini:'Fini',
     reporte:'Ranvwaye', annule:'Anile', quota:'Nou rive nan limit mizajou pou jodi a. Rezilta yo ka an reta.', erreurMatch:'Pa ka chaje match yo kounye a.',
     majA:'Mete ajou', aucuneVideo:'Poko gen videyo.', reseau:'Pa gen koneksyon. Tcheke entènèt ou.', aide:'Ou bezwen èd ? WhatsApp : ',
     meteoSrc:'Meteyo : Open-Meteo', liveN:function(n){ return n+' match an dirèk'; },
@@ -1041,7 +1041,7 @@ var TXT = {
     installTxt:'Ajoutez MasbetAirNet à l\'écran d\'accueil.', installBtn:'Installer', iosEtap:'<b>Sur iPhone :</b><br>1. Ouvrez cette page dans <b>Safari</b>.<br>2. Touchez le bouton <b>Partager</b> (carré avec flèche ⬆️ en bas de l\'écran).<br>3. Choisissez <b>« Sur l\'écran d\'accueil »</b>, puis <b>Ajouter</b>.', iosApp:'<b>Vous êtes dans WhatsApp ou Facebook :</b> touchez ⋯ ou ⬆️ et choisissez <b>« Ouvrir dans Safari »</b>. Suivez ensuite les étapes.', aucuneOffre:'Aucune offre pour le moment.',
     meteoIndispo:'Météo indisponible pour le moment.', ressenti:'Ressenti', humidite:'Humidité', vent:'Vent', lever:'Lever du soleil', coucher:'Coucher du soleil',
     pluie:'pluie', auj:'Aujourd\'hui', dem:'Demain', aHaiti:'Haïti', ceJour:'Ailleurs dans le monde ce jour-là', fr:'', rienEphem:'Rien pour ce jour.',
-    aucunMatch:'Aucun match des compétitions suivies aujourd\'hui.', footOff:'La rubrique matchs n\'est pas encore activée.', direct:'EN DIRECT', mt:'MT', fini:'Terminé',
+    aucunMatch:'Aucun match des compétitions suivies aujourd\'hui.', footOff:'La rubrique matchs n\'est pas encore activée.', footPann:'Les résultats des matchs internationaux sont indisponibles pour le moment. Ils reviendront bientôt.', direct:'EN DIRECT', mt:'MT', fini:'Terminé',
     reporte:'Reporté', annule:'Annulé', quota:'Limite de mises à jour atteinte pour aujourd\'hui. Les scores peuvent être en retard.', erreurMatch:'Impossible de charger les matchs pour le moment.',
     majA:'Mis à jour', aucuneVideo:'Pas encore de vidéos.', reseau:'Pas de connexion. Vérifiez votre internet.', aide:'Besoin d\'aide ? WhatsApp : ',
     meteoSrc:'Météo : Open-Meteo', liveN:function(n){ return n+' match(s) en direct'; },
@@ -2983,7 +2983,13 @@ function afficherMatchs(){
   if(MAT.erreurReseau){ el.innerHTML=mini.innerHTML='<div class="err">'+T('erreurMatch')+'</div>'; return; }
   document.getElementById('cMatchMini').classList.toggle('hidden', !MAT.actif);
   if(!MAT.actif){ el.innerHTML=mini.innerHTML='<div class="hint">'+T('footOff')+'</div>'; return; }
-  var l=MAT.matchs||[], av=MAT.avis==='quota'?'<div class="hint" style="margin-bottom:8px">'+T('quota')+'</div>':MAT.avis==='erreur'&&!l.length?'<div class="err">'+T('erreurMatch')+'</div>':'';
+  var l=MAT.matchs||[];
+  /* v168 : source des matchs coupée (compte API suspendu, quota…) et rien à montrer → pas de message rouge :
+     carte cachée à l'accueil ; dans Matchs, cachée s'il y a des championnats locaux, sinon simple avis gris */
+  var pann=!l.length&&(MAT.avis==='erreur'||MAT.avis==='quota'), cM=document.getElementById('cMatchs'), cL=document.getElementById('cLok');
+  if(cM) cM.classList.toggle('hidden', pann&&!!cL&&!cL.classList.contains('hidden'));
+  if(pann){ document.getElementById('cMatchMini').classList.add('hidden'); el.innerHTML=mini.innerHTML='<div class="hint">'+T('footPann')+'</div>'; return; }
+  var av=MAT.avis==='quota'?'<div class="hint" style="margin-bottom:8px">'+T('quota')+'</div>':MAT.avis==='erreur'&&!l.length?'<div class="err">'+T('erreurMatch')+'</div>':'';
   if(!l.length){ el.innerHTML=av+'<div class="hint">'+T('aucunMatch')+'</div>'; mini.innerHTML=el.innerHTML; return; }
   var groupes={}, ordre=[];
   l.forEach(function(m){ if(!groupes[m.competition]){ groupes[m.competition]=[]; ordre.push(m.competition); } groupes[m.competition].push(m); });
