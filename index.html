@@ -125,7 +125,9 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .aluF{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;display:none;z-index:2}
   .aluF.g{left:10px}.aluF.d{right:10px}
   @media (hover:hover) and (min-width:700px){.aluF{display:block}.aluF:hover{background:rgba(255,255,255,.26)}}
-  @media (min-width:700px){.aluS,.aluS.lg{min-height:260px;padding:28px 64px 56px}.aluT{font-size:30px;max-width:62%}.aluP{font-size:15.5px;max-width:56%}.aluLogo{width:150px;top:22px;right:64px}.aluPts{left:64px}}
+  /* v167 : carte plus basse sur téléphone (~200 px au lieu de ~320) */
+  @media (max-width:699px){.aluS{min-height:0;padding:16px 18px 36px;gap:6px}.aluS.lg{padding-top:16px}.aluK{font-size:10.5px;padding:3px 9px}.aluT{font-size:20px;max-width:76%}.aluP{font-size:13.5px;max-width:94%}.aluBs{margin-top:4px;gap:6px}.aluB{padding:8px 15px;font-size:14px}.aluLogo{width:72px;top:14px;right:14px;border-radius:8px}.aluPts{left:18px;bottom:14px}}
+  @media (min-width:700px){.aluS,.aluS.lg{min-height:220px;padding:24px 64px 48px}.aluT{font-size:30px;max-width:62%}.aluP{font-size:15.5px;max-width:56%}.aluLogo{width:150px;top:22px;right:64px}.aluPts{left:64px}}
   @media (prefers-reduced-motion:reduce){.aluK i{animation:none}.aluPts button{transition:none}}
   .hero h2{color:#fff}
   .hero p{margin:0 0 12px;color:#dfe4f2;font-size:15px}
@@ -3119,7 +3121,7 @@ function affMesurer(){   // v42.13 : secondes entre l'ouverture de la page et l'
 }
 // ---------- v166 : « À la une » enrichie (événement spécial programmé, championnat Tikan) ----------
 var ALU_TKN=null;
-function aluTkn(){ try{ var c=JSON.parse(lire('masbet_tkn_pub')||'null'); if(c&&c.d) ALU_TKN=c.d; if(c&&Date.now()-c.t<30*60e3) return; }catch(e){}
+function aluTkn(){ try{ var c=JSON.parse(lire('masbet_tkn_pub')||'null'); if(c&&c.d){ ALU_TKN=c.d; aluMaj(); } if(c&&Date.now()-c.t<30*60e3) return; }catch(e){}   // v167 : la copie gardée s'affiche tout de suite (avant : rien jusqu'à 30 min)
   api('tkn').then(function(d){ ALU_TKN=d; ecrire('masbet_tkn_pub',JSON.stringify({t:Date.now(),d:{edisyon:d.edisyon,ouvert:d.ouvert,ouvJou:d.ouvJou,finJou:d.finJou,inscrites:d.inscrites}})); aluMaj(); },function(){}); }
 function aluJJ(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso||'')); return m?m[3]+'/'+m[2]:''; }
 function aluMaj(){ if(typeof window.aluRendre!=='function') return; var fr=LANG==='fr', sl=window.aluBase(fr), avant=[];
