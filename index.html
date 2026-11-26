@@ -102,6 +102,31 @@ var NOUVO_TEL=(function(){ try{ return !localStorage.getItem('masbet_appareil')&
   .admB button:disabled{opacity:.45;cursor:default}
   .admS{display:inline-block;font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;margin-top:4px;background:#eef0f6}
   .admS.direk{background:#d62828;color:#fff}.admS.fini{background:#5d6782;color:#fff}
+
+  /* v166 — carte « À la une » (remplace la carte Wi-Fi) : diapositives qui défilent */
+  .alu{padding:0;overflow:hidden;position:relative;background:#0e1b3a;border-radius:18px;box-shadow:0 8px 24px rgba(14,27,58,.22)}
+  .aluPiste{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .aluPiste::-webkit-scrollbar{display:none}
+  .aluS{flex:0 0 100%;scroll-snap-align:start;position:relative;min-height:236px;padding:22px 20px 50px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;background:#0e1b3a center/cover no-repeat;text-decoration:none;isolation:isolate}
+  .aluS::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(9,18,42,.94) 0%,rgba(9,18,42,.80) 48%,rgba(9,18,42,.38) 100%),linear-gradient(0deg,rgba(9,18,42,.85) 0%,rgba(9,18,42,0) 55%)}
+  .aluK{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#f1d488;background:rgba(201,162,39,.16);border:1px solid rgba(241,212,136,.38);border-radius:999px;padding:4px 10px}
+  .aluK i{width:7px;height:7px;border-radius:50%;background:#ff4d4d;box-shadow:0 0 0 0 rgba(255,77,77,.7);animation:aluPouls 1.6s infinite}
+  @keyframes aluPouls{70%{box-shadow:0 0 0 8px rgba(255,77,77,0)}100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}}
+  .aluT{margin:0;font-size:23px;line-height:1.18;font-weight:900;color:#fff;max-width:92%;text-wrap:balance}
+  .aluP{margin:0;font-size:14.5px;line-height:1.4;color:#dfe4f2;max-width:88%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .aluBs{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .aluB{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border-radius:999px;font-weight:800;font-size:15px;text-decoration:none;background:var(--gold);color:var(--navy);box-shadow:0 4px 14px rgba(201,162,39,.35)}
+  .aluB.sec{background:rgba(255,255,255,.12);color:#fff;box-shadow:none;border:1px solid rgba(255,255,255,.28)}
+  .aluLogo{position:absolute;top:16px;right:16px;width:108px;height:auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  .aluS.lg{padding-top:74px}
+  .aluPts{position:absolute;left:20px;bottom:18px;display:flex;gap:6px;z-index:2}
+  .aluPts button{width:8px;height:8px;padding:0;border:0;border-radius:999px;background:rgba(255,255,255,.45);cursor:pointer;transition:width .25s,background .25s}
+  .aluPts button.on{width:22px;background:#f1d488}
+  .aluF{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;display:none;z-index:2}
+  .aluF.g{left:10px}.aluF.d{right:10px}
+  @media (hover:hover) and (min-width:700px){.aluF{display:block}.aluF:hover{background:rgba(255,255,255,.26)}}
+  @media (min-width:700px){.aluS,.aluS.lg{min-height:260px;padding:28px 64px 56px}.aluT{font-size:30px;max-width:62%}.aluP{font-size:15.5px;max-width:56%}.aluLogo{width:150px;top:22px;right:64px}.aluPts{left:64px}}
+  @media (prefers-reduced-motion:reduce){.aluK i{animation:none}.aluPts button{transition:none}}
   .hero h2{color:#fff}
   .hero p{margin:0 0 12px;color:#dfe4f2;font-size:15px}
   /* Offres */
@@ -400,7 +425,7 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     #vAkey.msn .offre{flex:0 0 auto}
     #lokHome,#cNotif,#cSert{grid-column:1 / -1}#lokHome:empty{display:none}
     #vAkey .card{margin:0}
-    #liveHome,#vAkey .hero{grid-column:1 / -1}
+    #liveHome,#vAkey .hero,#alu{grid-column:1 / -1}
     #liveHome:empty{display:none}
     #cOffres{grid-column:span 2}
     .offre{flex:0 0 calc(50% - 8px)}
@@ -716,11 +741,49 @@ svg.ico{width:20px;height:20px;flex:none;display:inline-block;vertical-align:-4p
     <div id="lokHome"></div>
     <div id="liveHome"></div>
     <div class="card hidden" id="cNotif"></div>
-    <div class="card hero">
-      <h2><span style="color:#fff"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 8.5a15 15 0 0 1 20 0"/><path d="M5.5 12a10 10 0 0 1 13 0"/><path d="M9 15.5a5 5 0 0 1 6 0"/><circle cx="12" cy="19" r="1.3" fill="currentColor" stroke="none"/></svg></span> <span data-t="heroTitre"></span></h2>
-      <p data-t="heroTxt"></p>
-      <a class="btn" href="achte.html#wifi" data-t="heroBtn"></a>
-    </div>
+    <section class="card alu" id="alu" aria-roledescription="carrousel" aria-label="À la une">
+      <div class="aluPiste" id="aluPiste"></div>
+      <div class="aluPts" id="aluPts"></div>
+      <button type="button" class="aluF g" id="aluG" aria-label="Précédent">‹</button><button type="button" class="aluF d" id="aluD" aria-label="Suivant">›</button>
+    </section>
+<script>/* v166 — « À la une » : rendu immédiat (Masbet TV + Wi-Fi), enrichi ensuite par aluMaj() (événement spécial, Tikan) */
+(function(){
+  var A={i:0,n:0,t:null,pause:0,sig:''};
+  function e(x){ return String(x==null?'':x).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function L(){ try{ return localStorage.getItem('masbet_lang')==='fr'?'fr':'ht'; }catch(x){ return 'ht'; } }
+  function grand(){ return (window.innerWidth||0)>=700; }
+  function img(base){ return 'photos/'+base+(grand()?'.jpg':'-p.jpg'); }
+  window.aluImg=img;
+  window.aluBase=function(fr){ var w=false; try{ w=!!(localStorage.getItem('masbet_cmds')||'').replace(/[\[\]\s]/g,''); }catch(x){}
+    var tv={id:'tv',img:img('live-dans'),logo:'photos/og/masbettv.jpg',k:'Masbet TV · 24/24',t:fr?'Regardez Masbet TV gratuitement':'Gade Masbet TV gratis',
+      p:fr?'Vidéos, matchs, émissions et lives Masbet, 24 h sur 24.':'Videyo, match, emisyon ak lives Masbet, 24 sou 24.',b:[{t:fr?'▶ Regarder':'▶ Gade kounye a',h:'#videyo&tv'}]};
+    var wf={id:'wifi',img:img('plas-piblik'),k:'MasbetAirNet · Anse-à-Veau',t:fr?'Le Wi-Fi d’Anse-à-Veau':'Wi-Fi Ansavo',
+      p:fr?'Payez par MonCash ou NatCash et recevez votre code tout de suite.':'Peye ak MonCash oswa NatCash, resevwa kòd ou touswit.',b:[{t:fr?'Acheter un code':'Achte yon kòd',h:'achte.html#wifi'}]};
+    return w?[wf,tv]:[tv,wf]; };
+  function aller(i,doux){ var p=document.getElementById('aluPiste'); if(!p||!A.n) return; A.i=(i+A.n)%A.n;
+    p.scrollTo({left:A.i*p.clientWidth,behavior:doux===false||matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}); pts(); }
+  function pts(){ var b=document.querySelectorAll('#aluPts button'); for(var k=0;k<b.length;k++){ b[k].classList.toggle('on',k===A.i); b[k].setAttribute('aria-current',k===A.i?'true':'false'); } }
+  function auto(){ clearInterval(A.t); if(A.n<2||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    A.t=setInterval(function(){ if(document.hidden||Date.now()<A.pause) return; aller(A.i+1); },7000); }
+  window.aluRendre=function(sl){ var p=document.getElementById('aluPiste'), d=document.getElementById('aluPts'); if(!p) return;
+    var sig=JSON.stringify(sl); if(sig===A.sig) return; A.sig=sig; var fr=L()==='fr', garde=(A.ids||[])[A.i]||'';
+    p.innerHTML=sl.map(function(x,k){ return '<div class="aluS'+(x.logo?' lg':'')+'" role="group" aria-roledescription="'+(fr?'diapositive':'diapozitiv')+'" aria-label="'+(k+1)+' / '+sl.length+'" style="background-image:url(\''+e(x.img)+'\')">'+
+      (x.logo?'<img class="aluLogo" src="'+e(x.logo)+'" alt="" width="1200" height="630" loading="lazy">':'')+
+      '<span class="aluK">'+(x.live?'<i></i>':'')+e(x.k)+'</span><h2 class="aluT">'+e(x.t)+'</h2>'+(x.p?'<p class="aluP">'+e(x.p)+'</p>':'')+
+      '<div class="aluBs">'+x.b.map(function(b,j){ return '<a class="aluB'+(j?' sec':'')+'" href="'+e(b.h)+'">'+e(b.t)+'</a>'; }).join('')+'</div></div>'; }).join('');
+    A.n=sl.length; d.innerHTML=A.n>1?sl.map(function(x,k){ return '<button type="button" aria-label="'+(k+1)+'"></button>'; }).join(''):'';
+    var j=0; if(garde) sl.forEach(function(x,k){ if(x.id===garde) j=k; }); A.ids=sl.map(function(x){ return x.id; });
+    d.querySelectorAll('button').forEach(function(b,k){ b.onclick=function(){ A.pause=Date.now()+15000; aller(k); }; });
+    A.i=j; aller(j,false); auto(); };
+  var p=document.getElementById('aluPiste'), tm=null;
+  p.addEventListener('scroll',function(){ clearTimeout(tm); tm=setTimeout(function(){ var w=p.clientWidth||1, k=Math.round(p.scrollLeft/w); if(k!==A.i){ A.i=k; pts(); } },90); },{passive:true});
+  ['touchstart','pointerdown','wheel'].forEach(function(ev){ p.addEventListener(ev,function(){ A.pause=Date.now()+15000; },{passive:true}); });
+  document.getElementById('aluG').onclick=function(){ A.pause=Date.now()+15000; aller(A.i-1); };
+  document.getElementById('aluD').onclick=function(){ A.pause=Date.now()+15000; aller(A.i+1); };
+  window.addEventListener('resize',function(){ aller(A.i,false); });
+  window.aluRendre(window.aluBase(L()==='fr'));
+})();
+</script>
 <script>/* v42.12 : l'entête s'affiche complet dès le début du chargement */(function(){var l='ht',k='';try{l=localStorage.getItem('masbet_lang')==='fr'?'fr':'ht';k=localStorage.getItem('masbet_kont')||'';}catch(e){}
 var D=l==='fr'?{chWifi:'Wi-Fi',chMatch:'Matchs',chJwet:"Jeux d'esprit",chKom:'Communauté',chIstwa:'Histoire du jour',chLiv:'Livres',chMed:'Méditation',apropo:"MasbetAirNet, le réseau Wi-Fi d'Anse-à-Veau →",heroTitre:'Acheter un code Wi-Fi',heroTxt:'Payez par MonCash ou NatCash et recevez votre code sur la page.',heroBtn:'Acheter maintenant'}:{chWifi:'Wi-Fi',chMatch:'Match',chJwet:'Jwèt lespri',chKom:'Kominote',chIstwa:'Istwa jodi a',chLiv:'Liv',chMed:'Meditasyon',apropo:'MasbetAirNet, rezo Wi-Fi Ansavo a →',heroTitre:'Achte kòd Wi-Fi',heroTxt:'Peye ak MonCash oswa NatCash, epi resevwa kòd ou sou paj la.',heroBtn:'Achte kounye a'};
 document.documentElement.lang=l;var h=document.querySelectorAll('header [data-t], .hero [data-t]');for(var i=0;i<h.length;i++){var v=D[h[i].getAttribute('data-t')];if(v&&!h[i].textContent)h[i].textContent=v;}
@@ -3054,9 +3117,29 @@ function affMesurer(){   // v42.13 : secondes entre l'ouverture de la page et l'
   var ms=Math.round(performance.now()), k=ACC_MEM?'rev':'nou'; if(document.hidden||ms>60000) return;
   setTimeout(function(){ apiPost('stat',{appareil:appareil(),ev:'aff',k:k,ms:ms}).catch(function(){}); },3000);
 }
+// ---------- v166 : « À la une » enrichie (événement spécial programmé, championnat Tikan) ----------
+var ALU_TKN=null;
+function aluTkn(){ try{ var c=JSON.parse(lire('masbet_tkn_pub')||'null'); if(c&&c.d) ALU_TKN=c.d; if(c&&Date.now()-c.t<30*60e3) return; }catch(e){}
+  api('tkn').then(function(d){ ALU_TKN=d; ecrire('masbet_tkn_pub',JSON.stringify({t:Date.now(),d:{edisyon:d.edisyon,ouvert:d.ouvert,ouvJou:d.ouvJou,finJou:d.finJou,inscrites:d.inscrites}})); aluMaj(); },function(){}); }
+function aluJJ(iso){ var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso||'')); return m?m[3]+'/'+m[2]:''; }
+function aluMaj(){ if(typeof window.aluRendre!=='function') return; var fr=LANG==='fr', sl=window.aluBase(fr), avant=[];
+  var l=ACC&&ACC.lives||[], ev=l.filter(function(x){ return x.special&&x.statut==='pwograme'; })[0];
+  if(ev) avant.push({id:'ev',img:okImg(ev.affiche)?ev.affiche:'photos/evenements.webp',k:fr?'Événement spécial':'Evènman espesyal',t:ev.titre,
+    p:(ev.quand?quandLive(ev.quand):'')+(ev.prix?' · '+(fr?'Ticket ':'Tikè ')+ev.prix+' HTG':''),b:[{t:fr?'Acheter mon ticket':'Achte tikè m',h:lienAchat(ev)},{t:fr?'Détails':'Detay',h:'#videyo'}]});
+  var k=ALU_TKN, fin=k&&k.finJou?Date.parse(k.finJou+'T23:59:59'):0;
+  if(k&&(k.ouvert||(fin&&Date.now()<=fin))){
+    var dates=k.ouvJou&&k.finJou?(fr?'Du '+aluJJ(k.ouvJou)+' au '+aluJJ(k.finJou):'Soti '+aluJJ(k.ouvJou)+' rive '+aluJJ(k.finJou)):'';
+    var q=fr?'?lang=fr':'';
+    sl.splice(1,0,k.ouvert?{id:'tkn',img:window.aluImg('match-nwit'),k:fr?'Championnat Tikan':'Chanpyona Tikan',t:fr?'Les inscriptions sont ouvertes':'Enskripsyon ekip yo louvri',
+        p:(k.inscrites?(fr?k.inscrites+' équipes déjà inscrites. ':k.inscrites+' ekip deja enskri. '):'')+dates+'.',b:[{t:fr?'Inscrire mon équipe':'Enskri ekip mwen',h:'/tikan/enskripsyon'+q},{t:fr?'Devenir sponsor':'Vin sponsò',h:'/tikan/sponsor'+q}]}
+      :{id:'tkn',img:window.aluImg('match-nwit'),k:fr?'Championnat Tikan':'Chanpyona Tikan',t:fr?'Classement, résultats, prochains matchs':'Klasman, rezilta, pwochen match',
+        p:dates?dates+(fr?' · places en vente':' · plas yo an vant'):'',b:[{t:fr?'Voir le championnat':'Wè chanpyona a',h:'/tikan/chanpyona'+q},{t:fr?'Ma place':'Plas mwen',h:'/tikan/plas'+q}]});
+  }
+  window.aluRendre(avant.concat(sl));
+}
 function toutAfficher(){ afficherLokal(); try{ afficherEdito(); if(ED_ID) editoOuvrir(ED_ID); }catch(e){}
   afficherDate(); try{ afficherIstwa(); if(IS_D&&!document.getElementById('isPage').classList.contains('hidden')) istwaOuvrir(IS_D); }catch(e){}
-  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv(); affMesurer();
+  if(ACC){ afficherOffres(); afficherMeteo(); afficherEphem(); afficherVideos(); afficherLives(); afficherTv(); affMesurer(); try{ aluMaj(); if(!window.ALU_T0){ window.ALU_T0=1; aluTkn(); } }catch(e){}
     document.getElementById('foot').innerHTML=(ACC.whatsapp?T('aide')+'<a href="https://wa.me/'+esc(String(ACC.whatsapp).replace(/\D/g,''))+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;font-weight:800;color:inherit;text-decoration:none;vertical-align:middle">'+icoWa('#25D366','#fff')+esc(ACC.whatsapp)+'</a>':'')+piedFondateur(); }
   if(MAT) afficherMatchs();
   if(QZ){ afficherQuizHome(); if(vueActive()==='quiz' && !(QZ.etat&&QZ.etat.joue&&!QZ.etat.fini)) afficherQuiz(); }
