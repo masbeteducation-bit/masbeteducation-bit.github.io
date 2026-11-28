@@ -1149,7 +1149,7 @@ function lotPaquet(f){
       f.forEach(function(x){ var m=memoire(x.a,x.p); if(m){ horsLigne(true); x.res(m); } else x.rej(e); }); });
 }
 // v124 : copies communes à tous gardées par Cloudflare (functions/api/<action>.js) : réponse en 0,1–0,3 s au lieu de 3–5 s chez Google
-var RESERVE_API={mtv:1, mtvdirect:1, matchs:1};
+var RESERVE_API={mtv:1, mtvdirect:1, matchs:1, tvpoz:1};   // v170 : tvpoz = Masbet TV en pause pendant un live
 function reserveApi(a){
   var h=location.hostname; if(!window.fetch||!(h==='masbet.me'||/\.masbet\.me$/.test(h)||/\.pages\.dev$/.test(h)||window.MASBET_RESERVE)) return Promise.reject(new Error('pas de réserve'));
   var ctl=window.AbortController?new AbortController():null, t=ctl?setTimeout(function(){ ctl.abort(); },6000):null;
@@ -2516,7 +2516,7 @@ var MTV_OU={tv:['tvEcran','tvInfo','tvMsg'], live:['liveEcran','liveInfo','liveM
 function mtvE(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][0]); }
 function mtvI(){ return document.getElementById(MTV_OU[MTV.ou||'tv'][1])||document.createElement('div'); }
 function mtvMsg(t){ var e=document.getElementById(MTV_OU[MTV.ou||'tv'][2]); if(e) e.textContent=t||''; }
-var MTV={yt:null, ytT:0, koD:{}, liste:null, prog:[], plages:[], memo:{}, ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0};
+var MTV={yt:null, ytT:0, koD:{}, liste:null, prog:[], plages:[], memo:{}, ordre:null, jour:'', p:null, t:null, actif:false, i:-1, ko:{}, fini:{}, cur:null, cache:0, poz:false, pozT:0};
 // v122 — Plages horaires de Masbet TV (onglet « Plages TV » du classeur Contenu).
 // Même calcul dans l'application et dans l'aperçu de partage (functions/tv/[id].js) : tout le monde voit la même chose au même moment.
 // d.v = rotation [[id, titre, durée s (déjà sans les 20 s de fin), live 0/1], …]
@@ -2655,6 +2655,9 @@ function mtvJouer(ou){
   mtvBoutons();
   var frais=MTV.liste&&Date.now()-MTV.cache<30*60e3;   // liste et grille relues toutes les 30 minutes
   var pr=frais?Promise.resolve():api('mtv').then(mtvCharger);
+  // v170 : un direct existe → on lit d'abord l'état de pause (3 s au plus) pour ne pas montrer le direct pendant la mi-temps
+  if(mtvDirekAdmin()) pr=pr.then(function(){ return new Promise(function(ok){ var fini=false, f=function(){ if(!fini){ fini=true; ok(); } };
+    setTimeout(f,3000); MTV.pozT=Date.now(); api('tvpoz').then(function(d){ MTV.poz=!!(d&&d.poz); f(); },f); }); });
   pr.then(function(){ if(!MTV.actif) return; mtvMsg(''); mtvSuivant(); MTV.ytT=0; mtvVeille(); },
     function(){ if(MTV.actif) mtvMsg(T('mtvErr')); });
 }
@@ -2716,6 +2719,7 @@ function mtvDirekAdmin(){
   return null;
 }
 function mtvDirekChoix(now){
+  if(MTV.poz) return null;   // v170 : ⏸ Masbet TV en pause pendant le live (mi-temps) : programme normal, le direct continue dans l'onglet Live
   var a=mtvDirekAdmin(); if(a&&!(MTV.koD[a.k]>now-300e3)) return a;
   if(mtvCreneau(now)) return null;
   var y=MTV.yt; if(y&&!(MTV.koD['yt|'+y[0]]>now-300e3)) return {k:'yt|'+y[0], src:'yt', id:y[0], titre:y[1]};
@@ -2747,6 +2751,19 @@ function mtvVeille(){   // toutes les minutes : un direct commence ou s'arrête 
   if((d?d.k:null)!==act) mtvSuivant();
 }
 setInterval(mtvVeille,60e3);
+// v170 — Pause de Masbet TV (page Admin ou cadre Tikan) : vérifiée toutes les 30 s, seulement si Masbet TV est ouverte
+// et qu'un direct existe (ou qu'une pause est en cours). Réponse servie par Cloudflare (/api/tvpoz), Google rarement appelé.
+function mtvPozVerif(force){
+  if(!MTV.actif||!MTV.liste||(document.hidden&&!force)) return;
+  if(!MTV.poz&&!mtvDirekAdmin()&&!MTV.yt) return;
+  if(!force&&Date.now()-MTV.pozT<25e3) return; MTV.pozT=Date.now();
+  api('tvpoz').then(function(d){ var p=!!(d&&d.poz); if(p!==MTV.poz){ MTV.poz=p;
+    // début de pause : grille relue tout de suite (une vidéo programmée pour la mi-temps passe même si elle a été ajoutée peu avant)
+    if(p&&Date.now()-MTV.cache>60e3){ MTV.cache=Date.now(); api('mtv').then(function(x){ mtvCharger(x); mtvVeille(); },function(){ mtvVeille(); }); }
+    else mtvVeille(); } },function(){});
+}
+setInterval(mtvPozVerif,30e3);
+document.addEventListener('visibilitychange',function(){ if(!document.hidden) mtvPozVerif(true); });
 function mtvSuivant(){
   if(!MTV.actif||!MTV.liste) return; clearTimeout(MTV.t);
   if(Date.now()-MTV.cache>30*60e3){ MTV.cache=Date.now(); api('mtv').then(function(d){ mtvCharger(d); },function(){}); }   // grille relue en fond

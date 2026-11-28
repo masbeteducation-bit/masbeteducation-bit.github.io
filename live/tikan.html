@@ -399,6 +399,8 @@ R.innerHTML='<div class="reg">'+
    '<div class="lig" style="margin-top:10px"><span style="flex:1;font-weight:700">Tableau de score (en haut)</span></div><div class="choix" id="tcz"></div>'+
    '<p class="note">« Caché » : avant le match ou après la fin, sans écran plein cadre. AN DIRÈK et le logo restent. Le tableau revient tout seul quand vous appuyez sur « 1re mi-temps » ou « 2e mi-temps ».</p>'+
    '<div class="lig" style="margin-top:10px"><span style="flex:1">Durée d’une mi-temps</span><div class="pas"><button type="button" data-s="mi" data-d="-1">−</button><b id="vmi"></b><button type="button" data-s="mi" data-d="1">+</button></div></div></div>'+
+  '<div class="c"><h2>📺 Masbet TV</h2><div class="lig"><button type="button" id="tvp" style="flex:1"></button></div><p class="note" id="tvpn"></p>'+
+   '<p class="note">Indépendant du bouton « Mi-temps ». Mi-temps ou pause sans spectacle : « ⏸ Pause » fait reprendre son programme à Masbet TV, et le live continue dans l’onglet Live. Activité culturelle à la mi-temps : ne touchez à rien, Masbet TV garde le direct. Le direct Prism n’est jamais coupé. Aussi dans la page Admin → Lives.</p></div>'+
   '<div class="c"><h2>Écran plein cadre</h2><div class="choix" id="ekr"></div><p class="note">Pour l’attente avant le match, la pause et la fin. Le tableau de score se cache pendant ces écrans.</p></div>'+
   '<div class="c"><h2>Partenaires (bandeau du bas)</h2><textarea id="pa" placeholder="Un nom par ligne"></textarea><p class="note">Les noms défilent toutes les 8 secondes. Les sponsors qui paient en ligne (masbet.me/tikan/sponsor) s\u2019ajoutent tout seuls après ces noms. Un partenaire officiel ne défile pas ici : il a son grand bandeau.</p></div>'+
   '<div class="c"><h2>⭐ Partenaires officiels (grand bandeau)</h2><div id="ofl"></div>'+
@@ -558,6 +560,25 @@ setInterval(function(){ if(OFATT) ofMajSiLibre(); if(!CONTENU||!window.fetch||sa
   fetch(CONTENU+'?api=tablo&rev='+REV+'&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); }).then(function(j){
     if(!j||!j.ok||!j.data||!j.data.etat||sale||enCours) return; var e=j.data.etat; REV=j.data.rev||REV;
     if(Number(e.ofr||0)>Number(S.ofr||0)){ S.of=String(e.of||''); S.ofr=Number(e.ofr)||0; ofMajSiLibre(); } }).catch(function(){}); },15000);
+/* v170 : ⏸ Pause / ▶ Reprendre Masbet TV (le direct continue dans l'onglet Live). État relu toutes les 20 s (peut aussi changer depuis la page Admin). */
+var TVP=null, TVPA=false;
+function tvpPeindre(){ var b=$('tvp'), n=$('tvpn'); if(!b) return;
+  b.disabled=TVPA||TVP===null; b.className=TVP?'p':'';
+  b.textContent=TVP===null?'…':TVP?'▶ Reprendre le direct sur Masbet TV':'⏸ Pause Masbet TV';
+  n.textContent=TVP===null?'':TVP?'⏸ EN PAUSE : Masbet TV joue son programme. Le live continue dans l’onglet Live.':'🔴 Masbet TV montre le direct (s’il y en a un).';
+  n.style.color=TVP?'#d97706':''; n.style.fontWeight='700'; }
+function tvpLire(){ if(!CONTENU||!window.fetch||TVPA) return;
+  fetch(CONTENU+'?api=tvpoz&_='+Date.now(),{credentials:'omit',cache:'no-store',redirect:'follow'}).then(function(r){ return r.json(); })
+    .then(function(j){ if(j&&j.ok&&j.data&&!TVPA){ TVP=!!j.data.poz; tvpPeindre(); } }).catch(function(){}); }
+$('tvp').onclick=function(){ if(TVP===null) return; var veut=!TVP;
+  if(!JET){ cnx(true); etatEnvoi('cle'); $('tvpn').textContent='Entrez le code administrateur, puis recommencez.'; return; }
+  TVPA=true; tvpPeindre();
+  poster({api:'tvpoz_set',jeton:JET,poz:veut?1:0}).then(function(j){ TVPA=false;
+    if(j&&j.ok&&j.data){ TVP=!!j.data.poz; tvpPeindre(); $('tvpn').textContent+=' Bascule dans l’application en moins d’une minute.'; }
+    else if(j&&/jeton/.test(j.erreur||'')){ JET=''; cnx(true); etatEnvoi('cle'); tvpPeindre(); $('tvpn').textContent='Entrez le code administrateur, puis recommencez.'; }
+    else { tvpPeindre(); $('tvpn').textContent='Erreur : '+((j&&j.erreur)||'réessayez.'); }
+  }).catch(function(){ TVPA=false; tvpPeindre(); $('tvpn').textContent='Pas de réseau, réessayez.'; }); };
+tvpPeindre(); tvpLire(); setInterval(function(){ if(!document.hidden) tvpLire(); },20000);
 })();
 </script>
 </body>
